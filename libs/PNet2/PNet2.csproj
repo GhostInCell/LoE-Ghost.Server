@@ -60,9 +60,9 @@
   <ItemGroup>
     <Compile Include="Collections\ConcurrentDictionary.cs" />
     <Compile Include="ConnectionStatus.cs" />
-    <Compile Include="Debug\DefaultConsoleLogger.cs" />
-    <Compile Include="Debug\ILogger.cs" />
-    <Compile Include="Debug\NullLogger.cs" />
+    <Compile Include="Utilities\DefaultConsoleLogger.cs" />
+    <Compile Include="Utilities\ILogger.cs" />
+    <Compile Include="Utilities\NullLogger.cs" />
     <Compile Include="DtoRChannels.cs" />
     <Compile Include="DynamicMethodDelegateFactory.cs" />
     <Compile Include="INetSerializable.cs" />
