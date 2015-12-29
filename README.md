@@ -14,6 +14,6 @@ You need php+mysql web server like this <a href="http://sourceforge.net/projects
 <br>type help for full commands list</li>
 <li>For local using run: Proxy.exe <i>localhost</i>
 <br><b>Warning:</b> Close Proxy.exe only by typing <b>exit</b> command or system proxy wouldn't be cleared.</li>
-<li>7. ?????</li>
-<li>8. PROFIT!</li>
+<li>?????</li>
+<li>PROFIT!</li>
 </ol>
