@@ -7,10 +7,11 @@ You need php+mysql web server like this <a href="http://sourceforge.net/projects
 <br>1. Execute legends_of_equestria.sql on mysql server.
 <br>2. Compile and run Server.exe for generating default configs file.
 <br>3. For local using just replace mysql user and password by your own.
-<br>4. Run Server.exe and wait full loading them type command: <b>user create</b> <i>login password access</i>.
+<br>4. Copy files from www folder to web server www folder.
+<br>5. Run Server.exe and wait full loading them type command: <b>user create</b> <i>login password access</i>.
 <br>access Player = 1, TeamMember = 20, Implementer = 25, Moderator = 30, 	Admin = 255
 <br>type help for full commands list
-<br>5. For local using run: Proxy.exe localhost
+<br>6. For local using run: Proxy.exe localhost
 <br><b>Warning:</b> Close Proxy.exe only by typing <b>exit</b> command or system proxy wouldn't be cleared.
-<br>6. ?????
-<br>7. PROFIT!
+<br>7. ?????
+<br>8. PROFIT!
