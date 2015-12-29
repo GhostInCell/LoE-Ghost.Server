@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A477544E-81A9-4BC2-9897-AF47B7C265A9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ghost.Server</RootNamespace>
+    <AssemblyName>Ghost.Server</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>none</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.9.8\lib\net45\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="protobuf-net, Version=2.0.0.668, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
+      <HintPath>..\packages\protobuf-net.2.0.0.668\lib\net40\protobuf-net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\Classes\Character.cs" />
+    <Compile Include="Core\Classes\CharData.cs" />
+    <Compile Include="Core\Classes\ChatMsg.cs" />
+    <Compile Include="Core\Classes\DialogEntry.cs" />
+    <Compile Include="Core\Classes\DialogScript.cs" />
+    <Compile Include="Core\Classes\FriendStatus.cs" />
+    <Compile Include="Core\Classes\PonyData.cs" />
+    <Compile Include="Core\Classes\StatHelper.cs" />
+    <Compile Include="Core\Classes\SyncEntry.cs" />
+    <Compile Include="Core\Classes\TargetEntry.cs" />
+    <Compile Include="Core\Classes\UserData.cs" />
+    <Compile Include="Core\Classes\UserSave.cs" />
+    <Compile Include="Core\Events\AutoDestroy.cs" />
+    <Compile Include="Core\Events\AutoRespawn.cs" />
+    <Compile Include="Core\Events\AutoSaveChar.cs" />
+    <Compile Include="Core\Events\CooldownReset..cs" />
+    <Compile Include="Core\Events\TradeRejector.cs" />
+    <Compile Include="Core\Events\VoidZoneTick.cs" />
+    <Compile Include="Core\Movment\MobMovement.cs" />
+    <Compile Include="Core\Movment\NullMovement.cs" />
+    <Compile Include="Core\Movment\PetMovement.cs" />
+    <Compile Include="Core\Movment\PlayerMovement.cs" />
+    <Compile Include="Core\Objects\WO_Loot.cs" />
+    <Compile Include="Core\Objects\WO_MOB.cs" />
+    <Compile Include="Core\Objects\WO_NPC.cs" />
+    <Compile Include="Core\Objects\WO_Pet.cs" />
+    <Compile Include="Core\Objects\WO_Pickup.cs" />
+    <Compile Include="Core\Objects\WO_Player.cs" />
+    <Compile Include="Core\Objects\WO_Spawn.cs" />
+    <Compile Include="Core\Objects\WO_Switch.cs" />
+    <Compile Include="Core\Objects\WO_VoidZone.cs" />
+    <Compile Include="Core\Players\CharPlayer.cs" />
+    <Compile Include="Core\Players\MapPlayer.cs" />
+    <Compile Include="Core\Players\MasterPlayer.cs" />
+    <Compile Include="Core\Servers\CharServer.cs" />
+    <Compile Include="Core\Servers\MapServer.cs" />
+    <Compile Include="Core\Servers\MasterServer.cs" />
+    <Compile Include="Core\Structs\DB_Dialog.cs" />
+    <Compile Include="Core\Structs\DB_Spell.cs" />
+    <Compile Include="Core\Structs\DB_SpellEffect.cs" />
+    <Compile Include="Core\Structs\DB_User.cs" />
+    <Compile Include="Mgrs\Map\DialogsMgr.cs" />
+    <Compile Include="Mgrs\Mob\MobStatsMgr.cs" />
+    <Compile Include="Mgrs\Mob\MobThreatMgr.cs" />
+    <Compile Include="Mgrs\Player\PlayerStatsMgr.cs" />
+    <Compile Include="Core\Structs\DB_Creature.cs" />
+    <Compile Include="Core\Structs\DB_Item.cs" />
+    <Compile Include="Core\Structs\DB_Loot.cs" />
+    <Compile Include="Core\Structs\DB_Map.cs" />
+    <Compile Include="Core\Structs\DB_WorldObject.cs" />
+    <Compile Include="Core\Structs\DB_NPC.cs" />
+    <Compile Include="Mgrs\CharsMgr.cs" />
+    <Compile Include="Mgrs\DataMgr.cs" />
+    <Compile Include="Mgrs\Map\ObjectsMgr.cs" />
+    <Compile Include="Core\ServerDB.cs" />
+    <Compile Include="Mgrs\SpellsMgr.cs" />
+    <Compile Include="Mgrs\Player\ItemsMgr.cs" />
+    <Compile Include="Mgrs\Player\SkillsMgr.cs" />
+    <Compile Include="Mgrs\Player\TradeMgr.cs" />
+    <Compile Include="Mgrs\ServersMgr.cs" />
+    <Compile Include="Scripts\ItemsScript.cs" />
+    <Compile Include="Scripts\Servers\CharServerScript.cs" />
+    <Compile Include="Scripts\Servers\MapServerScript.cs" />
+    <Compile Include="ServerInstance.cs" />
+    <Compile Include="Utilities\Abstracts\CreatureObject.cs" />
+    <Compile Include="Utilities\Abstracts\MovementGenerator.cs" />
+    <Compile Include="Utilities\Abstracts\ServerObject.cs" />
+    <Compile Include="Utilities\Abstracts\StatsMgr.cs" />
+    <Compile Include="Utilities\Abstracts\TimedEvent.cs" />
+    <Compile Include="Utilities\Abstracts\WorldObject.cs" />
+    <Compile Include="Utilities\Configs.cs" />
+    <Compile Include="Utilities\Constants.cs" />
+    <Compile Include="Utilities\Extensions.cs" />
+    <Compile Include="Utilities\Interfaces\IPlayer.cs" />
+    <Compile Include="Utilities\Interfaces\IRoom.cs" />
+    <Compile Include="Utilities\Interfaces\IServer.cs" />
+    <Compile Include="Utilities\Interfaces\IStatsMgr.cs" />
+    <Compile Include="Utilities\Interfaces\IUpdatable.cs" />
+    <Compile Include="Utilities\Interfaces\Script\IScriptedAI.cs" />
+    <Compile Include="Utilities\Interfaces\Script\IScriptedDialog.cs" />
+    <Compile Include="Utilities\Interfaces\Script\IScriptedItem.cs" />
+    <Compile Include="Utilities\Serializers.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\ServerLogger.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\libs\Lidgren.Network\Lidgren.Network.csproj">
+      <Project>{49ba1c69-6104-41ac-a5d8-b54fa9f696e8}</Project>
+      <Name>Lidgren.Network</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\libs\PNet2Room\PNet2Room.csproj">
+      <Project>{0539b54a-555c-46a4-bb85-540678faa8b1}</Project>
+      <Name>PNet2Room</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\libs\PNet2Server\PNet2Server.csproj">
+      <Project>{1ccddb57-d001-46be-a685-5da4c5ac9df4}</Project>
+      <Name>PNet2Server</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\libs\PNet2\PNet2.csproj">
+      <Project>{ebac22f9-499d-4c46-bace-6877585796ac}</Project>
+      <Name>PNet2</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
