@@ -23,7 +23,7 @@ namespace Proxy
                 Console.WriteLine("Proxy Started");
             Restart:
                 FiddlerApplication.BeforeRequest += FiddlerApplication_BeforeRequest;
-                FiddlerApplication.Startup(8081, true, false, false);
+                FiddlerApplication.Startup(8081, FiddlerCoreStartupFlags.RegisterAsSystemProxy);
                 try
                 {
                     while (APPIsRunning)

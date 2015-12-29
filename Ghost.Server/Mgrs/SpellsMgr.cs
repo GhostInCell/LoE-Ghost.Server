@@ -29,21 +29,22 @@ namespace Ghost.Server.Mgrs
                             {
                                 if (targetWO.IsPlayer)
                                 {
-                                    if ((main.Target & SpellTarget.Self) != 0 && targetWO == player.Object)
+                                    if ((main.Target & SpellTarget.Self) != 0 && isSelf)
                                         return true;
                                     else if ((main.Target & SpellTarget.Player) != 0)
-                                        return targetWO.IsPlayer;
+                                        return targetWO.IsPlayer && !isSelf;
                                 }
-                                else return targetWO.IsCreature && (targetWO as CreatureObject).HasStats;
+                                else
+                                    return targetWO.IsCreature && (targetWO as CreatureObject).HasStats;
                             }
                             else if ((main.Target & SpellTarget.Player) != 0)
                             {
-                                if ((main.Target & SpellTarget.Self) != 0 && targetWO == player.Object)
-                                    return true;
+                                if (isSelf)
+                                    return (main.Target & SpellTarget.Self) != 0;
                                 return targetWO.IsPlayer;
                             }
                             else if ((main.Target & SpellTarget.Self) != 0)
-                                return targetWO == player.Object;
+                                return isSelf;
                         }
                     }
                 }
