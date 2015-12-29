@@ -1,0 +1,3546 @@
+<?xml version="1.0"?>
+<ArrayOfItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Item>
+    <ID>0</ID>
+    <Icon>1</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A fresh green apple. It is a bit sour, but maybe you're into that.</Description>
+    <Name>Green Apple</Name>
+    <ResourcePath />
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>3</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>1</ID>
+    <Icon>2</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A red apple fresh from the farm.</Description>
+    <Name>Red apple</Name>
+    <ResourcePath />
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>3</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>2</ID>
+    <Icon>3</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>If you're trying to find an apple they don't flavor candy after, look no further than this juicy yellow apple.</Description>
+    <Name>Yellow Apple</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>3</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>3</ID>
+    <Icon>4</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Bananas typically grow in tropical, non-lunar environments.</Description>
+    <Name>Banana</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>15</MaxStackSize>
+    <Price>5</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>4</ID>
+    <Icon>5</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A crisp carrot. Good for eyesight and motivation.</Description>
+    <Name>Carrot</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>20</MaxStackSize>
+    <Price>5</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>5</ID>
+    <Icon>6</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A crisp stalk of celery. Grown in the sunshine. </Description>
+    <Name>Celery Stalk</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>20</MaxStackSize>
+    <Price>5</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>6</ID>
+    <Icon>7</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A fresh baked cookie with chocolate chips. (Warning: Highly addictive.) </Description>
+    <Name>Cookie</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>20</MaxStackSize>
+    <Price>5</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>7</ID>
+    <Icon>8</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A cupcake with a cherry on top.</Description>
+    <Name>Cupcake</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>8</MaxStackSize>
+    <Price>5</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>8</ID>
+    <Icon>9</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A juicy fresh pear. Because apparently apples aren't good enough for you.</Description>
+    <Name>Pear</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>0</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>9</ID>
+    <Icon>10</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A musical flute. The more you play, the more you know how to play the flute.</Description>
+    <Name>Flute</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>0</MaxStackSize>
+    <Price>25</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>10</ID>
+    <Icon>11</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A shiny new saxophone with which to make the music.</Description>
+    <Name>Saxophone</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>0</MaxStackSize>
+    <Price>35</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>11</ID>
+    <Icon>12</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A trombone. If anypony falls down, you'll be prepared to cruelly mock their suffering!</Description>
+    <Name>Trombone</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>0</MaxStackSize>
+    <Price>30</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>12</ID>
+    <Icon>13</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A trumpet. Good for concerts, dance halls, and impromptu days of judgement.</Description>
+    <Name>Trumpet</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>0</MaxStackSize>
+    <Price>23</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>13</ID>
+    <Icon>14</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A wonderful violin with steel strings. </Description>
+    <Name>Violin</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>0</MaxStackSize>
+    <Price>40</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>14</ID>
+    <Icon>15</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A chunk of ore. I wonder what it could be?</Description>
+    <Name>Chunk of Ore</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>8</MaxStackSize>
+    <Price>0</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>16</ID>
+    <Icon>31</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Ponies are not capable of learning through osmosis, although that doesn't mean you can't try. </Description>
+    <Name>Book Hat</Name>
+    <ResourcePath>Hats/book</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>0</MaxStackSize>
+    <Price>8</Price>
+    <Salable>true</Salable>
+    <WearableSlots>Hat</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>17</ID>
+    <Icon>33</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>These goggles will protect your eyes from flies while you're in the skies! </Description>
+    <Name>Goggles</Name>
+    <ResourcePath>Hats/goggles</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>0</MaxStackSize>
+    <Price>6</Price>
+    <Salable>true</Salable>
+    <WearableSlots>Mask</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>18</ID>
+    <Icon>51</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>For horses with poor vision, or those who just like the fashion, look no further than this trusty pair of eyeglasses!</Description>
+    <Name>Glasses</Name>
+    <ResourcePath>Hats/glasses</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>0</MaxStackSize>
+    <Price>6</Price>
+    <Salable>true</Salable>
+    <WearableSlots>Mask</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>19</ID>
+    <Icon>18</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Made from worn faux leather.</Description>
+    <Name>Cowpony Hat</Name>
+    <ResourcePath>Hats/cowboyhat</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>0</MaxStackSize>
+    <Price>6</Price>
+    <Salable>true</Salable>
+    <WearableSlots>Hat</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>20</ID>
+    <Icon>34</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Can also be used to carry juice, but be careful where you store it. </Description>
+    <Name>Potion Bags</Name>
+    <ResourcePath>Saddlebags/potion_bag</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>0</MaxStackSize>
+    <Price>6</Price>
+    <Salable>true</Salable>
+    <WearableSlots>SaddleBags</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>21</ID>
+    <Icon>45</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Perfect for preventing chemical burns, It also helps give you an intelligent aura. </Description>
+    <Name>Lab Coat</Name>
+    <ResourcePath>Jackets/lab_coat</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>0</MaxStackSize>
+    <Price>6</Price>
+    <Salable>true</Salable>
+    <WearableSlots>Shirt</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>22</ID>
+    <Icon>52</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>You've gotta keep your hoofsies warm somehow.</Description>
+    <Name>Boots</Name>
+    <ResourcePath>Boots/boots</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>0</MaxStackSize>
+    <Price>6</Price>
+    <Salable>true</Salable>
+    <WearableSlots>FrontShoes BackShoes</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>23</ID>
+    <Icon>50</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Legends has it that whoever's hooves can fit into these boots will look fabulous for the gala.</Description>
+    <Name>Gala boots</Name>
+    <ResourcePath>Boots/gala_boots</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>1</MaxStackSize>
+    <Price>20</Price>
+    <Salable>true</Salable>
+    <WearableSlots>FrontShoes</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>24</ID>
+    <Icon>30</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A useful tool for chipping away at rocks and the occasional mineral.</Description>
+    <Name>Pickaxe</Name>
+    <ResourcePath>Tools/pickaxe</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>1</MaxStackSize>
+    <Price>7</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>25</ID>
+    <Icon>17</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>To attempt to list every use of the hammer would be folly, for it is among the most versatile of tools. </Description>
+    <Name>Hammer</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>8</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>26</ID>
+    <Icon>73</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A juicy strawberry filled with strawberry juice.</Description>
+    <Name>Strawberry </Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>5</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>27</ID>
+    <Icon>74</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>An exqusite example of a strawberry dessert!</Description>
+    <Name>Strawberry Torte</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>8</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>28</ID>
+    <Icon>44</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A crate of potions used for medicine.</Description>
+    <Name>Medical Potion Crate</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>10</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>29</ID>
+    <Icon>35</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Such fancy materials! </Description>
+    <Name>Stack of Cloth</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>4</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>30</ID>
+    <Icon>43</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Feeling hungry? Once you open this you can eat to your heart's content. </Description>
+    <Name>Food Box</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>10</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>31</ID>
+    <Icon>76</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A cap that shows you are an assitant nurse. (Although it is best to stay out of medical matters until you've had the proper training.)</Description>
+    <Name>Assistant Nurse Cap</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>5</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>32</ID>
+    <Icon>38</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A mysterious multi-coloured liquid. </Description>
+    <Name>Rainbow Essence</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>6</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>33</ID>
+    <Icon>71</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Nothing is getting through that. But just to be safe, don't try it.</Description>
+    <Name>Hard Hat </Name>
+    <ResourcePath>Hats/firepony</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>7</Price>
+    <Salable>true</Salable>
+    <WearableSlots>Hat</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>34</ID>
+    <Icon>77</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A potion that restores your health.</Description>
+    <Name>Health Potion</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>30</MaxStackSize>
+    <Price>5</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>35</ID>
+    <Icon>78</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A wooden spoon, perfect for mixing things!</Description>
+    <Name>Mixing Spoon</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>2</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>36</ID>
+    <Icon>79</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Fire, on a stick! It's useful for providing light and also for lighting things that are hard to reach. </Description>
+    <Name>Torch</Name>
+    <ResourcePath>Saddlebags/torch</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>3</Price>
+    <Salable>true</Salable>
+    <WearableSlots>Mouth</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>37</ID>
+    <Icon>69</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A water container. It also can make a cool helmet. But it's better as a water container. </Description>
+    <Name>Water Bucket</Name>
+    <ResourcePath>Saddlebags/bucket</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>5</Price>
+    <Salable>true</Salable>
+    <WearableSlots>Mouth</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>38</ID>
+    <Icon>70</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A water container. It also can make a cool helmet. But it's better as a water container. This one has water in it! </Description>
+    <Name>Water Bucket (Full)</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>6</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>39</ID>
+    <Icon>85</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A frozen drop of cloud essence. It could be useful to somepony.</Description>
+    <Name>Frozen Essence Drops</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>50</MaxStackSize>
+    <Price>6</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>40</ID>
+    <Icon>18</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Zut alors! It's all for one, and one for fancy with this iconic piece of headwear. </Description>
+    <Name>Musketeer Hat</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>15</Price>
+    <Salable>true</Salable>
+    <WearableSlots>Hat</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>41</ID>
+    <Icon>75</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>An egg, freshly laid and collected this morning. Don't put too many of these in one saddlebag.</Description>
+    <Name>Egg</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>30</MaxStackSize>
+    <Price>2</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>42</ID>
+    <Icon>72</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>The book Skyhammer gave me to return to Final Ink at the Canterlot Library. </Description>
+    <Name>Skyhammer's Book </Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>5</MaxStackSize>
+    <Price>0</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>43</ID>
+    <Icon>55</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A fine pastry topped with a mountain of whipped cream. Looks delicious. </Description>
+    <Name>Whipped Cream Pie </Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>6</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>44</ID>
+    <Icon>55</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A freshly baked apple pie. Looks delicious. </Description>
+    <Name>Apple Pie</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>6</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>45</ID>
+    <Icon>58</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A gooseberry pie. Looks delicious. </Description>
+    <Name>Gooseberry Pie</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>6</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>46</ID>
+    <Icon>55</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A fabulous fusion of toffee, pie, and bananas. Looks delicious.</Description>
+    <Name>Banoffee Pie</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>6</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>47</ID>
+    <Icon>57</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A nice strawberry pie. Looks delicious. </Description>
+    <Name>Strawberry Pie </Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>6</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>48</ID>
+    <Icon>57</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A pie freshly made with raspberries. Looks delicious. </Description>
+    <Name>Raspberry Pie</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>6</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>49</ID>
+    <Icon>57</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A fresh cherry pie. Looks delicious. </Description>
+    <Name>Cherry Pie </Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>6</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>50</ID>
+    <Icon>58</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A pie made with a blueberry filling. Looks delicious. </Description>
+    <Name>Blueberry Pie</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>0</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>51</ID>
+    <Icon>53</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Hmm, an empty pie tin. This could fit on your head...</Description>
+    <Name>Empty Pie Tin </Name>
+    <ResourcePath>Hats/pie_tin</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>20</MaxStackSize>
+    <Price>2</Price>
+    <Salable>true</Salable>
+    <WearableSlots>Hat</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>52</ID>
+    <Icon>27</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>General Messerchmitt's script. It's full of jargon and words that are long and weird. It says "rhododendron" at one point. No joke.</Description>
+    <Name>General Messerschmitt's Speech </Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>1</MaxStackSize>
+    <Price>0</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>53</ID>
+    <Icon>27</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Ambitious ponies can earn one of these by sitting quietly through the esteemed general's lengthy war tales.</Description>
+    <Name>Messerchmitt's Letter of Recommendation</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>1</MaxStackSize>
+    <Price>0</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>54</ID>
+    <Icon>61</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Adjustable leg barding, clearly pegasusian in design.</Description>
+    <Name>Bronze Back Legs</Name>
+    <ResourcePath>Clothes/Bronze Armor Back Legs</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>50</Price>
+    <Salable>true</Salable>
+    <WearableSlots>BackShoes</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString>Health=33,HealthRegen=3,Armor=4,MagicResist=3</StatString>
+    <Stats>
+      <item>
+        <key>
+          <Stats>Health</Stats>
+        </key>
+        <value>
+          <int>33</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>HealthRegen</Stats>
+        </key>
+        <value>
+          <int>3</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Armor</Stats>
+        </key>
+        <value>
+          <int>4</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>MagicResist</Stats>
+        </key>
+        <value>
+          <int>3</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Energy</Stats>
+        </key>
+        <value>
+          <int>50</int>
+        </value>
+      </item>
+    </Stats>
+  </Item>
+  <Item>
+    <ID>55</ID>
+    <Icon>62</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A finely crafted Cloudsdale champron.</Description>
+    <Name>Bronze Helmet</Name>
+    <ResourcePath>Clothes/Bronze Armor Helmet</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>75</Price>
+    <Salable>true</Salable>
+    <WearableSlots>Mask</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString>Health=50,HealthRegen=8,Armor=4,MagicResist=3</StatString>
+    <Stats>
+      <item>
+        <key>
+          <Stats>Health</Stats>
+        </key>
+        <value>
+          <int>50</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>HealthRegen</Stats>
+        </key>
+        <value>
+          <int>8</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Armor</Stats>
+        </key>
+        <value>
+          <int>4</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>MagicResist</Stats>
+        </key>
+        <value>
+          <int>3</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Energy</Stats>
+        </key>
+        <value>
+          <int>25</int>
+        </value>
+      </item>
+    </Stats>
+  </Item>
+  <Item>
+    <ID>56</ID>
+    <Icon>66</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A durable peytral emblazoned with the emblem of a Cloudsdale craftspony.</Description>
+    <Name>Bronze Chest Plate</Name>
+    <ResourcePath>Clothes/Bronze Armor Chest</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>100</Price>
+    <Salable>true</Salable>
+    <WearableSlots>Shirt</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString>Health=50,HealthRegen=8,Armor=4,MagicResist=3</StatString>
+    <Stats>
+      <item>
+        <key>
+          <Stats>Health</Stats>
+        </key>
+        <value>
+          <int>50</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>HealthRegen</Stats>
+        </key>
+        <value>
+          <int>8</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Armor</Stats>
+        </key>
+        <value>
+          <int>4</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>MagicResist</Stats>
+        </key>
+        <value>
+          <int>3</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Energy</Stats>
+        </key>
+        <value>
+          <int>25</int>
+        </value>
+      </item>
+    </Stats>
+  </Item>
+  <Item>
+    <ID>57</ID>
+    <Icon>65</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Designed for long stretches of wear. One size fits all.</Description>
+    <Name>Bronze Front Legs</Name>
+    <ResourcePath>Clothes/Bronze Armor Front Legs</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>50</Price>
+    <Salable>true</Salable>
+    <WearableSlots>FrontShoes</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString>Health=33,HealthRegen=3,Armor=4,MagicResist=3</StatString>
+    <Stats>
+      <item>
+        <key>
+          <Stats>Health</Stats>
+        </key>
+        <value>
+          <int>33</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>HealthRegen</Stats>
+        </key>
+        <value>
+          <int>3</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Armor</Stats>
+        </key>
+        <value>
+          <int>4</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>MagicResist</Stats>
+        </key>
+        <value>
+          <int>3</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Energy</Stats>
+        </key>
+        <value>
+          <int>50</int>
+        </value>
+      </item>
+    </Stats>
+  </Item>
+  <Item>
+    <ID>58</ID>
+    <Icon>47</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>For those who enjoy science but prefer not to be blind.</Description>
+    <Name>Lab Goggles</Name>
+    <ResourcePath>Hats/lab goggles</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>6</Price>
+    <Salable>true</Salable>
+    <WearableSlots>Mask</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>59</ID>
+    <Icon>48</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Bag full of scrolls.</Description>
+    <Name>Scroll Bag</Name>
+    <ResourcePath>Saddlebags/scroll_bag</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>6</Price>
+    <Salable>true</Salable>
+    <WearableSlots>SaddleBags</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>60</ID>
+    <Icon>49</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Just think of all the things you can hold!</Description>
+    <Name>Satchel Bag</Name>
+    <ResourcePath>Saddlebags/satchel_bag</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>6</Price>
+    <Salable>true</Salable>
+    <WearableSlots>SaddleBags</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>61</ID>
+    <Icon>46</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Dont hit things too hard with this, or you might break it.</Description>
+    <Name>Wooden Sword</Name>
+    <ResourcePath>Saddlebags/wood_sword</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>5</Price>
+    <Salable>true</Salable>
+    <WearableSlots>SaddleBags</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>62</ID>
+    <Icon>36</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>How did you get this hat? Give it back to Ellowee this instant!</Description>
+    <Name>Ellowee's Hat</Name>
+    <ResourcePath>Hats/elloweehat</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>10</Price>
+    <Salable>false</Salable>
+    <WearableSlots>Hat</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>63</ID>
+    <Icon>59</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Careful where you wear this. You might mess up someone's perfect lawn.</Description>
+    <Name>Dandelion Bracelet</Name>
+    <ResourcePath>Boots/dandelion_bracelet</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>5</Price>
+    <Salable>true</Salable>
+    <WearableSlots>FrontShoes</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>64</ID>
+    <Icon>67</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A freshly picked dandelion. It looks pretty. </Description>
+    <Name>Dandelion</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>50</MaxStackSize>
+    <Price>0</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>65</ID>
+    <Icon>20</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Thbbbpt</Description>
+    <Name>Fluffle Puff</Name>
+    <ResourcePath>Clothes/Flufflepuff</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>666</Price>
+    <Salable>false</Salable>
+    <WearableSlots>FrontShoes BackShoes Shirt</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>66</ID>
+    <Icon>42</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>*fluffly noises*</Description>
+    <Name>Fluffle Hat</Name>
+    <ResourcePath>Hats/fluffle</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>600</Price>
+    <Salable>true</Salable>
+    <WearableSlots>Hat</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>67</ID>
+    <Icon>60</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Watch your back!</Description>
+    <Name>Bronze Back Plate</Name>
+    <ResourcePath>Clothes/Bronze Armor Back</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>75</Price>
+    <Salable>true</Salable>
+    <WearableSlots>SaddleBags</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString>Health=40,HealthRegen=3,Armor=4,MagicResist=3</StatString>
+    <Stats>
+      <item>
+        <key>
+          <Stats>Health</Stats>
+        </key>
+        <value>
+          <int>40</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>HealthRegen</Stats>
+        </key>
+        <value>
+          <int>3</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Armor</Stats>
+        </key>
+        <value>
+          <int>4</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>MagicResist</Stats>
+        </key>
+        <value>
+          <int>3</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Energy</Stats>
+        </key>
+        <value>
+          <int>50</int>
+        </value>
+      </item>
+    </Stats>
+  </Item>
+  <Item>
+    <ID>68</ID>
+    <Icon>63</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Some tasty mushrooms. YUM!</Description>
+    <Name>Mushrooms</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>5</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>69</ID>
+    <Icon>64</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A flower from high up in the mountains of Cantermore.</Description>
+    <Name>Mountain Flower</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>3</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>70</ID>
+    <Icon>83</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>This rock is the best rock. Look at how smooth it is.</Description>
+    <Name>Smooth Rock</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>30</MaxStackSize>
+    <Price>5</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>71</ID>
+    <Icon>28</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A beautiful shiny ruby. A pretty common gem in Equestria, often marketed as Dragon Feed.</Description>
+    <Name>Ruby</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>20</MaxStackSize>
+    <Price>7</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>72</ID>
+    <Icon>109</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Dust made from rubies. Sometimes employed for medical purposes.</Description>
+    <Name>Ruby Dust</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>20</MaxStackSize>
+    <Price>4</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>73</ID>
+    <Icon>110</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Perfect for a rainy day. This item can only be worn by itself. You cannot wear any other items with this item for now. Sorry for the inconvenience!</Description>
+    <Name>Raincloud Hat</Name>
+    <ResourcePath>Hats/Raincloud</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>15</Price>
+    <Salable>true</Salable>
+    <WearableSlots>Hat</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>74</ID>
+    <Icon>82</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A pretty heavy package..</Description>
+    <Name>Big Package</Name>
+    <ResourcePath />
+    <Stackable>false</Stackable>
+    <MaxStackSize>1</MaxStackSize>
+    <Price>0</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>75</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>The Paso Fino Perfect Party Pastry Pack is the perfect pack for pacifying potentially perturbant party ponies. Purportedly.</Description>
+    <Name>Paso Fino Basket</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>0</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>76</ID>
+    <Icon>72</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Clouddate: August 12. It was a day like any other. The birds were singing. The sun was shining. All seemed well in the world... Until disaster struck! Bjaaaaw, pew pew! Those are the sounds the disaster made whilst striking! It was up to me to save the day! I asked my trusty sidekick, Fire Opal, if she could help me get my cape out of the door. She openly refused on what appeared to be moral grounds, given the ferocity with which she declared herself to be napping, perhaps in recognition of some religious sabbatical. Her sensibilities are still a mystery to me. Perhaps I should inquire about this later, when there are no more disasters.</Description>
+    <Name>Cirrus's Diary</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>0</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>77</ID>
+    <Icon>48</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>The professor sipped gingerly at her ginger tea as she contemplated this new development. Perhaps it was he, and not she, who should be paying for the sheep insurance. After all, if what Pepper had said proved true, it was his idea to begin with that the insurance ought to be purchased at all, and her buyer's remorse was no great secret. After contemplating over this for a small while, she concluded that she would allow her dear coltfriend to take the fall for the whole incident, and smugly began writing a letter to notify the alien biker squid mafia of this new information.</Description>
+    <Name>Scribble's Novel</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>0</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>78</ID>
+    <Icon>68</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Perfect pitch pony phones.</Description>
+    <Name>Hullabaloo's Headphones</Name>
+    <ResourcePath>Hats/Headphones</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>800</Price>
+    <Salable>false</Salable>
+    <WearableSlots>Necklace</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>79</ID>
+    <Icon>80</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A small device used to record conversations without being detected.</Description>
+    <Name>Bugsy's Bug</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>0</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>81</ID>
+    <Icon>86</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>If rabbits don't lay eggs, then explain to me why they would need to hide them. You can't.</Description>
+    <Name>Rabbit Egg</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>900</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="PetEgg">
+      <PetPrefab>Pets/Bunny</PetPrefab>
+    </ItemUse>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>82</ID>
+    <Icon>88</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>This is a dog egg that exists for long and boring reasons involving magic and elemets. If you're that interested, check your local library. The fine people there might have an answer.</Description>
+    <Name>Dog Egg</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>900</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="PetEgg">
+      <PetPrefab>Pets/Dog</PetPrefab>
+    </ItemUse>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>83</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>One of the three missing pieces of the Aperit Amphora, now no longer missing.</Description>
+    <Name>Amphora Base</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>0</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>84</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>One of the three missing pieces of the Aperit Amphora, now no longer missing.</Description>
+    <Name>Amphora Statuette</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>0</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>85</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>One of the three missing pieces of the Aperit Amphora, now no longer missing.</Description>
+    <Name>Amphora Grip</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>0</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>86</ID>
+    <Icon>72</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Rosemary has entrusted you with this book's return to Final Ink.</Description>
+    <Name>Without Any Seam or Needlework</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>0</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>87</ID>
+    <Icon>111</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Amazing technology that lets you see in the dark</Description>
+    <Name>Lantern</Name>
+    <ResourcePath>Saddlebags/lantern</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>150</Price>
+    <Salable>true</Salable>
+    <WearableSlots>Mouth</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>88</ID>
+    <Icon>113</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>The stylish way to keep your hoofsies warm.</Description>
+    <Name>Socks</Name>
+    <ResourcePath>Clothes/socks</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>50</Price>
+    <Salable>true</Salable>
+    <WearableSlots>FrontShoes BackShoes</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>89</ID>
+    <Icon>44</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Mercury asked me to deliver these to Swift and Olga.</Description>
+    <Name>Medical Supplies</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>90</ID>
+    <Icon>81</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>It fillets, it sautes, it boils, it broils, it doesn't do any of that, it fries!</Description>
+    <Name>Frying Pan</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>5</MaxStackSize>
+    <Price>5</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>91</ID>
+    <Icon>43</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Pyrite gave you this package while day-dreaming about an ancient world. Ostensibly contains Midnight's violin. </Description>
+    <Name>Pyrite's Package</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>92</ID>
+    <Icon>43</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Actually containing a violin, this package should be in Midnight's hooves. </Description>
+    <Name>Midnight's Package</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>93</ID>
+    <Icon>87</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>You can do anything if you believe</Description>
+    <Name>Cat Egg</Name>
+    <ResourcePath />
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>900</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="PetEgg">
+      <PetPrefab>Pets/KittyCat</PetPrefab>
+    </ItemUse>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>94</ID>
+    <Icon>72</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>An advance copy of Purple Rain’s melodramatic ‘auto’ biography.</Description>
+    <Name>"Sand to Stardom" Prerelease Copy</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>20</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>95</ID>
+    <Icon>72</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>The first book in Foreshadow’s new avant-garde urban fantasy series. She swears it’ll be a thousand-bit collectors’ item once she gets famous, and advises you to hold onto it. It might make a nice hat (but that’d probably ruin the collectors’ value).</Description>
+    <Name>Catalepsy, Signed 1st Edition</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>20</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>96</ID>
+    <Icon>38</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>The secret ingredient is rocks.</Description>
+    <Name>Rock Candy</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>97</ID>
+    <Icon>55</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>I have to deliver this pie to Granny Grey.</Description>
+    <Name>Granny Grey's Apple Pie</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>0</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>98</ID>
+    <Icon>58</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>I have to deliver this pie to Farmer Fields and figure out how much I'm getting paid to do this.</Description>
+    <Name>Farmer Fields' Gooseberry Pie</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>0</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>99</ID>
+    <Icon>57</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>I wish I could sell this.</Description>
+    <Name>Gomi's Cherry Pie</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>0</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>100</ID>
+    <Icon>54</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Whipped cream pies are meant to be thrown at clowns, not eaten.</Description>
+    <Name>Buck's Whipped Cream Pie</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>0</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>101</ID>
+    <Icon>84</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Sextant needs this telescope so he can make scientific progress.</Description>
+    <Name>Looking Glass</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>100</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>102</ID>
+    <Icon>89</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Armor of the night!</Description>
+    <Name>Moonlight Back Legs</Name>
+    <ResourcePath>Clothes/Armor/Bronze Armor/Dark Bronze Armor/Dark Bronze Armor Back Legs</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>4300</Price>
+    <Salable>true</Salable>
+    <WearableSlots>BackShoes</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString>Health=666,HealthRegen=66,Armor=75,MagicResist=50</StatString>
+    <Stats>
+      <item>
+        <key>
+          <Stats>Health</Stats>
+        </key>
+        <value>
+          <int>666</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>HealthRegen</Stats>
+        </key>
+        <value>
+          <int>66</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Armor</Stats>
+        </key>
+        <value>
+          <int>75</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>MagicResist</Stats>
+        </key>
+        <value>
+          <int>50</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Energy</Stats>
+        </key>
+        <value>
+          <int>1000</int>
+        </value>
+      </item>
+    </Stats>
+  </Item>
+  <Item>
+    <ID>103</ID>
+    <Icon>93</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Armor of the night!</Description>
+    <Name>Moonlight Back Plate</Name>
+    <ResourcePath>Clothes/Armor/Bronze Armor/Dark Bronze Armor/Dark Bronze Armor Back Plate</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>4400</Price>
+    <Salable>true</Salable>
+    <WearableSlots>SaddleBags</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString>Health=800,HealthRegen=50,Armor=75,MagicResist=50</StatString>
+    <Stats>
+      <item>
+        <key>
+          <Stats>Health</Stats>
+        </key>
+        <value>
+          <int>800</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>HealthRegen</Stats>
+        </key>
+        <value>
+          <int>50</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Armor</Stats>
+        </key>
+        <value>
+          <int>75</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>MagicResist</Stats>
+        </key>
+        <value>
+          <int>50</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Energy</Stats>
+        </key>
+        <value>
+          <int>1000</int>
+        </value>
+      </item>
+    </Stats>
+  </Item>
+  <Item>
+    <ID>104</ID>
+    <Icon>90</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Armor of the night!</Description>
+    <Name>Moonlight Chest Plate</Name>
+    <ResourcePath>Clothes/Armor/Bronze Armor/Dark Bronze Armor/Dark Bronze Armor Chest Plate</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>4400</Price>
+    <Salable>true</Salable>
+    <WearableSlots>Shirt</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString>Health=1000,HealthRegen=150,Armor=80,MagicResist=60</StatString>
+    <Stats>
+      <item>
+        <key>
+          <Stats>Health</Stats>
+        </key>
+        <value>
+          <int>1000</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>HealthRegen</Stats>
+        </key>
+        <value>
+          <int>150</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Armor</Stats>
+        </key>
+        <value>
+          <int>80</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>MagicResist</Stats>
+        </key>
+        <value>
+          <int>60</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Energy</Stats>
+        </key>
+        <value>
+          <int>500</int>
+        </value>
+      </item>
+    </Stats>
+  </Item>
+  <Item>
+    <ID>105</ID>
+    <Icon>91</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Armor of the night!</Description>
+    <Name>Moonlight Front Legs</Name>
+    <ResourcePath>Clothes/Armor/Bronze Armor/Dark Bronze Armor/Dark Bronze Armor Front Legs</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>4300</Price>
+    <Salable>true</Salable>
+    <WearableSlots>FrontShoes</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString>Health=666,HealthRegen=66,Armor=75,MagicResist=50</StatString>
+    <Stats>
+      <item>
+        <key>
+          <Stats>Health</Stats>
+        </key>
+        <value>
+          <int>666</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>HealthRegen</Stats>
+        </key>
+        <value>
+          <int>66</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Armor</Stats>
+        </key>
+        <value>
+          <int>75</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>MagicResist</Stats>
+        </key>
+        <value>
+          <int>50</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Energy</Stats>
+        </key>
+        <value>
+          <int>1000</int>
+        </value>
+      </item>
+    </Stats>
+  </Item>
+  <Item>
+    <ID>106</ID>
+    <Icon>92</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Armor of the night!</Description>
+    <Name>Moonlight Helmet</Name>
+    <ResourcePath>Clothes/Armor/Bronze Armor/Dark Bronze Armor/Dark Bronze Armor Helmet</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>4450</Price>
+    <Salable>true</Salable>
+    <WearableSlots>Mask</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString>Health=1000,HealthRegen=150,Armor=80,MagicResist=60</StatString>
+    <Stats>
+      <item>
+        <key>
+          <Stats>Health</Stats>
+        </key>
+        <value>
+          <int>1000</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>HealthRegen</Stats>
+        </key>
+        <value>
+          <int>150</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Armor</Stats>
+        </key>
+        <value>
+          <int>80</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>MagicResist</Stats>
+        </key>
+        <value>
+          <int>60</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Energy</Stats>
+        </key>
+        <value>
+          <int>500</int>
+        </value>
+      </item>
+    </Stats>
+  </Item>
+  <Item>
+    <ID>107</ID>
+    <Icon>94</Icon>
+    <ItemLevel>30</ItemLevel>
+    <RequiredLevel>30</RequiredLevel>
+    <Description>It shines with a golden light.</Description>
+    <Name>Gold Back Legs</Name>
+    <ResourcePath>Clothes/Armor/Bronze Armor/Gold Bronze Armor/Gold Bronze Armor Back Legs</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>600</Price>
+    <Salable>true</Salable>
+    <WearableSlots>BackShoes</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString>Health=400,HealthRegen=40,Armor=45,MagicResist=24</StatString>
+    <Stats>
+      <item>
+        <key>
+          <Stats>Health</Stats>
+        </key>
+        <value>
+          <int>400</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>HealthRegen</Stats>
+        </key>
+        <value>
+          <int>40</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Armor</Stats>
+        </key>
+        <value>
+          <int>45</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>MagicResist</Stats>
+        </key>
+        <value>
+          <int>24</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Energy</Stats>
+        </key>
+        <value>
+          <int>600</int>
+        </value>
+      </item>
+    </Stats>
+  </Item>
+  <Item>
+    <ID>108</ID>
+    <Icon>98</Icon>
+    <ItemLevel>30</ItemLevel>
+    <RequiredLevel>30</RequiredLevel>
+    <Description>It shines with a golden light.</Description>
+    <Name>Gold Back Plate</Name>
+    <ResourcePath>Clothes/Armor/Bronze Armor/Gold Bronze Armor/Gold Bronze Armor Back Plate</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>800</Price>
+    <Salable>true</Salable>
+    <WearableSlots>SaddleBags</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString>Health=480,HealthRegen=30,Armor=45,MagicResist=30</StatString>
+    <Stats>
+      <item>
+        <key>
+          <Stats>Health</Stats>
+        </key>
+        <value>
+          <int>480</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>HealthRegen</Stats>
+        </key>
+        <value>
+          <int>30</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Armor</Stats>
+        </key>
+        <value>
+          <int>45</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>MagicResist</Stats>
+        </key>
+        <value>
+          <int>30</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Energy</Stats>
+        </key>
+        <value>
+          <int>600</int>
+        </value>
+      </item>
+    </Stats>
+  </Item>
+  <Item>
+    <ID>109</ID>
+    <Icon>95</Icon>
+    <ItemLevel>30</ItemLevel>
+    <RequiredLevel>30</RequiredLevel>
+    <Description>It shines with a golden light.</Description>
+    <Name>Gold Chest Plate</Name>
+    <ResourcePath>Clothes/Armor/Bronze Armor/Gold Bronze Armor/Gold Bronze Armor Chest Plate</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>800</Price>
+    <Salable>true</Salable>
+    <WearableSlots>Shirt</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString>Health=600,HealthRegen=90,Armor=48,MagicResist=36</StatString>
+    <Stats>
+      <item>
+        <key>
+          <Stats>Health</Stats>
+        </key>
+        <value>
+          <int>600</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>HealthRegen</Stats>
+        </key>
+        <value>
+          <int>90</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Armor</Stats>
+        </key>
+        <value>
+          <int>48</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>MagicResist</Stats>
+        </key>
+        <value>
+          <int>36</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Energy</Stats>
+        </key>
+        <value>
+          <int>300</int>
+        </value>
+      </item>
+    </Stats>
+  </Item>
+  <Item>
+    <ID>110</ID>
+    <Icon>96</Icon>
+    <ItemLevel>30</ItemLevel>
+    <RequiredLevel>30</RequiredLevel>
+    <Description>It shines with a golden light.</Description>
+    <Name>Gold Front Legs</Name>
+    <ResourcePath>Clothes/Armor/Bronze Armor/Gold Bronze Armor/Gold Bronze Armor Front Legs</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>600</Price>
+    <Salable>true</Salable>
+    <WearableSlots>FrontShoes</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString>Health=400,HealthRegen=40,Armor=45,MagicResist=24</StatString>
+    <Stats>
+      <item>
+        <key>
+          <Stats>Health</Stats>
+        </key>
+        <value>
+          <int>400</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>HealthRegen</Stats>
+        </key>
+        <value>
+          <int>40</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Armor</Stats>
+        </key>
+        <value>
+          <int>45</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>MagicResist</Stats>
+        </key>
+        <value>
+          <int>24</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Energy</Stats>
+        </key>
+        <value>
+          <int>600</int>
+        </value>
+      </item>
+    </Stats>
+  </Item>
+  <Item>
+    <ID>111</ID>
+    <Icon>97</Icon>
+    <ItemLevel>30</ItemLevel>
+    <RequiredLevel>30</RequiredLevel>
+    <Description>It shines with a golden light.</Description>
+    <Name>Gold Helmet</Name>
+    <ResourcePath>Clothes/Armor/Bronze Armor/Gold Bronze Armor/Gold Bronze Armor Helmet</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>900</Price>
+    <Salable>true</Salable>
+    <WearableSlots>Mask</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString>Health=600,HealthRegen=90,Armor=48,MagicResist=36</StatString>
+    <Stats>
+      <item>
+        <key>
+          <Stats>Health</Stats>
+        </key>
+        <value>
+          <int>600</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>HealthRegen</Stats>
+        </key>
+        <value>
+          <int>90</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Armor</Stats>
+        </key>
+        <value>
+          <int>48</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>MagicResist</Stats>
+        </key>
+        <value>
+          <int>36</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Energy</Stats>
+        </key>
+        <value>
+          <int>300</int>
+        </value>
+      </item>
+    </Stats>
+  </Item>
+  <Item>
+    <ID>112</ID>
+    <Icon>99</Icon>
+    <ItemLevel>10</ItemLevel>
+    <RequiredLevel>10</RequiredLevel>
+    <Description>Iron infused.</Description>
+    <Name>Iron Back Legs</Name>
+    <ResourcePath>Clothes/Armor/Bronze Armor/Silver Bronze Armor/Silver Bronze Armor Back Legs</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>300</Price>
+    <Salable>true</Salable>
+    <WearableSlots>BackShoes</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString>Health=133,HealthRegen=13,Armor=15,MagicResist=10</StatString>
+    <Stats>
+      <item>
+        <key>
+          <Stats>Health</Stats>
+        </key>
+        <value>
+          <int>133</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>HealthRegen</Stats>
+        </key>
+        <value>
+          <int>13</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Armor</Stats>
+        </key>
+        <value>
+          <int>15</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>MagicResist</Stats>
+        </key>
+        <value>
+          <int>10</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Energy</Stats>
+        </key>
+        <value>
+          <int>200</int>
+        </value>
+      </item>
+    </Stats>
+  </Item>
+  <Item>
+    <ID>113</ID>
+    <Icon>103</Icon>
+    <ItemLevel>10</ItemLevel>
+    <RequiredLevel>10</RequiredLevel>
+    <Description>Iron infused.</Description>
+    <Name>Iron Back Plate</Name>
+    <ResourcePath>Clothes/Armor/Bronze Armor/Silver Bronze Armor/Silver Bronze Armor Back Plate</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>350</Price>
+    <Salable>true</Salable>
+    <WearableSlots>SaddleBags</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString>Health=160,HealthRegen=10,Armor=15,MagicResist=10</StatString>
+    <Stats>
+      <item>
+        <key>
+          <Stats>Health</Stats>
+        </key>
+        <value>
+          <int>160</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>HealthRegen</Stats>
+        </key>
+        <value>
+          <int>10</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Armor</Stats>
+        </key>
+        <value>
+          <int>15</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>MagicResist</Stats>
+        </key>
+        <value>
+          <int>10</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Energy</Stats>
+        </key>
+        <value>
+          <int>200</int>
+        </value>
+      </item>
+    </Stats>
+  </Item>
+  <Item>
+    <ID>114</ID>
+    <Icon>100</Icon>
+    <ItemLevel>10</ItemLevel>
+    <RequiredLevel>10</RequiredLevel>
+    <Description>Iron infused.</Description>
+    <Name>Iron Chest Plate</Name>
+    <ResourcePath>Clothes/Armor/Bronze Armor/Silver Bronze Armor/Silver Bronze Armor Chest Plate</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>350</Price>
+    <Salable>true</Salable>
+    <WearableSlots>Shirt</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString>Health=200,HealthRegen=30,Armor=16,MagicResist=12</StatString>
+    <Stats>
+      <item>
+        <key>
+          <Stats>Health</Stats>
+        </key>
+        <value>
+          <int>200</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>HealthRegen</Stats>
+        </key>
+        <value>
+          <int>30</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Armor</Stats>
+        </key>
+        <value>
+          <int>16</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>MagicResist</Stats>
+        </key>
+        <value>
+          <int>12</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Energy</Stats>
+        </key>
+        <value>
+          <int>100</int>
+        </value>
+      </item>
+    </Stats>
+  </Item>
+  <Item>
+    <ID>115</ID>
+    <Icon>101</Icon>
+    <ItemLevel>10</ItemLevel>
+    <RequiredLevel>10</RequiredLevel>
+    <Description>Iron infused.</Description>
+    <Name>Iron Front Legs</Name>
+    <ResourcePath>Clothes/Armor/Bronze Armor/Silver Bronze Armor/Silver Bronze Armor Front Legs</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>300</Price>
+    <Salable>true</Salable>
+    <WearableSlots>FrontShoes</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString>Health=133,HealthRegen=13,Armor=15,MagicResist=10</StatString>
+    <Stats>
+      <item>
+        <key>
+          <Stats>Health</Stats>
+        </key>
+        <value>
+          <int>133</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>HealthRegen</Stats>
+        </key>
+        <value>
+          <int>13</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Armor</Stats>
+        </key>
+        <value>
+          <int>15</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>MagicResist</Stats>
+        </key>
+        <value>
+          <int>10</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Energy</Stats>
+        </key>
+        <value>
+          <int>200</int>
+        </value>
+      </item>
+    </Stats>
+  </Item>
+  <Item>
+    <ID>116</ID>
+    <Icon>102</Icon>
+    <ItemLevel>10</ItemLevel>
+    <RequiredLevel>10</RequiredLevel>
+    <Description>Iron infused.</Description>
+    <Name>Iron Helmet</Name>
+    <ResourcePath>Clothes/Armor/Bronze Armor/Silver Bronze Armor/Silver Bronze Armor Helmet</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>350</Price>
+    <Salable>true</Salable>
+    <WearableSlots>Mask</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString>Health=200,HealthRegen=30,Armor=16,MagicResist=12</StatString>
+    <Stats>
+      <item>
+        <key>
+          <Stats>Health</Stats>
+        </key>
+        <value>
+          <int>200</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>HealthRegen</Stats>
+        </key>
+        <value>
+          <int>30</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Armor</Stats>
+        </key>
+        <value>
+          <int>16</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>MagicResist</Stats>
+        </key>
+        <value>
+          <int>12</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Energy</Stats>
+        </key>
+        <value>
+          <int>100</int>
+        </value>
+      </item>
+    </Stats>
+  </Item>
+  <Item>
+    <ID>117</ID>
+    <Icon>27</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A piece of parchment from Scribble’s team research paper. They’re all out of order and smelling slightly of monster saliva.</Description>
+    <Name>Scribble's Paper</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>0</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>118</ID>
+    <Icon>27</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>It’s a little crumpled up and sticky, but it’s still mostly legible. It must have gotten wedged in a corner of your saddlebags under your stuff.</Description>
+    <Name>Vogue's Report</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>0</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>119</ID>
+    <Icon>104</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Praise the Sun!</Description>
+    <Name>Sunlight Back Legs</Name>
+    <ResourcePath>Clothes/Armor/Bronze Armor/Sunlight Armor/Sunlight Armor Back Legs</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>4300</Price>
+    <Salable>true</Salable>
+    <WearableSlots>BackShoes</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString>Health=666,HealthRegen=66,Armor=50,MagicResist=75</StatString>
+    <Stats>
+      <item>
+        <key>
+          <Stats>Health</Stats>
+        </key>
+        <value>
+          <int>666</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>HealthRegen</Stats>
+        </key>
+        <value>
+          <int>66</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Armor</Stats>
+        </key>
+        <value>
+          <int>50</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>MagicResist</Stats>
+        </key>
+        <value>
+          <int>75</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Energy</Stats>
+        </key>
+        <value>
+          <int>1000</int>
+        </value>
+      </item>
+    </Stats>
+  </Item>
+  <Item>
+    <ID>120</ID>
+    <Icon>108</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Praise the Sun!</Description>
+    <Name>Sunlight Back Plate</Name>
+    <ResourcePath>Clothes/Armor/Bronze Armor/Sunlight Armor/Sunlight Armor Back Plate</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>4400</Price>
+    <Salable>true</Salable>
+    <WearableSlots>SaddleBags</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString>Health=800,HealthRegen=50,Armor=50,MagicResist=75</StatString>
+    <Stats>
+      <item>
+        <key>
+          <Stats>Health</Stats>
+        </key>
+        <value>
+          <int>800</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>HealthRegen</Stats>
+        </key>
+        <value>
+          <int>50</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Armor</Stats>
+        </key>
+        <value>
+          <int>50</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>MagicResist</Stats>
+        </key>
+        <value>
+          <int>75</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Energy</Stats>
+        </key>
+        <value>
+          <int>1000</int>
+        </value>
+      </item>
+    </Stats>
+  </Item>
+  <Item>
+    <ID>121</ID>
+    <Icon>105</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Praise the Sun!</Description>
+    <Name>Sunlight Chest Plate</Name>
+    <ResourcePath>Clothes/Armor/Bronze Armor/Sunlight Armor/Sunlight Armor Chest Plate</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>4400</Price>
+    <Salable>true</Salable>
+    <WearableSlots>Shirt</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString>Health=1000,HealthRegen=150,Armor=60,MagicResist=80</StatString>
+    <Stats>
+      <item>
+        <key>
+          <Stats>Health</Stats>
+        </key>
+        <value>
+          <int>1000</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>HealthRegen</Stats>
+        </key>
+        <value>
+          <int>150</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Armor</Stats>
+        </key>
+        <value>
+          <int>60</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>MagicResist</Stats>
+        </key>
+        <value>
+          <int>80</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Energy</Stats>
+        </key>
+        <value>
+          <int>500</int>
+        </value>
+      </item>
+    </Stats>
+  </Item>
+  <Item>
+    <ID>122</ID>
+    <Icon>106</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Praise the Sun!</Description>
+    <Name>Sunlight Front Legs</Name>
+    <ResourcePath>Clothes/Armor/Bronze Armor/Sunlight Armor/Sunlight Armor Front Legs</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>4300</Price>
+    <Salable>true</Salable>
+    <WearableSlots>FrontShoes</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString>Health=666,HealthRegen=66,Armor=50,MagicResist=75</StatString>
+    <Stats>
+      <item>
+        <key>
+          <Stats>Health</Stats>
+        </key>
+        <value>
+          <int>666</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>HealthRegen</Stats>
+        </key>
+        <value>
+          <int>66</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Armor</Stats>
+        </key>
+        <value>
+          <int>50</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>MagicResist</Stats>
+        </key>
+        <value>
+          <int>75</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Energy</Stats>
+        </key>
+        <value>
+          <int>1000</int>
+        </value>
+      </item>
+    </Stats>
+  </Item>
+  <Item>
+    <ID>123</ID>
+    <Icon>107</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Praise the Sun!</Description>
+    <Name>Sunlight Helmet</Name>
+    <ResourcePath>Clothes/Armor/Bronze Armor/Sunlight Armor/Sunlight Armor Helmet</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>4450</Price>
+    <Salable>true</Salable>
+    <WearableSlots>Mask</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString>Health=1000,HealthRegen=150,Armor=60,MagicResist=80</StatString>
+    <Stats>
+      <item>
+        <key>
+          <Stats>Health</Stats>
+        </key>
+        <value>
+          <int>1000</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>HealthRegen</Stats>
+        </key>
+        <value>
+          <int>150</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Armor</Stats>
+        </key>
+        <value>
+          <int>60</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>MagicResist</Stats>
+        </key>
+        <value>
+          <int>80</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Energy</Stats>
+        </key>
+        <value>
+          <int>500</int>
+        </value>
+      </item>
+    </Stats>
+  </Item>
+  <Item>
+    <ID>124</ID>
+    <Icon>71</Icon>
+    <ItemLevel>40</ItemLevel>
+    <RequiredLevel>25</RequiredLevel>
+    <Description>Cake and grief counseling will be available at the conclusion of the test. </Description>
+    <Name>Test Helmet</Name>
+    <ResourcePath>Clothes/Armor/Bronze Armor/Sunlight Armor/Sunlight Armor Helmet</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>999</Price>
+    <Salable>true</Salable>
+    <WearableSlots>Mask</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString>Health=999,HealthRegen=999,Energy=999,EnergyRegen=999,Attack=999,Dodge=999,Armor=999,MagicResist=999,Resiliance=999,Fortitude=999,Evade=999,Tension=999,Speed=999,MagicCasting=999,PhysicalCasting=999,Taunt=999</StatString>
+    <Stats>
+      <item>
+        <key>
+          <Stats>Health</Stats>
+        </key>
+        <value>
+          <int>999</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>HealthRegen</Stats>
+        </key>
+        <value>
+          <int>999</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Energy</Stats>
+        </key>
+        <value>
+          <int>999</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>EnergyRegen</Stats>
+        </key>
+        <value>
+          <int>999</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Attack</Stats>
+        </key>
+        <value>
+          <int>999</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Dodge</Stats>
+        </key>
+        <value>
+          <int>999</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Armor</Stats>
+        </key>
+        <value>
+          <int>999</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>MagicResist</Stats>
+        </key>
+        <value>
+          <int>999</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Resiliance</Stats>
+        </key>
+        <value>
+          <int>999</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Fortitude</Stats>
+        </key>
+        <value>
+          <int>999</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Evade</Stats>
+        </key>
+        <value>
+          <int>999</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Tension</Stats>
+        </key>
+        <value>
+          <int>999</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Speed</Stats>
+        </key>
+        <value>
+          <int>999</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>MagicCasting</Stats>
+        </key>
+        <value>
+          <int>999</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>PhysicalCasting</Stats>
+        </key>
+        <value>
+          <int>999</int>
+        </value>
+      </item>
+      <item>
+        <key>
+          <Stats>Taunt</Stats>
+        </key>
+        <value>
+          <int>999</int>
+        </value>
+      </item>
+    </Stats>
+  </Item>
+  <Item>
+    <ID>125</ID>
+    <Icon>27</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Visa wants me to give this note to her secret crush, Breakout.</Description>
+    <Name>Visa's Note</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>126</ID>
+    <Icon>112</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Argyle Socks (Back Legs)</Name>
+    <ResourcePath>Clothes/Socks/Argyle Back Legs Socks</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>50</Price>
+    <Salable>true</Salable>
+    <WearableSlots>BackShoes</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>127</ID>
+    <Icon>113</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Argyle Socks (Front Legs)</Name>
+    <ResourcePath>Clothes/Socks/Argyle Front Legs Socks</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>50</Price>
+    <Salable>true</Salable>
+    <WearableSlots>FrontShoes</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>128</ID>
+    <Icon>112</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Checker Socks (Back Legs)</Name>
+    <ResourcePath>Clothes/Socks/Checker Back Legs Socks</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>50</Price>
+    <Salable>true</Salable>
+    <WearableSlots>BackShoes</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>129</ID>
+    <Icon>113</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Checker Socks (Front Legs)</Name>
+    <ResourcePath>Clothes/Socks/Checker Front Legs Socks</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>50</Price>
+    <Salable>true</Salable>
+    <WearableSlots>FrontShoes</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>130</ID>
+    <Icon>112</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Dot Socks (Back Legs)</Name>
+    <ResourcePath>Clothes/Socks/Dots Back Legs Socks</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>50</Price>
+    <Salable>true</Salable>
+    <WearableSlots>BackShoes</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>131</ID>
+    <Icon>113</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Dot Socks (Front Legs)</Name>
+    <ResourcePath>Clothes/Socks/Dots Front Legs Socks</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>50</Price>
+    <Salable>true</Salable>
+    <WearableSlots>FrontShoes</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>132</ID>
+    <Icon>112</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Horizonal Striped Socks (Back Legs)</Name>
+    <ResourcePath>Clothes/Socks/Horizonal Striped Back Legs Socks</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>50</Price>
+    <Salable>true</Salable>
+    <WearableSlots>BackShoes</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>133</ID>
+    <Icon>113</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Horizonal Striped Socks (Front Legs)</Name>
+    <ResourcePath>Clothes/Socks/Horizonal Striped Front Legs Socks</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>50</Price>
+    <Salable>true</Salable>
+    <WearableSlots>FrontShoes</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>134</ID>
+    <Icon>112</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Tartan Socks (Back Legs)</Name>
+    <ResourcePath>Clothes/Socks/Tartan Back Legs Socks</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>50</Price>
+    <Salable>true</Salable>
+    <WearableSlots>BackShoes</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>135</ID>
+    <Icon>113</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Tartan Socks (Front Legs)</Name>
+    <ResourcePath>Clothes/Socks/Tartan Front Legs Socks</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>50</Price>
+    <Salable>true</Salable>
+    <WearableSlots>FrontShoes</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>136</ID>
+    <Icon>112</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Vertical Striped Socks (Back Legs)</Name>
+    <ResourcePath>Clothes/Socks/Vertical Striped Back Legs Socks</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>50</Price>
+    <Salable>true</Salable>
+    <WearableSlots>BackShoes</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>137</ID>
+    <Icon>113</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Vertical Striped Socks (Front Legs)</Name>
+    <ResourcePath>Clothes/Socks/Vertical Striped Front Legs Socks</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>50</Price>
+    <Salable>true</Salable>
+    <WearableSlots>FrontShoes</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>138</ID>
+    <Icon>27</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A warrant for the arrest of a mining pony named Stoneshadow.</Description>
+    <Name>Arrest Warrant</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>139</ID>
+    <Icon>109</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>An exotic mineral which can be used to slow down or speed up the growth of crystals. Potentially dangerous. If you are a crystal pony, or think you might become a crystal pony, extreme caution should be used in handling and usage.</Description>
+    <Name>Stopping Salt</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>200</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>140</ID>
+    <Icon>21</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Valuable gems, mined from beneath the Crystal Kingdom, refined in Griffonia, and sold throughout Equestria.</Description>
+    <Name>Gems</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>30</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+  <Item>
+    <ID>141</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>The origin of many idioms.</Description>
+    <Name>Hornet's Nest</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+    <Stats />
+  </Item>
+</ArrayOfItem>

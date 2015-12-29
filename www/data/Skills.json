@@ -1,0 +1,664 @@
+[
+	{
+		"ID": 0,
+		"Name": "Prototype",
+		"Description": "do stuff",
+		"MaxLevel": 50,
+		"Icon": "stomp", /* icon used in hotbar */
+		/*"Races": "Earth",  /* by not having races listed, this is not purchasable for players*/
+		"Classes": "Combat",
+		"DamageType": "Physical",
+		"DamageByLevel": [
+			97.7, 107.3, 111.9, 116.3, 122.1,126.6,130.8,137.3,141.8,188.5,
+			195.3,202.4,219.1,228.4,237.3,245.9,254.1,262,269.6,338.8,
+			353.4,367.6,380.4,393.6,406.3,418.6,440.3,441.9,467.1,550.2,
+			570.3,589.8,608.7,627,644.7,662,678.7,695,710.8,832.6,
+			852.3,871.5,890.1,908.4,926.1,943.4,960.1,976.6,992.6,1000],
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"EnergyCost": 35,
+				"Aggression": 1,
+				"TargetDistance": 1.5,
+				"TargetShapes": "Target",
+				/* valid target shapes. can be combined
+				Sphere, Frustum, Target (if target, the player has to click on a player/enemy), Ray,
+				*/
+				"ConeAngle": 0, /*default*/
+				"AoERadius": 0, /*default*/
+				"CasterAnimation": "SeismicBuck",
+				"ProjectileResource": "GroundRockHit Gray1",
+				"Cooldown": 2.5,
+				"GlobalCooldown": 1,
+				"CastTime": 0.5,
+				"AoEDuration": 0, /*default. Time that the aoe sits on the ground ticking*/
+				"MaxSplashCount": 0, /*default. maximum number of things that can be hit by splash effects*/
+				"TrainingPointCost": 0, /*default*/
+				"MinimumLevel": 0, /*default*/
+				"TargetEffects": [
+					{
+						"Targets": "Enemy", /*this effect affects enemy targets. default value. Can be combined*/
+						/* valid Targets: 
+						None, Enemy, Friendly, Self
+						*/
+						"Stat": "Tension", /*currently (4/7/14) can be Health, Speed, Dodge (uses Amount(0 = no dodge, 1 = 100% dodge maybe), Armor(percent change from 0 (no change) to 1 (completely stopped)*/  
+						"Chance": 1, /*default. 0-1 value, likelihood of this effect happening*/
+						"Amount": 1, /*default*/
+						"IsMultiplier": true, /*default. is amount a multiplier or a set value. how to do percent based changes to attributes*/
+						"SkillId": -1, /*default. id of a skill to effect. -1 affects no skill*/
+						"Duration": 0, /*default*/
+						"IsDPS": false, /*default. does amount spread out over duration, or is duration how long amount affects the skill/stat*/
+						"Statuses": "None" /*default. Might not be used for anything but GUI*/
+					},
+					{
+						"Stat": "Health", /*this is required to actually do any damage. Would cause damage done to target be whatever the skill's level damage was*/
+						"Amount": 30,
+						"IsMultiplier": false,
+					},
+				],
+				"SplashEffects": [ /*uses same objects as TargetEffects*/
+					{
+						/*anything caught in splash will have 30 damage done to it */
+						"Stat": "Health",
+						"Amount": 30, 
+						"IsMultiplier": false,
+					}
+				]
+			}
+		]
+	},
+	{
+		"ID": 2,
+		"Name": "Teleport",
+		"Description": "Teleport over long distances.",
+		"MaxLevel": 50,
+		"Icon": "teleport",
+		"Races": "Unicorn",
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"EnergyCost": 1000,
+				"TargetDistance": 100,
+				"TargetShapes": "Sphere"
+			},
+			{
+				"ID": 1,
+				"Tier": 2,
+				"ParentID": 0,
+				"EnergyCost": 1000,
+				"TargetDistance": 100,
+				"TargetShapes": "Sphere"
+			},
+			{
+				"ID": 2,
+				"Tier": 3,
+				"ParentID": 1,
+				"EnergyCost": 1000,
+				"TargetDistance": 100,
+				"TargetShapes": "Sphere"
+			}
+		]
+	},
+	{
+		"ID": 5,
+		"Name": "Seismic Buck",
+		"Description": "kick things",
+		"MaxLevel": 50,
+		"Icon": "horseshoeshot",
+		"Races": "Earth",
+		"Classes": "Combat",
+		"DamageType": "Physical",
+		/*"DamageByLevel": [
+			97.7, 107.3, 111.9, 116.3, 122.1,126.6,130.8,137.3,141.8,188.5,
+			195.3,202.4,219.1,228.4,237.3,245.9,254.1,262,269.6,338.8,
+			353.4,367.6,380.4,393.6,406.3,418.6,440.3,441.9,467.1,550.2,
+			570.3,589.8,608.7,627,644.7,662,678.7,695,710.8,832.6,
+			852.3,871.5,890.1,908.4,926.1,943.4,960.1,976.6,992.6,1000],*/
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"EnergyCost": 35,
+				"Aggression": 1,
+				"TargetDistance": 2,
+				"TargetShapes": "Target",
+				"CasterAnimation": "SeismicBuck",
+				"ProjectileResource": "GroundRockHit Gray1",
+				"Cooldown": 2.5,
+				"GlobalCooldown": 1,
+				"CastTime": 0.5,
+				"TargetEffects": [
+					{
+						"Stat": "Tension",
+					},
+					{
+						"Stat": "Health",
+						"Amount": 80,
+						"IsMultiplier": false,
+					},
+				],
+			}
+		]
+	},
+	{
+		"ID": 6,
+		"Name": "Timberwolf Bite",
+		"Description": "Timberwolf bite attack",
+		"MaxLevel": 50,
+		"Classes": "Combat",
+		"DamageType": "Physical",
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"EnergyCost": 25,
+				"TargetDistance": 3,
+				"TargetShapes": "Target",
+				"CasterAnimation": "Bite",
+				"Cooldown": 1.6,
+				"CastTime": 0.355,
+				"GlobalCooldown": 1.6,
+				"TargetEffects": [
+					{
+						"Stat": "Health",
+						"Amount": 38.5, /*does a straight 20 damage*/
+						"IsMultiplier": false
+					},
+					{
+						"Stat": "Tension"
+					}
+				]
+			}
+		]
+	},
+	{
+		"ID": 7,
+		"Name": "Hornet Sting",
+		"Description": "Hornet sting attack",
+		"MaxLevel": 50,
+		"Classes": "Combat",
+		"DamageType": "Physical",
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"EnergyCost": 25,
+				"TargetDistance": 2,
+				"TargetShapes": "Target",
+				"CasterAnimation": "Sting",
+				"Cooldown": 1.6,
+				"CastTime": 0.633,
+				"GlobalCooldown": 1.6,
+				"TargetEffects": [
+					{
+						"Stat": "Health",
+						"Amount": 20,
+						"IsMultiplier": false
+					}
+				]
+			}
+		]
+	},
+	{
+		"ID": 8,
+		"Name": "Diamond Dog Slap",
+		"Description": "Diamond Dog slap attack",
+		"MaxLevel": 50,
+		"Classes": "Combat",
+		"DamageType": "Physical",
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"EnergyCost": 25,
+				"TargetDistance": 3,
+				"TargetShapes": "Target",
+				"CasterAnimation": "Attack 0",
+				"Cooldown": 4,
+				"CastTime": 0.667,
+				"GlobalCooldown": 4,
+				"TargetEffects": [
+					{
+						"Stat": "Health",
+						"Amount": 64.5,
+						"IsMultiplier": false
+					}
+				]
+			}
+		]
+	},
+	{
+		"ID": 9,
+		"Name": "Rainbow Fields",
+		"Description": "Create a field of flowers that puts your enemies to sleep",
+		"MaxLevel": 50,
+		"Races": "Unicorn",
+		"Classes": "Magic, Combat",
+		"Icon": "rainbowfields",
+		"DamageType": "Magical",
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"Aggression": 1,
+				"EnergyCost": 40,
+				"TargetDistance": 8,
+				"TargetShapes": "Sphere",
+				"CasterAnimation": "RainbowFields",
+				"ProjectileResource": "PoppyFlowers",
+				"CastTime": 0.5,
+				"Cooldown": 6,
+				"GlobalCooldown": 0.75,
+				"AoEDuration": 5, /* each time the aoe ticks (5 times), it will perform the splash effects */
+				"AoERadius": 3.5,
+				"SplashEffects": [
+					{
+						"Stat": "Health",
+						"Amount": 15,
+						"IsMultiplier": false,
+					},
+					{
+						"Stat": "Tension",
+					},
+					{
+						"Stat": "Speed",
+						"Amount": -0.5,
+						"IsMultiplier": true,
+						"Duration": 1,
+					}
+				]
+			}
+		]
+	},
+	{
+		"ID": 10,
+		"Name": "Ground Pound",
+		"Description": "Pony smash!",
+		"MaxLevel": 50,
+		"Icon": "groundpound",
+		"Classes": "Combat",
+		"Races": "Unicorn, Earth, Pegasus",
+		"DamageType": "Physical",
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"Aggression": 1,
+				"EnergyCost": 15,
+				"TargetDistance": 0.5,
+				"TargetShapes": "Sphere",
+				"CasterAnimation": "GroundPound",
+				"ProjectileResource": "GroundRockHit Gray1",
+				"CastTime": 0.5,
+				"Cooldown": 1.5,
+				"GlobalCooldown": 0.75,
+				"AoERadius": 2.0,
+				"SplashEffects": [
+					{
+						"Stat": "Health",
+						"Amount": 35,
+						"IsMultiplier": false,
+					},
+					{
+						"Stat": "Tension",
+					}
+				]
+			}
+		]
+	},
+	{
+		"ID": 11,
+		"Name": "Dual Cyclone",
+		"Description": "Twin cyclone chambers for twice the sucking power!",
+		"MaxLevel": 50,
+		"Classes": "Combat",
+		"Icon": "dualcyclone",
+		"Races": "Pegasus",
+		"DamageType": "Physical",
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"Aggression": 1,
+				"EnergyCost": 30,
+				"TargetDistance": 15,
+				"TargetShapes": "Target",
+				"CasterAnimation": "DualCyclone",
+				"ProjectileResource": "shitnado",
+				"CastTime": 0.5,
+				"Cooldown": 3.1,
+				"GlobalCooldown": 1,
+				"TargetEffects": [
+					{
+						"Stat": "Health",
+						"Amount": 52,
+						"IsMultiplier": false,
+					},
+					{
+						"Stat": "Tension",
+					}
+				]
+			}
+		]
+	},
+	{
+		"ID": 12,
+		"Name": "Heal",
+		"Description": "Heal a player",
+		"MaxLevel": 50,
+		"Icon": "minor_heal1",
+		"Races": "Unicorn, Earth, Pegasus",
+		"DamageType": "Magical",
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"Aggression": 1,
+				"EnergyCost": 50,
+				"TargetDistance": 10,
+				"TargetShapes": "Target",
+				"CasterAnimation": "RainbowFields",
+				"ProjectileResource": "HealAbility",
+				"CastTime": 0.5,
+				"Cooldown": 6,
+				"GlobalCooldown": 0.75,
+				"TargetEffects": [
+					{
+						"Targets": "Friendly",
+						"Stat": "Health",
+						"Amount": 78,
+						"IsMultiplier": false,
+					},
+				]
+			}
+		]
+	},
+	{
+		"ID": 13,
+		"Name": "Lantern Swoosh",
+		"Description": "Lantern Monster attack",
+		"MaxLevel": 50,
+		"Classes": "Combat",
+		"DamageType": "Physical",
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"EnergyCost": 25,
+				"TargetDistance": 6,
+				"TargetShapes": "Target",
+				"CasterAnimation": "Bite",
+				"Cooldown": 3.0,
+				"CastTime": 0.81,
+				"GlobalCooldown": 3.0,
+				"TargetEffects": [
+					{
+						"Stat": "Health",
+						"Amount": 38,
+						"IsMultiplier": false
+					},
+					{
+						"Stat": "Tension"
+					}
+				]
+			}
+		]
+	},
+	{
+		"ID": 14,
+		"Name": "Gale",
+		"Description": "Create a slicing windy gust",
+		"MaxLevel": 50,
+		"Icon": "gale",
+		"Classes": "Combat",
+		"Races": "Pegasus",
+		"DamageType": "Physical",
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"Aggression": 1,
+				"EnergyCost": 60,
+				"TargetDistance": 10,
+				"TargetShapes": "Frustum",
+				"CasterAnimation": "Gale",
+				"ProjectileResource": "Gale",
+				"CastTime": 0.5,
+				"Cooldown": 4,
+				"GlobalCooldown": 1,
+				"AoEDuration": 3, /* each time the aoe ticks (5 times), it will perform the splash effects */
+				"AoERadius": 10,
+				"ConeAngle": 40,
+				"SplashEffects": [
+					{
+						"Stat": "Health",
+						"Amount": 30,
+						"IsMultiplier": false,
+						"IsDPS": false,
+					},
+				]
+			}
+		]
+	},
+	{
+		"ID": 15,
+		"Name": "Magical Arrow",
+		"Description": "Shoots a magical arrow",
+		"MaxLevel": 50,
+		"Classes": "Combat",
+		"Icon": "magicarrow",
+		"Races": "Unicorn",
+		"DamageType": "Magical",
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"Aggression": 1,
+				"EnergyCost": 60,
+				"TargetDistance": 25,
+				"TargetShapes": "Target",
+				"CasterAnimation": "RainbowFields",
+				"ProjectileResource": "Magical Arrow",
+				"CastTime": 1,
+				"Cooldown": 7,
+				"GlobalCooldown": 1,
+				"TargetEffects": [
+					{
+						"Stat": "Health",
+						"Amount": 85,
+						"IsMultiplier": false,
+					},
+					{
+						"Stat": "Tension",
+					}
+				]
+			}
+		]
+	},
+	{
+		"ID": 16,
+		"Name": "Rough Terrain",
+		"Description": "Create a field of rocks that harms and slows enemies",
+		"MaxLevel": 50,
+		"Races": "Earth",
+		"Classes": "Combat",
+		"Icon": "roughterrain",
+		"DamageType": "Physical",
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"Aggression": 1,
+				"EnergyCost": 50,
+				"TargetDistance": 0.5,
+				"TargetShapes": "Sphere",
+				"CasterAnimation": "RoughTerrain",
+				"ProjectileResource": "Rough Terrain",
+				"CastTime": 0.5,
+				"Cooldown": 15,
+				"GlobalCooldown": 1,
+				"AoEDuration": 12, /* each time the aoe ticks (5 times), it will perform the splash effects */
+				"AoERadius": 7,
+				"SplashEffects": [
+					{
+						"Stat": "Health",
+						"Amount": 9,
+						"IsMultiplier": false,
+					},
+					{
+						"Stat": "Speed",
+						"Amount": -0.5,
+						"IsMultiplier": true,
+						"Duration": 1,
+					},
+				]
+			}
+		]
+	},
+	{
+		"ID": 17,
+		"Name": "Fire Breath",
+		"Description": "roast the tasty pony's!",
+		"MaxLevel": 50,
+		"Classes": "Combat",
+		"DamageType": "Magical",
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"Aggression": 1,
+				"EnergyCost": 25,
+				"TargetDistance": 10,
+				"TargetShapes": "Frustum",
+				"CasterAnimation": "Attack 0",
+				"ProjectileResource": "DragonFire2",
+				"CastTime": 0.58,
+				"Cooldown": 4,
+				"GlobalCooldown": 1,
+				"AoEDuration": 5, /* each time the aoe ticks (5 times), it will perform the splash effects */
+				"AoERadius": 15,
+				"FrustumAspectRatio": 2, 
+				"FrustumFieldOfViewY": 60,
+				"SplashEffects": [
+					{
+						"Stat": "Health",
+						"Amount": 20,
+						"IsMultiplier": false,
+						"IsDPS": false,
+					},
+					{
+						"Stat": "Health",
+						"Amount": 40,
+						"IsMultiplier": false,
+						"IsDPS": true,
+						"Duration": 5, 
+					},
+				]
+			}
+		]
+	},
+	{
+		"ID": 18,
+		"Name": "Stare",
+		"Description": "Stare damages and slows",
+		"MaxLevel": 50,
+		"Classes": "Combat",
+		"DamageType": "Magical",
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"Aggression": 1,
+				"EnergyCost": 25,
+				"TargetDistance": 6,
+				"TargetShapes": "Target",
+				"CasterAnimation": "Attack 0",
+				"ProjectileResource": "CockatriceStare",
+				"CastTime": 0.5,
+				"Cooldown": 3.5,
+				"GlobalCooldown": 3.5,
+				"TargetEffects": [
+					{
+						"Stat": "Health",
+						"Amount": 55,
+						"IsMultiplier": false,
+					},
+				]
+			}
+		]
+	},
+	{
+		"ID": 20,
+		"Name": "Admin Blast",
+		"Description": "Shoots a blast of administrative power.",
+		"MaxLevel": 50,
+		"Classes": "Combat",
+		"Icon": "magicarrow",
+		"DamageType": "Magical",
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"Aggression": 0,
+				"EnergyCost": 1,
+				"TargetDistance": 100,
+				"TargetShapes": "Target",
+				"CasterAnimation": "RainbowFields",
+				"ProjectileResource": "Magical Arrow",
+				"CastTime": 0,
+				"Cooldown": 0,
+				"GlobalCooldown": 0,
+				"TargetEffects": [
+					{
+						"Stat": "Health",
+						"Amount": 120,
+						"IsMultiplier": false,
+					},
+					{
+						"Stat": "Tension",
+					}
+				]
+			}
+		]
+	},
+	{
+		"ID": 21,
+		"Name": "Pillow Barrage",
+		"Description": "Hurl pillows at your foes!",
+		"MaxLevel": 50,
+		"Classes": "Combat",
+		"Icon": "magicarrow",
+		"Races": "Earth",
+		"DamageType": "Physical",
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"Aggression": 1,
+				"EnergyCost": 55,
+				"TargetDistance": 20,
+				"TargetShapes": "Target",
+				"CasterAnimation": "PillowBarrage",
+				"ProjectileResource": "Pillow Barrage",
+				"CastTime": 0.5,
+				"Cooldown": 6,
+				"GlobalCooldown": 1,
+				"TargetEffects": [
+					{
+						"Stat": "Health",
+						"Amount": 60,
+						"IsMultiplier": false,
+					},
+					{
+						"Stat": "Tension",
+					}
+				]
+			}
+		]
+	},
+
+
+]
+	

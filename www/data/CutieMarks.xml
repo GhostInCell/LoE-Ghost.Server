@@ -1,0 +1,1874 @@
+<?xml version="1.0"?>
+<ArrayOfCutieMark xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <CutieMark>
+    <ID>0</ID>
+    <Name>Blank Flank</Name>
+    <Description />
+    <Filepath>blank</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>1</ID>
+    <Name>Alchemy 1</Name>
+    <Description />
+    <Filepath>cutie_alchemy1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>2</ID>
+    <Name>Alchemy 2</Name>
+    <Description />
+    <Filepath>cutie_alchemy2</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>3</ID>
+    <Name>Alchemy 3</Name>
+    <Description />
+    <Filepath>cutie_alchemy3</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>4</ID>
+    <Name>Alchemy 4</Name>
+    <Description />
+    <Filepath>cutie_alchemy4</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>5</ID>
+    <Name>Alchemy Air</Name>
+    <Description />
+    <Filepath>cutie_alchemy_air</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>6</ID>
+    <Name>Alchemy Creation</Name>
+    <Description />
+    <Filepath>cutie_alchemy_creation</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>7</ID>
+    <Name>Alchemy Death</Name>
+    <Description />
+    <Filepath>cutie_alchemy_death</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>8</ID>
+    <Name>Alchemy Earth</Name>
+    <Description />
+    <Filepath>cutie_alchemy_earth</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>9</ID>
+    <Name>Alchemy Fire</Name>
+    <Description />
+    <Filepath>cutie_alchemy_fire</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>10</ID>
+    <Name>Alchemy Life</Name>
+    <Description />
+    <Filepath>cutie_alchemy_life</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>11</ID>
+    <Name>Alchemy Terra</Name>
+    <Description />
+    <Filepath>cutie_alchemy_terra</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>12</ID>
+    <Name>Alchemy Water</Name>
+    <Description />
+    <Filepath>cutie_alchemy_water</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>13</ID>
+    <Name>Axe 1</Name>
+    <Description />
+    <Filepath>cutie_axe1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>14</ID>
+    <Name>Blue Star</Name>
+    <Description />
+    <Filepath>cutie_blue_star</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>15</ID>
+    <Name>Book 1</Name>
+    <Description />
+    <Filepath>cutie_book1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>16</ID>
+    <Name>Bunny 1</Name>
+    <Description />
+    <Filepath>cutie_bunny1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>17</ID>
+    <Name>Butterfly 2</Name>
+    <Description />
+    <Filepath>cutie_butterfly2</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>18</ID>
+    <Name>Cake 1</Name>
+    <Description />
+    <Filepath>cutie_cake1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>19</ID>
+    <Name>Carrot</Name>
+    <Description />
+    <Filepath>cutie_carrot</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>20</ID>
+    <Name>Chef Hat</Name>
+    <Description />
+    <Filepath>cutie_chef_hat</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>21</ID>
+    <Name>Cherries</Name>
+    <Description />
+    <Filepath>cutie_cherries</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>22</ID>
+    <Name>Chives</Name>
+    <Description />
+    <Filepath>cutie_chives</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>23</ID>
+    <Name>Clover 4</Name>
+    <Description />
+    <Filepath>cutie_clover4</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>24</ID>
+    <Name>Confetti 1</Name>
+    <Description />
+    <Filepath>cutie_confetti1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>25</ID>
+    <Name>Cookie 1</Name>
+    <Description />
+    <Filepath>cutie_cookie1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>27</ID>
+    <Name>Corn</Name>
+    <Description />
+    <Filepath>cutie_corn</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>28</ID>
+    <Name>Cupcake 1</Name>
+    <Description />
+    <Filepath>cutie_cupcake1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>29</ID>
+    <Name>Doughnut 1</Name>
+    <Description />
+    <Filepath>cutie_doughnut1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>30</ID>
+    <Name>Dragon Wing</Name>
+    <Description />
+    <Filepath>cutie_dragon_wing</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>31</ID>
+    <Name>Dumbell 1</Name>
+    <Description />
+    <Filepath>cutie_dumbell1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>32</ID>
+    <Name>Eggplant</Name>
+    <Description />
+    <Filepath>cutie_eggplant</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>33</ID>
+    <Name>Electric Wing</Name>
+    <Description />
+    <Filepath>cutie_electric_wing</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>34</ID>
+    <Name>Electricity 1</Name>
+    <Description />
+    <Filepath>cutie_electricity1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>35</ID>
+    <Name>Emerald</Name>
+    <Description />
+    <Filepath>cutie_emerald</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>36</ID>
+    <Name>Fall Leaves</Name>
+    <Description />
+    <Filepath>cutie_fall_leaves</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>37</ID>
+    <Name>Fennel</Name>
+    <Description />
+    <Filepath>cutie_fennel</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>42</ID>
+    <Name>Fire Badge 1</Name>
+    <Description />
+    <Filepath>cutie_fire_badge1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>43</ID>
+    <Name>Fire Wing</Name>
+    <Description />
+    <Filepath>cutie_fire_wing</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>38</ID>
+    <Name>Fire 1</Name>
+    <Description />
+    <Filepath>cutie_fire1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>39</ID>
+    <Name>Fire 2</Name>
+    <Description />
+    <Filepath>cutie_fire2</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>40</ID>
+    <Name>Fire 3</Name>
+    <Description />
+    <Filepath>cutie_fire3</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>41</ID>
+    <Name>Fire 5</Name>
+    <Description />
+    <Filepath>cutie_fire5</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>44</ID>
+    <Name>Firework 1</Name>
+    <Description />
+    <Filepath>cutie_firework1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>191</ID>
+    <Name>Fish 1</Name>
+    <Description />
+    <Filepath>cutie_fish1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>198</ID>
+    <Name>Flannpc</Name>
+    <Description />
+    <Filepath>cutie_flannpc</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>45</ID>
+    <Name>Flower 1</Name>
+    <Description />
+    <Filepath>cutie_flower1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>146</ID>
+    <Name>Flower 2</Name>
+    <Description />
+    <Filepath>cutie_flower2</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>147</ID>
+    <Name>Flower 3</Name>
+    <Description />
+    <Filepath>cutie_flower3</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>46</ID>
+    <Name>Flower 4</Name>
+    <Description />
+    <Filepath>cutie_flower4</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>47</ID>
+    <Name>Flower 5</Name>
+    <Description />
+    <Filepath>cutie_flower5</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>48</ID>
+    <Name>Frog 1</Name>
+    <Description />
+    <Filepath>cutie_frog1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>49</ID>
+    <Name>Gear 2</Name>
+    <Description />
+    <Filepath>cutie_gear2</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>50</ID>
+    <Name>Gear 3</Name>
+    <Description />
+    <Filepath>cutie_gear3</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>148</ID>
+    <Name>Ghost 1</Name>
+    <Description />
+    <Filepath>cutie_ghost1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>51</ID>
+    <Name>Gold Wing</Name>
+    <Description />
+    <Filepath>cutie_gold_wing</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>149</ID>
+    <Name>Guitar 1</Name>
+    <Description />
+    <Filepath>cutie_guitar1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>52</ID>
+    <Name>Hammer 1</Name>
+    <Description />
+    <Filepath>cutie_hammer1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>53</ID>
+    <Name>Heart 1</Name>
+    <Description />
+    <Filepath>cutie_heart1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>54</ID>
+    <Name>Heart 2</Name>
+    <Description />
+    <Filepath>cutie_heart2</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>55</ID>
+    <Name>Holly</Name>
+    <Description />
+    <Filepath>cutie_holly</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>150</ID>
+    <Name>Horn 1</Name>
+    <Description />
+    <Filepath>cutie_horn1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>56</ID>
+    <Name>Horseshoe</Name>
+    <Description />
+    <Filepath>cutie_horseshoe</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>151</ID>
+    <Name>Hourglass 1</Name>
+    <Description />
+    <Filepath>cutie_hourglass1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>58</ID>
+    <Name>Ice Wing</Name>
+    <Description />
+    <Filepath>cutie_ice_wing</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>57</ID>
+    <Name>Ice 1</Name>
+    <Description />
+    <Filepath>cutie_ice1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>59</ID>
+    <Name>Judge</Name>
+    <Description />
+    <Filepath>cutie_judge</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>196</ID>
+    <Name>Key 1</Name>
+    <Description />
+    <Filepath>cutie_key1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>60</ID>
+    <Name>Kiwi</Name>
+    <Description />
+    <Filepath>cutie_kiwi</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>61</ID>
+    <Name>Ladybug 1</Name>
+    <Description />
+    <Filepath>cutie_ladybug1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>152</ID>
+    <Name>Shield 4</Name>
+    <Description />
+    <Filepath>cutie_lawntotallydidntsneakthisinnopenotatall</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>62</ID>
+    <Name>Leaf 1</Name>
+    <Description />
+    <Filepath>cutie_leaf1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>153</ID>
+    <Name>Leaf 2</Name>
+    <Description />
+    <Filepath>cutie_leaf2</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>63</ID>
+    <Name>Lemon</Name>
+    <Description />
+    <Filepath>cutie_lemon</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>180</ID>
+    <Name>Letter</Name>
+    <Description>Letter with a flower</Description>
+    <Filepath>cutie_letter</Filepath>
+    <Bonuses>
+      <Bonus>
+        <ValueOperand>Multiplier</ValueOperand>
+        <BonusType>Ability</BonusType>
+        <Value>1.1</Value>
+        <UnderlyingID>1</UnderlyingID>
+      </Bonus>
+    </Bonuses>
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>64</ID>
+    <Name>Lettuce</Name>
+    <Description />
+    <Filepath>cutie_lettuce</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>154</ID>
+    <Name>Lightbringer</Name>
+    <Description />
+    <Filepath>cutie_lightbringer</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>65</ID>
+    <Name>Lightning 2</Name>
+    <Description />
+    <Filepath>cutie_lightning2</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>155</ID>
+    <Name>Magic 1</Name>
+    <Description />
+    <Filepath>cutie_magic1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>156</ID>
+    <Name>Magic 2</Name>
+    <Description />
+    <Filepath>cutie_magic2</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>157</ID>
+    <Name>Magic 3</Name>
+    <Description />
+    <Filepath>cutie_magic3</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>158</ID>
+    <Name>Magic 4</Name>
+    <Description />
+    <Filepath>cutie_magic4</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>66</ID>
+    <Name>Magic 5</Name>
+    <Description />
+    <Filepath>cutie_magic5</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>67</ID>
+    <Name>Magic 6</Name>
+    <Description />
+    <Filepath>cutie_magic6</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>68</ID>
+    <Name>Magic 7</Name>
+    <Description />
+    <Filepath>cutie_magic7</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>69</ID>
+    <Name>Magnifying Glass</Name>
+    <Description />
+    <Filepath>cutie_magnifying_glass</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>159</ID>
+    <Name>Marble 1</Name>
+    <Description />
+    <Filepath>cutie_marble1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>160</ID>
+    <Name>Marble 2</Name>
+    <Description />
+    <Filepath>cutie_marble2</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>161</ID>
+    <Name>Marble 3</Name>
+    <Description />
+    <Filepath>cutie_marble3</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>187</ID>
+    <Name>Mask 1</Name>
+    <Description />
+    <Filepath>cutie_mask1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>70</ID>
+    <Name>Melon</Name>
+    <Description />
+    <Filepath>cutie_melon</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>197</ID>
+    <Name>Winged Thermometer</Name>
+    <Description>Cutiemark for NPC Mercury</Description>
+    <Filepath>cutie_mercurynpc</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>71</ID>
+    <Name>Meteor</Name>
+    <Description />
+    <Filepath>cutie_meteor</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>72</ID>
+    <Name>Moon 1</Name>
+    <Description />
+    <Filepath>cutie_moon1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>162</ID>
+    <Name>Movie Clapper</Name>
+    <Description />
+    <Filepath>cutie_movie_clapper</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>73</ID>
+    <Name>Muffin 1</Name>
+    <Description />
+    <Filepath>cutie_muffin1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>74</ID>
+    <Name>Okra</Name>
+    <Description />
+    <Filepath>cutie_okra</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>75</ID>
+    <Name>Orange</Name>
+    <Description />
+    <Filepath>cutie_orange</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>76</ID>
+    <Name>Orange Pepper</Name>
+    <Description />
+    <Filepath>cutie_orange_pepper</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>186</ID>
+    <Name>Paintbrush 1</Name>
+    <Description />
+    <Filepath>cutie_paintbrush1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>182</ID>
+    <Name>Paintbrush 2</Name>
+    <Description />
+    <Filepath>cutie_paintbrush2</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>77</ID>
+    <Name>Pan 2</Name>
+    <Description />
+    <Filepath>cutie_pan2</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>78</ID>
+    <Name>Party Hat 1</Name>
+    <Description />
+    <Filepath>cutie_party_hat1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>79</ID>
+    <Name>Party Hat 2</Name>
+    <Description />
+    <Filepath>cutie_party_hat2</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>80</ID>
+    <Name>Paw 1</Name>
+    <Description />
+    <Filepath>cutie_paw1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>163</ID>
+    <Name>Peace 1</Name>
+    <Description />
+    <Filepath>cutie_peace1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>81</ID>
+    <Name>Pearl 1</Name>
+    <Description />
+    <Filepath>cutie_pearl1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>82</ID>
+    <Name>Pearl 2</Name>
+    <Description />
+    <Filepath>cutie_pearl2</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>83</ID>
+    <Name>Pearl 3</Name>
+    <Description />
+    <Filepath>cutie_pearl3</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>84</ID>
+    <Name>Pepper</Name>
+    <Description />
+    <Filepath>cutie_pepper</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>85</ID>
+    <Name>Pie 1</Name>
+    <Description />
+    <Filepath>cutie_pie1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>86</ID>
+    <Name>Pie 2</Name>
+    <Description />
+    <Filepath>cutie_pie2</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>87</ID>
+    <Name>Pinata 1</Name>
+    <Description />
+    <Filepath>cutie_pinata1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>164</ID>
+    <Name>Pinball</Name>
+    <Description />
+    <Filepath>cutie_pinball</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>88</ID>
+    <Name>Pineapple</Name>
+    <Description />
+    <Filepath>cutie_pineapple</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>165</ID>
+    <Name>Police Badge 1</Name>
+    <Description />
+    <Filepath>cutie_police_badge1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>89</ID>
+    <Name>Pot 2</Name>
+    <Description />
+    <Filepath>cutie_pot2</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>90</ID>
+    <Name>Potato</Name>
+    <Description />
+    <Filepath>cutie_potato</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>91</ID>
+    <Name>Present 1</Name>
+    <Description />
+    <Filepath>cutie_present1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>92</ID>
+    <Name>Purple Grapes</Name>
+    <Description />
+    <Filepath>cutie_purple_grapes</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>166</ID>
+    <Name>Puzzle Eye</Name>
+    <Description />
+    <Filepath>cutie_puzzle_eye</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>95</ID>
+    <Name>Puzzle Panda</Name>
+    <Description />
+    <Filepath>cutie_puzzle_panda</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>93</ID>
+    <Name>Puzzle 1</Name>
+    <Description />
+    <Filepath>cutie_puzzle1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>94</ID>
+    <Name>Puzzle 2</Name>
+    <Description />
+    <Filepath>cutie_puzzle2</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>189</ID>
+    <Name>Quill 1</Name>
+    <Description />
+    <Filepath>cutie_quill1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>97</ID>
+    <Name>Rainbow Wing</Name>
+    <Description />
+    <Filepath>cutie_rainbow_wing</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>96</ID>
+    <Name>Rainbow 1</Name>
+    <Description />
+    <Filepath>cutie_rainbow1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>98</ID>
+    <Name>Red Apple</Name>
+    <Description />
+    <Filepath>cutie_red_apple</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>99</ID>
+    <Name>Red Cross</Name>
+    <Description />
+    <Filepath>cutie_red_cross</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>195</ID>
+    <Name>Ring 1</Name>
+    <Description />
+    <Filepath>cutie_ring1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>100</ID>
+    <Name>Rod Of Asclepius 2</Name>
+    <Description />
+    <Filepath>cutie_rod_of_asclepius2</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>101</ID>
+    <Name>Rose 1</Name>
+    <Description />
+    <Filepath>cutie_rose1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>102</ID>
+    <Name>Rosemary</Name>
+    <Description />
+    <Filepath>cutie_rosemary</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>103</ID>
+    <Name>Sage</Name>
+    <Description />
+    <Filepath>cutie_sage</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>104</ID>
+    <Name>Salt</Name>
+    <Description />
+    <Filepath>cutie_salt</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>194</ID>
+    <Name>Saw</Name>
+    <Description />
+    <Filepath>cutie_saw</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>105</ID>
+    <Name>Saxophone 1</Name>
+    <Description />
+    <Filepath>cutie_saxophone1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>167</ID>
+    <Name>Scroll 1</Name>
+    <Description />
+    <Filepath>cutie_scroll1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>106</ID>
+    <Name>Shadow Wing</Name>
+    <Description />
+    <Filepath>cutie_shadow_wing</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>107</ID>
+    <Name>Sheriff Badge 1</Name>
+    <Description />
+    <Filepath>cutie_sheriff_badge1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>108</ID>
+    <Name>Shield 1</Name>
+    <Description />
+    <Filepath>cutie_shield1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>109</ID>
+    <Name>Shield 2</Name>
+    <Description />
+    <Filepath>cutie_shield2</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>110</ID>
+    <Name>Shield 3</Name>
+    <Description />
+    <Filepath>cutie_shield3</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>111</ID>
+    <Name>Shooting Star 6</Name>
+    <Description />
+    <Filepath>cutie_shooting_star6</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>193</ID>
+    <Name>Shovel</Name>
+    <Description />
+    <Filepath>cutie_shovel</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>168</ID>
+    <Name>Silver Star</Name>
+    <Description />
+    <Filepath>cutie_silver_star</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>112</ID>
+    <Name>Silver Wing</Name>
+    <Description />
+    <Filepath>cutie_silver_wing</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>113</ID>
+    <Name>Skull 1</Name>
+    <Description />
+    <Filepath>cutie_skull1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>114</ID>
+    <Name>Skull 2</Name>
+    <Description />
+    <Filepath>cutie_skull2</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>169</ID>
+    <Name>Smash</Name>
+    <Description />
+    <Filepath>cutie_smash</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>115</ID>
+    <Name>Spoons</Name>
+    <Description />
+    <Filepath>cutie_spoons</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>202</ID>
+    <Name>Spudnpc</Name>
+    <Description />
+    <Filepath>cutie_spudnpc</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>170</ID>
+    <Name>Sticky Note</Name>
+    <Description />
+    <Filepath>cutie_Sticky_Note</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>190</ID>
+    <Name>Strawberry</Name>
+    <Description />
+    <Filepath>cutie_strawberry</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>116</ID>
+    <Name>Streamers 1</Name>
+    <Description />
+    <Filepath>cutie_streamers1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>117</ID>
+    <Name>Sun 1</Name>
+    <Description />
+    <Filepath>cutie_sun1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>118</ID>
+    <Name>Sun 2</Name>
+    <Description />
+    <Filepath>cutie_sun2</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>171</ID>
+    <Name>Sunflower 1</Name>
+    <Description />
+    <Filepath>cutie_sunflower1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>183</ID>
+    <Name>Sword</Name>
+    <Description />
+    <Filepath>cutie_sword1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>188</ID>
+    <Name>Sword 2</Name>
+    <Description />
+    <Filepath>cutie_sword2</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>172</ID>
+    <Name>Tanzanite</Name>
+    <Description />
+    <Filepath>cutie_tanzanite</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>119</ID>
+    <Name>Thread 1</Name>
+    <Description />
+    <Filepath>cutie_thread1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>173</ID>
+    <Name>Three Stars</Name>
+    <Description />
+    <Filepath>cutie_three_stars</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>120</ID>
+    <Name>Tomato</Name>
+    <Description />
+    <Filepath>cutie_tomato</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>174</ID>
+    <Name>Topaz</Name>
+    <Description />
+    <Filepath>cutie_topaz</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>121</ID>
+    <Name>Tourmaline</Name>
+    <Description />
+    <Filepath>cutie_tourmaline</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>122</ID>
+    <Name>Tree 1</Name>
+    <Description />
+    <Filepath>cutie_tree1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>123</ID>
+    <Name>Turnip</Name>
+    <Description />
+    <Filepath>cutie_turnip</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>203</ID>
+    <Name>Voguenpc</Name>
+    <Description />
+    <Filepath>cutie_voguenpc</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>175</ID>
+    <Name>Wand 1</Name>
+    <Description />
+    <Filepath>cutie_wand1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>200</ID>
+    <Name>Wandanpc</Name>
+    <Description />
+    <Filepath>cutie_wandanpc</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>124</ID>
+    <Name>Water 1</Name>
+    <Description />
+    <Filepath>cutie_water1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>125</ID>
+    <Name>Waterdrop 1</Name>
+    <Description />
+    <Filepath>cutie_waterdrop1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>176</ID>
+    <Name>Waterdrop 2</Name>
+    <Description />
+    <Filepath>cutie_waterdrop2</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>126</ID>
+    <Name>Wave 1</Name>
+    <Description />
+    <Filepath>cutie_wave1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>177</ID>
+    <Name>Wind</Name>
+    <Description />
+    <Filepath>cutie_wind</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>178</ID>
+    <Name>Yellow Star</Name>
+    <Description />
+    <Filepath>cutie_yellow_star</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>127</ID>
+    <Name>Yinyang</Name>
+    <Description />
+    <Filepath>cutie_yinyang</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>179</ID>
+    <Name>Compass</Name>
+    <Description />
+    <Filepath>flip_compass</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>128</ID>
+    <Name>Dunce</Name>
+    <Description />
+    <Filepath>flip_dunce</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>129</ID>
+    <Name>Music Note 1</Name>
+    <Description />
+    <Filepath>flip_music_note1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>130</ID>
+    <Name>Music Note 2</Name>
+    <Description />
+    <Filepath>flip_music_note2</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>131</ID>
+    <Name>Music Note 3</Name>
+    <Description />
+    <Filepath>flip_music_note3</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>132</ID>
+    <Name>Music Note 4</Name>
+    <Description />
+    <Filepath>flip_music_note4</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>133</ID>
+    <Name>Music Note 5</Name>
+    <Description />
+    <Filepath>flip_music_note5</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>134</ID>
+    <Name>Music Note 6</Name>
+    <Description />
+    <Filepath>flip_music_note6</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>138</ID>
+    <Name>Anchor</Name>
+    <Description />
+    <Filepath>cutie_anchor</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>204</ID>
+    <Name>Astralnpc</Name>
+    <Description />
+    <Filepath>cutie_astralnpc</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>192</ID>
+    <Name>Axe 2</Name>
+    <Description />
+    <Filepath>cutie_axe2</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>185</ID>
+    <Name>Beachball</Name>
+    <Description />
+    <Filepath>cutie_beachball</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>184</ID>
+    <Name>Cactus 1</Name>
+    <Description />
+    <Filepath>cutie_cactus1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>139</ID>
+    <Name>Citrine</Name>
+    <Description />
+    <Filepath>cutie_citrine</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>181</ID>
+    <Name>Comb</Name>
+    <Description />
+    <Filepath>cutie_comb1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>140</ID>
+    <Name>Cooking 3</Name>
+    <Description />
+    <Filepath>cutie_cooking3</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>141</ID>
+    <Name>Cooking 4</Name>
+    <Description />
+    <Filepath>cutie_cooking4</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>142</ID>
+    <Name>Dice 1</Name>
+    <Description />
+    <Filepath>cutie_dice1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>143</ID>
+    <Name>Drum 1</Name>
+    <Description />
+    <Filepath>cutie_drum1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>144</ID>
+    <Name>Earth</Name>
+    <Description />
+    <Filepath>cutie_earth</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>145</ID>
+    <Name>Fire 4</Name>
+    <Description />
+    <Filepath>cutie_fire4</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>205</ID>
+    <Name>Ellowee</Name>
+    <Description>Ellowee's cutiemark.</Description>
+    <Filepath>cutie_elloweenpc</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>206</ID>
+    <Name>Bonsai 1</Name>
+    <Description />
+    <Filepath>cutie_bonsai1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>207</ID>
+    <Name>Igloo 1</Name>
+    <Description />
+    <Filepath>cutie_igloo1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>208</ID>
+    <Name>Inksplat 1</Name>
+    <Description />
+    <Filepath>cutie_inksplat1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>209</ID>
+    <Name>Mallet 1</Name>
+    <Description />
+    <Filepath>cutie_mallet1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>210</ID>
+    <Name>Mortar 1</Name>
+    <Description />
+    <Filepath>cutie_mortar1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>211</ID>
+    <Name>Tubes 1</Name>
+    <Description />
+    <Filepath>cutie_tubes1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>212</ID>
+    <Name>Violin 1</Name>
+    <Description />
+    <Filepath>cutie_violin1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>213</ID>
+    <Name>Watch 1</Name>
+    <Description />
+    <Filepath>cutie_watch1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>214</ID>
+    <Name>Knight 1</Name>
+    <Description>Undefined</Description>
+    <Filepath>cutie_knight1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>215</ID>
+    <Name>Rook 1</Name>
+    <Description>Undefined</Description>
+    <Filepath>cutie_rook1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>216</ID>
+    <Name>Mask 2</Name>
+    <Description>Undefined</Description>
+    <Filepath>cutie_mask2</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>217</ID>
+    <Name>Mask 3</Name>
+    <Description>Undefined</Description>
+    <Filepath>cutie_mask3</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>218</ID>
+    <Name>Gear Wing</Name>
+    <Description>Undefined</Description>
+    <Filepath>cutie_gear_wing</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>219</ID>
+    <Name>Gold Mining</Name>
+    <Description />
+    <Filepath>cutie_mining_gold</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>220</ID>
+    <Name>Cirrusnpc</Name>
+    <Description>Undefined</Description>
+    <Filepath>cutie_cirrusnpc</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>221</ID>
+    <Name>Hullabaloonpc</Name>
+    <Description>Undefined</Description>
+    <Filepath>cutie_hullabaloonpc</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>222</ID>
+    <Name>Scribblenpc</Name>
+    <Description>Undefined</Description>
+    <Filepath>cutie_scribblenpc</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>223</ID>
+    <Name>Silverhoofnpc</Name>
+    <Description>Undefined</Description>
+    <Filepath>cutie_silverhoofnpc</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>224</ID>
+    <Name>Waywardnpc</Name>
+    <Description>Undefined</Description>
+    <Filepath>cutie_waywardnpc</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>225</ID>
+    <Name>Opalnpc</Name>
+    <Description>Undefined</Description>
+    <Filepath>cutie_opal_npc</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>226</ID>
+    <Name>Bits</Name>
+    <Description>Undefined</Description>
+    <Filepath>cutie_bits</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>227</ID>
+    <Name>Piggy</Name>
+    <Description>Undefined</Description>
+    <Filepath>cutie_piggy</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>228</ID>
+    <Name>Balloon 1</Name>
+    <Description>Undefined</Description>
+    <Filepath>cutie_balloon_animal</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>229</ID>
+    <Name>Bandaid</Name>
+    <Description>Undefined</Description>
+    <Filepath>cutie_bandaid</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>230</ID>
+    <Name>First Aid</Name>
+    <Description>Undefined</Description>
+    <Filepath>cutie_first_aid</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>231</ID>
+    <Name>Ice Pack</Name>
+    <Description>Undefined</Description>
+    <Filepath>cutie_ice_pack</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>232</ID>
+    <Name>Book 2</Name>
+    <Description>Undefined</Description>
+    <Filepath>cutie_book2</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>233</ID>
+    <Name>Snow 1</Name>
+    <Description>Undefined</Description>
+    <Filepath>cutie_snow1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>234</ID>
+    <Name>Cloud 1</Name>
+    <Description>Undefined</Description>
+    <Filepath>cutie_cloud1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>235</ID>
+    <Name>Scarf</Name>
+    <Description>Undefined</Description>
+    <Filepath>cutie_scarf</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>236</ID>
+    <Name>Vase 1</Name>
+    <Description>Undefined</Description>
+    <Filepath>cutie_vase1</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>237</ID>
+    <Name>Scribbles</Name>
+    <Description>Undefined</Description>
+    <Filepath>cutie_scribbles</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+  <CutieMark>
+    <ID>238</ID>
+    <Name>Equal</Name>
+    <Description />
+    <Filepath>cutie_equal</Filepath>
+    <Bonuses />
+    <MarkType>None</MarkType>
+  </CutieMark>
+</ArrayOfCutieMark>

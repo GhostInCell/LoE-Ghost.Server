@@ -74,7 +74,7 @@ namespace Ghost.Server.Core.Objects
         {
             if (_onwer.IsSpawned)
             {
-                if (--_ticks > 0)
+                if (--_ticks >= 0)
                 {
                     float effect; bool magick;
                     foreach (var item in _spell.Effects.Values)

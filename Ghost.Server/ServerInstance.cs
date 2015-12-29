@@ -71,13 +71,15 @@ namespace Ghost.Server
         public void DoCommand(string command)
         {
             string[] cmdArgs = null;
+            Action<string[]> cmdAction;
             int index = command.IndexOf(' ');
             if (index > 0)
             {
                 cmdArgs = command.Substring(index + 1).Split(' ').Select(x => x.Trim()).ToArray();
                 command = command.Remove(index);
             }
-            if (_cmdList.ContainsKey(command)) _cmdList[command](cmdArgs);
+            if (_cmdList.TryGetValue(command, out cmdAction))
+                cmdAction(cmdArgs);
             cmdArgs = null;
         }
         private bool Load()
