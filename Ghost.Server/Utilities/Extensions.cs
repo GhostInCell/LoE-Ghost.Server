@@ -277,8 +277,8 @@ namespace Ghost.Server.Utilities
             ret.CutieMark1 = bits.GetBits(ref index, 10);
             ret.CutieMark2 = bits.GetBits(ref index, 10);
             ret.Gender = (byte)bits.GetBits(ref index, 2);
-            ret.BodySize = MathHelper.Clamp(bits.GetBits(ref index, 32).ToFloatBits(), 0.9f, 1.1f);
-            ret.HornSize = MathHelper.Clamp(bits.GetBits(ref index, 32).ToFloatBits(), 0.8f, 1.25f);
+            ret.BodySize = MathHelper.Clamp(bits.GetBits(ref index, 32).BitsToFloat(), 0.9f, 1.1f);
+            ret.HornSize = MathHelper.Clamp(bits.GetBits(ref index, 32).BitsToFloat(), 0.8f, 1.25f);
             ret.Name = new string(new char[nameIndex += bits.GetBits(ref index, 5)]);
             fixed (char* ptr = ret.Name)
             {
@@ -354,9 +354,25 @@ namespace Ghost.Server.Utilities
             player.PlayerRpc(15, ChatType.System, string.Empty, msg, DateTime.Now, -1, ChatIcon.System, -1);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetBounds(this PNetR.Player player)
+        {
+            player.Rpc(210, (byte)70, Constants.DefaultRoomBoundsMin.X, Constants.DefaultRoomBoundsMin.Y, Constants.DefaultRoomBoundsMin.Z,
+                Constants.DefaultRoomBoundsMax.X, Constants.DefaultRoomBoundsMax.Y, Constants.DefaultRoomBoundsMax.Z);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetBounds(this PNetR.Player player, Vector3 min, Vector3 max)
+        {
+            player.Rpc(210, (byte)70, min.X, min.Y, min.Z, max.X, max.Y, max.Z);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SystemMsg(this PNetR.Player player, string msg)
         {
             player.Rpc(15, ChatType.System, string.Empty, string.Empty, msg, -1, -1, ChatIcon.System, DateTime.Now);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void UpdateFriend(this PNetS.Player player, FriendStatus status)
+        {
+            player.PlayerRpc(20, (byte)21, status);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Whisper(this PNetS.Player player, PNetS.Player target, ChatMsg msg)
@@ -425,7 +441,7 @@ namespace Ghost.Server.Utilities
             return ((CharacterType)race).ToString().Replace('_', ' ');
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static unsafe float ToFloatBits(this int @value)
+        public static unsafe float BitsToFloat(this int @value)
         {
             return *(float*)&@value;
         }
@@ -443,6 +459,13 @@ namespace Ghost.Server.Utilities
             msg.Write(vec.X);
             msg.Write(vec.Y);
             msg.Write(vec.Z);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void WritePosition(this NetMessage msg, Vector3 vec)
+        {
+            msg.WriteRangedSingle(vec.X, Constants.DefaultRoomBoundsMin.X, Constants.DefaultRoomBoundsMax.X, 16);
+            msg.WriteRangedSingle(vec.Y, Constants.DefaultRoomBoundsMin.Y, Constants.DefaultRoomBoundsMax.Y, 16);
+            msg.WriteRangedSingle(vec.Z, Constants.DefaultRoomBoundsMin.Z, Constants.DefaultRoomBoundsMax.Z, 16);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 ReadRotation(this NetMessage msg, ref bool full)
@@ -558,7 +581,7 @@ namespace Ghost.Server.Utilities
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Teleport(this PNetR.NetworkView view, Vector3 position)
         {
-            view.Rpc(2, 201, RpcMode.OthersOrdered, position.X, position.Y, position.Z);
+            view.Rpc(2, 201, RpcMode.AllOrdered, position.X, position.Y, position.Z);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void WearItem(this PNetR.NetworkView view, int id, byte slot)

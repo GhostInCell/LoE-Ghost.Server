@@ -217,6 +217,7 @@ namespace Ghost.Server.Core.Players
                 _player.Error($"Error while retrieving pony");
             else
             {
+                _player.SetBounds();
                 _save = new AutoSaveChar(this);
                 _object = new WO_Player(this);
                 _items.Initialize();

@@ -240,8 +240,8 @@ namespace Ghost.Server.Core.Players
                         {
                             _save.Friends.Remove(_status.ID);
                             target._save.Friends.Remove(_user.ID);
-                            _player.PlayerRpc(20, (byte)21, _status.Fill(target, OnlineStatus.Remove));
-                            target._player.PlayerRpc(20, (byte)21, _status.Fill(this, OnlineStatus.Remove));
+                            _player.UpdateFriend(_status.Fill(target, OnlineStatus.Remove));
+                            target._player.UpdateFriend(_status.Fill(this, OnlineStatus.Remove));
                         }
                         else
                             ServerLogger.LogInfo($"Player[{_player.Id}] received update friend status for offline user[{_status.ID}] status: {_status.Status}");
@@ -253,14 +253,14 @@ namespace Ghost.Server.Core.Players
                             {
                                 _save.Friends[target._user.ID] = (byte)OnlineStatus.Online;
                                 target._save.Friends[_user.ID] = (byte)OnlineStatus.Online;
-                                _player.PlayerRpc(20, (byte)21, _status.Fill(target, OnlineStatus.Online));
-                                target._player.PlayerRpc(20, (byte)21, _status.Fill(this, OnlineStatus.Online));
+                                _player.UpdateFriend(_status.Fill(target, OnlineStatus.Online));
+                                target._player.UpdateFriend(_status.Fill(this, OnlineStatus.Online));
                             }
                             else
                             {
                                 _save.Friends[target._user.ID] = (byte)OnlineStatus.Outgoing;
                                 target._save.Friends[_user.ID] = (byte)OnlineStatus.Incoming;
-                                target._player.PlayerRpc(20, (byte)21, _status.Fill(this, OnlineStatus.Incoming));
+                                target._player.UpdateFriend(_status.Fill(this, OnlineStatus.Incoming));
                             }
                         }
                         else
@@ -290,14 +290,14 @@ namespace Ghost.Server.Core.Players
                             {
                                 _save.Friends[target._user.ID] = (byte)OnlineStatus.Online;
                                 target._save.Friends[_user.ID] = (byte)OnlineStatus.Online;
-                                _player.PlayerRpc(20, (byte)21, _status.Fill(target, OnlineStatus.Online));
-                                target._player.PlayerRpc(20, (byte)21, _status.Fill(this, OnlineStatus.Online));
+                                _player.UpdateFriend(_status.Fill(target, OnlineStatus.Online));
+                                target._player.UpdateFriend(_status.Fill(this, OnlineStatus.Online));
                             }
                             else
                             {
                                 _save.Friends[target._user.ID] = (byte)OnlineStatus.Outgoing;
                                 target._save.Friends[_user.ID] = (byte)OnlineStatus.Incoming;
-                                target._player.PlayerRpc(20, (byte)21, _status.Fill(this, OnlineStatus.Incoming));
+                                target._player.UpdateFriend(_status.Fill(this, OnlineStatus.Incoming));
                             }
                         }
                         break;

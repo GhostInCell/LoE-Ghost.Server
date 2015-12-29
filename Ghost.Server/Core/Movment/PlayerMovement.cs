@@ -146,9 +146,9 @@ namespace Ghost.Server.Core.Movment
                     _player.Shop.CloseShop(_player);
                 if (_player.Trade.IsTrading && Vector3.Distance(_position, _player.Trade.Target.Object.Position) > Constants.MaxInteractionDistance)
                     _player.Trade.CloseBoth();
-                var msg = _object.View.CreateStream(_entry.AllocSize);
-                _entry.OnSerialize(msg); _object.View.SendStream(msg);
             }
+            var msg = _object.View.CreateStream(_entry.AllocSize);
+            _entry.OnSerialize(msg); _object.View.SendStream(msg);
         }
         #endregion
     }

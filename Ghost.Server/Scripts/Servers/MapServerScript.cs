@@ -54,7 +54,9 @@ namespace Ghost.Server.Scripts.Servers
             var player = _server[arg2.Sender.Id];
             if (player.User.Access == AccessLevel.Admin) icon = ChatIcon.Admin;
             if (player.User.Access == AccessLevel.Moderator) icon = ChatIcon.Mod;
-            if (message.Sum(x => char.IsUpper(x) ? 1 : 0) > message.Length / 4 + 4 || time < player.LastMsg)
+            if (message == Constants.StuckCommand)
+                _server.Objects.Teleport(player.Object, player.User.Spawn);
+            else if (message.Sum(x => char.IsUpper(x) ? 1 : 0) > message.Length / 4 + 4 || time < player.LastMsg)
                 player.Player.SystemMsg(Constants.ChatWarning);
             else
             {

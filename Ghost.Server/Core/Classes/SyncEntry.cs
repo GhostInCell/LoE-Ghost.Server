@@ -24,7 +24,7 @@ namespace Ghost.Server.Core.Classes
         public void OnSerialize(NetMessage message)
         {
             message.WriteFixedTime(Time, false);
-            message.Write(Position);
+            message.WritePosition(Position);
             message.WriteRotation(Rotation, FullRotation);
         }
         public void OnDeserialize(NetMessage message)

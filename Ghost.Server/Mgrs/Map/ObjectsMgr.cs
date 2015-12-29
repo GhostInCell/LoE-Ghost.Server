@@ -155,15 +155,23 @@ namespace Ghost.Server.Mgrs.Map
                     _nvObjects.Remove(obj.SGuid);
             }
         }
-        public bool SetPosition(WorldObject obj, ushort id = 0)
+        public void Teleport(WO_Player obj, ushort id = 0)
         {
             WorldObject obj01;
-            if (!_nsObjects.TryGetValue(id, out obj01) &&
-                !_nsObjects.TryGetValue(0, out obj01))
-                return false;
-            obj.Position = obj01.Position;
-            obj.Rotation = obj01.Rotation.ToRadians();
-            return true;
+            if (_nsObjects.TryGetValue(id, out obj01) || _nsObjects.TryGetValue(0, out obj01))
+            {
+                obj.Teleport(obj01.Position);
+                obj.Rotation = obj01.Rotation.ToRadians();
+            }
+        }
+        public void SetPosition(WorldObject obj, ushort id = 0)
+        {
+            WorldObject obj01;
+            if (_nsObjects.TryGetValue(id, out obj01) || _nsObjects.TryGetValue(0, out obj01))
+            {
+                obj.Position = obj01.Position;
+                obj.Rotation = obj01.Rotation.ToRadians();
+            }
         }
         public bool TryGetObject(uint guid, out WorldObject obj)
         {

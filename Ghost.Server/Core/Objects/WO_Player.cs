@@ -60,6 +60,10 @@ namespace Ghost.Server.Core.Objects
             _player.Data.Rotation = _movement.Rotation;
             Spawn();
         }
+        public void Teleport(Vector3 position)
+        {
+            _view.Teleport(_movement.Position = position);
+        }
         #region Events Handlers
         private void WO_Player_OnSpawn()
         {

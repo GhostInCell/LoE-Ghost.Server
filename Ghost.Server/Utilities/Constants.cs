@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Ghost.Server.Utilities
 {
@@ -35,12 +36,16 @@ namespace Ghost.Server.Utilities
         public const string Master = "Master";
         public const float LootDespawnTime = 32f;
         public const float PlayerRespawnTime = 8f;
-        
+
         public const float MaxSkillsDistance = 32f;
         public const float AnnounceDuration = 1.5f;
 
         public const float MeleeCombatDistance = 1.5f;
 
+        public static readonly Vector3 DefaultRoomBoundsMin = new Vector3(-2500f, -1000f, -2500f);
+        public static readonly Vector3 DefaultRoomBoundsMax = new Vector3(4250f, 2500f, 4250f);
+
+        public const string StuckCommand = "unstuck me";
         public const string Characters = "Characters";
         public const float MaxInteractionDistance = 8f;
         public const string Configs = "loe_server.cfg";
