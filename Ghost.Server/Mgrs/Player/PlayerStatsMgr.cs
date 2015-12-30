@@ -125,10 +125,9 @@ namespace Ghost.Server.Mgrs.Player
         }
         public override void DoDamage(CreatureObject other, float damage, bool isMagic = false)
         {
-            int lvlDif = other.Stats.Level - _level;
             StatHelper hStat = _stats[Stats.Health];
             StatHelper pStat = isMagic ? _stats[Stats.MagicResist] : _stats[Stats.Armor];
-            hStat.UpdateCurrent(-damage * (1f - MathHelper.Clamp((0.095f / (_level + lvlDif)) * pStat.Max, 0f, 0.75f)));
+            hStat.UpdateCurrent(-CalculateDamage(other.Stats.Level, damage, pStat.Max));
             if (hStat.Current == 0f)
             {
                 _creature.View.Rpc(4, 51, RpcMode.AllOrdered, (byte)Stats.Health, hStat.Max);

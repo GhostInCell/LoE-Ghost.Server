@@ -1,5 +1,4 @@
-﻿using Ghost.Server.Core.Movment;
-using Ghost.Server.Mgrs.Map;
+﻿using Ghost.Server.Mgrs.Map;
 using Ghost.Server.Utilities.Interfaces;
 using PNetR;
 using System.Numerics;
@@ -8,6 +7,7 @@ namespace Ghost.Server.Utilities.Abstracts
 {
     public abstract class CreatureObject : WorldObject
     {
+        protected bool _isKilled;
         protected StatsMgr _stats;
         protected NetworkView _view;
         protected MovementGenerator _movement;
@@ -79,7 +79,7 @@ namespace Ghost.Server.Utilities.Abstracts
         private void CreatureObject_OnDestroy()
         {
             _view.ClearSubscriptions();
-            _server.Room.Destroy(_view);
+            _server.Room.Destroy(_view, _isKilled ? Constants.Killed : (byte)0);
             if (_stats != null)
             {
                 _stats.Destroy();

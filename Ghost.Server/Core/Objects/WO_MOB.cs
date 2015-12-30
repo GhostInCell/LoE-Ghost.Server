@@ -1,7 +1,6 @@
 ﻿using Ghost.Server.Core.Classes;
 using Ghost.Server.Core.Events;
 using Ghost.Server.Core.Movment;
-using Ghost.Server.Core.Players;
 using Ghost.Server.Core.Structs;
 using Ghost.Server.Mgrs;
 using Ghost.Server.Mgrs.Map;
@@ -121,11 +120,13 @@ namespace Ghost.Server.Core.Objects
         }
         public void Kill()
         {
+            _isKilled = true;
             var player = _threat.Attacker;
             if (player != null)
             {
                 player.Player.Stats.AddExp(Talent.Combat, (uint)_stats.Level * 100);
-                new WO_Loot(_creature.LootID, this, player.Player, _manager);
+                if (_creature.LootID > 0)
+                    new WO_Loot(_creature.LootID, this, player.Player, _manager);
             }
             if ((_data.Flags & 1) == 1)
                 Despawn();
@@ -159,6 +160,7 @@ namespace Ghost.Server.Core.Objects
             _threat.Destroy();
             _threat = null;
             _target = null;
+            _tEntry = null;
         }
         #endregion
     }

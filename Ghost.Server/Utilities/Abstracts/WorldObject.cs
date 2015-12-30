@@ -107,6 +107,8 @@ namespace Ghost.Server.Utilities.Abstracts
             _manager.Remove(this);
             if ((_guid & Constants.ReleaseGuide) > 0)
                 _manager.ReleaseGuid(_guid);
+            if (this is IUpdatable)
+                _server.RemoveFromUpdate((IUpdatable)this);
             OnDestroy?.Invoke();
             if (OnSpawn != null)
                 foreach (var item in OnSpawn.GetInvocationList())

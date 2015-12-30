@@ -307,9 +307,9 @@ namespace Ghost.Server
                                             var pClass = _master[id];
                                             if (pClass != null && pClass.OnMap)
                                             {
-                                                if (args.Length >= 10 || !int.TryParse(args[09], out data01)) data01 = -1;
-                                                if (args.Length >= 11 || !int.TryParse(args[10], out data02)) data02 = -1;
-                                                if (args.Length >= 12 || !int.TryParse(args[11], out data03)) data03 = -1;
+                                                if (args.Length < 10 || !int.TryParse(args[09], out data01)) data01 = -1;
+                                                if (args.Length < 11 || !int.TryParse(args[10], out data02)) data02 = -1;
+                                                if (args.Length < 12 || !int.TryParse(args[11], out data03)) data03 = -1;
                                                 if (ServerDB.CreateObjectAt(pClass.Object, pClass.User.Map, guid, objectID, type, flags, time, data01, data02, data03))
                                                     Console.WriteLine($"Object [{guid}:{objectID}] created at map {pClass.User.Map} pos {pClass.Object.Position}");
                                                 else Console.WriteLine($"Error: can't create object [{guid}:{objectID}]");

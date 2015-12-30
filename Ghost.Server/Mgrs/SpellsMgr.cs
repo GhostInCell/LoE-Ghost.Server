@@ -73,9 +73,9 @@ namespace Ghost.Server.Mgrs
                             if (targetWO != player.Object)
                                 (targetWO as CreatureObject).Stats.DoDamage(player.Object, effect, item.Type == SpellEffectType.MagickDamage);
                             break;
-                        case SpellEffectType.FrontDamage:
-                        case SpellEffectType.MagicFrontDamage:
-                            magick = item.Type == SpellEffectType.MagicFrontDamage;
+                        case SpellEffectType.FrontAreaDamage:
+                        case SpellEffectType.MagicFrontAreaDamage:
+                            magick = item.Type == SpellEffectType.MagicFrontAreaDamage;
                             Vector3 direction = MathHelper.GetDirection(player.Object);
                             if ((item.Target & SpellTarget.Creature) != 0)
                                 foreach (var entry in player.Server.Objects.GetMobsInRadius(player.Object.Position + direction * item.Data01, item.Data02).ToArray())
@@ -117,9 +117,9 @@ namespace Ghost.Server.Mgrs
                                 area = true;
                             }
                             break;
-                        case SpellEffectType.FrontDamage:
-                        case SpellEffectType.MagicFrontDamage:
-                            magick = item.Type == SpellEffectType.MagicFrontDamage;
+                        case SpellEffectType.FrontAreaDamage:
+                        case SpellEffectType.MagicFrontAreaDamage:
+                            magick = item.Type == SpellEffectType.MagicFrontAreaDamage;
                             Vector3 direction = MathHelper.GetDirection(player.Object);
                             if ((item.Target & SpellTarget.Creature) != 0)
                                 foreach (var entry in player.Server.Objects.GetMobsInRadius(player.Object.Position + direction * item.Data01, item.Data02).ToArray())
@@ -127,7 +127,7 @@ namespace Ghost.Server.Mgrs
                             break;
                         case SpellEffectType.SplashDamage:
                         case SpellEffectType.MagicSplashDamage:
-                            magick = item.Type == SpellEffectType.MagicFrontDamage;
+                            magick = item.Type == SpellEffectType.MagicSplashDamage;
                             if ((item.Target & SpellTarget.Creature) != 0)
                                 foreach (var entry in player.Server.Objects.GetMobsInRadius(player.Object, item.Data02).ToArray())
                                     entry.Stats?.DoDamage(player.Object, effect, magick);

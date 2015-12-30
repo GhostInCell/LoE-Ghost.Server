@@ -23,13 +23,13 @@ namespace Ghost.Server.Utilities
     }
     public enum SpellEffectType : byte
     {
-        None,
+        Init,
         Damage,
         SplashDamage,
-        FrontDamage,
+        FrontAreaDamage,
         MagickDamage = 5,
-        MagicFrontDamage = 6,
-        MagicSplashDamage = 7,
+        MagicSplashDamage = 6,
+        MagicFrontAreaDamage = 7,
         Heal = 10,
         AreaInit = 250,
         AreaPeriodicDamage = 252,
@@ -43,10 +43,6 @@ namespace Ghost.Server.Utilities
         Choice = 254,
         Greetings = 253,
         Say = 0
-    }
-    public enum CompareType : byte
-    {
-        Equal, NotEqual, Lower, Greater, LowerOrEqual, GreaterOrEqual
     }
     public enum DialogCommand : byte
     {
