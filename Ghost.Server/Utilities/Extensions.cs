@@ -1,5 +1,6 @@
 ﻿using Ghost.Server.Core.Classes;
 using Ghost.Server.Core.Players;
+using Ghost.Server.Utilities.Abstracts;
 using MySql.Data.MySqlClient;
 using PNet;
 using System;
@@ -230,6 +231,11 @@ namespace Ghost.Server.Utilities
             return @value * (float)(Math.PI / 180f);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 GetDirection(WorldObject obj)
+        {
+            return Vector3.Transform(Vector3.UnitZ, Quaternion.CreateFromAxisAngle(Vector3.UnitY, obj.Rotation.Y));
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Quaternion GetRotation(Vector3 source, Vector3 dest, Vector3 up)
         {
             float dot = Vector3.Dot(source, dest);
@@ -433,7 +439,7 @@ namespace Ghost.Server.Utilities
             if (slot == ItemSlot.None)
                 return 0;
             else
-                return (byte)(Math.Log((int)slot, 2.0) + 1.0);
+                return (byte)(Math.Log((uint)slot, 2.0) + 1.0);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetRaceName(this byte race)
@@ -525,24 +531,6 @@ namespace Ghost.Server.Utilities
                     result.Z = (float)Math.Atan2(2f * q1.X * q1.W - 2f * q1.Y * q1.Z, -num2 + num3 - num4 + num);
                 }
             }
-            return result;
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Quaternion EulToQuat2(this Vector3 eu)
-        {
-            Quaternion result = new Quaternion();
-            double num = Math.Cos(eu.Y * 0.5);
-            double num2 = Math.Sin(eu.Y * 0.5);
-            double num3 = Math.Cos(eu.X * 0.5);
-            double num4 = Math.Sin(eu.X * 0.5);
-            double num5 = Math.Cos(eu.Z * 0.5);
-            double num6 = Math.Sin(eu.Z * 0.5);
-            double num7 = num * num3;
-            double num8 = num2 * num4;
-            result.W = (float)(num7 * num5 - num8 * num6);
-            result.X = (float)(num7 * num6 + num8 * num5);
-            result.Y = (float)(num2 * num3 * num5 + num * num4 * num6);
-            result.Z = (float)(num * num4 * num5 - num2 * num3 * num6);
             return result;
         }
     }

@@ -52,7 +52,7 @@ namespace Ghost.Server.Core.Classes
             Instances = new Dictionary<ushort, ushort>();
             Items = new Dictionary<byte, Tuple<int, int>>();
             Talents = new Dictionary<int, Tuple<uint, short>>();
-            SerWears = new SER_Wears(this);
+            SerWears = new SER_Wears(Wears);
             SerSkills = new SER_Skills(this);
             SerTalents = new SER_Talents(this);
             SerInventory = new SER_Inventory(this);

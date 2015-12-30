@@ -76,7 +76,7 @@ namespace Ghost.Server.Mgrs
                         case SpellEffectType.FrontDamage:
                         case SpellEffectType.MagicFrontDamage:
                             magick = item.Type == SpellEffectType.MagicFrontDamage;
-                            Vector3 direction = Vector3.Transform(Vector3.UnitZ, Quaternion.CreateFromAxisAngle(Vector3.UnitY, player.Object.Rotation.Y));
+                            Vector3 direction = MathHelper.GetDirection(player.Object);
                             if ((item.Target & SpellTarget.Creature) != 0)
                                 foreach (var entry in player.Server.Objects.GetMobsInRadius(player.Object.Position + direction * item.Data01, item.Data02).ToArray())
                                     entry.Stats?.DoDamage(player.Object, effect, magick);
@@ -120,7 +120,7 @@ namespace Ghost.Server.Mgrs
                         case SpellEffectType.FrontDamage:
                         case SpellEffectType.MagicFrontDamage:
                             magick = item.Type == SpellEffectType.MagicFrontDamage;
-                            Vector3 direction = Vector3.Transform(Vector3.UnitZ, Quaternion.CreateFromAxisAngle(Vector3.UnitY, player.Object.Rotation.Y));
+                            Vector3 direction = MathHelper.GetDirection(player.Object);
                             if ((item.Target & SpellTarget.Creature) != 0)
                                 foreach (var entry in player.Server.Objects.GetMobsInRadius(player.Object.Position + direction * item.Data01, item.Data02).ToArray())
                                     entry.Stats?.DoDamage(player.Object, effect, magick);

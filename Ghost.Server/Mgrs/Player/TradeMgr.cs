@@ -19,7 +19,7 @@ namespace Ghost.Server.Mgrs.Player
         private MapPlayer _target;
         private SER_Trade _offerItems;
         private TradeRejector _regected;
-        private List<Tuple<int, int>> _offer;
+        private Dictionary<int, int> _offer;
         public bool IsTrading
         {
             get { return _trading; }
@@ -31,7 +31,7 @@ namespace Ghost.Server.Mgrs.Player
         public TradeMgr(MapPlayer player)
         {
             _player = player;
-            _offer = new List<Tuple<int, int>>();
+            _offer = new Dictionary<int, int>();
             _offerItems = new SER_Trade(_offer);
         }
         public void Close()
@@ -100,25 +100,27 @@ namespace Ghost.Server.Mgrs.Player
         {
             lock (_lock)
             {
-                int length = _offer.Count;
-                for (int i = 0; i < length; i++)
-                    if (!_player.Items.HasItems(_offer[i].Item1, _offer[i].Item2))
+                foreach (var item in _offer)
+                {
+                    if (!_player.Items.HasItems(item.Key, item.Value))
                     {
                         CloseBoth();
                         return;
                     }
+                }
             }
             _target.Trade._ready = _ready = false;
             UpdateState();
         }
-        private void ProcessTrade(List<Tuple<int, int>> _toffer)
+        private void ProcessTrade(Dictionary<int, int> _toffer)
         {
-            int length = _offer.Count;
-            for (int i = 0; i < length; i++)
-                _player.Items.RemoveItems(_offer[i].Item1, _offer[i].Item2);
-            length = _toffer.Count;
-            for (int i = 0; i < length; i++)
-                _player.Items.AddItems(_toffer[i].Item1, _toffer[i].Item2);
+            lock (_lock)
+            {
+                foreach (var item in _offer)
+                    _player.Items.RemoveItems(item.Key, item.Value);
+                foreach (var item in _toffer)
+                    _player.Items.AddItems(item.Key, item.Value);
+            }
         }
         #region RPC Handlers
         [Rpc(1)]//Trade Request

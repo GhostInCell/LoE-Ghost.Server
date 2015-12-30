@@ -8,6 +8,7 @@ using Ghost.Server.Utilities;
 using Ghost.Server.Utilities.Abstracts;
 using PNet;
 using PNetR;
+using System.Collections.Generic;
 using System.Numerics;
 
 namespace Ghost.Server.Core.Objects
@@ -17,7 +18,9 @@ namespace Ghost.Server.Core.Objects
         private readonly DB_NPC _npc;
         private readonly DB_WorldObject _data;
         private SER_Shop shop_ser;
+        private SER_Wears wears_ser;
         private DialogScript _dialog;
+        private Dictionary<byte, int> _wears;
         public DB_NPC NPC
         {
             get
@@ -63,6 +66,20 @@ namespace Ghost.Server.Core.Objects
                 _dialog = _server.Dialogs.GetDialog(_npc.Dialog);
             if ((_npc.Flags & NPCFlags.Trader) > 0)
                 shop_ser = new SER_Shop(_npc.Items);
+            if ((_npc.Flags & NPCFlags.Wears) > 0)
+            {
+                DB_Item entry; byte slot;
+                _wears = new Dictionary<byte, int>();
+                wears_ser = new SER_Wears(_wears);
+                foreach (var item in _npc.Wears)
+                    if (item > 0 && DataMgr.Select(item, out entry))
+                    {
+                        slot = entry.Slot.ToWearSlot();
+                        if (_wears.ContainsKey(slot))
+                            ServerLogger.LogWarn($"NPC id {data.ObjectID} duplicate wear slot {entry.Slot}");
+                        else _wears[slot] = item;
+                    }
+            }
             _movement = new NullMovement(this);
             Spawn();
         }
@@ -72,6 +89,13 @@ namespace Ghost.Server.Core.Objects
             _view.Rpc(6, 23, player.Player);
         }
         #region RPC Handlers
+        private void RPC_07_04(NetMessage arg1, NetMessageInfo arg2)
+        {
+            if ((_npc.Flags & NPCFlags.Wears) > 0)
+                _view.Rpc(7, 4, arg2.Sender, wears_ser);
+            else
+                _view.Rpc(7, 4, arg2.Sender, Constants.MaxWornItems, (byte)0);
+        }
         private void RPC_04_53(NetMessage arg1, NetMessageInfo arg2)
         {
             _view.Rpc(4, 53, arg2.Sender, _npc.Level);
@@ -134,6 +158,7 @@ namespace Ghost.Server.Core.Objects
         {
             _view = _server.Room.Instantiate("PlayerBase", _movement.Position, _movement.Rotation);
             _view.FinishedInstantiation += View_FinishedInstantiation;
+            _view.SubscribeToRpc(7, 04, RPC_07_04);
             _view.SubscribeToRpc(4, 53, RPC_04_53);
             if ((_npc.Flags & NPCFlags.Trader) > 0)
             {

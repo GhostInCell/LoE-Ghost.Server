@@ -22,6 +22,7 @@ namespace Ghost.Server.Core.Objects
         private readonly DB_Creature _creature;
         private float _aTime;
         private WO_Player _target;
+        private TargetEntry _tEntry;
         private IScriptedAI _script;
         private AutoRespawn _respawn;
         private MobThreatMgr _threat;
@@ -91,6 +92,7 @@ namespace Ghost.Server.Core.Objects
             _stats = new MobStatsMgr(this);
             _threat = new MobThreatMgr(this);
             _movement = new MobMovement(this);
+            _tEntry = new TargetEntry() { SkillID = _creature.SpellID, Upgrade = 0 };
             Spawn();
         }
         public void Update(TimeSpan time)
@@ -111,9 +113,9 @@ namespace Ghost.Server.Core.Objects
                 }
                 else if (Vector3.Distance(_movement.Position, _target.Position) <= (Constants.MeleeCombatDistance + 0.1f))
                 {
-                    _view.PerformSkill(new TargetEntry() { Guid = _target.SGuid, SkillID = _creature.SpellID, Time = PNet.Utilities.Now, Upgrade = 0 });
+                    _view.PerformSkill(_tEntry.Fill(_target));
                     _target.Player.Stats.DoDamage(this, (_stats as MobStatsMgr).RandomDamage);
-                    if (_target.IsSpawned) _threat.Remove(_target);
+                    if (!_target.IsSpawned) _threat.Remove(_target);
                 }
             }
         }

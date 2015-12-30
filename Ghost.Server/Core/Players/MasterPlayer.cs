@@ -167,7 +167,11 @@ namespace Ghost.Server.Core.Players
                         break;
                     case ChatType.Whisper:
                         if (_lastWhisper != null)
-                            _player.Whisper(_lastWhisper.Player, _message);
+                        {
+                            if (_lastWhisper.Player != null)
+                                _player.Whisper(_lastWhisper.Player, _message);
+                            else _lastWhisper = null;
+                        }
                         break;
                     default:
                         _player.SystemMsg($"Chat type {_message.Type} not allowed!");

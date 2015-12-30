@@ -98,23 +98,23 @@ namespace Ghost.Server.Utilities
     }
     public class SER_Wears : INetSerializable
     {
-        private readonly CharData _data;
+        private readonly Dictionary<byte, int> _data;
         public int AllocSize
         {
             get
             {
-                return 2 + _data.Wears.Count * 5;
+                return 2 + _data.Count * 5;
             }
         }
-        public SER_Wears(CharData data)
+        public SER_Wears(Dictionary<byte, int> data)
         {
             _data = data;
         }
         public void OnSerialize(NetMessage message)
         {
             message.Write(Constants.MaxWornItems);
-            message.Write((byte)_data.Wears.Count);
-            foreach (var item in _data.Wears)
+            message.Write((byte)_data.Count);
+            foreach (var item in _data)
             {
                 message.Write((byte)(item.Key - 1));
                 message.Write(item.Value);
@@ -127,7 +127,7 @@ namespace Ghost.Server.Utilities
     }
     public class SER_Trade : INetSerializable
     {
-        private readonly List<Tuple<int, int>> _data;
+        private readonly Dictionary<int, int> _data;
         public int AllocSize
         {
             get
@@ -135,7 +135,7 @@ namespace Ghost.Server.Utilities
                 return 4 + _data.Count * 8;
             }
         }
-        public SER_Trade(List<Tuple<int, int>> data)
+        public SER_Trade(Dictionary<int, int> data)
         {
             _data = data;
         }
@@ -143,19 +143,23 @@ namespace Ghost.Server.Utilities
         {
             int length = _data.Count;
             message.Write(length);
-            for (int i = 0; i < length; i++)
+            foreach (var item in _data)
             {
-                message.Write(_data[i].Item1);
-                message.Write(_data[i].Item2);
+                message.Write(item.Key);
+                message.Write(item.Value);
             }
-
         }
         public void OnDeserialize(NetMessage message)
         {
-            _data.Clear();
-            int length = message.ReadInt32();
-            for (int i = 0; i < length; i++)
-                _data.Add(new Tuple<int, int>(message.ReadInt32(), message.ReadInt32()));
+            int item, nCount, oCount;
+            for (int length = message.ReadInt32(); length > 0; length--)
+            {
+                item = message.ReadInt32();
+                nCount = message.ReadInt32();
+                if (_data.TryGetValue(item, out oCount))
+                    _data[item] = nCount + oCount;
+                else _data[item] = nCount;
+            }
         }
     }
     public class SER_Skills : INetSerializable

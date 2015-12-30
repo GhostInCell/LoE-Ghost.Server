@@ -1,4 +1,5 @@
 ﻿using Ghost.Server.Utilities;
+using Ghost.Server.Utilities.Abstracts;
 using PNet;
 using System.Numerics;
 
@@ -25,6 +26,12 @@ namespace Ghost.Server.Core.Classes
         public TargetEntry()
         {
             Guid = -1;
+        }
+        public TargetEntry Fill(WorldObject obj)
+        {
+            Guid = obj.SGuid;
+            Time = PNet.Utilities.Now;
+            return this;
         }
         public void OnSerialize(NetMessage message)
         {

@@ -449,7 +449,7 @@ namespace Ghost.Server.Core
                                     if ((entry.Flags & NPCFlags.Trader) > 0)
                                         entry.Items.Add(_result.GetInt32(23));
                                     if ((entry.Flags & NPCFlags.Wears) > 0)
-                                        for (int i = 24; i <= 31; i++)
+                                        for (int i = 25; i <= 32; i++)
                                             entry.Wears.Add(_result.GetInt32(i));
                                     data[id] = entry;
                                 }

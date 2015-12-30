@@ -35,13 +35,13 @@ namespace Ghost.Server.Mgrs.Mob
         {
             lock (_threat)
             {
+                _threat.Remove(player);
                 if (_attacker == player)
                 {
                     _attacker = null;
                     if (_threat.Count > 0)
                         _attacker = _threat.OrderBy(x => x.Value).Last().Key;
                 }
-                _threat.Remove(player);
             }
         }
         public bool SelectTarget(out WO_Player player)
