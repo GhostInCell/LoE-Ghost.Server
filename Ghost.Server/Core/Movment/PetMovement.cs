@@ -110,14 +110,11 @@ namespace Ghost.Server.Core.Movment
         {
             if (_locked && _resetLock) _object.View.Lock(_locked = false);
             _entry.OnDeserialize(arg1);
-            float distance = Vector3.Distance(_position, _entry.Position);
-            _speed = (float)(distance / (_entry.Time - _time));
-            if (distance > 0.01 || _rotation.Y != _entry.Rotation.Y)
-            {
-                _time = _entry.Time;
-                _position = _entry.Position;
-                _rotation = _entry.Rotation;
-            }
+            //float distance = Vector3.Distance(_position, _entry.Position);
+            //_speed = (float)(distance / (_entry.Time - _time));
+            _time = _entry.Time;
+            _position = _entry.Position;
+            _rotation = _entry.Rotation;
             var msg = _object.View.CreateStream(_entry.AllocSize);
             _entry.OnSerialize(msg); _object.View.SendStream(msg);
 

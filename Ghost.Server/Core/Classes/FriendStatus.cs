@@ -1,24 +1,10 @@
 ﻿using Ghost.Server.Core.Players;
 using Ghost.Server.Core.Structs;
+using Ghost.Server.Utilities;
 using PNet;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ghost.Server.Core.Classes
 {
-    public enum OnlineStatus : byte
-    {
-        Offline,
-        Online,
-        Remove = 20,
-        Blocker = 22,
-        Blockee,
-        Incoming = 25,
-        Outgoing
-    }
     public class FriendStatus : INetSerializable
     {
         public int ID;

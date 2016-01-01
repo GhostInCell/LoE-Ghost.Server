@@ -108,16 +108,14 @@ namespace Ghost.Server.Mgrs.Player
         {
             var talantState = _player.Data.Talents[(int)talant];
             if (talantState.Item2 >= CharsMgr.MaxLevel) return;
-            var cLevel = talantState.Item2;
             var cExp = talantState.Item1 + exp + bonusExp;
-            var nExp = CalculateExpForLevel(talantState.Item2);
-            var nLevel = cExp >= nExp ? CalculateNewLevel(talantState.Item2, nExp, ref cExp) : talantState.Item2;
-            _player.Data.Talents[(int)talant] = new Tuple<uint, short>(cExp, nLevel);
-            if (cLevel != nLevel)
+            var level = CalculateNewLevel(talantState.Item2, ref cExp);
+            _player.Data.Talents[(int)talant] = new Tuple<uint, short>(cExp, level);
+            if (talantState.Item2 != level)
             {
                 UpdateBase();
                 _player.Player.Rpc(4, _player.Data.SerTalents);
-                _player.Player.Rpc(3, (int)talant, cExp, (int)nLevel);
+                _player.Player.Rpc(3, (int)talant, cExp, (int)level);
                 _creature.View.Rpc(4, 52, RpcMode.OwnerUnordered, SerStats);
                 _creature.View.Rpc(4, 53, RpcMode.AllUnordered, _player.Char.Level);
             }
@@ -125,6 +123,7 @@ namespace Ghost.Server.Mgrs.Player
         }
         public override void DoDamage(CreatureObject other, float damage, bool isMagic = false)
         {
+            if (!_creature.IsSpawned) return;
             StatHelper hStat = _stats[Stats.Health];
             StatHelper pStat = isMagic ? _stats[Stats.MagicResist] : _stats[Stats.Armor];
             hStat.UpdateCurrent(-CalculateDamage(other.Stats.Level, damage, pStat.Max));
@@ -186,19 +185,19 @@ namespace Ghost.Server.Mgrs.Player
                     break;
             }
         }
-        private uint CalculateExpForLevel(short level)
+        private short CalculateNewLevel(short level, ref uint cExp)
         {
-            if (level <= 0) level = 1;
-            else if (level > CharsMgr.MaxLevel) level = CharsMgr.MaxLevel;
-            return (uint)(level * 500 + (level - 1) * 500);
-        }
-        private short CalculateNewLevel(short cLevel, uint nExp, ref uint cExp)
-        {
-            cExp -= nExp; cLevel++;
-            if (cLevel >= CharsMgr.MaxLevel) return CharsMgr.MaxLevel;
-            while (cExp >= (nExp = CalculateExpForLevel(cLevel)) && cLevel < CharsMgr.MaxLevel)
-            { cExp -= nExp; cLevel++; }
-            return cLevel;
+            if (level >= CharsMgr.MaxLevel)
+                return CharsMgr.MaxLevel;
+            else if (level <= 0) level = 1;
+            while (level < CharsMgr.MaxLevel)
+            {
+                var nExp = (uint)(level * 500 + (level - 1) * 500);
+                if (cExp < nExp) break;
+                cExp -= nExp;
+                level++;
+            }
+            return level;
         }
     }
 }

@@ -174,6 +174,10 @@ namespace Ghost.Server.Core.Classes
                     return _npcs[entry.Npc] == player.Dialog;
                 case DialogCondition.NpcIndex_NotEqual:
                     return _npcs[entry.Npc] != player.Dialog;
+                case DialogCondition.Race_Equal:
+                    return player.Char.Pony.Race == entry.ConditionData01;
+                case DialogCondition.Race_NotEqual:
+                    return player.Char.Pony.Race != entry.ConditionData01;
                 case DialogCondition.State_Equal:
                     return dState == entry.ConditionData01;
                 case DialogCondition.State_NotEqual:

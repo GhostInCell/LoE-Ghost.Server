@@ -120,13 +120,20 @@ namespace Ghost.Server.Core.Objects
         }
         public void Kill()
         {
-            _isKilled = true;
-            var player = _threat.Attacker;
-            if (player != null)
+            lock (_resource)
             {
-                player.Player.Stats.AddExp(Talent.Combat, (uint)_stats.Level * 100);
+                if (_isKilled) return;
+                _isKilled = true;
+            }
+            var awards = _threat.ToAward;
+            if (awards.Length > 0)
+            {
+                var bonus = (uint)(_stats.Level * (awards.Length - 1));
                 if (_creature.LootID > 0)
-                    new WO_Loot(_creature.LootID, this, player.Player, _manager);
+                    new WO_Loot(_creature.LootID, this, awards[0].Player, _manager);
+                awards[0].Player.Stats.AddExp(Talent.Combat, (uint)_stats.Level * 25, bonus);
+                for (uint i = 1; i < awards.Length; i++)
+                    awards[i].Player.Stats.AddExp(Talent.Combat, (uint)(_stats.Level * 25f / i), bonus / i);
             }
             if ((_data.Flags & 1) == 1)
                 Despawn();
@@ -138,6 +145,7 @@ namespace Ghost.Server.Core.Objects
         {
             if (_resource == null) return;
             _respawn?.Destroy(); _respawn = null;
+            _isKilled = false;
             _stats.UpdateStats();
             _movement.Position = _data.Position;
             _movement.Rotation = _data.Rotation.ToRadians();
@@ -155,7 +163,7 @@ namespace Ghost.Server.Core.Objects
         }
         private void WO_MOB_OnDestroy()
         {
-            _respawn?.Destroy();
+            _respawn?.Destroy(); 
             _respawn = null;
             _threat.Destroy();
             _threat = null;

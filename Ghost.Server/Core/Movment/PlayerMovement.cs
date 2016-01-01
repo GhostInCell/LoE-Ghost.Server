@@ -119,7 +119,7 @@ namespace Ghost.Server.Core.Movment
             _entry.OnDeserialize(arg1);
             float distance = Vector3.Distance(_position, _entry.Position);
             _speed = (float)(distance / (_entry.Time - _time));
-            if (distance > 0.01 || _rotation.Y != _entry.Rotation.Y)
+            if (distance > 0.01)
             {
                 if (_speed > 25f && _player.User.Access < AccessLevel.TeamMember)
                     _player.Player.Disconnect("MOV EAX, #DEADC0DE");
@@ -138,15 +138,15 @@ namespace Ghost.Server.Core.Movment
                             else _running = _speed > 8.8f;
                             break;
                     }
-                    _time = _entry.Time;
-                    _position = _entry.Position;
-                    _rotation = _entry.Rotation;
                 }
                 if (_player.Shop != null && Vector3.Distance(_position, _player.Shop.Position) > Constants.MaxInteractionDistance)
                     _player.Shop.CloseShop(_player);
                 if (_player.Trade.IsTrading && Vector3.Distance(_position, _player.Trade.Target.Object.Position) > Constants.MaxInteractionDistance)
                     _player.Trade.CloseBoth();
             }
+            _time = _entry.Time;
+            _position = _entry.Position;
+            _rotation = _entry.Rotation;
             var msg = _object.View.CreateStream(_entry.AllocSize);
             _entry.OnSerialize(msg); _object.View.SendStream(msg);
         }

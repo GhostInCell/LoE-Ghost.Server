@@ -110,9 +110,8 @@ namespace Ghost.Server.Mgrs.Player
         }
         public bool HasInSlot(byte islot, int id, int amount)
         {
-            if (!_itemsHash.Contains(id)) return false;
-            var slotEntry = GetSlot(islot);
-            return slotEntry.Item1 == id && slotEntry.Item2 == amount;
+            Tuple<int, int> slot;
+            return _items.TryGetValue(islot, out slot) && slot.Item1 == id && slot.Item2 == amount;
         }
         private int GetFreeSlot()
         {
@@ -123,7 +122,8 @@ namespace Ghost.Server.Mgrs.Player
         }
         private Tuple<int, int> GetSlot(byte slot)
         {
-            return _items.ContainsKey(slot) ? _items[slot] : Empty;
+            Tuple<int, int> ret;
+            return _items.TryGetValue(slot, out ret) ? ret : Empty;
         }
         private int AddItem(DB_Item item, int amount)
         {

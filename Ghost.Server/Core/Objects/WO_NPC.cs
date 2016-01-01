@@ -62,7 +62,7 @@ namespace Ghost.Server.Core.Objects
             _data = data;
             if (!DataMgr.Select(data.ObjectID, out _npc))
                 ServerLogger.LogError($"NPC id {data.ObjectID} doesn't exist");
-            if ((_npc.Flags & NPCFlags.Scripted) > 0)
+            if ((_npc.Flags & NPCFlags.Dialog) > 0)
                 _dialog = _server.Dialogs.GetDialog(_npc.Dialog);
             if ((_npc.Flags & NPCFlags.Trader) > 0)
                 shop_ser = new SER_Shop(_npc.Items);

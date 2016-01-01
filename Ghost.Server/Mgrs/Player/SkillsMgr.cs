@@ -38,7 +38,6 @@ namespace Ghost.Server.Mgrs.Player
         }
         public void RemoveCooldown(int skillID)
         {
-            _cooldown[skillID].Destroy();
             _cooldown.Remove(skillID);
         }
         public void AddCooldown(int skillID, float seconds)

@@ -65,6 +65,7 @@ namespace Ghost.Server.Mgrs.Mob
         }
         public override void DoDamage(CreatureObject other, float damage, bool isMagic = false)
         {
+            if (!_creature.IsSpawned) return;
             StatHelper hStat = _stats[Stats.Health];
             StatHelper pStat = isMagic ? _stats[Stats.MagicResist] : _stats[Stats.Armor];
             hStat.UpdateCurrent(-CalculateDamage(other.Stats.Level, damage, pStat.Max));

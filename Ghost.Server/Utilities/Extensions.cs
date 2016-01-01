@@ -15,6 +15,16 @@ using System.Text;
 namespace Ghost.Server.Utilities
 {
     #region Enums
+    public enum OnlineStatus : byte
+    {
+        Offline,
+        Online,
+        Remove = 20,
+        Blocker = 22,
+        Blockee,
+        Incoming = 25,
+        Outgoing
+    }
     [Flags]
     public enum SpellTarget : byte
     {
@@ -63,6 +73,8 @@ namespace Ghost.Server.Utilities
 
         NpcIndex_Equal = 0x02,
         NpcIndex_NotEqual = 0x12,
+        Race_Equal = 0x22,
+        Race_NotEqual = 0x32,
 
         State_Equal = 0x03,
         State_NotEqual = 0x13,
@@ -127,7 +139,7 @@ namespace Ghost.Server.Utilities
     [Flags]
     public enum NPCFlags : byte
     {
-        None, Trader, Wears, Scripted = 4
+        None, Trader, Wears, Dialog = 4, Scripted = 8
     }
     [Flags]
     public enum ChatType : byte
@@ -440,7 +452,13 @@ namespace Ghost.Server.Utilities
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetRaceName(this byte race)
         {
-            return ((CharacterType)race).ToString().Replace('_', ' ');
+            switch (race)
+            {
+                case 1: return "Earth Pony";
+                case 2: return "Unicorn";
+                case 3: return "Pegasus";
+                default: return string.Empty;
+            }
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static unsafe float BitsToFloat(this int @value)

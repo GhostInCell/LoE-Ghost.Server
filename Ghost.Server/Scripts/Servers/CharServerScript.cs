@@ -34,7 +34,7 @@ namespace Ghost.Server.Scripts.Servers
             {
                 var character = index == -1 ? player.Data.Last() : player.Data[index];
                 player.User.Char = character.ID;
-                if (player.User.Char == 0 || !DataMgr.Select(character.Map, out map))
+                if (character.Map == 0 || !DataMgr.Select(character.Map, out map))
                     arg2.Sender.ChangeRoom(startMap[pony.Race]);
                 else
                     arg2.Sender.ChangeRoom(map.Name);

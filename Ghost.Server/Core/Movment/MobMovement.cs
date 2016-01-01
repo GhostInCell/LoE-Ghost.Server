@@ -72,7 +72,7 @@ namespace Ghost.Server.Core.Movment
         {
             if (!_locked)
             {
-                if (_mob.Target != null && _mob.Target.IsSpawned)
+                if (_mob.Target?.IsSpawned ?? false)
                 {
                     _direction = Vector3.Normalize(_position - _mob.Target.Position);
                     _rotation = MathHelper.GetRotation(-Vector3.UnitZ, _direction, Vector3.UnitY).QuatToEul2();
@@ -87,12 +87,9 @@ namespace Ghost.Server.Core.Movment
                 {
                     _direction = Vector3.Normalize(_position - _mob.SpawnPosition);
                     _rotation = MathHelper.GetRotation(-Vector3.UnitZ, _direction, Vector3.UnitY).QuatToEul2();
-                    if (Vector3.Distance(_position, _mob.SpawnPosition) > 0)
-                    {
-                        _position += (-_direction * (time.Milliseconds * (_mob.Stats.Speed / 50000f)));
-                        if (Vector3.Distance(_position, _mob.SpawnPosition) < Constants.MeleeCombatDistance)
-                            _position = _mob.SpawnPosition;
-                    }
+                    _position += (-_direction * (time.Milliseconds * (_mob.Stats.Speed / 50000f)));
+                    if (Vector3.Distance(_position, _mob.SpawnPosition) < Constants.MeleeCombatDistance)
+                        _position = _mob.SpawnPosition;
                 }
             }
             _entry.Position = _position;

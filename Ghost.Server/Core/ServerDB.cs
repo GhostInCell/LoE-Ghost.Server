@@ -334,7 +334,7 @@ namespace Ghost.Server.Core
             catch { return false; }
             finally { Monitor.Exit(_connection); }
         }
-        public static bool CreateNPC(ushort level, byte flags, PonyData pony, out int id)
+        public static bool CreateNPC(ushort level, byte flags, ushort dialog, byte index, ushort script, PonyData pony, out int id)
         {
             id = -1;
             if (!IsConnected) return false;
@@ -343,12 +343,16 @@ namespace Ghost.Server.Core
                 Monitor.Enter(_connection);
                 using (MySqlCommand _cmd = _connection.CreateCommand())
                 {
-                    _cmd.CommandText = $"INSERT INTO {tb_05} (level, flags, name, race, gender, eye, tail, hoof, mane, bodysize, hornsize, eyecolor, hoofcolor, bodycolor, " +
-                        "haircolor0, haircolor1, haircolor2, cutiemark0, cutiemark1, cutiemark2) VALUES (@level, @flags, @name, @race, @gender, @eye, @tail, @hoof, @mane, @bodysize, " +
-                        "@hornsize, @eyecolor, @hoofcolor, @bodycolor, @haircolor0, @haircolor1, @haircolor2, @cutiemark0, @cutiemark1, @cutiemark2);";
+                    _cmd.CommandText = $"INSERT INTO {tb_05} (flags, level, dialog, index, script, name, race, gender, eye, tail, hoof, mane, bodysize, hornsize, eyecolor, " +
+                        "hoofcolor, bodycolor, haircolor0, haircolor1, haircolor2, cutiemark0, cutiemark1, cutiemark2) VALUES (@flags, @level, @dialog, @index, @script, @name, " +
+                        "@race, @gender, @eye, " + "@tail, @hoof, @mane, @bodysize, @hornsize, @eyecolor, @hoofcolor, @bodycolor, @haircolor0, @haircolor1, @haircolor2, @cutiemark0, " +
+                        "@cutiemark1, @cutiemark2);";
                     _cmd.Parameters.AddWithValue("level", level);
                     _cmd.Parameters.AddWithValue("flags", flags);
+                    _cmd.Parameters.AddWithValue("index", index);
                     _cmd.Parameters.AddWithValue("eye", pony.Eye);
+                    _cmd.Parameters.AddWithValue("dialog", dialog);
+                    _cmd.Parameters.AddWithValue("script", script);
                     _cmd.Parameters.AddWithValue("mane", pony.Mane);
                     _cmd.Parameters.AddWithValue("tail", pony.Tail);
                     _cmd.Parameters.AddWithValue("hoof", pony.Hoof);
@@ -371,7 +375,6 @@ namespace Ghost.Server.Core
                         id = (int)_cmd.LastInsertedId;
                         return true;
                     }
-
                 }
                 return false;
             }
@@ -442,14 +445,14 @@ namespace Ghost.Server.Core
                             {
                                 id = _result.GetInt32(0);
                                 if (data.ContainsKey(id))
-                                    data[id].Items.Add(_result.GetInt32(23));
+                                    data[id].Items.Add(_result.GetInt32(24));
                                 else
                                 {
-                                    entry = new DB_NPC(id, _result.GetByte(1), _result.GetInt16(2), _result.GetUInt16(3), _result.GetByte(4), _result.GetPony(5));
+                                    entry = new DB_NPC(id, _result.GetByte(1), _result.GetInt16(2), _result.GetUInt16(3), _result.GetByte(4), _result.GetUInt16(5), _result.GetPony(6));
                                     if ((entry.Flags & NPCFlags.Trader) > 0)
-                                        entry.Items.Add(_result.GetInt32(23));
+                                        entry.Items.Add(_result.GetInt32(24));
                                     if ((entry.Flags & NPCFlags.Wears) > 0)
-                                        for (int i = 25; i <= 32; i++)
+                                        for (int i = 26; i <= 33; i++)
                                             entry.Wears.Add(_result.GetInt32(i));
                                     data[id] = entry;
                                 }

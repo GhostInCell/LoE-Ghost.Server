@@ -8,13 +8,18 @@ namespace Ghost.Server.Mgrs.Mob
 {
     public class MobThreatMgr
     {
+        private readonly object _lock = new object();
         private WO_MOB _mob;
-        private bool _inCombat;
-        private WO_Player _attacker;
         private Dictionary<WO_Player, int> _threat;
-        public WO_Player Attacker
+        public WO_Player[] ToAward
         {
-            get { return _attacker; }
+            get
+            {
+                lock (_lock)
+                {
+                    return _threat.OrderByDescending(x => x.Value).Select(x => x.Key).ToArray();
+                }
+            }
         }
         public MobThreatMgr(WO_MOB mob)
         {
@@ -23,32 +28,26 @@ namespace Ghost.Server.Mgrs.Mob
         }
         public void Clear()
         {
-            _threat.Clear();
+            lock (_lock)
+                _threat.Clear();
         }
         public void Destroy()
         {
             _mob = null;
-            _threat.Clear();
+            lock (_lock) 
+                _threat.Clear();
             _threat = null;
         }
         public void Remove(WO_Player player)
         {
-            lock (_threat)
-            {
+            lock (_lock)
                 _threat.Remove(player);
-                if (_attacker == player)
-                {
-                    _attacker = null;
-                    if (_threat.Count > 0)
-                        _attacker = _threat.OrderBy(x => x.Value).Last().Key;
-                }
-            }
         }
         public bool SelectTarget(out WO_Player player)
         {
-            player = null;
-            lock (_threat)
+            lock (_lock)
             {
+                player = null;
                 if (_threat.Count > 0)
                 {
                     foreach (var item in _threat.ToArray())
@@ -58,23 +57,18 @@ namespace Ghost.Server.Mgrs.Mob
                 foreach (var item in _mob.Manager.GetPlayersInRadius(_mob, Constants.MaxInteractionDistance))
                     if (!_threat.ContainsKey(item))
                         _threat[item] = item.Player.Char.Level;
+                return (player = _threat.OrderByDescending(x => x.Value).FirstOrDefault().Key) != null;
             }
-            if (_inCombat = _threat.Count > 0)
-                player = _threat.OrderBy(x => x.Value).Last().Key;
-            return _inCombat;
         }
         public void AddThreat(WO_Player player, int value)
         {
-            lock (_threat)
+            lock (_lock)
             {
-                if (_threat.Count == 0 || _attacker == null)
-                    _attacker = player;
                 if (_threat.ContainsKey(player))
                     _threat[player] += value;
                 else
                     _threat[player] = value;
             }
-
         }
     }
 }

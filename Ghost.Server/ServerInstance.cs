@@ -1,5 +1,4 @@
 ﻿using Ghost.Server.Core;
-using Ghost.Server.Core.Classes;
 using Ghost.Server.Core.Players;
 using Ghost.Server.Core.Servers;
 using Ghost.Server.Core.Structs;
@@ -8,7 +7,6 @@ using Ghost.Server.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 
 namespace Ghost.Server
 {
@@ -168,39 +166,44 @@ namespace Ghost.Server
             {
                 if (args?.Length >= 1 && args[0] != "?")
                 {
-                    switch (args[0])
+                    if (_master != null)
                     {
-                        case "create":
-                            if (args.Length >= 2)
-                            {
-                                ushort level; byte flags; int id;
-                                switch (args[1])
+                        switch (args[0])
+                        {
+                            case "create":
+                                if (args.Length >= 2)
                                 {
-                                    case "npc":
-                                        if (args.Length == 5 && ushort.TryParse(args[2], out level) && byte.TryParse(args[3], out flags))
-                                        {
-                                            try
+                                    ushort level, dialog, script; byte flags, index; int id;
+                                    switch (args[1])
+                                    {
+                                        case "npc":
+                                            if (args.Length == 5 && ushort.TryParse(args[2], out level) && byte.TryParse(args[3], out flags) &&
+                                            ushort.TryParse(args[4], out dialog) && byte.TryParse(args[5], out index) && ushort.TryParse(args[6], out script))
                                             {
-                                                if (ServerDB.CreateNPC(level, flags, args[4].ToPonyData(), out id))
-                                                    Console.WriteLine($"new NPC id {id} created!");
-                                                else Console.WriteLine($"Error: can't create new npc");
+                                                try
+                                                {
+                                                    if (ServerDB.CreateNPC(level, flags, dialog, index, script, args[7].ToPonyData(), out id))
+                                                        Console.WriteLine($"new NPC id {id} created!");
+                                                    else Console.WriteLine($"Error: can't create new npc");
+                                                }
+                                                catch
+                                                {
+                                                    Console.WriteLine($"Error: bad ponycode");
+                                                }
                                             }
-                                            catch
-                                            {
-                                                Console.WriteLine($"Error: bad ponycode");
-                                            }
-                                        }
-                                        else
-                                            Console.WriteLine("Using: data create npc level flags ponycode");
-                                        break;
-                                    default:
-                                        Console.WriteLine("Using: data create npc args");
-                                        break;
+                                            else
+                                                Console.WriteLine("Using: data create npc level flags dialogID dialogIndex scriptID ponycode");
+                                            break;
+                                        default:
+                                            Console.WriteLine("Using: data create npc args");
+                                            break;
+                                    }
                                 }
-                            }
-                            else Console.WriteLine("Using: data create npc args");
-                            break;
+                                else Console.WriteLine("Using: data create npc args");
+                                break;
+                        }
                     }
+                    else Console.WriteLine("Error: can't find master server in this instance");
                 }
                 else Console.WriteLine("Using: data create args");
             };
@@ -210,46 +213,50 @@ namespace Ghost.Server
             {
                 if (args?.Length >= 1 && args[0] != "?")
                 {
-                    ushort id;
-                    switch (args[0])
+                    if (_master != null)
                     {
-                        case "dialogs":
-                            if (args.Length >= 2)
-                            {
-                                switch (args[1])
+                        ushort id;
+                        switch (args[0])
+                        {
+                            case "dialogs":
+                                if (args.Length >= 2)
                                 {
-                                    case "clear":
-                                        if (args.Length >= 3 && ushort.TryParse(args[2], out id))
-                                        {
-                                            var pClass = _master[id];
-                                            if (pClass != null && pClass.OnMap)
-                                                pClass.Char.Data.Dialogs.Clear();
-                                            else Console.WriteLine($"Error: can't find player {id}");
-                                        }
-                                        else
-                                            Console.WriteLine("Using: player dialogs clear playerID");
-                                        break;
-                                    default:
-                                        Console.WriteLine("Using: player dialogs clear args");
-                                        break;
+                                    switch (args[1])
+                                    {
+                                        case "clear":
+                                            if (args.Length >= 3 && ushort.TryParse(args[2], out id))
+                                            {
+                                                var pClass = _master[id];
+                                                if (pClass != null && pClass.OnMap)
+                                                    pClass.Char.Data.Dialogs.Clear();
+                                                else Console.WriteLine($"Error: can't find player {id}");
+                                            }
+                                            else
+                                                Console.WriteLine("Using: player dialogs clear playerID");
+                                            break;
+                                        default:
+                                            Console.WriteLine("Using: player dialogs clear args");
+                                            break;
+                                    }
                                 }
-                            }
-                            else Console.WriteLine("Using: player dialogs clear args");
-                            break;
-                        case "kill":
-                            if (args.Length >= 1 && ushort.TryParse(args[1], out id))
-                            {
-                                var pClass = _master[id];
-                                if (pClass != null && pClass.OnMap)
-                                    (pClass.RoomPlayer as MapPlayer).Object.Despawn();
-                                else Console.WriteLine($"Error: can't find player {id}");
-                            }
-                            else Console.WriteLine("Using: player kill playerID");
-                            break;
-                        default:
-                            Console.WriteLine("Using: player kill|dialogs args");
-                            break;
+                                else Console.WriteLine("Using: player dialogs clear args");
+                                break;
+                            case "kill":
+                                if (args.Length >= 1 && ushort.TryParse(args[1], out id))
+                                {
+                                    var pClass = _master[id];
+                                    if (pClass != null && pClass.OnMap)
+                                        (pClass.RoomPlayer as MapPlayer).Object.Despawn();
+                                    else Console.WriteLine($"Error: can't find player {id}");
+                                }
+                                else Console.WriteLine("Using: player kill playerID");
+                                break;
+                            default:
+                                Console.WriteLine("Using: player kill|dialogs args");
+                                break;
+                        }
                     }
+                    else Console.WriteLine("Error: can't find master server in this instance");
                 }
                 else Console.WriteLine("Using: player kill|dialogs args");
             };
@@ -291,42 +298,46 @@ namespace Ghost.Server
             {
                 if (args?.Length >= 1 && args[0] != "?")
                 {
-                    switch (args[0])
+                    if (_master != null)
                     {
-                        case "create":
-                            if (args.Length >= 3 && args[1] == "at")
-                            {
-                                ushort id, guid; byte type, flags; float time;
-                                int objectID, data01, data02, data03;
-                                switch (args[2])
+                        switch (args[0])
+                        {
+                            case "create":
+                                if (args.Length >= 3 && args[1] == "at")
                                 {
-                                    case "player":
-                                        if (args.Length >= 9 && ushort.TryParse(args[3], out id) && ushort.TryParse(args[4], out guid) && int.TryParse(args[5], out objectID) && 
-                                        byte.TryParse(args[6], out type) && byte.TryParse(args[7], out flags) && float.TryParse(args[8], out time))
-                                        {
-                                            var pClass = _master[id];
-                                            if (pClass != null && pClass.OnMap)
+                                    ushort id, guid; byte type, flags; float time;
+                                    int objectID, data01, data02, data03;
+                                    switch (args[2])
+                                    {
+                                        case "player":
+                                            if (args.Length >= 9 && ushort.TryParse(args[3], out id) && ushort.TryParse(args[4], out guid) && int.TryParse(args[5], out objectID) &&
+                                            byte.TryParse(args[6], out type) && byte.TryParse(args[7], out flags) && float.TryParse(args[8], out time))
                                             {
-                                                if (args.Length < 10 || !int.TryParse(args[09], out data01)) data01 = -1;
-                                                if (args.Length < 11 || !int.TryParse(args[10], out data02)) data02 = -1;
-                                                if (args.Length < 12 || !int.TryParse(args[11], out data03)) data03 = -1;
-                                                if (ServerDB.CreateObjectAt(pClass.Object, pClass.User.Map, guid, objectID, type, flags, time, data01, data02, data03))
-                                                    Console.WriteLine($"Object [{guid}:{objectID}] created at map {pClass.User.Map} pos {pClass.Object.Position}");
-                                                else Console.WriteLine($"Error: can't create object [{guid}:{objectID}]");
+                                                var pClass = _master[id];
+                                                if (pClass != null && pClass.OnMap)
+                                                {
+                                                    if (args.Length < 10 || !int.TryParse(args[09], out data01)) data01 = -1;
+                                                    if (args.Length < 11 || !int.TryParse(args[10], out data02)) data02 = -1;
+                                                    if (args.Length < 12 || !int.TryParse(args[11], out data03)) data03 = -1;
+                                                    if (ServerDB.CreateObjectAt(pClass.Object, pClass.User.Map, guid, objectID, type, flags, time, data01, data02, data03))
+                                                        Console.WriteLine($"Object [{guid}:{objectID}] created at map {pClass.User.Map} pos {pClass.Object.Position}");
+                                                    else Console.WriteLine($"Error: can't create object [{guid}:{objectID}]");
+                                                }
+                                                else Console.WriteLine($"Error: can't determine position for {id}");
                                             }
-                                            else Console.WriteLine($"Error: can't determine position for {id}");
-                                        }
-                                        else
-                                            Console.WriteLine("Using: object create at player playerID guid objectID type flags time dataArgs");
-                                        break;
-                                    default:
-                                        Console.WriteLine("Using: object create at player args");
-                                        break;
+                                            else
+                                                Console.WriteLine("Using: object create at player playerID guid objectID type flags time dataArgs");
+                                            break;
+                                        default:
+                                            Console.WriteLine("Using: object create at player args");
+                                            break;
+                                    }
                                 }
-                            }
-                            else Console.WriteLine("Using: object create at player args");
-                            break;
+                                else Console.WriteLine("Using: object create at player args");
+                                break;
+                        }
                     }
+                    else Console.WriteLine("Error: can't find master server in this instance");
                 }
                 else Console.WriteLine("Using: object create args");
             };

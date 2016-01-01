@@ -19,7 +19,7 @@ namespace Ghost.Server.Core.Classes
         }
         public override string ToString()
         {
-            return $"time {Time:0.000000} <{Position.X:0.00}, {Position.Y:0.00}, {Position.Z:0.00}>";
+            return $"time {Time:0.000000} <{Position.X:0.00}, {Position.Y:0.00}, {Position.Z:0.00}> <{Rotation.Y:0.00}>";
         }
         public void OnSerialize(NetMessage message)
         {

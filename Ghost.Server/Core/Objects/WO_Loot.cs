@@ -36,7 +36,7 @@ namespace Ghost.Server.Core.Objects
         {
             get
             {
-                return _view.Id;
+                return (ushort)(_guid & 0xFFFF);
             }
         }
         public override Vector3 Position

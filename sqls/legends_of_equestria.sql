@@ -1,4 +1,4 @@
-﻿-- --------------------------------------------------------
+-- --------------------------------------------------------
 -- Хост:                         127.0.0.1
 -- Версия сервера:               5.6.17 - MySQL Community Server (GPL)
 -- ОС Сервера:                   Win64
@@ -43,6 +43,10 @@ CREATE TABLE IF NOT EXISTS `loe_character` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `CHAR NAME` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Дамп данных таблицы legends_of_equestria.loe_character: ~0 rows (приблизительно)
+/*!40000 ALTER TABLE `loe_character` DISABLE KEYS */;
+/*!40000 ALTER TABLE `loe_character` ENABLE KEYS */;
 
 
 -- Дамп структуры для таблица legends_of_equestria.loe_creature
@@ -887,7 +891,7 @@ CREATE TABLE IF NOT EXISTS `loe_map_object` (
   PRIMARY KEY (`map`,`guid`,`object`,`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_map_object: ~68 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_map_object: ~67 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_map_object` DISABLE KEYS */;
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(1, 0, -1, 0, 0, -72.8009, 0.305817, 152.089, 0, 18.8273, 0, -1, -1, -1, -1);
@@ -1122,6 +1126,7 @@ CREATE TABLE IF NOT EXISTS `loe_npc` (
   `level` smallint(6) NOT NULL,
   `dialog` smallint(5) unsigned NOT NULL,
   `index` tinyint(3) unsigned NOT NULL,
+  `script` smallint(5) unsigned NOT NULL,
   `name` varchar(64) NOT NULL,
   `race` tinyint(3) unsigned NOT NULL,
   `gender` tinyint(3) unsigned NOT NULL,
@@ -1143,16 +1148,14 @@ CREATE TABLE IF NOT EXISTS `loe_npc` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_npc: ~4 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_npc: ~3 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_npc` DISABLE KEYS */;
-INSERT INTO `loe_npc` (`id`, `flags`, `level`, `dialog`, `index`, `name`, `race`, `gender`, `eye`, `tail`, `hoof`, `mane`, `bodysize`, `hornsize`, `eyecolor`, `hoofcolor`, `bodycolor`, `haircolor0`, `haircolor1`, `haircolor2`, `cutiemark0`, `cutiemark1`, `cutiemark2`) VALUES
-	(1, 7, 5, 1, 0, 'Frederic Dash', 2, 2, 1, 10, 0, 16, 0.9, 0.98497, 8322980, 0, 16767615, 16744172, 16752626, 16744172, 54, 0, 0);
-INSERT INTO `loe_npc` (`id`, `flags`, `level`, `dialog`, `index`, `name`, `race`, `gender`, `eye`, `tail`, `hoof`, `mane`, `bodysize`, `hornsize`, `eyecolor`, `hoofcolor`, `bodycolor`, `haircolor0`, `haircolor1`, `haircolor2`, `cutiemark0`, `cutiemark1`, `cutiemark2`) VALUES
-	(2, 4, 4, 2, 0, 'Datura  Herb', 1, 2, 0, 13, 0, 13, 1.015, 1.06999, 3735528, 0, 8388489, 5414502, 718335, 15397375, 102, 0, 0);
-INSERT INTO `loe_npc` (`id`, `flags`, `level`, `dialog`, `index`, `name`, `race`, `gender`, `eye`, `tail`, `hoof`, `mane`, `bodysize`, `hornsize`, `eyecolor`, `hoofcolor`, `bodycolor`, `haircolor0`, `haircolor1`, `haircolor2`, `cutiemark0`, `cutiemark1`, `cutiemark2`) VALUES
-	(3, 4, 6, 2, 1, 'Tropical Tail', 3, 3, 1, 3, 0, 11, 1.045, 1.19997, 16764265, 0, 7533055, 5880319, 16775150, 16772854, 88, 0, 0);
-INSERT INTO `loe_npc` (`id`, `flags`, `level`, `dialog`, `index`, `name`, `race`, `gender`, `eye`, `tail`, `hoof`, `mane`, `bodysize`, `hornsize`, `eyecolor`, `hoofcolor`, `bodycolor`, `haircolor0`, `haircolor1`, `haircolor2`, `cutiemark0`, `cutiemark1`, `cutiemark2`) VALUES
-	(4, 0, 24, 0, 0, 'Marcus Rueda', 3, 2, 1, 2, 0, 10, 1.085, 0.81, 10223487, 0, 16744331, 8552447, 10592255, 8552447, 234, 0, 0);
+INSERT INTO `loe_npc` (`id`, `flags`, `level`, `dialog`, `index`, `script`, `name`, `race`, `gender`, `eye`, `tail`, `hoof`, `mane`, `bodysize`, `hornsize`, `eyecolor`, `hoofcolor`, `bodycolor`, `haircolor0`, `haircolor1`, `haircolor2`, `cutiemark0`, `cutiemark1`, `cutiemark2`) VALUES
+	(1, 7, 5, 1, 0, 0, 'Frederic Dash', 2, 2, 1, 10, 0, 16, 0.9, 0.98497, 8322980, 0, 16767615, 16744172, 16752626, 16744172, 54, 0, 0);
+INSERT INTO `loe_npc` (`id`, `flags`, `level`, `dialog`, `index`, `script`, `name`, `race`, `gender`, `eye`, `tail`, `hoof`, `mane`, `bodysize`, `hornsize`, `eyecolor`, `hoofcolor`, `bodycolor`, `haircolor0`, `haircolor1`, `haircolor2`, `cutiemark0`, `cutiemark1`, `cutiemark2`) VALUES
+	(2, 4, 4, 2, 0, 0, 'Datura  Herb', 1, 2, 0, 13, 0, 13, 1.015, 1.06999, 3735528, 0, 8388489, 5414502, 718335, 15397375, 102, 0, 0);
+INSERT INTO `loe_npc` (`id`, `flags`, `level`, `dialog`, `index`, `script`, `name`, `race`, `gender`, `eye`, `tail`, `hoof`, `mane`, `bodysize`, `hornsize`, `eyecolor`, `hoofcolor`, `bodycolor`, `haircolor0`, `haircolor1`, `haircolor2`, `cutiemark0`, `cutiemark1`, `cutiemark2`) VALUES
+	(3, 4, 6, 2, 1, 0, 'Tropical Tail', 3, 3, 1, 3, 0, 11, 1.045, 1.19997, 16764265, 0, 7533055, 5880319, 16775150, 16772854, 88, 0, 0);
 /*!40000 ALTER TABLE `loe_npc` ENABLE KEYS */;
 
 
@@ -1292,14 +1295,12 @@ CREATE TABLE IF NOT EXISTS `loe_spell` (
   PRIMARY KEY (`id`,`index`,`effect`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_spell: ~15 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_spell: ~16 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_spell` DISABLE KEYS */;
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
 	(2, 0, 255, 7, 80, 32, 2.5, 0, 0, 0);
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
-	(5, 0, 0, 15, 60, 2.5, 3, 0, 0, 0);
-INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
-	(5, 1, 1, 2, 0, 0, 0, 40, 25, 2);
+	(5, 0, 1, 2, 60, 2.5, 3, 40, 25, 2);
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
 	(9, 0, 250, 15, 80, 32, 12, 6, 6, 8);
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
@@ -1343,6 +1344,9 @@ CREATE TABLE IF NOT EXISTS `loe_user` (
   UNIQUE KEY `login` (`login`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- Дамп данных таблицы legends_of_equestria.loe_user: ~0 rows (приблизительно)
+/*!40000 ALTER TABLE `loe_user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `loe_user` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
