@@ -29,6 +29,7 @@ namespace Ghost.Server.Core
         private const string tb_09 = "loe_loot";
         private const string tb_10 = "loe_message";
         private const string tb_11 = "loe_spell";
+        private const string tb_12 = "loe_movement";
         private static bool IsConnected;
         private static readonly int _maxChars;
         private static readonly string _connectionString;
@@ -334,7 +335,7 @@ namespace Ghost.Server.Core
             catch { return false; }
             finally { Monitor.Exit(_connection); }
         }
-        public static bool CreateNPC(ushort level, byte flags, ushort dialog, byte index, ushort script, PonyData pony, out int id)
+        public static bool CreateNPC(ushort level, byte flags, ushort dialog, byte index, ushort movement, PonyData pony, out int id)
         {
             id = -1;
             if (!IsConnected) return false;
@@ -343,21 +344,21 @@ namespace Ghost.Server.Core
                 Monitor.Enter(_connection);
                 using (MySqlCommand _cmd = _connection.CreateCommand())
                 {
-                    _cmd.CommandText = $"INSERT INTO {tb_05} (flags, level, dialog, index, script, name, race, gender, eye, tail, hoof, mane, bodysize, hornsize, eyecolor, " +
-                        "hoofcolor, bodycolor, haircolor0, haircolor1, haircolor2, cutiemark0, cutiemark1, cutiemark2) VALUES (@flags, @level, @dialog, @index, @script, @name, " +
-                        "@race, @gender, @eye, " + "@tail, @hoof, @mane, @bodysize, @hornsize, @eyecolor, @hoofcolor, @bodycolor, @haircolor0, @haircolor1, @haircolor2, @cutiemark0, " +
+                    _cmd.CommandText = $"INSERT INTO {tb_05} (flags, level, dialog, `index`, movement, name, race, gender, eye, tail, hoof, mane, bodysize, hornsize, eyecolor, " +
+                        "hoofcolor, bodycolor, haircolor0, haircolor1, haircolor2, cutiemark0, cutiemark1, cutiemark2) VALUES (@flags, @level, @dialog, @index, @movement, @name, " +
+                        "@race, @gender, @eye, @tail, @hoof, @mane, @bodysize, @hornsize, @eyecolor, @hoofcolor, @bodycolor, @haircolor0, @haircolor1, @haircolor2, @cutiemark0, " +
                         "@cutiemark1, @cutiemark2);";
                     _cmd.Parameters.AddWithValue("level", level);
                     _cmd.Parameters.AddWithValue("flags", flags);
                     _cmd.Parameters.AddWithValue("index", index);
                     _cmd.Parameters.AddWithValue("eye", pony.Eye);
                     _cmd.Parameters.AddWithValue("dialog", dialog);
-                    _cmd.Parameters.AddWithValue("script", script);
                     _cmd.Parameters.AddWithValue("mane", pony.Mane);
                     _cmd.Parameters.AddWithValue("tail", pony.Tail);
                     _cmd.Parameters.AddWithValue("hoof", pony.Hoof);
                     _cmd.Parameters.AddWithValue("name", pony.Name);
                     _cmd.Parameters.AddWithValue("race", pony.Race);
+                    _cmd.Parameters.AddWithValue("movement", movement);
                     _cmd.Parameters.AddWithValue("gender", pony.Gender);
                     _cmd.Parameters.AddWithValue("bodysize", pony.BodySize);
                     _cmd.Parameters.AddWithValue("hornsize", pony.HornSize);
@@ -607,6 +608,35 @@ namespace Ghost.Server.Core
                                 if (!data.TryGetValue(id, out script)) data[id] = script = new DB_Dialog(id);
                                 script.Entries.Add(state, new DialogEntry(_result.GetByte(2), _result.GetByte(3), _result.GetInt32(4), _result.GetByte(5),
                                     _result.GetInt32(6), _result.GetInt32(7), _result.GetByte(8), _result.GetInt32(9), _result.GetInt32(10)));
+                            }
+                    }
+                }
+                return true;
+            }
+            catch { return false; }
+            finally { Monitor.Exit(_connection); }
+        }
+        public static bool SelectAllMovements(out Dictionary<int, DB_Movement> data)
+        {
+            data = new Dictionary<int, DB_Movement>();
+            if (!IsConnected) return false;
+            try
+            {
+                using (MySqlCommand _cmd = _connection.CreateCommand())
+                {
+                    _cmd.CommandText = $"SELECT * FROM {tb_12};";
+                    Monitor.Enter(_connection);
+                    using (MySqlDataReader _result = _cmd.ExecuteReader())
+                    {
+                        ushort id; ushort state; DB_Movement script;
+                        if (_result.HasRows)
+                            while (_result.Read())
+                            {
+                                id = _result.GetUInt16(0);
+                                state = _result.GetUInt16(1);
+                                if (!data.TryGetValue(id, out script)) data[id] = script = new DB_Movement(id);
+                                script.Entries.Add(state, new MovementEntry(_result.GetByte(2), _result.GetInt32(3), _result.GetInt32(4), _result.GetByte(5),
+                                    _result.GetInt32(6), _result.GetInt32(7), _result.GetVector3(8), _result.GetVector3(11)));
                             }
                     }
                 }

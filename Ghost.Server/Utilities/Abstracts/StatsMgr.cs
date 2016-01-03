@@ -52,7 +52,7 @@ namespace Ghost.Server.Utilities.Abstracts
         public abstract void DoDamage(CreatureObject other, float damage, bool isMagic = false);
         protected float CalculateDamage(short level, float damage, float protection)
         {
-            return damage * (1f - MathHelper.Clamp(0.09f / (_level >= level ? _level : level) * protection + (0.005f * (_level - level)), 0f, 0.75f));
+            return damage * (1f - MathHelper.Clamp(0.08f / (_level >= level ? _level : level) * protection + (0.005f * (_level - level)), 0.05f, 0.75f));
         }
         #region RPC Handlers
         private void RPC_053(NetMessage arg1, NetMessageInfo arg2)

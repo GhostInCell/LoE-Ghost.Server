@@ -1,11 +1,11 @@
-﻿using Ghost.Server.Core.Objects;
+﻿using Ghost.Server.Core.Movment;
+using Ghost.Server.Core.Objects;
 using Ghost.Server.Core.Players;
 using Ghost.Server.Core.Servers;
 using Ghost.Server.Core.Structs;
 using Ghost.Server.Mgrs;
 using Ghost.Server.Utilities;
 using Ghost.Server.Utilities.Interfaces.Script;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -32,6 +32,15 @@ namespace Ghost.Server.Core.Classes
                 return _server;
             }
         }
+        public DialogScript(DialogScript data)
+        {
+            _id = data._id;
+            _server = data._server;
+            _npcs = new WO_NPC[data._npcs.Length];
+            for (int i = 0; i < _npcs.Length; i++)
+                _npcs[i] = data._npcs[i];
+            _entries = data._entries;
+        }
         public DialogScript(DB_Dialog data, MapServer server)
         {
             _id = data.ID;
@@ -47,7 +56,11 @@ namespace Ghost.Server.Core.Classes
         }
         public void OnDialogEnd(MapPlayer player)
         {
-
+            for (int i = 0; i < _npcs.Length; i++)
+            {
+                if (_npcs[i] == null) continue;
+                _npcs[i].Movement.Unlock();
+            }
         }
         public void OnDialogNext(MapPlayer player)
         {
@@ -56,15 +69,23 @@ namespace Ghost.Server.Core.Classes
             if (_entries.TryGetValue(dState, out entry))
             {
                 ExecuteCommand(ref dState, false, player, entry);
-                if (entry.IsEnd) return;
-                if (!entry.IsGoTo) dState++;
-                Execute(ref dState, false, player);
+                if (!entry.IsEnd)
+                {
+                    if (!entry.IsGoTo) dState++;
+                    Execute(ref dState, false, player);
+                }
             }
             else player.DialogEnd();
             player.Data.Dialogs[_id] = dState;
         }
         public void OnDialogStart(MapPlayer player)
         {
+            for (int i = 0; i < _npcs.Length; i++)
+            {
+                if (_npcs[i] == null) continue;
+                _npcs[i].Movement.Lock(false);
+                _npcs[i].Movement.LookAt(player.Object);
+            }
             short dState = player.Data.GetDialogState(_id);
             foreach (var item in _entries.TakeWhile(x => x.Key < 0))
             {
@@ -202,6 +223,14 @@ namespace Ghost.Server.Core.Classes
                     return player.Stats.Level <= entry.ConditionData01;
                 case DialogCondition.Level_GreaterOrEqual:
                     return player.Stats.Level >= entry.ConditionData01;
+                case DialogCondition.Movement_Equal:
+                    if (_npcs[entry.Npc].Movement is ScriptedMovement)
+                        return (_npcs[entry.Npc].Movement as ScriptedMovement).State == entry.ConditionData01;
+                    return false;
+                case DialogCondition.Movement_NotEqual:
+                    if (_npcs[entry.Npc].Movement is ScriptedMovement)
+                        return (_npcs[entry.Npc].Movement as ScriptedMovement).State != entry.ConditionData01;
+                    return false;
                 case DialogCondition.LastChoice_Equal:
                     return player.LastDialogChoice == entry.ConditionData01;
                 case DialogCondition.LastChoice_NotEqual:
@@ -219,21 +248,25 @@ namespace Ghost.Server.Core.Classes
                 case DialogCondition.TalentLevel_GreaterOrEqual:
                     return player.Data.GetTalentLevel(entry.ConditionData02) >= entry.ConditionData01;
                 case DialogCondition.Item_HasCount:
+                    if (entry.ConditionData01 == -1)
+                        return player.Data.Bits >= entry.ConditionData02;
                     return player.Items.HasItems(entry.ConditionData01, entry.ConditionData02);
                 default: return false;
             }
         }
-        private void ExecuteCommand(ref short state, bool isStart, MapPlayer player, DialogEntry entry)
+        private void ExecuteCommand(ref short dState, bool isStart, MapPlayer player, DialogEntry entry)
         {
+            int var01; WO_NPC var02;
             switch (entry.Command)
             {
                 case DialogCommand.DialogEnd:
                     if (entry.CommandData01 > 0)
-                        player.Data.Dialogs[_id] = (short)entry.CommandData01;
+                        dState = (short)entry.CommandData01;
                     player.DialogEnd();
                     return;
                 case DialogCommand.GoTo:
-                    state = (short)entry.CommandData01;
+                    if (entry.CommandData01 >= 0)
+                        dState = (short)entry.CommandData01;
                     return;
                 case DialogCommand.AddXP:
                     if (entry.CommandData02 == -1)
@@ -252,6 +285,15 @@ namespace Ghost.Server.Core.Classes
                     break;
                 case DialogCommand.RemoveItem:
                     player.Items.RemoveItems(entry.CommandData01, entry.CommandData02);
+                    break;
+                case DialogCommand.CloneNPCIndex:
+                    if (!player.Clones.ContainsKey(_npcs[entry.Npc].NPC.ID))
+                        _npcs[entry.Npc].Clone(player);
+                    break;
+                case DialogCommand.SetCloneMoveState:
+                    var01 = _npcs[entry.Npc].NPC.ID;
+                    if (player.Clones.TryGetValue(var01, out var02) && var02.Movement is ScriptedMovement)
+                        (var02.Movement as ScriptedMovement).State = (ushort)entry.CommandData01;
                     break;
                 case DialogCommand.AddQuest:
                 case DialogCommand.RemoveQuest:

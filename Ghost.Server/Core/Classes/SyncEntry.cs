@@ -14,7 +14,7 @@ namespace Ghost.Server.Core.Classes
         {
             get
             {
-                return (FullRotation ? 3 : 1) + 16;
+                return (FullRotation ? 3 : 1) + 10;
             }
         }
         public override string ToString()

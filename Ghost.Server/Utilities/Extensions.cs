@@ -15,6 +15,15 @@ using System.Text;
 namespace Ghost.Server.Utilities
 {
     #region Enums
+    public enum MovementType : byte
+    {
+        Move = 0,
+        Stay = 1,
+    }
+    public enum MovementCommand : byte
+    {
+        None, SetSpeed, GoTo = 5
+    }
     public enum OnlineStatus : byte
     {
         Offline,
@@ -57,7 +66,8 @@ namespace Ghost.Server.Utilities
     public enum DialogCommand : byte
     {
         None, DialogEnd, GoTo, AddXP, AddBits, AddItem, RemoveBits, RemoveItem,
-        AddQuest, RemoveQuest, SetQuestState
+        AddQuest, RemoveQuest, SetQuestState,
+        CloneNPCIndex = 32, SetCloneMoveState
     }
     public enum DialogCondition : byte
     {
@@ -75,6 +85,8 @@ namespace Ghost.Server.Utilities
         NpcIndex_NotEqual = 0x12,
         Race_Equal = 0x22,
         Race_NotEqual = 0x32,
+        Movement_Equal = 0x42,
+        Movement_NotEqual = 0x52,
 
         State_Equal = 0x03,
         State_NotEqual = 0x13,
@@ -139,7 +151,7 @@ namespace Ghost.Server.Utilities
     [Flags]
     public enum NPCFlags : byte
     {
-        None, Trader, Wears, Dialog = 4, Scripted = 8
+        None, Trader, Wears, Dialog = 4, ScriptedMovement = 8
     }
     [Flags]
     public enum ChatType : byte
@@ -244,17 +256,17 @@ namespace Ghost.Server.Utilities
             return Vector3.Transform(Vector3.UnitZ, Quaternion.CreateFromAxisAngle(Vector3.UnitY, obj.Rotation.Y));
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Quaternion GetRotation(Vector3 source, Vector3 dest, Vector3 up)
+        public static Vector3 GetRotation(Vector3 source, Vector3 dest, Vector3 up)
         {
             float dot = Vector3.Dot(source, dest);
             if (Math.Abs(dot - (-1.0f)) < 0.000001f)
-                return new Quaternion(up, ToRadians(180.0f));
+                return new Quaternion(up, ToRadians(180.0f)).QuatToEul2();
             if (Math.Abs(dot - (1.0f)) < 0.000001f)
-                return Quaternion.Identity;
+                return Quaternion.Identity.QuatToEul2();
             float rotAngle = (float)Math.Acos(dot);
             Vector3 rotAxis = Vector3.Cross(source, dest);
             rotAxis = Vector3.Normalize(rotAxis);
-            return Quaternion.CreateFromAxisAngle(rotAxis, rotAngle);
+            return Quaternion.CreateFromAxisAngle(rotAxis, rotAngle).QuatToEul2();
         }
     }
     public static class StringExtension
@@ -320,20 +332,36 @@ namespace Ghost.Server.Utilities
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetMessage(this string msg, MapPlayer player)
         {
-            string literal;
+            string literal; char mod;
             int index01 = 0, index02;
             while ((index01 = msg.IndexOf('{', index01)) > 0)
             {
                 index02 = msg.IndexOf('}');
+                if (msg.Length > (index02 + 2) && msg[index02 + 1] == ':')
+                    mod = msg[index02 + 2];
+                else mod = '\0';
                 literal = msg.Substring(++index01, index02 - index01);
                 switch (literal)
                 {
+                    case "n":
+                        literal = "\r\n";
+                        break;
                     case "name":
                         literal = player.Char.Pony.Name;
                         break;
                     case "race":
                         literal = player.Char.Pony.Race.GetRaceName();
                         break;
+                }
+                if (mod != '\0')
+                {
+                    index02 += 2;
+                    switch (mod)
+                    {
+                        case 'l':
+                            literal = literal.ToLowerInvariant();
+                            break;                            
+                    }
                 }
                 msg = msg.Remove(--index01) + literal + msg.Substring(++index02);
             }

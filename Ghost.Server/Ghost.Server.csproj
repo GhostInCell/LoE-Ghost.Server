@@ -78,6 +78,7 @@
     <Compile Include="Core\Classes\DialogEntry.cs" />
     <Compile Include="Core\Classes\DialogScript.cs" />
     <Compile Include="Core\Classes\FriendStatus.cs" />
+    <Compile Include="Core\Classes\MovementEntry.cs" />
     <Compile Include="Core\Classes\PonyData.cs" />
     <Compile Include="Core\Classes\StatHelper.cs" />
     <Compile Include="Core\Classes\SyncEntry.cs" />
@@ -88,12 +89,14 @@
     <Compile Include="Core\Events\AutoRespawn.cs" />
     <Compile Include="Core\Events\AutoSaveChar.cs" />
     <Compile Include="Core\Events\CooldownReset..cs" />
+    <Compile Include="Core\Events\MovementWait.cs" />
     <Compile Include="Core\Events\TradeRejector.cs" />
     <Compile Include="Core\Events\VoidZoneTick.cs" />
     <Compile Include="Core\Movment\MobMovement.cs" />
     <Compile Include="Core\Movment\NullMovement.cs" />
     <Compile Include="Core\Movment\PetMovement.cs" />
     <Compile Include="Core\Movment\PlayerMovement.cs" />
+    <Compile Include="Core\Movment\ScriptedMovement.cs" />
     <Compile Include="Core\Objects\WO_Loot.cs" />
     <Compile Include="Core\Objects\WO_MOB.cs" />
     <Compile Include="Core\Objects\WO_NPC.cs" />
@@ -110,6 +113,7 @@
     <Compile Include="Core\Servers\MapServer.cs" />
     <Compile Include="Core\Servers\MasterServer.cs" />
     <Compile Include="Core\Structs\DB_Dialog.cs" />
+    <Compile Include="Core\Structs\DB_Movement.cs" />
     <Compile Include="Core\Structs\DB_Spell.cs" />
     <Compile Include="Core\Structs\DB_SpellEffect.cs" />
     <Compile Include="Core\Structs\DB_User.cs" />

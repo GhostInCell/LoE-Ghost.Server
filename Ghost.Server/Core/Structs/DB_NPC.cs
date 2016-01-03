@@ -8,21 +8,21 @@ namespace Ghost.Server.Core.Structs
     {
         public int ID;
         public short Level;
-        public ushort Script;
         public ushort Dialog;
         public PonyData Pony;
         public NPCFlags Flags;
         public List<int> Items;
         public List<int> Wears;
+        public ushort Movement;
         public byte DialogIndex;
-        public DB_NPC(int id, byte flags, short level, ushort dialog, byte index, ushort script, PonyData pony)
+        public DB_NPC(int id, byte flags, short level, ushort dialog, byte index, ushort movement, PonyData pony)
         {
             ID = id;
             Pony = pony;
             Level = level;
-            Script = script;
             Dialog = dialog;
             DialogIndex = index;
+            Movement = movement;
             Flags = (NPCFlags)flags;
             if ((Flags & NPCFlags.Trader) > 0)
                 Items = new List<int>();

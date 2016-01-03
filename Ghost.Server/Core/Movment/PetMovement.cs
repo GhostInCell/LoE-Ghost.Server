@@ -70,6 +70,9 @@ namespace Ghost.Server.Core.Movment
             _resetLock = reset;
             _object.View?.Lock(_locked = true);
         }
+        public override void LookAt(WorldObject obj)
+        {
+        }
         #region RPC Handlers
         [Rpc(201)]
         private void RPC_02_201(NetMessage arg1, NetMessageInfo arg2)

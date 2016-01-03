@@ -130,7 +130,6 @@ namespace Ghost.Server
             #region User
             _cmdList["user"] = (string[] args) =>
             {
-                const string _help = "Using: user info|create args";
                 if (args?.Length >= 1 && args[0] != "?")
                 {
                     switch (args[0])
@@ -154,11 +153,11 @@ namespace Ghost.Server
                                 Console.WriteLine($"User {id}, {user.Name} access {user.Access}, {(user.SID == null ? "offline" : (_master?.IsOnline(id) ?? false ? "online" : "offline/undefined"))}");
                             break;
                         default:
-                            Console.WriteLine(_help);
+                            Console.WriteLine("Using: user info|create args");
                             break;
                     }
                 }
-                else Console.WriteLine(_help);
+                else Console.WriteLine("Using: user info|create args");
             };
             #endregion
             #region Data
@@ -173,16 +172,16 @@ namespace Ghost.Server
                             case "create":
                                 if (args.Length >= 2)
                                 {
-                                    ushort level, dialog, script; byte flags, index; int id;
+                                    ushort level, dialog, movement; byte flags, index; int id;
                                     switch (args[1])
                                     {
                                         case "npc":
-                                            if (args.Length == 5 && ushort.TryParse(args[2], out level) && byte.TryParse(args[3], out flags) &&
-                                            ushort.TryParse(args[4], out dialog) && byte.TryParse(args[5], out index) && ushort.TryParse(args[6], out script))
+                                            if (args.Length == 8 && ushort.TryParse(args[2], out level) && byte.TryParse(args[3], out flags) &&
+                                            ushort.TryParse(args[4], out dialog) && byte.TryParse(args[5], out index) && ushort.TryParse(args[6], out movement))
                                             {
                                                 try
                                                 {
-                                                    if (ServerDB.CreateNPC(level, flags, dialog, index, script, args[7].ToPonyData(), out id))
+                                                    if (ServerDB.CreateNPC(level, flags, dialog, index, movement, args[7].ToPonyData(), out id))
                                                         Console.WriteLine($"new NPC id {id} created!");
                                                     else Console.WriteLine($"Error: can't create new npc");
                                                 }
@@ -192,7 +191,7 @@ namespace Ghost.Server
                                                 }
                                             }
                                             else
-                                                Console.WriteLine("Using: data create npc level flags dialogID dialogIndex scriptID ponycode");
+                                                Console.WriteLine("Using: data create npc level flags dialogID dialogIndex movementID ponycode");
                                             break;
                                         default:
                                             Console.WriteLine("Using: data create npc args");
@@ -350,9 +349,9 @@ namespace Ghost.Server
                     switch (args[0])
                     {
                         case "all":
-                            _master?.Restart();
-                            _characters?.Restart();
                             foreach (var item in _maps) item.Restart();
+                            _characters?.Restart();
+                            _master?.Restart();
                             break;
                         case "maps":
                             foreach (var item in _maps) item.Restart();

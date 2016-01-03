@@ -1,11 +1,8 @@
 ﻿using Ghost.Server.Core.Classes;
+using Ghost.Server.Core.Players;
 using Ghost.Server.Core.Servers;
 using Ghost.Server.Core.Structs;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ghost.Server.Mgrs.Map
 {
@@ -13,10 +10,12 @@ namespace Ghost.Server.Mgrs.Map
     {
         MapServer _server;
         private Dictionary<ushort, DialogScript> _dialogs;
+        private Dictionary<ushort, Dictionary<ushort, DialogScript>> _dClones;
         public DialogsMgr(MapServer server)
         {
             _server = server;
             _dialogs = new Dictionary<ushort, DialogScript>();
+            _dClones = new Dictionary<ushort, Dictionary<ushort, DialogScript>>();
         }
         public void Destroy()
         {
@@ -29,6 +28,34 @@ namespace Ghost.Server.Mgrs.Map
             DialogScript ret; DB_Dialog data;
             if (!_dialogs.TryGetValue(id, out ret) && DataMgr.Select(id, out data))
                 _dialogs[id] = ret = new DialogScript(data, _server);
+            return ret;
+        }
+        public void RemoveClones(ushort id)
+        {
+            _dClones.Remove(id);
+        }
+        public void RemoveClone(ushort id, MapPlayer owner)
+        {
+            Dictionary<ushort, DialogScript> clones;
+            if (_dClones.TryGetValue(owner.Player.Id, out clones))
+                clones.Remove(id);
+        }
+        public DialogScript GetClone(ushort id, MapPlayer owner)
+        {
+            Dictionary<ushort, DialogScript> clones; DialogScript original, ret = null;
+            if (_dialogs.TryGetValue(id, out original))
+            {
+                if (_dClones.TryGetValue(owner.Player.Id, out clones))
+                {
+                    if (!clones.TryGetValue(id, out ret))
+                        ret = new DialogScript(original);
+                }
+                else
+                    _dClones[owner.Player.Id] = new Dictionary<ushort, DialogScript>()
+                    {
+                        { id, ret = new DialogScript(original)}
+                    };
+            }
             return ret;
         }
     }

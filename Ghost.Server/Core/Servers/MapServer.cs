@@ -83,7 +83,6 @@ namespace Ghost.Server.Core.Servers
         {
             get { return _objects; }
         }
-
         public DialogsMgr Dialogs
         {
             get { return _dialogs; }
@@ -150,10 +149,11 @@ namespace Ghost.Server.Core.Servers
         #region Server Loop
         private void ServerLoop()
         {
-            int delay = Configs.Get<int>(Configs.Map_Reconnect); if (delay <= 0) delay = 2000;
+            int delay = Configs.Get<int>(Configs.Map_Reconnect);
             int tick = _cfg.TickRate; if (tick < 0) tick = 0;
+            IUpdatable[] toUpdate; if (delay <= 0) delay = 2000; 
             ServerTime timer = ServerTime.StartNew();
-            TimeSpan time01, time02 = timer.Elapsed;
+            TimeSpan time01, time02 = timer.Elapsed, time03;
             int timeout = delay, time;
             while (_running)
             {
@@ -166,10 +166,15 @@ namespace Ghost.Server.Core.Servers
                 }
                 else
                 {
-                    //time01 = timer.Elapsed - time02;
+                    time03 = timer.Elapsed - time02;
                     lock (_updatables)
                         if (_updatables.Count > 0)
-                            DoUpdate(timer.Elapsed - time02);
+                        {
+                            toUpdate = _updatables.ToArray();
+                            for (int i = 0; i < toUpdate.Length; i++)
+                                toUpdate[i].Update(time03);
+                            toUpdate = null;
+                        }
                 }
                 time02 = timer.Elapsed;
                 time = tick - (time02 - time01).Milliseconds;
@@ -191,14 +196,14 @@ namespace Ghost.Server.Core.Servers
         }
         private void Room_PlayerAdded(Player obj)
         {
-            var player = new MapPlayer(obj, this);
-            _players[obj.Id] = player;
+            _players[obj.Id] = new MapPlayer(obj, this);
             ServerLogger.LogServer(this, $" Player {obj.Id} added");
         }
         private void Room_PlayerRemoved(Player obj)
         {
             _players[obj.Id].Destroy();
             _players.Remove(obj.Id);
+            _dialogs.RemoveClones(obj.Id);
             ServerLogger.LogServer(this, $" Player {obj.Id} removed");
         }
         private INetSerializable Room_ConstructNetData()
@@ -224,15 +229,6 @@ namespace Ghost.Server.Core.Servers
             _rLoop.IsBackground = true;
             _running = true;
             _rLoop.Start();
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void DoUpdate(TimeSpan time)
-        {
-            IUpdatable[] toUpdate = _updatables.ToArray();
-            int length = toUpdate.Length;
-            for (int i = 0; i < length; i++)
-                toUpdate[i].Update(time);
-            toUpdate = null;
         }
     }
 }

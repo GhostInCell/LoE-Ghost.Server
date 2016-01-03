@@ -18,6 +18,7 @@ namespace Ghost.Server.Utilities
         public const byte TypeIDVoidZone = 0x80;
 
         public const uint ReleaseGuide = 0x1000000;
+        public const uint ClonedObject = 0x4000000;
         public const uint ServerObject = 0x80000000;
         public const uint PlayerObject = 0x40000000;
         public const uint DynamicObject = 0x8000000;
@@ -25,7 +26,8 @@ namespace Ghost.Server.Utilities
         public const uint InteractObject = 0x10000000;
 
         public const uint IDRObject = IRObject | DynamicObject;
-        public const uint DRObject = ReleaseGuide | DynamicObject;
+        public const uint CRObject = ClonedObject | ReleaseGuide;
+        public const uint DRObject = DynamicObject | ReleaseGuide;
         public const uint IRObject = InteractObject | ReleaseGuide;
 
         public const uint PlayerVarPet = 0xF0000000;

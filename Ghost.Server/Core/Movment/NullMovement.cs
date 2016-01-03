@@ -55,6 +55,9 @@ namespace Ghost.Server.Core.Movment
         public override void Lock(bool reset = true)
         {
         }
+        public override void LookAt(WorldObject obj)
+        {
+        }
         #region Events Handlers
         private void NullMovement_OnSpawn()
         {

@@ -3,8 +3,6 @@ using Ghost.Server.Core.Objects;
 using Ghost.Server.Utilities;
 using Ghost.Server.Utilities.Abstracts;
 using Ghost.Server.Utilities.Interfaces;
-using PNet;
-using PNetR;
 using System;
 using System.Numerics;
 
@@ -36,7 +34,6 @@ namespace Ghost.Server.Core.Movment
                 return false;
             }
         }
-
         public override bool IsMovable
         {
             get
@@ -44,7 +41,6 @@ namespace Ghost.Server.Core.Movment
                 return true;
             }
         }
-
         public MobMovement(WO_MOB obj) 
             : base(obj)
         {
@@ -74,37 +70,45 @@ namespace Ghost.Server.Core.Movment
             {
                 if (_mob.Target?.IsSpawned ?? false)
                 {
-                    _direction = Vector3.Normalize(_position - _mob.Target.Position);
-                    _rotation = MathHelper.GetRotation(-Vector3.UnitZ, _direction, Vector3.UnitY).QuatToEul2();
-                    if (Vector3.Distance(_position, _mob.Target.Position) >= (Constants.MeleeCombatDistance + 0.1f))
+                    if (Vector3.Distance(_position, _mob.Target.Position) > Constants.MeleeCombatDistance)
                     {
-                        _position += (-_direction * (time.Milliseconds * (_mob.Stats.Speed / 50000f)));
-                        if (Vector3.Distance(_position, _mob.Target.Position) < Constants.MeleeCombatDistance)
-                            _position = _mob.Target.Position + (_direction * Constants.MeleeCombatDistance);
+                        _direction = Vector3.Normalize(_mob.Target.Position - _position);
+                        _rotation = MathHelper.GetRotation(Vector3.UnitZ, _direction, Vector3.UnitY);
+                        var offset = (_direction * ((time.Milliseconds / 1000f) * _speed / 45f));
+                        if (Vector3.Distance(_position, _mob.Target.Position) > Constants.MeleeCombatDistance + offset.Length())
+                            _position += offset;
+                        else
+                            _position = _mob.Target.Position - (_direction * (Constants.MeleeCombatDistance - 0.05f));
                     }
                 }
                 else if (Vector3.Distance(_position, _mob.SpawnPosition) > 0)
                 {
-                    _direction = Vector3.Normalize(_position - _mob.SpawnPosition);
-                    _rotation = MathHelper.GetRotation(-Vector3.UnitZ, _direction, Vector3.UnitY).QuatToEul2();
-                    _position += (-_direction * (time.Milliseconds * (_mob.Stats.Speed / 50000f)));
-                    if (Vector3.Distance(_position, _mob.SpawnPosition) < Constants.MeleeCombatDistance)
+                    _direction = Vector3.Normalize(_mob.SpawnPosition - _position);
+                    _rotation = MathHelper.GetRotation(Vector3.UnitZ, _direction, Vector3.UnitY);
+                    var offset = (_direction * ((time.Milliseconds / 1000f) * _speed / 45f));
+                    if (Vector3.Distance(_position, _mob.SpawnPosition) > offset.Length())
+                        _position += offset;
+                    else
                         _position = _mob.SpawnPosition;
                 }
+                _entry.Position = _position;
+                _entry.Rotation = _rotation;
+                _entry.Time = PNet.Utilities.Now;
+                var msg = _mob.View.CreateStream(_entry.AllocSize);
+                _entry.OnSerialize(msg); _mob.View.SendStream(msg);
             }
-            _entry.Position = _position;
-            _entry.Rotation = _rotation;
-            _entry.Time = PNet.Utilities.Now;
-            var msg = _mob.View.CreateStream(_entry.AllocSize);
-            _entry.OnSerialize(msg); _mob.View.SendStream(msg);
         }
         public override void Lock(bool reset = true)
         {
             _locked = true;
         }
+        public override void LookAt(WorldObject obj)
+        {
+        }
         #region Events Handlers
         private void MobMovement_OnSpawn()
         {
+            _speed = _object.Stats.Speed;
             _object.View.GettingPosition += View_GettingPosition;
             _object.View.GettingRotation += View_GettingRotation;
         }

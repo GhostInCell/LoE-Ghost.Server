@@ -17,10 +17,14 @@ namespace Ghost.Server.Mgrs
         private readonly static Dictionary<int, DB_Spell> _spells;
         private readonly static Dictionary<int, DB_Dialog> _dialogs;
         private readonly static Dictionary<int, DB_Creature> _creatures;
+        private readonly static Dictionary<int, DB_Movement> _movements;
         private readonly static Dictionary<int, Tuple<ushort, string>> _messages;
         public static string Info
         {
-            get { return $"Maps {_maps.Count}; Items {_items.Count}; NPCs {_npcs.Count}; Loots {_loots.Count}; Spells {_spells.Count}; Dialogs {_dialogs.Count}; Creatures {_creatures.Count}; Resources {_resources.Count}"; }
+            get
+            {
+                return $"Maps {_maps.Count}; Items {_items.Count}; NPCs {_npcs.Count}; Loots {_loots.Count}; Spells {_spells.Count}; Dialogs {_dialogs.Count}; Movements {_movements.Count}; Creatures {_creatures.Count}; Resources {_resources.Count}";
+            }
         }
         public static bool IsLoaded
         {
@@ -29,7 +33,6 @@ namespace Ghost.Server.Mgrs
         static DataMgr()
         {
             _loaded = true;
-
             _loaded &= ServerDB.SelectAllMaps(out _maps);
             _loaded &= ServerDB.SelectAllNPCs(out _npcs);
             _loaded &= ServerDB.SelectAllItems(out _items);
@@ -39,7 +42,7 @@ namespace Ghost.Server.Mgrs
             _loaded &= ServerDB.SelectAllMessages(out _messages);
             _loaded &= ServerDB.SelectAllResources(out _resources);
             _loaded &= ServerDB.SelectAllCreatures(out _creatures);
-
+            _loaded &= ServerDB.SelectAllMovements(out _movements);
         }
         public static DB_Map SelectMap(int id)
         {
@@ -104,6 +107,10 @@ namespace Ghost.Server.Mgrs
         public static bool Select(int id, out DB_Creature entry)
         {
             return _creatures.TryGetValue(id, out entry);
+        }
+        public static bool Select(int id, out DB_Movement entry)
+        {
+            return _movements.TryGetValue(id, out entry);
         }
     }
 }

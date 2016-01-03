@@ -17,6 +17,8 @@ namespace Ghost.Server.Core.Objects
     {
         private readonly DB_NPC _npc;
         private readonly DB_WorldObject _data;
+        private MapPlayer _owner;
+        private WO_NPC _original;
         private SER_Shop shop_ser;
         private SER_Wears wears_ser;
         private DialogScript _dialog;
@@ -56,6 +58,37 @@ namespace Ghost.Server.Core.Objects
                 return _data.Rotation;
             }
         }
+        public WO_NPC(WO_NPC original, MapPlayer owner)
+            : base(original._manager.GetNewGuid() | Constants.CRObject, original._manager)
+        {
+            _owner = owner;
+            _original = original;
+            _npc = original._npc;
+            _data = original._data;
+            if ((_npc.Flags & NPCFlags.Dialog) > 0)
+                _dialog = _server.Dialogs.GetClone(_npc.Dialog, owner);
+            if ((_npc.Flags & NPCFlags.Trader) > 0)
+                shop_ser = new SER_Shop(_npc.Items, $"{_npc.Pony.Name}'s shop");
+            if ((_npc.Flags & NPCFlags.Wears) > 0)
+            {
+                DB_Item entry; byte slot;
+                _wears = new Dictionary<byte, int>();
+                wears_ser = new SER_Wears(_wears);
+                foreach (var item in _npc.Wears)
+                    if (item > 0 && DataMgr.Select(item, out entry))
+                    {
+                        slot = entry.Slot.ToWearSlot();
+                        if (_wears.ContainsKey(slot))
+                            ServerLogger.LogWarn($"NPC id {_data.ObjectID} duplicate wear slot {entry.Slot}");
+                        else _wears[slot] = item;
+                    }
+            }
+            if ((_npc.Flags & NPCFlags.ScriptedMovement) > 0)
+                _movement = new ScriptedMovement(original._movement as ScriptedMovement, this);
+            else
+                _movement = new NullMovement(this);
+            Spawn();
+        }
         public WO_NPC(DB_WorldObject data, ObjectsMgr manager)
             : base(manager.GetNewGuid() | Constants.ReleaseGuide, manager)
         {
@@ -65,7 +98,7 @@ namespace Ghost.Server.Core.Objects
             if ((_npc.Flags & NPCFlags.Dialog) > 0)
                 _dialog = _server.Dialogs.GetDialog(_npc.Dialog);
             if ((_npc.Flags & NPCFlags.Trader) > 0)
-                shop_ser = new SER_Shop(_npc.Items);
+                shop_ser = new SER_Shop(_npc.Items, $"{_npc.Pony.Name}'s shop");
             if ((_npc.Flags & NPCFlags.Wears) > 0)
             {
                 DB_Item entry; byte slot;
@@ -80,11 +113,20 @@ namespace Ghost.Server.Core.Objects
                         else _wears[slot] = item;
                     }
             }
-            _movement = new NullMovement(this);
+            if ((_npc.Flags & NPCFlags.ScriptedMovement) > 0)
+                _movement = new ScriptedMovement(_npc.Movement, this);
+            else
+                _movement = new NullMovement(this);
             Spawn();
+        }
+        public void Clone(MapPlayer player)
+        {
+            player.Clones[_npc.ID] = new WO_NPC(this, player);
+            _view.RebuildVisibility();
         }
         public void CloseShop(MapPlayer player)
         {
+            _movement.Unlock();
             player.Shop = null;
             _view.Rpc(6, 23, player.Player);
         }
@@ -133,13 +175,16 @@ namespace Ghost.Server.Core.Objects
             MapPlayer player = _server[arg2.Sender.Id];
             if ((_npc.Flags & NPCFlags.Trader) > 0 && Vector3.Distance(player.Object.Position, _movement.Position) <= Constants.MaxInteractionDistance)
             {
+                _movement.Lock(false);
+                _movement.LookAt(player.Object);
                 player.Shop = this;
-                _view.Rpc(6, 22, arg2.Sender, shop_ser, $"{_npc.Pony.Name}'s shop");
+                _view.Rpc(6, 22, arg2.Sender, shop_ser);
             }
         }
         private void RPC_06_23(NetMessage arg1, NetMessageInfo arg2)
         {
             MapPlayer player = _server[arg2.Sender.Id];
+            _movement.Unlock();
             player.Shop = null;
             _view.Rpc(6, 23, arg2.Sender);
         }
@@ -157,6 +202,7 @@ namespace Ghost.Server.Core.Objects
         private void WO_NPC_OnSpawn()
         {
             _view = _server.Room.Instantiate("PlayerBase", _movement.Position, _movement.Rotation);
+            _view.CheckVisibility += View_CheckVisibility;
             _view.FinishedInstantiation += View_FinishedInstantiation;
             _view.SubscribeToRpc(7, 04, RPC_07_04);
             _view.SubscribeToRpc(4, 53, RPC_04_53);
@@ -176,14 +222,29 @@ namespace Ghost.Server.Core.Objects
         private void WO_NPC_OnDespawn()
         {
             if (_dialog != null) _dialog.NPC[_npc.DialogIndex] = null;
+            _view.CheckVisibility -= View_CheckVisibility;
             _view.FinishedInstantiation -= View_FinishedInstantiation;
         }
         private void WO_NPC_OnDestroy()
         {
-            if (_dialog != null) _dialog.NPC[_npc.DialogIndex] = null;
+            if (_dialog != null)
+            {
+                _dialog.NPC[_npc.DialogIndex] = null;
+                if (_owner != null)
+                    _server.Dialogs.RemoveClone(_dialog.ID, _owner);
+            }
+            if (_owner != null) _owner.Clones.Remove(_npc.ID);
+            _view.CheckVisibility -= View_CheckVisibility;
             _view.FinishedInstantiation -= View_FinishedInstantiation;
+            if (_original != null && _original.IsSpawned)
+                _original._view.RebuildVisibility();
             _dialog = null;
             shop_ser = null;
+        }
+        private bool View_CheckVisibility(Player arg)
+        {
+            MapPlayer player = _server[arg.Id];
+            return _owner != null ? arg.Id == _owner.Player.Id : player == null || !player.Clones.ContainsKey(_npc.ID);
         }
         private void View_FinishedInstantiation(Player obj)
         {

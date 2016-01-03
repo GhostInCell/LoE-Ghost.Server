@@ -51,5 +51,6 @@ namespace Ghost.Server.Utilities.Abstracts
         public abstract void Unlock();
         public abstract void Destroy();
         public abstract void Lock(bool reset = true);
+        public abstract void LookAt(WorldObject obj);
     }
 }

@@ -76,6 +76,9 @@ namespace Ghost.Server.Core.Movment
             _resetLock = reset;
             _object.View?.Lock(_locked = true);
         }
+        public override void LookAt(WorldObject obj)
+        {
+        }
         #region RPC Handlers
         [Rpc(201)]
         private void RPC_02_201(NetMessage arg1, NetMessageInfo arg2)
@@ -115,7 +118,12 @@ namespace Ghost.Server.Core.Movment
         }
         private void View_ReceivedStream(NetMessage arg1, Player arg2)
         {
-            if (_locked && _resetLock) _object.View.Lock(_locked = false);
+            if (_locked)
+            {
+                if (_resetLock)
+                    _object.View.Lock(_locked = false);
+                else return;
+            }
             _entry.OnDeserialize(arg1);
             float distance = Vector3.Distance(_position, _entry.Position);
             _speed = (float)(distance / (_entry.Time - _time));
@@ -134,8 +142,10 @@ namespace Ghost.Server.Core.Movment
                             _running = _speed > 8.5f;
                             break;
                         case 3:
-                            if (_flying) _running = _speed > 16.5f;
-                            else _running = _speed > 8.8f;
+                            if (_flying)
+                                _running = _speed > 16.5f;
+                            else
+                                _running = _speed > 8.8f;
                             break;
                     }
                 }

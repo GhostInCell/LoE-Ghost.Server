@@ -26,6 +26,13 @@ namespace Ghost.Server.Utilities.Abstracts
                 return _guid;
             }
         }
+        public bool IsClone
+        {
+            get
+            {
+                return (_guid & Constants.ClonedObject) > 0;
+            }
+        }
         public bool IsPlayer
         {
             get

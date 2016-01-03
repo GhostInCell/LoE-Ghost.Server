@@ -8,12 +8,16 @@ using Ghost.Server.Utilities;
 using Ghost.Server.Utilities.Interfaces;
 using PNetR;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ghost.Server.Core.Players
 {
     public class MapPlayer : IPlayer
     {
         private WO_Pet _pet;
+        private WO_NPC _shop;
+        private WO_NPC _dialog;
         private Player _player;
         private UserData _user;
         private Character _char;
@@ -23,18 +27,20 @@ namespace Ghost.Server.Core.Players
         private MapServer _server;
         private WO_Player _object;
         private AutoSaveChar _save;
-
+        private Dictionary<int, WO_NPC> _clones;
         public WO_Pet Pet
         {
             get { return _pet; }
         }
         public WO_NPC Shop
         {
-            get; set;
+            get { return _shop; }
+            set { _shop = value; }
         }
         public WO_NPC Dialog
         {
-            get; set;
+            get { return _dialog; }
+            set { _dialog = value; }
         }
         public string Status
         {
@@ -110,6 +116,10 @@ namespace Ghost.Server.Core.Players
         {
             get; set;
         }
+        public Dictionary<int, WO_NPC> Clones
+        {
+            get { return _clones; }
+        }
         public short LastDialogChoice
         {
             get; set;
@@ -136,6 +146,7 @@ namespace Ghost.Server.Core.Players
             _trade = new TradeMgr(this);
             _items = new ItemsMgr(this);
             _skills = new SkillsMgr(this);
+            _clones = new Dictionary<int, WO_NPC>();
             _player.NetUserDataChanged += Player_NetUserDataChanged;
         }
         public void Destroy()
@@ -148,10 +159,20 @@ namespace Ghost.Server.Core.Players
             _skills.Destroy();
             _pet?.Destroy();
             CharsMgr.SaveCharacter(_char);
+            if (_dialog != null)
+                _dialog.Dialog.OnDialogEnd(this);
+            if (_shop != null)
+                _shop.Movement.Unlock();
+            foreach (var item in _clones.Values.ToArray())
+                item.Destroy();
+            _clones.Clear();
+            _shop = null;
             _user = null;
             _char = null;
             _trade = null;
             _items = null;
+            _clones = null;
+            _dialog = null;
             _server = null;
             _player = null;
             _object = null;
@@ -159,14 +180,14 @@ namespace Ghost.Server.Core.Players
         }
         public void DialogEnd()
         {
-            Dialog.Dialog.OnDialogEnd(this);
+            _dialog.Dialog.OnDialogEnd(this);
             _player.Rpc(13);
-            Dialog = null;
+            _dialog = null;
         }
         public void DialogBegin()
         {
             _player.Rpc(11);
-            Dialog.Dialog.OnDialogStart(this);
+            _dialog.Dialog.OnDialogStart(this);
         }
         public void SetPet(int id = -1)
         {

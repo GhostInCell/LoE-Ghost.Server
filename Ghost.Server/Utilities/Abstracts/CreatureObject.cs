@@ -19,10 +19,6 @@ namespace Ghost.Server.Utilities.Abstracts
         {
             get { return _view; }
         }
-        public bool Movable
-        {
-            get { return _movement?.IsMovable ?? false; }
-        }
         public bool HasStats
         {
             get { return _stats != null; }

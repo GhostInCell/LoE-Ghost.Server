@@ -39,17 +39,19 @@ namespace Ghost.Server.Utilities
     }
     public class SER_Shop : INetSerializable
     {
+        private readonly string _name;
         private readonly List<int> _data;
         public int AllocSize
         {
             get
             {
-                return 4 + _data.Count * 8;
+                return 5 + _data.Count * 8 + (_name?.Length ?? 0) * 2;
             }
         }
-        public SER_Shop(List<int> data)
+        public SER_Shop(List<int> data, string name)
         {
             _data = data;
+            _name = name;
         }
         public void OnSerialize(NetMessage message)
         {
@@ -60,6 +62,7 @@ namespace Ghost.Server.Utilities
                 message.Write(_data[i]);
                 message.Write(1);
             }
+            message.Write(_name);
         }
         public void OnDeserialize(NetMessage message)
         {
