@@ -3,15 +3,18 @@ using Ghost.Server.Core.Objects;
 using Ghost.Server.Core.Players;
 using Ghost.Server.Utilities;
 using Ghost.Server.Utilities.Abstracts;
+using Ghost.Server.Utilities.Interfaces;
 using PNet;
 using PNetR;
 using System.Numerics;
+using System;
 
 namespace Ghost.Server.Core.Movment
 {
     [NetComponent(2)]
-    public class PlayerMovement : MovementGenerator
+    public class PlayerMovement : MovementGenerator, IUpdatable
     {
+        private int _update;
         private double _time;
         private bool _locked;
         private bool _flying;
@@ -19,6 +22,11 @@ namespace Ghost.Server.Core.Movment
         private bool _resetLock;
         private SyncEntry _entry;
         private MapPlayer _player;
+        private int _lastAnimation;
+        public override int Animation
+        {
+            get { return _lastAnimation; }
+        }
         public override bool IsLocked
         {
             get
@@ -71,6 +79,15 @@ namespace Ghost.Server.Core.Movment
             _object = null;
             _player = null;
         }
+        public void Update(TimeSpan time)
+        {
+            if ((_update -= time.Milliseconds) <= 0)
+            {
+                _update = _interval;
+                var msg = _object.View.CreateStream(_entry.AllocSize);
+                _entry.OnSerialize(msg);_object.View.SendStream(msg);
+            }
+        }
         public override void Lock(bool reset = true)
         {
             _resetLock = reset;
@@ -89,9 +106,9 @@ namespace Ghost.Server.Core.Movment
         [Rpc(202)]
         private void RPC_02_202(NetMessage arg1, NetMessageInfo arg2)
         {
-            int animation = arg1.ReadInt32();
-            _flying = (_player.Char.Pony.Race == 3 && animation == 1);
-            _object.View.Rpc(2, 202, RpcMode.OthersOrdered, animation);
+            _lastAnimation = arg1.ReadInt32();
+            _flying = (_player.Char.Pony.Race == 3 && _lastAnimation == 1);
+            _object.View.Rpc(2, 202, RpcMode.OthersOrdered, _lastAnimation);
         }
         #endregion
         #region Events Handlers
@@ -118,12 +135,9 @@ namespace Ghost.Server.Core.Movment
         }
         private void View_ReceivedStream(NetMessage arg1, Player arg2)
         {
-            if (_locked)
-            {
-                if (_resetLock)
-                    _object.View.Lock(_locked = false);
-                else return;
-            }
+            if (_resetLock)
+                _object.View.Lock(_resetLock = _locked = false);
+            else if (_locked) return;
             _entry.OnDeserialize(arg1);
             float distance = Vector3.Distance(_position, _entry.Position);
             _speed = (float)(distance / (_entry.Time - _time));
@@ -154,11 +168,10 @@ namespace Ghost.Server.Core.Movment
                 if (_player.Trade.IsTrading && Vector3.Distance(_position, _player.Trade.Target.Object.Position) > Constants.MaxInteractionDistance)
                     _player.Trade.CloseBoth();
             }
+            else _running = false;
             _time = _entry.Time;
             _position = _entry.Position;
             _rotation = _entry.Rotation;
-            var msg = _object.View.CreateStream(_entry.AllocSize);
-            _entry.OnSerialize(msg); _object.View.SendStream(msg);
         }
         #endregion
     }

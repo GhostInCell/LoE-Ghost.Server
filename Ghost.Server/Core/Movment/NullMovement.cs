@@ -15,6 +15,10 @@ namespace Ghost.Server.Core.Movment
             _position = obj.SpawnPosition;
             _rotation = obj.SpawnRotation;
         }
+        public override int Animation
+        {
+            get { return 0; }
+        }
         public override bool IsFlying
         {
             get

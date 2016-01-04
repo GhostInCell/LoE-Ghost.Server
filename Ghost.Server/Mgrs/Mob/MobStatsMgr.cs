@@ -4,8 +4,6 @@ using Ghost.Server.Utilities;
 using Ghost.Server.Utilities.Abstracts;
 using PNet;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Ghost.Server.Mgrs.Mob
 {
@@ -41,6 +39,12 @@ namespace Ghost.Server.Mgrs.Mob
             _stats[Stats.HealthRegen] = new StatHelper(_level * _mob.Creature.Base_HP_Reg);
             _stats[Stats.MagicResist] = new StatHelper(_level * _mob.Creature.Base_Resists);
         }
+        public override void SendStats(PNetR.Player player)
+        {
+            var hp = _stats[Stats.Health];
+            _creature.View.Rpc(4, 51, player, (byte)Stats.Health, hp.Max);
+            _creature.View.Rpc(4, 50, player, (byte)Stats.Health, hp.Current);
+        }
         public override void Destroy()
         {
             _stats.Clear();
@@ -57,7 +61,6 @@ namespace Ghost.Server.Mgrs.Mob
             if (hp.Max != hp.Current)
             {
                 hp.UpdateCurrent(_stats[Stats.HealthRegen].Max * (interval / 1000f));
-                _mob.View.Rpc(4, 51, RpcMode.AllOrdered, (byte)Stats.Health, hp.Max);
                 _mob.View.Rpc(4, 50, RpcMode.AllOrdered, (byte)Stats.Health, hp.Current);
             }
             if (ep.Max != ep.Current)
@@ -70,7 +73,6 @@ namespace Ghost.Server.Mgrs.Mob
             StatHelper pStat = isMagic ? _stats[Stats.MagicResist] : _stats[Stats.Armor];
             hStat.UpdateCurrent(-CalculateDamage(other.Stats.Level, damage, pStat.Max));
             if (other.IsPlayer) _mob.ThreatMgr.AddThreat(other as WO_Player, (int)damage);
-            _mob.View.Rpc(4, 51, RpcMode.AllOrdered, (byte)Stats.Health, hStat.Max);
             _mob.View.Rpc(4, 50, RpcMode.AllOrdered, (byte)Stats.Health, hStat.Current);
             if (hStat.Current == 0f) _mob.Kill();
         }

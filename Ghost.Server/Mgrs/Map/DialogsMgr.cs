@@ -48,7 +48,7 @@ namespace Ghost.Server.Mgrs.Map
                 if (_dClones.TryGetValue(owner.Player.Id, out clones))
                 {
                     if (!clones.TryGetValue(id, out ret))
-                        ret = new DialogScript(original);
+                        clones[id] = ret = new DialogScript(original);
                 }
                 else
                     _dClones[owner.Player.Id] = new Dictionary<ushort, DialogScript>()

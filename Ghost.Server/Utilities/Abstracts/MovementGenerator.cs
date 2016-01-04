@@ -6,6 +6,11 @@ namespace Ghost.Server.Utilities.Abstracts
 {
     public abstract class MovementGenerator
     {
+        protected static readonly int _interval = 400;
+        static MovementGenerator()
+        {
+            _interval = Configs.Get<int>(Configs.Movement_SyncInterval);
+        }
         protected float _speed;
         protected Vector3 _position;
         protected Vector3 _rotation;
@@ -31,6 +36,10 @@ namespace Ghost.Server.Utilities.Abstracts
             get { return _direction; }
             set { _direction = Vector3.Normalize(_direction); }
         }
+        public abstract int Animation
+        {
+            get;
+        }
         public abstract bool IsLocked
         {
             get;
@@ -43,7 +52,10 @@ namespace Ghost.Server.Utilities.Abstracts
         {
             get;
         }
-        public abstract bool IsMovable { get; }
+        public abstract bool IsMovable
+        {
+            get;
+        }
         public MovementGenerator(CreatureObject obj)
         {
             _object = obj;

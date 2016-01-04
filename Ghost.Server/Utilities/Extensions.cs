@@ -246,11 +246,6 @@ namespace Ghost.Server.Utilities
             return @value;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float ToRadians(float @value)
-        {
-            return @value * (float)(Math.PI / 180f);
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 GetDirection(WorldObject obj)
         {
             return Vector3.Transform(Vector3.UnitZ, Quaternion.CreateFromAxisAngle(Vector3.UnitY, obj.Rotation.Y));
@@ -259,14 +254,11 @@ namespace Ghost.Server.Utilities
         public static Vector3 GetRotation(Vector3 source, Vector3 dest, Vector3 up)
         {
             float dot = Vector3.Dot(source, dest);
-            if (Math.Abs(dot - (-1.0f)) < 0.000001f)
-                return new Quaternion(up, ToRadians(180.0f)).QuatToEul2();
-            if (Math.Abs(dot - (1.0f)) < 0.000001f)
+            if (Math.Abs(dot + 1.0f) < 0.000001f)
+                return new Quaternion(up, (float)Math.PI).QuatToEul2();
+            if (Math.Abs(dot - 1.0f) < 0.000001f)
                 return Quaternion.Identity.QuatToEul2();
-            float rotAngle = (float)Math.Acos(dot);
-            Vector3 rotAxis = Vector3.Cross(source, dest);
-            rotAxis = Vector3.Normalize(rotAxis);
-            return Quaternion.CreateFromAxisAngle(rotAxis, rotAngle).QuatToEul2();
+            return Quaternion.CreateFromAxisAngle(Vector3.Normalize(Vector3.Cross(source, dest)), (float)Math.Acos(dot)).QuatToEul2();
         }
     }
     public static class StringExtension
@@ -637,11 +629,6 @@ namespace Ghost.Server.Utilities
         public static void DeleteItem(this PNetR.NetworkView view, byte slot, int amount)
         {
             view.Rpc(7, 7, RpcMode.OwnerOrdered, slot, amount);
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void UpdateStats(this PNetR.NetworkView view, INetSerializable stats)
-        {
-            view.Rpc(4, 52, RpcMode.OwnerOrdered, stats);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void AddItem(this PNetR.NetworkView view, int id, int amount, byte slot)

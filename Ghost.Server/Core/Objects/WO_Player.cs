@@ -97,7 +97,11 @@ namespace Ghost.Server.Core.Objects
                 _view.Rpc(7, 5, _player.Player, _player.Data.SerInventory);
             }
             else
+            {
                 _view.Rpc(2, 200, obj, _player.Char);
+                _view.Rpc(2, 202, obj, _movement.Animation);
+                _stats.SendStats(obj);
+            }
         }
         #endregion
     }

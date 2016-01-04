@@ -287,6 +287,9 @@ namespace Ghost.Server
                             }
                             else Console.WriteLine("Using: status player id");
                             break;
+                        default:
+                            Console.WriteLine("Using: status servers|player args");
+                            break;
                     }
                 }
                 else Console.WriteLine("Using: status servers|player args");

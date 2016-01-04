@@ -16,6 +16,7 @@ namespace Ghost.Server.Utilities
         private const string DEF_Game_UnicornStart = "Canterlot";
         private const string DEF_Game_PegasusStart = "Cloudsdale";
         private const string DEF_Game_EarthPonyStart = "Ponydale";
+        private const int DEF_Movement_SyncInterval = 200;
         private const int DEF_Server_MaxMaps = 256;
         private const bool DEF_Server_Master = true;
         private const bool DEF_Server_AllMaps = true;
@@ -35,7 +36,7 @@ namespace Ghost.Server.Utilities
         private const int DEF_Map_Reconnect = 2000;
         private const string DEF_Map_Host = "127.0.0.1";
 
-        private const int DEF_Char_Tick = 10;
+        private const int DEF_Char_Tick = 66;
         private const int DEF_Char_Port = 14010;
         private const int DEF_Char_MaxPlayers = 500;
         private const string DEF_Char_Host = "127.0.0.1";
@@ -67,6 +68,7 @@ namespace Ghost.Server.Utilities
         public const string Game_UnicornStart = "game_unicornstart";
         public const string Game_PegasusStart = "game_pegasusstart";
         public const string Game_EarthPonyStart = "game_earthponystart";
+        public const string Movement_SyncInterval = "movement_syncinterval";
         public const string Server_Host = "server_host";
         public const string Server_Master = "server_master";
         public const string Server_Scripts = "server_scripts";

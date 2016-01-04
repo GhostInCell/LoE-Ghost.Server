@@ -46,6 +46,26 @@ namespace Ghost.Server.Mgrs.Player
                         else
                             ServerLogger.LogWarn($"Player stat {stat.Item1} not found");
             }
+            if (_creature.View != null) SendStatsAll();
+        }
+        public void SendStatsAll()
+        {
+            _creature.View.Rpc(4, 52, RpcMode.OwnerOrdered, SerStats);
+            var toSend = _stats[Stats.Health];
+            _creature.View.Rpc(4, 51, RpcMode.OthersOrdered, (byte)Stats.Health, toSend.Max);
+            _creature.View.Rpc(4, 50, RpcMode.OthersOrdered, (byte)Stats.Health, toSend.Current);
+            toSend = _stats[Stats.Energy];
+            _creature.View.Rpc(4, 51, RpcMode.OthersOrdered, (byte)Stats.Energy, toSend.Max);
+            _creature.View.Rpc(4, 50, RpcMode.OthersOrdered, (byte)Stats.Energy, toSend.Current);
+        }
+        public override void SendStats(PNetR.Player player)
+        {
+            var toSend = _stats[Stats.Health];
+            _creature.View.Rpc(4, 51, player, (byte)Stats.Health, toSend.Max);
+            _creature.View.Rpc(4, 50, player, (byte)Stats.Health, toSend.Current);
+            toSend = _stats[Stats.Energy];
+            _creature.View.Rpc(4, 51, player, (byte)Stats.Energy, toSend.Max);
+            _creature.View.Rpc(4, 50, player, (byte)Stats.Energy, toSend.Current);
         }
         public override void Destroy()
         {
@@ -55,11 +75,6 @@ namespace Ghost.Server.Mgrs.Player
             _player = null;
             _status = null;
             _creature = null;
-        }
-        public void UpdateItemsStats()
-        {
-            UpdateStats();
-            _creature.View.UpdateStats(SerStats);
         }
         public override void Update(TimeSpan time)
         {
@@ -75,13 +90,11 @@ namespace Ghost.Server.Mgrs.Player
             if (hp.Max != hp.Current)
             {
                 hp.UpdateCurrent(_stats[Stats.HealthRegen].Max * (interval / 1000f));
-                _creature.View.Rpc(4, 51, RpcMode.AllOrdered, (byte)Stats.Health, hp.Max);
                 _creature.View.Rpc(4, 50, RpcMode.AllOrdered, (byte)Stats.Health, hp.Current);
             }
             if (ep.Max != ep.Current)
             {
                 ep.UpdateCurrent(_stats[Stats.EnergyRegen].Max * (interval / 1000f));
-                _creature.View.Rpc(4, 51, RpcMode.AllOrdered, (byte)Stats.Energy, ep.Max);
                 _creature.View.Rpc(4, 50, RpcMode.AllOrdered, (byte)Stats.Energy, ep.Current);
             }
             _status = $"HP {hp.Current}/{hp.Max}; EP {ep.Current}/{ep.Max}";
@@ -92,7 +105,6 @@ namespace Ghost.Server.Mgrs.Player
             _stats[stat].UpdateCurrent(value);
             if (stat == Stats.Health && Health == 0f)
             {
-                _creature.View.Rpc(4, 51, RpcMode.AllOrdered, (byte)Stats.Health, _stats[stat].Max);
                 _creature.View.Rpc(4, 50, RpcMode.AllOrdered, (byte)Stats.Health, 0f);
                 _creature.Despawn();
             }
@@ -116,7 +128,6 @@ namespace Ghost.Server.Mgrs.Player
                 UpdateBase();
                 _player.Player.Rpc(4, _player.Data.SerTalents);
                 _player.Player.Rpc(3, (int)talant, cExp, (int)level);
-                _creature.View.Rpc(4, 52, RpcMode.OwnerUnordered, SerStats);
                 _creature.View.Rpc(4, 53, RpcMode.AllUnordered, _player.Char.Level);
             }
             else _player.Player.Rpc(2, (int)talant, exp, bonusExp);
@@ -129,7 +140,6 @@ namespace Ghost.Server.Mgrs.Player
             hStat.UpdateCurrent(-CalculateDamage(other.Stats.Level, damage, pStat.Max));
             if (hStat.Current == 0f)
             {
-                _creature.View.Rpc(4, 51, RpcMode.AllOrdered, (byte)Stats.Health, hStat.Max);
                 _creature.View.Rpc(4, 50, RpcMode.AllOrdered, (byte)Stats.Health, 0f);
                 _creature.Despawn();
             } 
@@ -184,6 +194,7 @@ namespace Ghost.Server.Mgrs.Player
                     _stats[Stats.HealthRegen].SetBase(28 + (_level - 1) * 9.5f);
                     break;
             }
+            SendStatsAll();
         }
         private short CalculateNewLevel(short level, ref uint cExp)
         {

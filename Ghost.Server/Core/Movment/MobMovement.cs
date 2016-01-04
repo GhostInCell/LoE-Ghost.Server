@@ -10,9 +10,14 @@ namespace Ghost.Server.Core.Movment
 {
     public class MobMovement : MovementGenerator, IUpdatable
     {
+        private int _update;
         private WO_MOB _mob;
         private bool _locked;
         private SyncEntry _entry;
+        public override int Animation
+        {
+            get { return 0; }
+        }
         public override bool IsLocked
         {
             get
@@ -91,11 +96,15 @@ namespace Ghost.Server.Core.Movment
                     else
                         _position = _mob.SpawnPosition;
                 }
+            }
+            if ((_update -= time.Milliseconds) <= 0)
+            {
+                _update = _interval;
                 _entry.Position = _position;
                 _entry.Rotation = _rotation;
                 _entry.Time = PNet.Utilities.Now;
-                var msg = _mob.View.CreateStream(_entry.AllocSize);
-                _entry.OnSerialize(msg); _mob.View.SendStream(msg);
+                var msg = _object.View.CreateStream(_entry.AllocSize);
+                _entry.OnSerialize(msg); _object.View.SendStream(msg);
             }
         }
         public override void Lock(bool reset = true)

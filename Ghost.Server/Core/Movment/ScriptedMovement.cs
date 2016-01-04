@@ -14,6 +14,7 @@ namespace Ghost.Server.Core.Movment
     public class ScriptedMovement : MovementGenerator, IUpdatable
     {
         private readonly DB_Movement _entries;
+        private int _update;
         private int _locked;
         private ushort _state;
         private bool _waiting;
@@ -34,6 +35,10 @@ namespace Ghost.Server.Core.Movment
                 }
                 Execute();
             }
+        }
+        public override int Animation
+        {
+            get { return 0; }
         }
         public override bool IsLocked
         {
@@ -134,6 +139,10 @@ namespace Ghost.Server.Core.Movment
                     _rotation = _current.Rotation.ToRadians();
                 else
                     Execute();
+            }
+            if ((_update -= time.Milliseconds) <= 0)
+            {
+                _update = _interval;
                 _entry.Position = _position;
                 _entry.Rotation = _rotation;
                 _entry.Time = PNet.Utilities.Now;
@@ -165,7 +174,7 @@ namespace Ghost.Server.Core.Movment
                     case MovementType.Stay:
                         _waiting = true;
                         if (_current.Data01 > 0)
-                            _wait = new MovementWait(this, (_current.Data01 > _current.Data02 ?
+                            _wait = new MovementWait(this, (_current.Data01 < _current.Data02 ?
                                 TimeSpan.FromSeconds(Constants.RND.Next(_current.Data01, _current.Data02)) :
                                 TimeSpan.FromSeconds(_current.Data01)));
                         break;

@@ -150,10 +150,12 @@ namespace Ghost.Server.Core.Objects
             _movement.Position = _data.Position;
             _movement.Rotation = _data.Rotation.ToRadians();
             _view = _server.Room.Instantiate(_resource, _data.Position, _data.Rotation);
+            _view.FinishedInstantiation += View_FinishedInstantiation;
             if (_script != null) _script.SetOwner(this);
         }
         private void WO_MOB_OnDespawn()
         {
+            _view.FinishedInstantiation -= View_FinishedInstantiation;
             _aTime = 0f;
             _target = null;
             _threat.Clear();
@@ -163,12 +165,17 @@ namespace Ghost.Server.Core.Objects
         }
         private void WO_MOB_OnDestroy()
         {
+            _view.FinishedInstantiation -= View_FinishedInstantiation;
             _respawn?.Destroy(); 
             _respawn = null;
             _threat.Destroy();
             _threat = null;
             _target = null;
             _tEntry = null;
+        }
+        private void View_FinishedInstantiation(PNetR.Player obj)
+        {
+            _stats.SendStats(obj);
         }
         #endregion
     }

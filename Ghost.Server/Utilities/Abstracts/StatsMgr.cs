@@ -12,12 +12,6 @@ namespace Ghost.Server.Utilities.Abstracts
         protected short _level;
         protected CreatureObject _creature;
         protected Dictionary<Stats, StatHelper> _stats;
-        public StatsMgr(CreatureObject creature)
-        {
-            _creature = creature;
-            _creature.OnSpawn += StatsMgr_OnSpawn;
-            _stats = new Dictionary<Stats, StatHelper>();
-        }
         public float Armor
         {
             get { return _stats[Stats.Armor].Max; }
@@ -42,6 +36,19 @@ namespace Ghost.Server.Utilities.Abstracts
         {
             get { return _stats[Stats.Health].Current; }
         }
+        public StatHelper this[Stats stat]
+        {
+            get
+            {
+                StatHelper ret; _stats.TryGetValue(stat, out ret); return ret;
+            }
+        }
+        public StatsMgr(CreatureObject creature)
+        {
+            _creature = creature;
+            _creature.OnSpawn += StatsMgr_OnSpawn;
+            _stats = new Dictionary<Stats, StatHelper>();
+        }
         public void DoHeal(CreatureObject other, float amount)
         {
             _stats[Stats.Health].UpdateCurrent(amount);
@@ -49,6 +56,7 @@ namespace Ghost.Server.Utilities.Abstracts
         public abstract void Destroy();
         public abstract void UpdateStats();
         public abstract void Update(TimeSpan time);
+        public abstract void SendStats(Player player);
         public abstract void DoDamage(CreatureObject other, float damage, bool isMagic = false);
         protected float CalculateDamage(short level, float damage, float protection)
         {

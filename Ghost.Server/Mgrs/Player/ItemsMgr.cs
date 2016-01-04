@@ -259,7 +259,7 @@ namespace Ghost.Server.Mgrs.Player
                         AddItem(DataMgr.SelectItem(_wears[wslot]), 1);
                     _wears[wslot] = item.ID;
                     if ((item.Flags & ItemFlags.Stats) > 0)
-                        _player.Stats.UpdateItemsStats();
+                        _player.Stats.UpdateStats();
                     _player.View.WearItem(item.ID, wslot);
                 }
                 else _player.Error($"You can't whear item {item.Name ?? item.ID.ToString()} in slot {wslotType}");
@@ -283,7 +283,7 @@ namespace Ghost.Server.Mgrs.Player
                     _wears.Remove(wearSlot);
                     _player.View.UnwearItem(wslot);
                     if ((item.Flags & ItemFlags.Stats) > 0)
-                        _player.Stats.UpdateItemsStats();
+                        _player.Stats.UpdateStats();
                 }
                 else
                     _player.View.WearItem(item.ID, wearSlot);
