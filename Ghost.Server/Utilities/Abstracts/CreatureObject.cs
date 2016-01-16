@@ -8,7 +8,6 @@ namespace Ghost.Server.Utilities.Abstracts
     public abstract class CreatureObject : WorldObject
     {
         protected bool _dead;
-        protected bool _killed;
         protected StatsMgr _stats;
         protected NetworkView _view;
         protected MovementGenerator _movement;

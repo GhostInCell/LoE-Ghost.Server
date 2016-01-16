@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Item>
     <ID>0</ID>
@@ -15,7 +15,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>1</ID>
@@ -32,7 +31,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>2</ID>
@@ -49,7 +47,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>3</ID>
@@ -66,7 +63,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>4</ID>
@@ -83,7 +79,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>5</ID>
@@ -100,7 +95,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>6</ID>
@@ -117,7 +111,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>7</ID>
@@ -134,7 +127,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>8</ID>
@@ -151,7 +143,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>9</ID>
@@ -168,7 +159,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>10</ID>
@@ -185,7 +175,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>11</ID>
@@ -202,7 +191,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>12</ID>
@@ -219,7 +207,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>13</ID>
@@ -236,7 +223,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>14</ID>
@@ -253,7 +239,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>16</ID>
@@ -270,7 +255,6 @@
     <WearableSlots>Hat</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>17</ID>
@@ -287,7 +271,6 @@
     <WearableSlots>Mask</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>18</ID>
@@ -304,7 +287,6 @@
     <WearableSlots>Mask</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>19</ID>
@@ -321,7 +303,6 @@
     <WearableSlots>Hat</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>20</ID>
@@ -338,7 +319,6 @@
     <WearableSlots>SaddleBags</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>21</ID>
@@ -355,7 +335,6 @@
     <WearableSlots>Shirt</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>22</ID>
@@ -372,7 +351,6 @@
     <WearableSlots>FrontShoes BackShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>23</ID>
@@ -389,7 +367,6 @@
     <WearableSlots>FrontShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>24</ID>
@@ -406,7 +383,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>25</ID>
@@ -423,7 +399,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>26</ID>
@@ -440,7 +415,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>27</ID>
@@ -457,7 +431,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>28</ID>
@@ -474,7 +447,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>29</ID>
@@ -491,7 +463,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>30</ID>
@@ -508,7 +479,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>31</ID>
@@ -525,7 +495,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>32</ID>
@@ -542,7 +511,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>33</ID>
@@ -559,7 +527,6 @@
     <WearableSlots>Hat</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>34</ID>
@@ -576,7 +543,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>35</ID>
@@ -593,7 +559,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>36</ID>
@@ -610,7 +575,6 @@
     <WearableSlots>Mouth</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>37</ID>
@@ -627,7 +591,6 @@
     <WearableSlots>Mouth</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>38</ID>
@@ -644,7 +607,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>39</ID>
@@ -661,7 +623,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>40</ID>
@@ -678,7 +639,6 @@
     <WearableSlots>Hat</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>41</ID>
@@ -695,7 +655,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>42</ID>
@@ -712,7 +671,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>43</ID>
@@ -729,7 +687,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>44</ID>
@@ -746,7 +703,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>45</ID>
@@ -763,7 +719,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>46</ID>
@@ -780,7 +735,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>47</ID>
@@ -797,7 +751,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>48</ID>
@@ -814,7 +767,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>49</ID>
@@ -831,7 +783,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>50</ID>
@@ -848,7 +799,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>51</ID>
@@ -865,7 +815,6 @@
     <WearableSlots>Hat</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>52</ID>
@@ -882,7 +831,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>53</ID>
@@ -899,7 +847,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>54</ID>
@@ -916,48 +863,6 @@
     <WearableSlots>BackShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString>Health=33,HealthRegen=3,Armor=4,MagicResist=3</StatString>
-    <Stats>
-      <item>
-        <key>
-          <Stats>Health</Stats>
-        </key>
-        <value>
-          <int>33</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>HealthRegen</Stats>
-        </key>
-        <value>
-          <int>3</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Armor</Stats>
-        </key>
-        <value>
-          <int>4</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>MagicResist</Stats>
-        </key>
-        <value>
-          <int>3</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Energy</Stats>
-        </key>
-        <value>
-          <int>50</int>
-        </value>
-      </item>
-    </Stats>
   </Item>
   <Item>
     <ID>55</ID>
@@ -974,48 +879,6 @@
     <WearableSlots>Mask</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString>Health=50,HealthRegen=8,Armor=4,MagicResist=3</StatString>
-    <Stats>
-      <item>
-        <key>
-          <Stats>Health</Stats>
-        </key>
-        <value>
-          <int>50</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>HealthRegen</Stats>
-        </key>
-        <value>
-          <int>8</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Armor</Stats>
-        </key>
-        <value>
-          <int>4</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>MagicResist</Stats>
-        </key>
-        <value>
-          <int>3</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Energy</Stats>
-        </key>
-        <value>
-          <int>25</int>
-        </value>
-      </item>
-    </Stats>
   </Item>
   <Item>
     <ID>56</ID>
@@ -1032,48 +895,6 @@
     <WearableSlots>Shirt</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString>Health=50,HealthRegen=8,Armor=4,MagicResist=3</StatString>
-    <Stats>
-      <item>
-        <key>
-          <Stats>Health</Stats>
-        </key>
-        <value>
-          <int>50</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>HealthRegen</Stats>
-        </key>
-        <value>
-          <int>8</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Armor</Stats>
-        </key>
-        <value>
-          <int>4</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>MagicResist</Stats>
-        </key>
-        <value>
-          <int>3</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Energy</Stats>
-        </key>
-        <value>
-          <int>25</int>
-        </value>
-      </item>
-    </Stats>
   </Item>
   <Item>
     <ID>57</ID>
@@ -1090,48 +911,6 @@
     <WearableSlots>FrontShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString>Health=33,HealthRegen=3,Armor=4,MagicResist=3</StatString>
-    <Stats>
-      <item>
-        <key>
-          <Stats>Health</Stats>
-        </key>
-        <value>
-          <int>33</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>HealthRegen</Stats>
-        </key>
-        <value>
-          <int>3</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Armor</Stats>
-        </key>
-        <value>
-          <int>4</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>MagicResist</Stats>
-        </key>
-        <value>
-          <int>3</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Energy</Stats>
-        </key>
-        <value>
-          <int>50</int>
-        </value>
-      </item>
-    </Stats>
   </Item>
   <Item>
     <ID>58</ID>
@@ -1148,7 +927,6 @@
     <WearableSlots>Mask</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>59</ID>
@@ -1165,7 +943,6 @@
     <WearableSlots>SaddleBags</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>60</ID>
@@ -1182,7 +959,6 @@
     <WearableSlots>SaddleBags</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>61</ID>
@@ -1199,7 +975,6 @@
     <WearableSlots>SaddleBags</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>62</ID>
@@ -1216,7 +991,6 @@
     <WearableSlots>Hat</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>63</ID>
@@ -1233,7 +1007,6 @@
     <WearableSlots>FrontShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>64</ID>
@@ -1250,7 +1023,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>65</ID>
@@ -1267,7 +1039,6 @@
     <WearableSlots>FrontShoes BackShoes Shirt</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>66</ID>
@@ -1284,7 +1055,6 @@
     <WearableSlots>Hat</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>67</ID>
@@ -1301,48 +1071,6 @@
     <WearableSlots>SaddleBags</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString>Health=40,HealthRegen=3,Armor=4,MagicResist=3</StatString>
-    <Stats>
-      <item>
-        <key>
-          <Stats>Health</Stats>
-        </key>
-        <value>
-          <int>40</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>HealthRegen</Stats>
-        </key>
-        <value>
-          <int>3</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Armor</Stats>
-        </key>
-        <value>
-          <int>4</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>MagicResist</Stats>
-        </key>
-        <value>
-          <int>3</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Energy</Stats>
-        </key>
-        <value>
-          <int>50</int>
-        </value>
-      </item>
-    </Stats>
   </Item>
   <Item>
     <ID>68</ID>
@@ -1359,7 +1087,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>69</ID>
@@ -1376,7 +1103,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>70</ID>
@@ -1393,7 +1119,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>71</ID>
@@ -1410,7 +1135,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>72</ID>
@@ -1427,7 +1151,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>73</ID>
@@ -1444,7 +1167,6 @@
     <WearableSlots>Hat</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>74</ID>
@@ -1461,7 +1183,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>75</ID>
@@ -1478,7 +1199,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>76</ID>
@@ -1495,7 +1215,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>77</ID>
@@ -1512,7 +1231,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>78</ID>
@@ -1529,7 +1247,6 @@
     <WearableSlots>Necklace</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>79</ID>
@@ -1546,7 +1263,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>81</ID>
@@ -1566,7 +1282,6 @@
     </ItemUse>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>82</ID>
@@ -1586,7 +1301,6 @@
     </ItemUse>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>83</ID>
@@ -1603,7 +1317,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>84</ID>
@@ -1620,7 +1333,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>85</ID>
@@ -1637,7 +1349,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>86</ID>
@@ -1654,7 +1365,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>87</ID>
@@ -1671,7 +1381,6 @@
     <WearableSlots>Mouth</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>88</ID>
@@ -1688,7 +1397,6 @@
     <WearableSlots>FrontShoes BackShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>89</ID>
@@ -1705,7 +1413,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>90</ID>
@@ -1722,7 +1429,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>91</ID>
@@ -1739,7 +1445,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>92</ID>
@@ -1756,7 +1461,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>93</ID>
@@ -1776,7 +1480,6 @@
     </ItemUse>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>94</ID>
@@ -1793,7 +1496,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>95</ID>
@@ -1810,7 +1512,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>96</ID>
@@ -1827,7 +1528,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>97</ID>
@@ -1844,7 +1544,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>98</ID>
@@ -1861,7 +1560,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>99</ID>
@@ -1878,7 +1576,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>100</ID>
@@ -1895,7 +1592,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>101</ID>
@@ -1912,7 +1608,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>102</ID>
@@ -1929,48 +1624,6 @@
     <WearableSlots>BackShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString>Health=666,HealthRegen=66,Armor=75,MagicResist=50</StatString>
-    <Stats>
-      <item>
-        <key>
-          <Stats>Health</Stats>
-        </key>
-        <value>
-          <int>666</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>HealthRegen</Stats>
-        </key>
-        <value>
-          <int>66</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Armor</Stats>
-        </key>
-        <value>
-          <int>75</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>MagicResist</Stats>
-        </key>
-        <value>
-          <int>50</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Energy</Stats>
-        </key>
-        <value>
-          <int>1000</int>
-        </value>
-      </item>
-    </Stats>
   </Item>
   <Item>
     <ID>103</ID>
@@ -1987,48 +1640,6 @@
     <WearableSlots>SaddleBags</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString>Health=800,HealthRegen=50,Armor=75,MagicResist=50</StatString>
-    <Stats>
-      <item>
-        <key>
-          <Stats>Health</Stats>
-        </key>
-        <value>
-          <int>800</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>HealthRegen</Stats>
-        </key>
-        <value>
-          <int>50</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Armor</Stats>
-        </key>
-        <value>
-          <int>75</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>MagicResist</Stats>
-        </key>
-        <value>
-          <int>50</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Energy</Stats>
-        </key>
-        <value>
-          <int>1000</int>
-        </value>
-      </item>
-    </Stats>
   </Item>
   <Item>
     <ID>104</ID>
@@ -2045,48 +1656,6 @@
     <WearableSlots>Shirt</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString>Health=1000,HealthRegen=150,Armor=80,MagicResist=60</StatString>
-    <Stats>
-      <item>
-        <key>
-          <Stats>Health</Stats>
-        </key>
-        <value>
-          <int>1000</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>HealthRegen</Stats>
-        </key>
-        <value>
-          <int>150</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Armor</Stats>
-        </key>
-        <value>
-          <int>80</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>MagicResist</Stats>
-        </key>
-        <value>
-          <int>60</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Energy</Stats>
-        </key>
-        <value>
-          <int>500</int>
-        </value>
-      </item>
-    </Stats>
   </Item>
   <Item>
     <ID>105</ID>
@@ -2103,48 +1672,6 @@
     <WearableSlots>FrontShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString>Health=666,HealthRegen=66,Armor=75,MagicResist=50</StatString>
-    <Stats>
-      <item>
-        <key>
-          <Stats>Health</Stats>
-        </key>
-        <value>
-          <int>666</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>HealthRegen</Stats>
-        </key>
-        <value>
-          <int>66</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Armor</Stats>
-        </key>
-        <value>
-          <int>75</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>MagicResist</Stats>
-        </key>
-        <value>
-          <int>50</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Energy</Stats>
-        </key>
-        <value>
-          <int>1000</int>
-        </value>
-      </item>
-    </Stats>
   </Item>
   <Item>
     <ID>106</ID>
@@ -2161,48 +1688,6 @@
     <WearableSlots>Mask</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString>Health=1000,HealthRegen=150,Armor=80,MagicResist=60</StatString>
-    <Stats>
-      <item>
-        <key>
-          <Stats>Health</Stats>
-        </key>
-        <value>
-          <int>1000</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>HealthRegen</Stats>
-        </key>
-        <value>
-          <int>150</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Armor</Stats>
-        </key>
-        <value>
-          <int>80</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>MagicResist</Stats>
-        </key>
-        <value>
-          <int>60</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Energy</Stats>
-        </key>
-        <value>
-          <int>500</int>
-        </value>
-      </item>
-    </Stats>
   </Item>
   <Item>
     <ID>107</ID>
@@ -2219,48 +1704,6 @@
     <WearableSlots>BackShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString>Health=400,HealthRegen=40,Armor=45,MagicResist=24</StatString>
-    <Stats>
-      <item>
-        <key>
-          <Stats>Health</Stats>
-        </key>
-        <value>
-          <int>400</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>HealthRegen</Stats>
-        </key>
-        <value>
-          <int>40</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Armor</Stats>
-        </key>
-        <value>
-          <int>45</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>MagicResist</Stats>
-        </key>
-        <value>
-          <int>24</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Energy</Stats>
-        </key>
-        <value>
-          <int>600</int>
-        </value>
-      </item>
-    </Stats>
   </Item>
   <Item>
     <ID>108</ID>
@@ -2277,48 +1720,6 @@
     <WearableSlots>SaddleBags</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString>Health=480,HealthRegen=30,Armor=45,MagicResist=30</StatString>
-    <Stats>
-      <item>
-        <key>
-          <Stats>Health</Stats>
-        </key>
-        <value>
-          <int>480</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>HealthRegen</Stats>
-        </key>
-        <value>
-          <int>30</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Armor</Stats>
-        </key>
-        <value>
-          <int>45</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>MagicResist</Stats>
-        </key>
-        <value>
-          <int>30</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Energy</Stats>
-        </key>
-        <value>
-          <int>600</int>
-        </value>
-      </item>
-    </Stats>
   </Item>
   <Item>
     <ID>109</ID>
@@ -2335,48 +1736,6 @@
     <WearableSlots>Shirt</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString>Health=600,HealthRegen=90,Armor=48,MagicResist=36</StatString>
-    <Stats>
-      <item>
-        <key>
-          <Stats>Health</Stats>
-        </key>
-        <value>
-          <int>600</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>HealthRegen</Stats>
-        </key>
-        <value>
-          <int>90</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Armor</Stats>
-        </key>
-        <value>
-          <int>48</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>MagicResist</Stats>
-        </key>
-        <value>
-          <int>36</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Energy</Stats>
-        </key>
-        <value>
-          <int>300</int>
-        </value>
-      </item>
-    </Stats>
   </Item>
   <Item>
     <ID>110</ID>
@@ -2393,48 +1752,6 @@
     <WearableSlots>FrontShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString>Health=400,HealthRegen=40,Armor=45,MagicResist=24</StatString>
-    <Stats>
-      <item>
-        <key>
-          <Stats>Health</Stats>
-        </key>
-        <value>
-          <int>400</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>HealthRegen</Stats>
-        </key>
-        <value>
-          <int>40</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Armor</Stats>
-        </key>
-        <value>
-          <int>45</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>MagicResist</Stats>
-        </key>
-        <value>
-          <int>24</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Energy</Stats>
-        </key>
-        <value>
-          <int>600</int>
-        </value>
-      </item>
-    </Stats>
   </Item>
   <Item>
     <ID>111</ID>
@@ -2451,48 +1768,6 @@
     <WearableSlots>Mask</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString>Health=600,HealthRegen=90,Armor=48,MagicResist=36</StatString>
-    <Stats>
-      <item>
-        <key>
-          <Stats>Health</Stats>
-        </key>
-        <value>
-          <int>600</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>HealthRegen</Stats>
-        </key>
-        <value>
-          <int>90</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Armor</Stats>
-        </key>
-        <value>
-          <int>48</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>MagicResist</Stats>
-        </key>
-        <value>
-          <int>36</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Energy</Stats>
-        </key>
-        <value>
-          <int>300</int>
-        </value>
-      </item>
-    </Stats>
   </Item>
   <Item>
     <ID>112</ID>
@@ -2509,48 +1784,6 @@
     <WearableSlots>BackShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString>Health=133,HealthRegen=13,Armor=15,MagicResist=10</StatString>
-    <Stats>
-      <item>
-        <key>
-          <Stats>Health</Stats>
-        </key>
-        <value>
-          <int>133</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>HealthRegen</Stats>
-        </key>
-        <value>
-          <int>13</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Armor</Stats>
-        </key>
-        <value>
-          <int>15</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>MagicResist</Stats>
-        </key>
-        <value>
-          <int>10</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Energy</Stats>
-        </key>
-        <value>
-          <int>200</int>
-        </value>
-      </item>
-    </Stats>
   </Item>
   <Item>
     <ID>113</ID>
@@ -2567,48 +1800,6 @@
     <WearableSlots>SaddleBags</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString>Health=160,HealthRegen=10,Armor=15,MagicResist=10</StatString>
-    <Stats>
-      <item>
-        <key>
-          <Stats>Health</Stats>
-        </key>
-        <value>
-          <int>160</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>HealthRegen</Stats>
-        </key>
-        <value>
-          <int>10</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Armor</Stats>
-        </key>
-        <value>
-          <int>15</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>MagicResist</Stats>
-        </key>
-        <value>
-          <int>10</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Energy</Stats>
-        </key>
-        <value>
-          <int>200</int>
-        </value>
-      </item>
-    </Stats>
   </Item>
   <Item>
     <ID>114</ID>
@@ -2625,48 +1816,6 @@
     <WearableSlots>Shirt</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString>Health=200,HealthRegen=30,Armor=16,MagicResist=12</StatString>
-    <Stats>
-      <item>
-        <key>
-          <Stats>Health</Stats>
-        </key>
-        <value>
-          <int>200</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>HealthRegen</Stats>
-        </key>
-        <value>
-          <int>30</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Armor</Stats>
-        </key>
-        <value>
-          <int>16</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>MagicResist</Stats>
-        </key>
-        <value>
-          <int>12</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Energy</Stats>
-        </key>
-        <value>
-          <int>100</int>
-        </value>
-      </item>
-    </Stats>
   </Item>
   <Item>
     <ID>115</ID>
@@ -2683,48 +1832,6 @@
     <WearableSlots>FrontShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString>Health=133,HealthRegen=13,Armor=15,MagicResist=10</StatString>
-    <Stats>
-      <item>
-        <key>
-          <Stats>Health</Stats>
-        </key>
-        <value>
-          <int>133</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>HealthRegen</Stats>
-        </key>
-        <value>
-          <int>13</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Armor</Stats>
-        </key>
-        <value>
-          <int>15</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>MagicResist</Stats>
-        </key>
-        <value>
-          <int>10</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Energy</Stats>
-        </key>
-        <value>
-          <int>200</int>
-        </value>
-      </item>
-    </Stats>
   </Item>
   <Item>
     <ID>116</ID>
@@ -2741,48 +1848,6 @@
     <WearableSlots>Mask</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString>Health=200,HealthRegen=30,Armor=16,MagicResist=12</StatString>
-    <Stats>
-      <item>
-        <key>
-          <Stats>Health</Stats>
-        </key>
-        <value>
-          <int>200</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>HealthRegen</Stats>
-        </key>
-        <value>
-          <int>30</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Armor</Stats>
-        </key>
-        <value>
-          <int>16</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>MagicResist</Stats>
-        </key>
-        <value>
-          <int>12</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Energy</Stats>
-        </key>
-        <value>
-          <int>100</int>
-        </value>
-      </item>
-    </Stats>
   </Item>
   <Item>
     <ID>117</ID>
@@ -2799,7 +1864,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>118</ID>
@@ -2816,7 +1880,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>119</ID>
@@ -2833,48 +1896,6 @@
     <WearableSlots>BackShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString>Health=666,HealthRegen=66,Armor=50,MagicResist=75</StatString>
-    <Stats>
-      <item>
-        <key>
-          <Stats>Health</Stats>
-        </key>
-        <value>
-          <int>666</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>HealthRegen</Stats>
-        </key>
-        <value>
-          <int>66</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Armor</Stats>
-        </key>
-        <value>
-          <int>50</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>MagicResist</Stats>
-        </key>
-        <value>
-          <int>75</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Energy</Stats>
-        </key>
-        <value>
-          <int>1000</int>
-        </value>
-      </item>
-    </Stats>
   </Item>
   <Item>
     <ID>120</ID>
@@ -2891,48 +1912,6 @@
     <WearableSlots>SaddleBags</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString>Health=800,HealthRegen=50,Armor=50,MagicResist=75</StatString>
-    <Stats>
-      <item>
-        <key>
-          <Stats>Health</Stats>
-        </key>
-        <value>
-          <int>800</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>HealthRegen</Stats>
-        </key>
-        <value>
-          <int>50</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Armor</Stats>
-        </key>
-        <value>
-          <int>50</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>MagicResist</Stats>
-        </key>
-        <value>
-          <int>75</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Energy</Stats>
-        </key>
-        <value>
-          <int>1000</int>
-        </value>
-      </item>
-    </Stats>
   </Item>
   <Item>
     <ID>121</ID>
@@ -2949,48 +1928,6 @@
     <WearableSlots>Shirt</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString>Health=1000,HealthRegen=150,Armor=60,MagicResist=80</StatString>
-    <Stats>
-      <item>
-        <key>
-          <Stats>Health</Stats>
-        </key>
-        <value>
-          <int>1000</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>HealthRegen</Stats>
-        </key>
-        <value>
-          <int>150</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Armor</Stats>
-        </key>
-        <value>
-          <int>60</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>MagicResist</Stats>
-        </key>
-        <value>
-          <int>80</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Energy</Stats>
-        </key>
-        <value>
-          <int>500</int>
-        </value>
-      </item>
-    </Stats>
   </Item>
   <Item>
     <ID>122</ID>
@@ -3007,48 +1944,6 @@
     <WearableSlots>FrontShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString>Health=666,HealthRegen=66,Armor=50,MagicResist=75</StatString>
-    <Stats>
-      <item>
-        <key>
-          <Stats>Health</Stats>
-        </key>
-        <value>
-          <int>666</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>HealthRegen</Stats>
-        </key>
-        <value>
-          <int>66</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Armor</Stats>
-        </key>
-        <value>
-          <int>50</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>MagicResist</Stats>
-        </key>
-        <value>
-          <int>75</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Energy</Stats>
-        </key>
-        <value>
-          <int>1000</int>
-        </value>
-      </item>
-    </Stats>
   </Item>
   <Item>
     <ID>123</ID>
@@ -3065,48 +1960,6 @@
     <WearableSlots>Mask</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString>Health=1000,HealthRegen=150,Armor=60,MagicResist=80</StatString>
-    <Stats>
-      <item>
-        <key>
-          <Stats>Health</Stats>
-        </key>
-        <value>
-          <int>1000</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>HealthRegen</Stats>
-        </key>
-        <value>
-          <int>150</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Armor</Stats>
-        </key>
-        <value>
-          <int>60</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>MagicResist</Stats>
-        </key>
-        <value>
-          <int>80</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Energy</Stats>
-        </key>
-        <value>
-          <int>500</int>
-        </value>
-      </item>
-    </Stats>
   </Item>
   <Item>
     <ID>124</ID>
@@ -3123,136 +1976,6 @@
     <WearableSlots>Mask</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString>Health=999,HealthRegen=999,Energy=999,EnergyRegen=999,Attack=999,Dodge=999,Armor=999,MagicResist=999,Resiliance=999,Fortitude=999,Evade=999,Tension=999,Speed=999,MagicCasting=999,PhysicalCasting=999,Taunt=999</StatString>
-    <Stats>
-      <item>
-        <key>
-          <Stats>Health</Stats>
-        </key>
-        <value>
-          <int>999</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>HealthRegen</Stats>
-        </key>
-        <value>
-          <int>999</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Energy</Stats>
-        </key>
-        <value>
-          <int>999</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>EnergyRegen</Stats>
-        </key>
-        <value>
-          <int>999</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Attack</Stats>
-        </key>
-        <value>
-          <int>999</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Dodge</Stats>
-        </key>
-        <value>
-          <int>999</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Armor</Stats>
-        </key>
-        <value>
-          <int>999</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>MagicResist</Stats>
-        </key>
-        <value>
-          <int>999</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Resiliance</Stats>
-        </key>
-        <value>
-          <int>999</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Fortitude</Stats>
-        </key>
-        <value>
-          <int>999</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Evade</Stats>
-        </key>
-        <value>
-          <int>999</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Tension</Stats>
-        </key>
-        <value>
-          <int>999</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Speed</Stats>
-        </key>
-        <value>
-          <int>999</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>MagicCasting</Stats>
-        </key>
-        <value>
-          <int>999</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>PhysicalCasting</Stats>
-        </key>
-        <value>
-          <int>999</int>
-        </value>
-      </item>
-      <item>
-        <key>
-          <Stats>Taunt</Stats>
-        </key>
-        <value>
-          <int>999</int>
-        </value>
-      </item>
-    </Stats>
   </Item>
   <Item>
     <ID>125</ID>
@@ -3269,7 +1992,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>126</ID>
@@ -3286,7 +2008,6 @@
     <WearableSlots>BackShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>127</ID>
@@ -3303,7 +2024,6 @@
     <WearableSlots>FrontShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>128</ID>
@@ -3320,7 +2040,6 @@
     <WearableSlots>BackShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>129</ID>
@@ -3337,7 +2056,6 @@
     <WearableSlots>FrontShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>130</ID>
@@ -3354,7 +2072,6 @@
     <WearableSlots>BackShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>131</ID>
@@ -3371,7 +2088,6 @@
     <WearableSlots>FrontShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>132</ID>
@@ -3388,7 +2104,6 @@
     <WearableSlots>BackShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>133</ID>
@@ -3405,7 +2120,6 @@
     <WearableSlots>FrontShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>134</ID>
@@ -3422,7 +2136,6 @@
     <WearableSlots>BackShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>135</ID>
@@ -3439,7 +2152,6 @@
     <WearableSlots>FrontShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>136</ID>
@@ -3456,7 +2168,6 @@
     <WearableSlots>BackShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>137</ID>
@@ -3473,7 +2184,6 @@
     <WearableSlots>FrontShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>138</ID>
@@ -3490,7 +2200,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>139</ID>
@@ -3507,7 +2216,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>140</ID>
@@ -3524,7 +2232,6 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
   </Item>
   <Item>
     <ID>141</ID>
@@ -3541,6 +2248,2501 @@
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
-    <Stats />
+  </Item>
+  <Item>
+    <ID>142</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Useful scraps of linen.</Description>
+    <Name>Linen Scrap</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>143</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Pieces of canvas suitable for making armor.</Description>
+    <Name>Canvas Scrap</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>144</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Little bits of time. Who can't use more time?</Description>
+    <Name>Temporal Scrap</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>145</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>An ingot of copper suitable for crafting.</Description>
+    <Name>Copper Ingot</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>146</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>An ingot of bronze suitable for crafting.</Description>
+    <Name>Bronze Ingot</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>147</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>An ingot of iron suitable for crafting.</Description>
+    <Name>Iron Ingot</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>148</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>An ingot of steel suitable for crafting.</Description>
+    <Name>Steel Ingot</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>149</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>An ingot of alicium suitable for crafting.</Description>
+    <Name>Alicium Ingot</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>150</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>An ingot of titanium suitable for crafting.</Description>
+    <Name>Titanium Ingot</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>151</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>An ingot of elementium suitable for crafting.</Description>
+    <Name>Elementium Ingot</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>152</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>An ingot of space suitable for crafting. Pairs very well with temporal scrap.</Description>
+    <Name>Spacial Ingot</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>153</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>It's stuff that helps make heat!</Description>
+    <Name>Heating Catalyst</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>154</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Something's got to start the magic off right.</Description>
+    <Name>Magical Catalyst</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>155</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>You can't keep your materials unless you have pouches to keep them in.</Description>
+    <Name>Pouch Template</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>156</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A strap made of linen. Useful for putting together armor.</Description>
+    <Name>Linen Strap</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>157</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Linen padding for armor</Description>
+    <Name>Linen Padding</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>158</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Squares of linen. Useful for putting together armor. (Or making napkins.)</Description>
+    <Name>Linen Square</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>159</ID>
+    <Icon>0</Icon>
+    <ItemLevel>20</ItemLevel>
+    <RequiredLevel>20</RequiredLevel>
+    <Description>Strap made of canvas. Useful in holding armor together.</Description>
+    <Name>Canvas Strap</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>160</ID>
+    <Icon>0</Icon>
+    <ItemLevel>20</ItemLevel>
+    <RequiredLevel>20</RequiredLevel>
+    <Description>Canvas padding. Not very comfortable.</Description>
+    <Name>Canvas Padding</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>162</ID>
+    <Icon>0</Icon>
+    <ItemLevel>20</ItemLevel>
+    <RequiredLevel>20</RequiredLevel>
+    <Description>Square of canvas. Useful for armor -- or tents.</Description>
+    <Name>Canvas Square</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>163</ID>
+    <Icon>0</Icon>
+    <ItemLevel>40</ItemLevel>
+    <RequiredLevel>40</RequiredLevel>
+    <Description>Woven strap. Good for holding things together.</Description>
+    <Name>Woven Strap</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>164</ID>
+    <Icon>0</Icon>
+    <ItemLevel>40</ItemLevel>
+    <RequiredLevel>40</RequiredLevel>
+    <Description>Woven Padding. Good for woven armor.</Description>
+    <Name>Woven Padding</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>165</ID>
+    <Icon>0</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Temporal Strip. Good for temporal armor. Tempus fugit.</Description>
+    <Name>Temporal Strip</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>166</ID>
+    <Icon>0</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Temporal Padding. Sometimes you do need to pad time.</Description>
+    <Name>Temporal Padding</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>167</ID>
+    <Icon>0</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Temporal Square. Useful in making temporal armor.</Description>
+    <Name>Temporal Square</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>168</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A pretty strip of copper.</Description>
+    <Name>Copper Strip</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>169</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A whole sheet of copper suitable for banging into other shapes.</Description>
+    <Name>Copper Sheet</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>170</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Pretty copper casing.</Description>
+    <Name>Copper Casing</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>171</ID>
+    <Icon>0</Icon>
+    <ItemLevel>10</ItemLevel>
+    <RequiredLevel>10</RequiredLevel>
+    <Description>A solid strip of bronze</Description>
+    <Name>Bronze Strip</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>172</ID>
+    <Icon>0</Icon>
+    <ItemLevel>10</ItemLevel>
+    <RequiredLevel>10</RequiredLevel>
+    <Description>Hardened sheet of bronze</Description>
+    <Name>Bronze Sheet</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>173</ID>
+    <Icon>0</Icon>
+    <ItemLevel>10</ItemLevel>
+    <RequiredLevel>10</RequiredLevel>
+    <Description>Hardened bronze casing.</Description>
+    <Name>Bronze Casing</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>174</ID>
+    <Icon>0</Icon>
+    <ItemLevel>20</ItemLevel>
+    <RequiredLevel>20</RequiredLevel>
+    <Description>A strip of iron.</Description>
+    <Name>Iton Strip</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>175</ID>
+    <Icon>0</Icon>
+    <ItemLevel>20</ItemLevel>
+    <RequiredLevel>20</RequiredLevel>
+    <Description>A whole sheet of iron.</Description>
+    <Name>Iron Sheet</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>176</ID>
+    <Icon>0</Icon>
+    <ItemLevel>20</ItemLevel>
+    <RequiredLevel>20</RequiredLevel>
+    <Description>An iron casing suitable for building armor.</Description>
+    <Name>Iron Casing</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>177</ID>
+    <Icon>0</Icon>
+    <ItemLevel>30</ItemLevel>
+    <RequiredLevel>30</RequiredLevel>
+    <Description>A strip of tempered steel.</Description>
+    <Name>Steel Strip</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>178</ID>
+    <Icon>0</Icon>
+    <ItemLevel>30</ItemLevel>
+    <RequiredLevel>30</RequiredLevel>
+    <Description>A sheet of tempered steel.</Description>
+    <Name>Steel Sheet</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>179</ID>
+    <Icon>0</Icon>
+    <ItemLevel>30</ItemLevel>
+    <RequiredLevel>30</RequiredLevel>
+    <Description>A tempered steel casing suitable for armor.</Description>
+    <Name>Steel Casing</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>180</ID>
+    <Icon>0</Icon>
+    <ItemLevel>40</ItemLevel>
+    <RequiredLevel>40</RequiredLevel>
+    <Description>A strip of rare alicium.</Description>
+    <Name>Alicium Strip</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>181</ID>
+    <Icon>0</Icon>
+    <ItemLevel>40</ItemLevel>
+    <RequiredLevel>40</RequiredLevel>
+    <Description>A whole sheet of precious alicium.</Description>
+    <Name>Alicium Sheet</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>182</ID>
+    <Icon>0</Icon>
+    <ItemLevel>40</ItemLevel>
+    <RequiredLevel>40</RequiredLevel>
+    <Description>A casing of rare alicium suitable for armor.</Description>
+    <Name>Alicium Casing</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>183</ID>
+    <Icon>0</Icon>
+    <ItemLevel>40</ItemLevel>
+    <RequiredLevel>40</RequiredLevel>
+    <Description>A strip of rainbow-colored titanium.</Description>
+    <Name>Titanium Strip</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>184</ID>
+    <Icon>0</Icon>
+    <ItemLevel>40</ItemLevel>
+    <RequiredLevel>40</RequiredLevel>
+    <Description>A sheet of rainbow-colored titanium,</Description>
+    <Name>Titanium Sheet</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>185</ID>
+    <Icon>0</Icon>
+    <ItemLevel>40</ItemLevel>
+    <RequiredLevel>40</RequiredLevel>
+    <Description>A casing of precious titanium,</Description>
+    <Name>Titanium Casing</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>186</ID>
+    <Icon>0</Icon>
+    <ItemLevel>40</ItemLevel>
+    <RequiredLevel>40</RequiredLevel>
+    <Description>A strip of elementium.</Description>
+    <Name>Elementium Strip</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>187</ID>
+    <Icon>0</Icon>
+    <ItemLevel>40</ItemLevel>
+    <RequiredLevel>40</RequiredLevel>
+    <Description>A sheet of elementium.</Description>
+    <Name>Elementium Sheet</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>188</ID>
+    <Icon>0</Icon>
+    <ItemLevel>40</ItemLevel>
+    <RequiredLevel>40</RequiredLevel>
+    <Description>A casing of elementium suitable for building armor.</Description>
+    <Name>Elementium Casing</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>189</ID>
+    <Icon>0</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>A Very Special Metal Cast.</Description>
+    <Name>Spacial Cast</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>190</ID>
+    <Icon>0</Icon>
+    <ItemLevel>3</ItemLevel>
+    <RequiredLevel>3</RequiredLevel>
+    <Description>Copper Back Plate</Description>
+    <Name>Copper Back Plate</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>191</ID>
+    <Icon>0</Icon>
+    <ItemLevel>6</ItemLevel>
+    <RequiredLevel>6</RequiredLevel>
+    <Description>Copper Chest Plate</Description>
+    <Name>Copper Chest Plate</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>192</ID>
+    <Icon>0</Icon>
+    <ItemLevel>9</ItemLevel>
+    <RequiredLevel>9</RequiredLevel>
+    <Description>Copper Helmet</Description>
+    <Name>Copper Helmet</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>193</ID>
+    <Icon>0</Icon>
+    <ItemLevel>12</ItemLevel>
+    <RequiredLevel>12</RequiredLevel>
+    <Description>Bronze Back Plate</Description>
+    <Name>Bronze Back Plate</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>194</ID>
+    <Icon>0</Icon>
+    <ItemLevel>14</ItemLevel>
+    <RequiredLevel>14</RequiredLevel>
+    <Description>Bronze Chest Plate</Description>
+    <Name>Bronze Chest Plate</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>195</ID>
+    <Icon>0</Icon>
+    <ItemLevel>16</ItemLevel>
+    <RequiredLevel>16</RequiredLevel>
+    <Description>Bronze Front Legs</Description>
+    <Name>Bronze Front Legs</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>196</ID>
+    <Icon>0</Icon>
+    <ItemLevel>18</ItemLevel>
+    <RequiredLevel>18</RequiredLevel>
+    <Description>Bronze Helmet</Description>
+    <Name>Bronze Helmet</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>197</ID>
+    <Icon>0</Icon>
+    <ItemLevel>21</ItemLevel>
+    <RequiredLevel>21</RequiredLevel>
+    <Description>Iron Back Legs</Description>
+    <Name>Iron Back Legs</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>198</ID>
+    <Icon>0</Icon>
+    <ItemLevel>23</ItemLevel>
+    <RequiredLevel>23</RequiredLevel>
+    <Description>Iron Back Plate</Description>
+    <Name>Iron Back Plate</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>199</ID>
+    <Icon>0</Icon>
+    <ItemLevel>25</ItemLevel>
+    <RequiredLevel>25</RequiredLevel>
+    <Description>Iron Chest Plate</Description>
+    <Name>Iron Chest Plate</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>200</ID>
+    <Icon>0</Icon>
+    <ItemLevel>27</ItemLevel>
+    <RequiredLevel>27</RequiredLevel>
+    <Description>Iron Front Legs</Description>
+    <Name>Iron Front Legs</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>201</ID>
+    <Icon>0</Icon>
+    <ItemLevel>29</ItemLevel>
+    <RequiredLevel>29</RequiredLevel>
+    <Description>Iron Helmet</Description>
+    <Name>Iron Helmet</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>202</ID>
+    <Icon>0</Icon>
+    <ItemLevel>31</ItemLevel>
+    <RequiredLevel>31</RequiredLevel>
+    <Description>Steel Back Legs</Description>
+    <Name>Steel Back Legs</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>203</ID>
+    <Icon>0</Icon>
+    <ItemLevel>33</ItemLevel>
+    <RequiredLevel>33</RequiredLevel>
+    <Description>Steel Back Plate</Description>
+    <Name>Steel Back Plate</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>204</ID>
+    <Icon>0</Icon>
+    <ItemLevel>35</ItemLevel>
+    <RequiredLevel>35</RequiredLevel>
+    <Description>Steel Chest Plate</Description>
+    <Name>Steel Chest Plate</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>205</ID>
+    <Icon>0</Icon>
+    <ItemLevel>37</ItemLevel>
+    <RequiredLevel>37</RequiredLevel>
+    <Description>Steel Front Legs</Description>
+    <Name>Steel Front Legs</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>206</ID>
+    <Icon>0</Icon>
+    <ItemLevel>39</ItemLevel>
+    <RequiredLevel>39</RequiredLevel>
+    <Description>Steel Helmet</Description>
+    <Name>Steel Helmet</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>207</ID>
+    <Icon>0</Icon>
+    <ItemLevel>41</ItemLevel>
+    <RequiredLevel>41</RequiredLevel>
+    <Description>Alicium Back Legs</Description>
+    <Name>Alicium Back Legs</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>208</ID>
+    <Icon>0</Icon>
+    <ItemLevel>43</ItemLevel>
+    <RequiredLevel>43</RequiredLevel>
+    <Description>Alicium Back Plate</Description>
+    <Name>Alicium Back Plate</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>209</ID>
+    <Icon>0</Icon>
+    <ItemLevel>45</ItemLevel>
+    <RequiredLevel>45</RequiredLevel>
+    <Description>Alicium Chest Plate</Description>
+    <Name>Alicium Chest Plate</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>210</ID>
+    <Icon>0</Icon>
+    <ItemLevel>47</ItemLevel>
+    <RequiredLevel>47</RequiredLevel>
+    <Description>Alicium Front Legs</Description>
+    <Name>Alicium Front Legs</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>211</ID>
+    <Icon>0</Icon>
+    <ItemLevel>49</ItemLevel>
+    <RequiredLevel>49</RequiredLevel>
+    <Description>Alicium Helmet</Description>
+    <Name>Alicium Helmet</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>212</ID>
+    <Icon>0</Icon>
+    <ItemLevel>41</ItemLevel>
+    <RequiredLevel>41</RequiredLevel>
+    <Description>Titanium Back Legs</Description>
+    <Name>Titanium Back legs</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>213</ID>
+    <Icon>0</Icon>
+    <ItemLevel>43</ItemLevel>
+    <RequiredLevel>43</RequiredLevel>
+    <Description>Titanium Back Plate</Description>
+    <Name>Titanium Back Plate</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>214</ID>
+    <Icon>0</Icon>
+    <ItemLevel>45</ItemLevel>
+    <RequiredLevel>45</RequiredLevel>
+    <Description>Titanium Chest Plate</Description>
+    <Name>Titanium Chest Plate</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>215</ID>
+    <Icon>0</Icon>
+    <ItemLevel>47</ItemLevel>
+    <RequiredLevel>47</RequiredLevel>
+    <Description>Titanium Front Legs</Description>
+    <Name>Titanium Front Legs</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>216</ID>
+    <Icon>0</Icon>
+    <ItemLevel>49</ItemLevel>
+    <RequiredLevel>49</RequiredLevel>
+    <Description>Titanium Helmet</Description>
+    <Name>Titanium Helmet</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>217</ID>
+    <Icon>0</Icon>
+    <ItemLevel>41</ItemLevel>
+    <RequiredLevel>41</RequiredLevel>
+    <Description>Elementium Back Legs</Description>
+    <Name>Elementium Back Legs</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>218</ID>
+    <Icon>0</Icon>
+    <ItemLevel>43</ItemLevel>
+    <RequiredLevel>43</RequiredLevel>
+    <Description>Elementium Back Plate</Description>
+    <Name>Elementium Back Plate</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>219</ID>
+    <Icon>0</Icon>
+    <ItemLevel>45</ItemLevel>
+    <RequiredLevel>45</RequiredLevel>
+    <Description>Elementium Chest Plate</Description>
+    <Name>Elementium Chest Plate</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>220</ID>
+    <Icon>0</Icon>
+    <ItemLevel>47</ItemLevel>
+    <RequiredLevel>47</RequiredLevel>
+    <Description>Elementium Front Legs</Description>
+    <Name>Elementium Front Legs</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>221</ID>
+    <Icon>0</Icon>
+    <ItemLevel>49</ItemLevel>
+    <RequiredLevel>49</RequiredLevel>
+    <Description>Elementium Helmet</Description>
+    <Name>Elementium Helmet</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>222</ID>
+    <Icon>0</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Harmonious Back Legs</Description>
+    <Name>Harmonious Back Legs</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>223</ID>
+    <Icon>0</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Harmonious Back Plate</Description>
+    <Name>Harmonious Back Plate</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>224</ID>
+    <Icon>0</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Harmonious Chest Plate</Description>
+    <Name>Harmonious Chest Plate</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>225</ID>
+    <Icon>0</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Harmonious Front Legs</Description>
+    <Name>Harmonious Front Legs</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>226</ID>
+    <Icon>0</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Harmonious Helmet</Description>
+    <Name>Harmonious Helmet</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>227</ID>
+    <Icon>0</Icon>
+    <ItemLevel>3</ItemLevel>
+    <RequiredLevel>3</RequiredLevel>
+    <Description>Mage Cloak</Description>
+    <Name>Mage Cloak</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>228</ID>
+    <Icon>0</Icon>
+    <ItemLevel>4</ItemLevel>
+    <RequiredLevel>4</RequiredLevel>
+    <Description>Sanguine Back Legs</Description>
+    <Name>Sanguine Back Legs</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>229</ID>
+    <Icon>0</Icon>
+    <ItemLevel>4</ItemLevel>
+    <RequiredLevel>4</RequiredLevel>
+    <Description>Sanguine Back Plate</Description>
+    <Name>Sanguine Back Plate</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>230</ID>
+    <Icon>0</Icon>
+    <ItemLevel>4</ItemLevel>
+    <RequiredLevel>4</RequiredLevel>
+    <Description>Sanguine Chest Plate</Description>
+    <Name>Sanguine Chest Plate</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>231</ID>
+    <Icon>0</Icon>
+    <ItemLevel>4</ItemLevel>
+    <RequiredLevel>4</RequiredLevel>
+    <Description>Sanguine Front Legs</Description>
+    <Name>Sanguine Front Legs</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>232</ID>
+    <Icon>0</Icon>
+    <ItemLevel>4</ItemLevel>
+    <RequiredLevel>4</RequiredLevel>
+    <Description>Sanguine Helmet</Description>
+    <Name>Sanguine Helmet</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>233</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Linen Pouch</Description>
+    <Name>Linen Pouch</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>234</ID>
+    <Icon>0</Icon>
+    <ItemLevel>20</ItemLevel>
+    <RequiredLevel>20</RequiredLevel>
+    <Description>Canvas Pouch</Description>
+    <Name>Canvas Pouch</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>235</ID>
+    <Icon>0</Icon>
+    <ItemLevel>40</ItemLevel>
+    <RequiredLevel>40</RequiredLevel>
+    <Description>Woven Pouch</Description>
+    <Name>Woven Pouch</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>236</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Amor Harmony 1</Description>
+    <Name>Amor Harmony 1</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>237</ID>
+    <Icon>0</Icon>
+    <ItemLevel>10</ItemLevel>
+    <RequiredLevel>10</RequiredLevel>
+    <Description>Amor Harmony 2</Description>
+    <Name>Amor Harmony 2</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>238</ID>
+    <Icon>0</Icon>
+    <ItemLevel>20</ItemLevel>
+    <RequiredLevel>20</RequiredLevel>
+    <Description>Amor Harmony 3</Description>
+    <Name>Amor Harmony 3</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>239</ID>
+    <Icon>0</Icon>
+    <ItemLevel>30</ItemLevel>
+    <RequiredLevel>30</RequiredLevel>
+    <Description>Amor Harmony 4</Description>
+    <Name>Amor Harmony 4</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>240</ID>
+    <Icon>0</Icon>
+    <ItemLevel>40</ItemLevel>
+    <RequiredLevel>40</RequiredLevel>
+    <Description>Amor Harmony 5</Description>
+    <Name>Amor Harmony 5</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>241</ID>
+    <Icon>0</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Amor Harmony 6</Description>
+    <Name>Amor Harmony 6</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>242</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Magic Resist Harmony 1</Description>
+    <Name>Magic Resist Harmony 1</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>243</ID>
+    <Icon>0</Icon>
+    <ItemLevel>10</ItemLevel>
+    <RequiredLevel>10</RequiredLevel>
+    <Description>Magic Resist Harmony 2</Description>
+    <Name>Magic Resist Harmony 2</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>244</ID>
+    <Icon>0</Icon>
+    <ItemLevel>20</ItemLevel>
+    <RequiredLevel>20</RequiredLevel>
+    <Description>Magic Resist Harmony 3</Description>
+    <Name>Magic Resist Harmony 3</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>245</ID>
+    <Icon>0</Icon>
+    <ItemLevel>30</ItemLevel>
+    <RequiredLevel>30</RequiredLevel>
+    <Description>Magic Resist Harmony 4</Description>
+    <Name>Magic Resist Harmony 4</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>246</ID>
+    <Icon>0</Icon>
+    <ItemLevel>40</ItemLevel>
+    <RequiredLevel>40</RequiredLevel>
+    <Description>Magic Resist Harmony 5</Description>
+    <Name>Magic Resist Harmony 5</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>247</ID>
+    <Icon>0</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Magic Resist Harmony 6</Description>
+    <Name>Magic Resist Harmony 6</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>248</ID>
+    <Icon>0</Icon>
+    <ItemLevel>2</ItemLevel>
+    <RequiredLevel>2</RequiredLevel>
+    <Description>Health Harmony 1</Description>
+    <Name>Health Harmony 1</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>249</ID>
+    <Icon>0</Icon>
+    <ItemLevel>12</ItemLevel>
+    <RequiredLevel>12</RequiredLevel>
+    <Description>Health Harmony 2</Description>
+    <Name>Health Harmony 2</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>250</ID>
+    <Icon>0</Icon>
+    <ItemLevel>22</ItemLevel>
+    <RequiredLevel>22</RequiredLevel>
+    <Description>Health Harmony 3</Description>
+    <Name>Health Harmony 3</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>251</ID>
+    <Icon>0</Icon>
+    <ItemLevel>32</ItemLevel>
+    <RequiredLevel>32</RequiredLevel>
+    <Description>Health Harmony 4</Description>
+    <Name>Health Harmony 4</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>252</ID>
+    <Icon>0</Icon>
+    <ItemLevel>42</ItemLevel>
+    <RequiredLevel>42</RequiredLevel>
+    <Description>Health Harmony 5</Description>
+    <Name>Health Harmony 5</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>253</ID>
+    <Icon>0</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Health Harmony 6</Description>
+    <Name>Health Harmony 6</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>254</ID>
+    <Icon>0</Icon>
+    <ItemLevel>2</ItemLevel>
+    <RequiredLevel>2</RequiredLevel>
+    <Description>Health Regen Harmony 1</Description>
+    <Name>Health Regen Harmony 1</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>255</ID>
+    <Icon>0</Icon>
+    <ItemLevel>12</ItemLevel>
+    <RequiredLevel>12</RequiredLevel>
+    <Description>Health Regen Harmony 2</Description>
+    <Name>Health Regen Harmony 2</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>256</ID>
+    <Icon>0</Icon>
+    <ItemLevel>22</ItemLevel>
+    <RequiredLevel>22</RequiredLevel>
+    <Description>Health Regen Harmony 3</Description>
+    <Name>Health Regen Harmony 3</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>257</ID>
+    <Icon>0</Icon>
+    <ItemLevel>32</ItemLevel>
+    <RequiredLevel>32</RequiredLevel>
+    <Description>Health Regen Harmony 4</Description>
+    <Name>Health Regen Harmony 4</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>258</ID>
+    <Icon>0</Icon>
+    <ItemLevel>42</ItemLevel>
+    <RequiredLevel>42</RequiredLevel>
+    <Description>Health Regen Harmony 5</Description>
+    <Name>Health Regen Harmony 5</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>259</ID>
+    <Icon>0</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Health Regen Harmony 6</Description>
+    <Name>Health Regen Harmony 6</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>260</ID>
+    <Icon>0</Icon>
+    <ItemLevel>4</ItemLevel>
+    <RequiredLevel>4</RequiredLevel>
+    <Description>Energy Harmony 1</Description>
+    <Name>Energy Harmony 1</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>261</ID>
+    <Icon>0</Icon>
+    <ItemLevel>14</ItemLevel>
+    <RequiredLevel>14</RequiredLevel>
+    <Description>Energy Harmony 2</Description>
+    <Name>Energy Harmony 2</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>262</ID>
+    <Icon>0</Icon>
+    <ItemLevel>24</ItemLevel>
+    <RequiredLevel>24</RequiredLevel>
+    <Description>Energy Harmony 3</Description>
+    <Name>Energy Harmony 3</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>263</ID>
+    <Icon>0</Icon>
+    <ItemLevel>34</ItemLevel>
+    <RequiredLevel>34</RequiredLevel>
+    <Description>Energy Harmony 4</Description>
+    <Name>Energy Harmony 4</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>264</ID>
+    <Icon>0</Icon>
+    <ItemLevel>44</ItemLevel>
+    <RequiredLevel>44</RequiredLevel>
+    <Description>Energy Harmony 5</Description>
+    <Name>Energy Harmony 5</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>265</ID>
+    <Icon>0</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Energy Harmony 6</Description>
+    <Name>Energy Harmony 6</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>266</ID>
+    <Icon>0</Icon>
+    <ItemLevel>4</ItemLevel>
+    <RequiredLevel>4</RequiredLevel>
+    <Description>Energy Regen Harmony 1</Description>
+    <Name>Energy Regen Harmony 1</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>267</ID>
+    <Icon>0</Icon>
+    <ItemLevel>14</ItemLevel>
+    <RequiredLevel>14</RequiredLevel>
+    <Description>Energy Regen Harmony 2</Description>
+    <Name>Energy Regen Harmony 2</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>268</ID>
+    <Icon>0</Icon>
+    <ItemLevel>24</ItemLevel>
+    <RequiredLevel>24</RequiredLevel>
+    <Description>Energy Regen Harmony 3</Description>
+    <Name>Energy Regen Harmony 3</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>269</ID>
+    <Icon>0</Icon>
+    <ItemLevel>34</ItemLevel>
+    <RequiredLevel>34</RequiredLevel>
+    <Description>Energy Regen Harmony 4</Description>
+    <Name>Energy Regen Harmony 4</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>270</ID>
+    <Icon>0</Icon>
+    <ItemLevel>44</ItemLevel>
+    <RequiredLevel>44</RequiredLevel>
+    <Description>Energy Regen Harmony 5</Description>
+    <Name>Energy Regen Harmony 5</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>271</ID>
+    <Icon>0</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Energy Regen Harmony 6</Description>
+    <Name>Energy Regen Harmony 6</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>272</ID>
+    <Icon>0</Icon>
+    <ItemLevel>6</ItemLevel>
+    <RequiredLevel>6</RequiredLevel>
+    <Description>Movement Speed Harmony 1</Description>
+    <Name>Movement Speed Harmony 1</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>273</ID>
+    <Icon>0</Icon>
+    <ItemLevel>16</ItemLevel>
+    <RequiredLevel>16</RequiredLevel>
+    <Description>Movement Speed Harmony 2</Description>
+    <Name>Movement Speed Harmony 2</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>274</ID>
+    <Icon>0</Icon>
+    <ItemLevel>26</ItemLevel>
+    <RequiredLevel>26</RequiredLevel>
+    <Description>Movement Speed Harmony 3</Description>
+    <Name>Movement Speed Harmony 3</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>275</ID>
+    <Icon>0</Icon>
+    <ItemLevel>36</ItemLevel>
+    <RequiredLevel>36</RequiredLevel>
+    <Description>Movement Speed Harmony 4</Description>
+    <Name>Movement Speed Harmony 4</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>276</ID>
+    <Icon>0</Icon>
+    <ItemLevel>46</ItemLevel>
+    <RequiredLevel>46</RequiredLevel>
+    <Description>Movement Speed Harmony 5</Description>
+    <Name>Movement Speed Harmony 5</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>277</ID>
+    <Icon>0</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Movement Speed Harmony 6</Description>
+    <Name>Movement Speed Harmony 6</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>278</ID>
+    <Icon>0</Icon>
+    <ItemLevel>8</ItemLevel>
+    <RequiredLevel>8</RequiredLevel>
+    <Description>Ability Damage Harmony 1</Description>
+    <Name>Ability Damage Harmony 1</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>279</ID>
+    <Icon>0</Icon>
+    <ItemLevel>18</ItemLevel>
+    <RequiredLevel>18</RequiredLevel>
+    <Description>Ability Damage Harmony 2</Description>
+    <Name>Ability Damage Harmony 2</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>280</ID>
+    <Icon>0</Icon>
+    <ItemLevel>28</ItemLevel>
+    <RequiredLevel>28</RequiredLevel>
+    <Description>Ability Damage Harmony 3</Description>
+    <Name>Ability Damage Harmony 3</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>281</ID>
+    <Icon>0</Icon>
+    <ItemLevel>38</ItemLevel>
+    <RequiredLevel>38</RequiredLevel>
+    <Description>Ability Damage Harmony 4</Description>
+    <Name>Ability Damage Harmony 4</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>282</ID>
+    <Icon>0</Icon>
+    <ItemLevel>48</ItemLevel>
+    <RequiredLevel>48</RequiredLevel>
+    <Description>Ability Damage Harmony 5</Description>
+    <Name>Ability Damage Harmony 5</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>283</ID>
+    <Icon>0</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Ability Damage Harmony 6</Description>
+    <Name>Ability Damage Harmony 6</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>284</ID>
+    <Icon>0</Icon>
+    <ItemLevel>8</ItemLevel>
+    <RequiredLevel>8</RequiredLevel>
+    <Description>Abiliry Healing Harmony 1</Description>
+    <Name>Ability Healing Harmony 1</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>285</ID>
+    <Icon>0</Icon>
+    <ItemLevel>18</ItemLevel>
+    <RequiredLevel>18</RequiredLevel>
+    <Description>Ability Healing Harmony 2</Description>
+    <Name>Ability Healing Harmony 2</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>286</ID>
+    <Icon>0</Icon>
+    <ItemLevel>28</ItemLevel>
+    <RequiredLevel>28</RequiredLevel>
+    <Description>Ability Healing Harmony 3</Description>
+    <Name>Ability Healing Harmony 3</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>287</ID>
+    <Icon>0</Icon>
+    <ItemLevel>38</ItemLevel>
+    <RequiredLevel>38</RequiredLevel>
+    <Description>Ability Healing Harmony 4</Description>
+    <Name>Ability Healing Harmony 4</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>288</ID>
+    <Icon>0</Icon>
+    <ItemLevel>48</ItemLevel>
+    <RequiredLevel>48</RequiredLevel>
+    <Description>Ability Healing Harmony 5</Description>
+    <Name>Ability Healing Harmony 5</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>289</ID>
+    <Icon>0</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Ability Healing Harmony 6</Description>
+    <Name>Ability Healing Harmony 6</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>290</ID>
+    <Icon>0</Icon>
+    <ItemLevel>38</ItemLevel>
+    <RequiredLevel>38</RequiredLevel>
+    <Description>Payback Harmony 4</Description>
+    <Name>Payback Harmony 4</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>291</ID>
+    <Icon>0</Icon>
+    <ItemLevel>48</ItemLevel>
+    <RequiredLevel>48</RequiredLevel>
+    <Description>Payback Harmony 5</Description>
+    <Name>Payback Harmony 5</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>292</ID>
+    <Icon>0</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Payback Harmony 6</Description>
+    <Name>Payback Harmony 6</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>293</ID>
+    <Icon>0</Icon>
+    <ItemLevel>38</ItemLevel>
+    <RequiredLevel>38</RequiredLevel>
+    <Description>Starlight Harmony 4</Description>
+    <Name>Starlight Harmony 4</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>294</ID>
+    <Icon>0</Icon>
+    <ItemLevel>48</ItemLevel>
+    <RequiredLevel>48</RequiredLevel>
+    <Description>Starlight Harmony 5</Description>
+    <Name>Starlight Harmony 5</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>295</ID>
+    <Icon>0</Icon>
+    <ItemLevel>50</ItemLevel>
+    <RequiredLevel>50</RequiredLevel>
+    <Description>Starlight Harmony 6</Description>
+    <Name>Starlight Harmony 6</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>296</ID>
+    <Icon>27</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>This is a personal letter from Silky Roads to her daughter, Lavender Bloom. You'd better not read it!</Description>
+    <Name>Silky Roads' Letter</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>297</ID>
+    <Icon>27</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A letter from Lavender Bloom to her mother. Hey, don't go reading other ponies' mail!</Description>
+    <Name>Lavender Bloom's Letter</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>298</ID>
+    <Icon>114</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>It's not like I like you or anything...</Description>
+    <Name>Sempai Dress</Name>
+    <ResourcePath>Clothes/Dresses/SempaiDress</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>20</Price>
+    <Salable>true</Salable>
+    <WearableSlots>FrontKnees Shirt</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
   </Item>
 </ArrayOfItem>

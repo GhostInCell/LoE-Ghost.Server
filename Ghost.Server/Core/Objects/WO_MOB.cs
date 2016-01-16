@@ -76,7 +76,6 @@ namespace Ghost.Server.Core.Objects
         {
             if (_resource == null) return;
             _respawn?.Destroy();
-            _killed = false;
             _stats.UpdateStats();
             _movement.Position = _data.Position;
             _movement.Rotation = _data.Rotation.ToRadians();

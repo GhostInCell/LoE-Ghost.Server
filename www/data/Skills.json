@@ -48,6 +48,7 @@
 						"IsMultiplier": true, /*default. is amount a multiplier or a set value. how to do percent based changes to attributes*/
 						"SkillId": -1, /*default. id of a skill to effect. -1 affects no skill*/
 						"Duration": 0, /*default*/
+						"TickDuration": 0, /*default. Used if you would like for the Effect to tick every one of these during the duration - If the Duration is 10 and this is 1, then it will tick 10 times before it ends*/
 						"IsDPS": false, /*default. does amount spread out over duration, or is duration how long amount affects the skill/stat*/
 						"Statuses": "None" /*default. Might not be used for anything but GUI*/
 					},
@@ -98,6 +99,23 @@
 				"EnergyCost": 1000,
 				"TargetDistance": 100,
 				"TargetShapes": "Sphere"
+			},
+			{
+				"ID": 3,
+				"Tier": 4,
+				"ParentID": 2,
+				"EnergyCost": 1000,
+				"TargetDistance": 100,
+				"TargetShapes": "Sphere"
+			}
+			,
+			{
+				"ID": 4,
+				"Tier": 5,
+				"ParentID": 3,
+				"EnergyCost": 1000,
+				"TargetDistance": 100,
+				"TargetShapes": "Sphere"
 			}
 		]
 	},
@@ -110,12 +128,12 @@
 		"Races": "Earth",
 		"Classes": "Combat",
 		"DamageType": "Physical",
-		/*"DamageByLevel": [
+		"DamageByLevel": [
 			97.7, 107.3, 111.9, 116.3, 122.1,126.6,130.8,137.3,141.8,188.5,
 			195.3,202.4,219.1,228.4,237.3,245.9,254.1,262,269.6,338.8,
 			353.4,367.6,380.4,393.6,406.3,418.6,440.3,441.9,467.1,550.2,
 			570.3,589.8,608.7,627,644.7,662,678.7,695,710.8,832.6,
-			852.3,871.5,890.1,908.4,926.1,943.4,960.1,976.6,992.6,1000],*/
+			852.3,871.5,890.1,908.4,926.1,943.4,960.1,976.6,992.6,1000],
 		"Upgrades": [
 			{
 				"ID": 0,
@@ -123,22 +141,100 @@
 				"EnergyCost": 35,
 				"Aggression": 1,
 				"TargetDistance": 2,
-				"TargetShapes": "Target",
+				"TargetShapes": "Frustum",
 				"CasterAnimation": "SeismicBuck",
 				"ProjectileResource": "GroundRockHit Gray1",
 				"Cooldown": 2.5,
 				"GlobalCooldown": 1,
 				"CastTime": 0.5,
+				"AoERadius": 1,
+				"AoEMax": 2,
+				"ConeAngle": 60,
+				"FrustumAspectRatio": 1, 
+				"FrustumFieldOfViewY": 60,
 				"TargetEffects": [
 					{
+						"SubId": 0,
 						"Stat": "Tension",
+						"Amount": 85,
+						"IsMultiplier": false,
 					},
 					{
+						"SubId": 1,
 						"Stat": "Health",
-						"Amount": 80,
+						"Amount": 85,
+						"IsMultiplier": false,
+					},
+					{
+						"Targets": "Self",
+						"SubId": 16, /* this coorelates to a server side script */
+						"Stat": "None",
+						"Amount": 1,
 						"IsMultiplier": false,
 					},
 				],
+				"SplashEffects": [
+					{
+						"SubId": 2,
+						"Stat": "Health",
+						"Amount": 39,
+						"IsMultiplier": false,
+					},
+					{
+						"SubId": 3,
+						"Stat": "Tension",
+						"Amount": 85,
+						"IsMultiplier": false,
+					}
+				]
+			},
+			{
+				"ID": 1, /* Big upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"EnergyCost": 34,
+			},
+			{
+				"ID": 2, /* Big upgrade */
+				"Tier": 3,
+				"ParentID": 1,
+				"EnergyCost": 33,
+			},
+			{
+				"ID": 3, /* Big upgrade */
+				"Tier": 4,
+				"ParentID": 2,
+				"EnergyCost": 32,
+			},
+			{
+				"ID": 4, /* Big upgrade */
+				"Tier": 5,
+				"ParentID": 3,
+				"EnergyCost": 31,
+			},
+			{
+				"ID": 5, /* Modifier upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"Cooldown": 2.3,
+			},
+			{
+				"ID": 6, /* Modifier upgrade */
+				"Tier": 3,
+				"ParentID": 5,
+				"Cooldown": 2.2,
+			},
+			{
+				"ID": 7, /* Modifier upgrade */
+				"Tier": 4,
+				"ParentID": 6,
+				"Cooldown": 2.1,
+			},
+			{
+				"ID": 8, /* Modifier upgrade */
+				"Tier": 5,
+				"ParentID": 7,
+				"Cooldown": 2.0,
 			}
 		]
 	},
@@ -213,7 +309,7 @@
 				"ID": 0,
 				"Tier": 1,
 				"EnergyCost": 25,
-				"TargetDistance": 3,
+				"TargetDistance": 6,
 				"TargetShapes": "Target",
 				"CasterAnimation": "Attack 0",
 				"Cooldown": 4,
@@ -261,14 +357,104 @@
 					},
 					{
 						"Stat": "Tension",
-					},
-					{
-						"Stat": "Speed",
-						"Amount": -0.5,
-						"IsMultiplier": true,
-						"Duration": 1,
 					}
 				]
+			},
+			{
+				"ID": 1, /* stun upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"EnergyCost": 34,
+			},
+			{
+				"ID": 2, /* stun upgrade */
+				"Tier": 3,
+				"ParentID": 1,
+				"EnergyCost": 33,
+			},
+			{
+				"ID": 3, /* stun upgrade */
+				"Tier": 4,
+				"ParentID": 2,
+				"EnergyCost": 32,
+			},
+			{
+				"ID": 4, /* stun upgrade */
+				"Tier": 5,
+				"ParentID": 3,
+				"EnergyCost": 31,
+			},
+			{
+				"ID": 5, /* Modifier upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"Cooldown": 2.3,
+			},
+			{
+				"ID": 6, /* Modifier upgrade */
+				"Tier": 3,
+				"ParentID": 5,
+				"Cooldown": 2.2,
+			},
+			{
+				"ID": 7, /* Modifier upgrade */
+				"Tier": 4,
+				"ParentID": 6,
+				"Cooldown": 2.1,
+			},
+			{
+				"ID": 8, /* Modifier upgrade */
+				"Tier": 5,
+				"ParentID": 7,
+				"Cooldown": 2.0,
+			},
+			{
+				"ID": 9, /* StacksNeeded upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"CastTime": 0.4,
+			},
+			{
+				"ID": 10, /* StacksNeeded upgrade */
+				"Tier": 3,
+				"ParentID": 9,
+				"CastTime": 0.3,
+			},
+			{
+				"ID": 11, /* StacksNeeded upgrade */
+				"Tier": 4,
+				"ParentID": 10,
+				"CastTime": 0.2,
+			},
+			{
+				"ID": 12, /* StacksNeeded upgrade */
+				"Tier": 5,
+				"ParentID": 11,
+				"CastTime": 0.1,
+			},
+			{
+				"ID": 13, /* Self upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"CastTime": 0.4,
+			},
+			{
+				"ID": 14, /* Self upgrade */
+				"Tier": 3,
+				"ParentID": 13,
+				"CastTime": 0.3,
+			},
+			{
+				"ID": 15, /* Self upgrade */
+				"Tier": 4,
+				"ParentID": 14,
+				"CastTime": 0.2,
+			},
+			{
+				"ID": 16, /* Self upgrade */
+				"Tier": 5,
+				"ParentID": 15,
+				"CastTime": 0.1,
 			}
 		]
 	},
@@ -278,7 +464,7 @@
 		"Description": "Pony smash!",
 		"MaxLevel": 50,
 		"Icon": "groundpound",
-		"Classes": "Combat",
+		"Classes": "CombatRelated",
 		"Races": "Unicorn, Earth, Pegasus",
 		"DamageType": "Physical",
 		"Upgrades": [
@@ -287,7 +473,7 @@
 				"Tier": 1,
 				"Aggression": 1,
 				"EnergyCost": 15,
-				"TargetDistance": 0.5,
+				"TargetDistance": 2,
 				"TargetShapes": "Sphere",
 				"CasterAnimation": "GroundPound",
 				"ProjectileResource": "GroundRockHit Gray1",
@@ -297,13 +483,24 @@
 				"AoERadius": 2.0,
 				"SplashEffects": [
 					{
+						"SubId": 0,
 						"Stat": "Health",
 						"Amount": 35,
 						"IsMultiplier": false,
 					},
 					{
+						"SubId": 1,
 						"Stat": "Tension",
-					}
+						"Amount": 35,
+						"IsMultiplier": false,
+					},
+					{
+						"Targets": "Self",
+						"SubId": 17, /* this coorelates to a server side script */
+						"Stat": "None",
+						"Amount": 1,
+						"IsMultiplier": false,
+					},
 				]
 			}
 		]
@@ -313,10 +510,11 @@
 		"Name": "Dual Cyclone",
 		"Description": "Twin cyclone chambers for twice the sucking power!",
 		"MaxLevel": 50,
-		"Classes": "Combat",
+		"Classes": "Flying",
 		"Icon": "dualcyclone",
 		"Races": "Pegasus",
 		"DamageType": "Physical",
+		"SkillProcessingType": "CSScript",
 		"Upgrades": [
 			{
 				"ID": 0,
@@ -332,46 +530,80 @@
 				"GlobalCooldown": 1,
 				"TargetEffects": [
 					{
+						"SubId": 0,
+						"Stat": "Tension",
+						"Amount": 52,
+						"IsMultiplier": false,
+					},
+					{
+						"SubId": 1,
 						"Stat": "Health",
 						"Amount": 52,
 						"IsMultiplier": false,
 					},
 					{
-						"Stat": "Tension",
-					}
-				]
-			}
-		]
-	},
-	{
-		"ID": 12,
-		"Name": "Heal",
-		"Description": "Heal a player",
-		"MaxLevel": 50,
-		"Icon": "minor_heal1",
-		"Races": "Unicorn, Earth, Pegasus",
-		"DamageType": "Magical",
-		"Upgrades": [
-			{
-				"ID": 0,
-				"Tier": 1,
-				"Aggression": 1,
-				"EnergyCost": 50,
-				"TargetDistance": 10,
-				"TargetShapes": "Target",
-				"CasterAnimation": "RainbowFields",
-				"ProjectileResource": "HealAbility",
-				"CastTime": 0.5,
-				"Cooldown": 6,
-				"GlobalCooldown": 0.75,
-				"TargetEffects": [
+						"Targets": "Self",
+						"SubId": 19, /* this coorelates to a server side script */
+						"Stat": "None",
+						"Amount": 1.0,
+						"IsMultiplier": false,
+					},
 					{
-						"Targets": "Friendly",
-						"Stat": "Health",
-						"Amount": 78,
+						"Targets": "Self",
+						"SubId": 20, /* this coorelates to a server side script */
+						"Stat": "None",
+						"Amount": 1.0,
 						"IsMultiplier": false,
 					},
 				]
+			},
+			{
+				"ID": 1, /* stun upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"EnergyCost": 34,
+			},
+			{
+				"ID": 2, /* stun upgrade */
+				"Tier": 3,
+				"ParentID": 1,
+				"EnergyCost": 33,
+			},
+			{
+				"ID": 3, /* stun upgrade */
+				"Tier": 4,
+				"ParentID": 2,
+				"EnergyCost": 32,
+			},
+			{
+				"ID": 4, /* stun upgrade */
+				"Tier": 5,
+				"ParentID": 3,
+				"EnergyCost": 31,
+			},
+			{
+				"ID": 5, /* Modifier upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"Cooldown": 2.3,
+			},
+			{
+				"ID": 6, /* Modifier upgrade */
+				"Tier": 3,
+				"ParentID": 5,
+				"Cooldown": 2.2,
+			},
+			{
+				"ID": 7, /* Modifier upgrade */
+				"Tier": 4,
+				"ParentID": 6,
+				"Cooldown": 2.1,
+			},
+			{
+				"ID": 8, /* Modifier upgrade */
+				"Tier": 5,
+				"ParentID": 7,
+				"Cooldown": 2.0,
 			}
 		]
 	},
@@ -431,6 +663,8 @@
 				"AoEDuration": 3, /* each time the aoe ticks (5 times), it will perform the splash effects */
 				"AoERadius": 10,
 				"ConeAngle": 40,
+				"FrustumAspectRatio": 1, 
+				"FrustumFieldOfViewY": 60,
 				"SplashEffects": [
 					{
 						"Stat": "Health",
@@ -456,8 +690,8 @@
 				"ID": 0,
 				"Tier": 1,
 				"Aggression": 1,
-				"EnergyCost": 60,
-				"TargetDistance": 25,
+				"EnergyCost": 70,
+				"TargetDistance": 20,
 				"TargetShapes": "Target",
 				"CasterAnimation": "RainbowFields",
 				"ProjectileResource": "Magical Arrow",
@@ -474,6 +708,78 @@
 						"Stat": "Tension",
 					}
 				]
+			},
+			{
+				"ID": 1, /* stun upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"EnergyCost": 34,
+			},
+			{
+				"ID": 2, /* stun upgrade */
+				"Tier": 3,
+				"ParentID": 1,
+				"EnergyCost": 33,
+			},
+			{
+				"ID": 3, /* stun upgrade */
+				"Tier": 4,
+				"ParentID": 2,
+				"EnergyCost": 32,
+			},
+			{
+				"ID": 4, /* stun upgrade */
+				"Tier": 5,
+				"ParentID": 3,
+				"EnergyCost": 31,
+			},
+			{
+				"ID": 5, /* Modifier upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"Cooldown": 2.3,
+			},
+			{
+				"ID": 6, /* Modifier upgrade */
+				"Tier": 3,
+				"ParentID": 5,
+				"Cooldown": 2.2,
+			},
+			{
+				"ID": 7, /* Modifier upgrade */
+				"Tier": 4,
+				"ParentID": 6,
+				"Cooldown": 2.1,
+			},
+			{
+				"ID": 8, /* Modifier upgrade */
+				"Tier": 5,
+				"ParentID": 7,
+				"Cooldown": 2.0,
+			},
+			{
+				"ID": 9, /* StacksNeeded upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"CastTime": 0.4,
+			},
+			{
+				"ID": 10, /* StacksNeeded upgrade */
+				"Tier": 3,
+				"ParentID": 9,
+				"CastTime": 0.3,
+			},
+			{
+				"ID": 11, /* StacksNeeded upgrade */
+				"Tier": 4,
+				"ParentID": 10,
+				"CastTime": 0.2,
+			},
+			{
+				"ID": 12, /* StacksNeeded upgrade */
+				"Tier": 5,
+				"ParentID": 11,
+				"CastTime": 0.1,
 			}
 		]
 	},
@@ -492,8 +798,9 @@
 				"Tier": 1,
 				"Aggression": 1,
 				"EnergyCost": 50,
-				"TargetDistance": 0.5,
+				"TargetDistance": 0,
 				"TargetShapes": "Sphere",
+				"AttachShapes": "Self",
 				"CasterAnimation": "RoughTerrain",
 				"ProjectileResource": "Rough Terrain",
 				"CastTime": 0.5,
@@ -536,7 +843,7 @@
 				"ProjectileResource": "DragonFire2",
 				"CastTime": 0.58,
 				"Cooldown": 4,
-				"GlobalCooldown": 1,
+				"GlobalCooldown": 0,
 				"AoEDuration": 5, /* each time the aoe ticks (5 times), it will perform the splash effects */
 				"AoERadius": 15,
 				"FrustumAspectRatio": 2, 
@@ -544,13 +851,13 @@
 				"SplashEffects": [
 					{
 						"Stat": "Health",
-						"Amount": 20,
+						"Amount": 50,
 						"IsMultiplier": false,
 						"IsDPS": false,
 					},
 					{
 						"Stat": "Health",
-						"Amount": 40,
+						"Amount": 80,
 						"IsMultiplier": false,
 						"IsDPS": true,
 						"Duration": 5, 
@@ -612,8 +919,15 @@
 				"GlobalCooldown": 0,
 				"TargetEffects": [
 					{
+						"Targets": "Enemy",
 						"Stat": "Health",
 						"Amount": 120,
+						"IsMultiplier": false,
+					},
+					{
+						"Targets": "Friendly",
+						"Stat": "Health",
+						"Amount": -120,
 						"IsMultiplier": false,
 					},
 					{
@@ -648,7 +962,7 @@
 				"TargetEffects": [
 					{
 						"Stat": "Health",
-						"Amount": 60,
+						"Amount": 70,
 						"IsMultiplier": false,
 					},
 					{
@@ -658,7 +972,2017 @@
 			}
 		]
 	},
-
+	{
+		"ID": 22,
+		"Name": "Dragon Rough Terrain",
+		"Description": "Create a field of rocks that harms and slows enemies",
+		"MaxLevel": 50,
+		"Classes": "Combat",
+		"Icon": "roughterrain",
+		"DamageType": "Physical",
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"Aggression": 1,
+				"EnergyCost": 1,
+				"TargetDistance": 12.5,
+				"TargetShapes": "Sphere",
+				"CasterAnimation": "RoughTerrain",
+				"ProjectileResource": "Rough Terrain",
+				"CastTime": 0,
+				"Cooldown": 5,
+				"GlobalCooldown": 1,
+				"AoEDuration": 12, /* each time the aoe ticks (5 times), it will perform the splash effects */
+				"AoERadius": 7,
+				"SplashEffects": [
+					{
+						"Stat": "Health",
+						"Amount": 25,
+						"IsMultiplier": false,
+					},
+					{
+						"Stat": "Speed",
+						"Amount": -0.5,
+						"IsMultiplier": true,
+						"Duration": 1,
+					},
+				]
+			}
+		] 
+	},
+	{
+		"ID": 23,
+		"Name": "Field Tactician",
+		"Description": "kick things",
+		"MaxLevel": 50,
+		"Icon": "horseshoeshot",
+		"Classes": "Combat",
+		"DamageType": "Physical",
+		"Races": "Earth",
+		"SkillProcessingType": "CSScript",
+		/*"DamageByLevel": [
+			97.7, 107.3, 111.9, 116.3, 122.1,126.6,130.8,137.3,141.8,188.5,
+			195.3,202.4,219.1,228.4,237.3,245.9,254.1,262,269.6,338.8,
+			353.4,367.6,380.4,393.6,406.3,418.6,440.3,441.9,467.1,550.2,
+			570.3,589.8,608.7,627,644.7,662,678.7,695,710.8,832.6,
+			852.3,871.5,890.1,908.4,926.1,943.4,960.1,976.6,992.6,1000],*/
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"EnergyCost": 0,
+				"Aggression": 1,
+				"TargetDistance": 0,
+				"TargetShapes": "Sphere",
+				"AoERadius": 8.0,
+				"CasterAnimation": "SeismicBuck",
+				"ProjectileResource": "GroundRockHit Gray1",
+				"Cooldown": 2.5,
+				"GlobalCooldown": 1,
+				"CastTime": 0.5,
+				"TargetEffects": [
+					{
+						"SubId": 15, /* this needs to be 15 */
+						"Targets": "Self",
+						"Stat": "None",
+						"Amount": 1.2,
+						"Duration": 10,
+					},
+				],
+				"SplashEffects": [
+					{
+						"SubId": 0,
+						"Stat": "Tension",
+					},
+					{
+						"SubId": 1,
+						"Stat": "Health",
+						"Amount": 85,
+						"IsMultiplier": false,
+					},
+					{
+						"SubId": 2,
+						"Statuses": "Paralyzed",
+						"Duration": 5,
+						"IsDPS": true,
+					},
+				],
+			},
+			{
+				"ID": 1, /* stun upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"EnergyCost": 34,
+			},
+			{
+				"ID": 2, /* stun upgrade */
+				"Tier": 3,
+				"ParentID": 1,
+				"EnergyCost": 33,
+			},
+			{
+				"ID": 3, /* stun upgrade */
+				"Tier": 4,
+				"ParentID": 2,
+				"EnergyCost": 32,
+			},
+			{
+				"ID": 4, /* stun upgrade */
+				"Tier": 5,
+				"ParentID": 3,
+				"EnergyCost": 31,
+			},
+			{
+				"ID": 5, /* Modifier upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"Cooldown": 2.3,
+			},
+			{
+				"ID": 6, /* Modifier upgrade */
+				"Tier": 3,
+				"ParentID": 5,
+				"Cooldown": 2.2,
+			},
+			{
+				"ID": 7, /* Modifier upgrade */
+				"Tier": 4,
+				"ParentID": 6,
+				"Cooldown": 2.1,
+			},
+			{
+				"ID": 8, /* Modifier upgrade */
+				"Tier": 5,
+				"ParentID": 7,
+				"Cooldown": 2.0,
+			},
+			{
+				"ID": 9, /* StacksNeeded upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"CastTime": 0.4,
+			},
+			{
+				"ID": 10, /* StacksNeeded upgrade */
+				"Tier": 3,
+				"ParentID": 9,
+				"CastTime": 0.3,
+			},
+			{
+				"ID": 11, /* StacksNeeded upgrade */
+				"Tier": 4,
+				"ParentID": 10,
+				"CastTime": 0.2,
+			},
+			{
+				"ID": 12, /* StacksNeeded upgrade */
+				"Tier": 5,
+				"ParentID": 11,
+				"CastTime": 0.1,
+			}
+		]
+	},
+	{
+		"ID": 24,
+		"Name": "Jeering Shout",
+		"Description": "kick things",
+		"MaxLevel": 50,
+		"Icon": "horseshoeshot",
+		"Classes": "Combat",
+		"DamageType": "Physical",
+		"Races": "Earth",
+		/*"DamageByLevel": [
+			97.7, 107.3, 111.9, 116.3, 122.1,126.6,130.8,137.3,141.8,188.5,
+			195.3,202.4,219.1,228.4,237.3,245.9,254.1,262,269.6,338.8,
+			353.4,367.6,380.4,393.6,406.3,418.6,440.3,441.9,467.1,550.2,
+			570.3,589.8,608.7,627,644.7,662,678.7,695,710.8,832.6,
+			852.3,871.5,890.1,908.4,926.1,943.4,960.1,976.6,992.6,1000],*/
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"EnergyCost": 35,
+				"Aggression": 1,
+				"TargetDistance": 2,
+				"TargetShapes": "Target",
+				"CasterAnimation": "SeismicBuck",
+				"ProjectileResource": "GroundRockHit Gray1",
+				"Cooldown": 2.0,
+				"GlobalCooldown": 1,
+				"CastTime": 0.5,
+				"TargetEffects": [
+					{
+						"SubId": 15, /* this coorelates to a server side script */
+						"Targets": "Self",
+						"Stat": "None",
+						"Amount": 1.2,
+						"Duration": 10,
+					},
+					{
+						"Targets": "Self",
+						"SubId": 16, /* this coorelates to a server side script */
+						"Stat": "None",
+						"Amount": 1,
+						"IsMultiplier": false,
+					},
+				],
+			},
+			{
+				"ID": 1, /* stun upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"EnergyCost": 34,
+			},
+			{
+				"ID": 2, /* stun upgrade */
+				"Tier": 3,
+				"ParentID": 1,
+				"EnergyCost": 33,
+			},
+			{
+				"ID": 3, /* stun upgrade */
+				"Tier": 4,
+				"ParentID": 2,
+				"EnergyCost": 32,
+			},
+			{
+				"ID": 4, /* stun upgrade */
+				"Tier": 5,
+				"ParentID": 3,
+				"EnergyCost": 31,
+			},
+			{
+				"ID": 5, /* Modifier upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"Cooldown": 2.3,
+			},
+			{
+				"ID": 6, /* Modifier upgrade */
+				"Tier": 3,
+				"ParentID": 5,
+				"Cooldown": 2.2,
+			},
+			{
+				"ID": 7, /* Modifier upgrade */
+				"Tier": 4,
+				"ParentID": 6,
+				"Cooldown": 2.1,
+			},
+			{
+				"ID": 8, /* Modifier upgrade */
+				"Tier": 5,
+				"ParentID": 7,
+				"Cooldown": 2.0,
+			}
+		]
+	},
+	{
+		"ID": 25,
+		"Name": "Airstep",
+		"Description": "kick things",
+		"MaxLevel": 50,
+		"Icon": "horseshoeshot",
+		"Classes": "Flying",
+		"DamageType": "Physical",
+		"Races": "Pegasus",
+		/*"DamageByLevel": [
+			97.7, 107.3, 111.9, 116.3, 122.1,126.6,130.8,137.3,141.8,188.5,
+			195.3,202.4,219.1,228.4,237.3,245.9,254.1,262,269.6,338.8,
+			353.4,367.6,380.4,393.6,406.3,418.6,440.3,441.9,467.1,550.2,
+			570.3,589.8,608.7,627,644.7,662,678.7,695,710.8,832.6,
+			852.3,871.5,890.1,908.4,926.1,943.4,960.1,976.6,992.6,1000],*/
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"EnergyCost": 35,
+				"Aggression": 1,
+				"TargetDistance": 0,
+				"TargetShapes": "Self",
+				"CasterAnimation": "SeismicBuck",
+				"ProjectileResource": "GroundRockHit Gray1",
+				"Cooldown": 2.5,
+				"GlobalCooldown": 1,
+				"CastTime": 0.5,
+				"TargetEffects": [
+					{
+						"SubId": 0,
+						"Targets": "Self",
+						"Stat": "Dodge",
+						"Amount": 1.5,
+						"IsMultiplier": true,
+					},
+					{
+						"Targets": "Self",
+						"SubId": 18, /* this coorelates to a server side script */
+						"Stat": "None",
+						"Amount": 1,
+						"IsMultiplier": false,
+						"Duration": 2,
+					},
+					{
+						"Targets": "Self",
+						"SubId": 19, /* this coorelates to a server side script */
+						"Stat": "None",
+						"Amount": 1.0,
+						"IsMultiplier": false,
+					},
+				],
+			},
+			{
+				"ID": 1, /* stun upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"EnergyCost": 34,
+			},
+			{
+				"ID": 2, /* stun upgrade */
+				"Tier": 3,
+				"ParentID": 1,
+				"EnergyCost": 33,
+			},
+			{
+				"ID": 3, /* stun upgrade */
+				"Tier": 4,
+				"ParentID": 2,
+				"EnergyCost": 32,
+			},
+			{
+				"ID": 4, /* stun upgrade */
+				"Tier": 5,
+				"ParentID": 3,
+				"EnergyCost": 31,
+			},
+			{
+				"ID": 5, /* Modifier upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"Cooldown": 2.3,
+			},
+			{
+				"ID": 6, /* Modifier upgrade */
+				"Tier": 3,
+				"ParentID": 5,
+				"Cooldown": 2.2,
+			},
+			{
+				"ID": 7, /* Modifier upgrade */
+				"Tier": 4,
+				"ParentID": 6,
+				"Cooldown": 2.1,
+			},
+			{
+				"ID": 8, /* Modifier upgrade */
+				"Tier": 5,
+				"ParentID": 7,
+				"Cooldown": 2.0,
+			},
+			{
+				"ID": 9, /* StacksNeeded upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"CastTime": 0.4,
+			},
+			{
+				"ID": 10, /* StacksNeeded upgrade */
+				"Tier": 3,
+				"ParentID": 9,
+				"CastTime": 0.3,
+			},
+			{
+				"ID": 11, /* StacksNeeded upgrade */
+				"Tier": 4,
+				"ParentID": 10,
+				"CastTime": 0.2,
+			},
+			{
+				"ID": 12, /* StacksNeeded upgrade */
+				"Tier": 5,
+				"ParentID": 11,
+				"CastTime": 0.1,
+			}
+		]
+	},
+	{
+		"ID": 26,
+		"Name": "Rapier",
+		"Description": "kick things",
+		"MaxLevel": 50,
+		"Icon": "horseshoeshot",
+		"Classes": "Flying",
+		"DamageType": "Physical",
+		"Races": "Pegasus",
+		"SkillProcessingType": "CSScript",
+		/*"DamageByLevel": [
+			97.7, 107.3, 111.9, 116.3, 122.1,126.6,130.8,137.3,141.8,188.5,
+			195.3,202.4,219.1,228.4,237.3,245.9,254.1,262,269.6,338.8,
+			353.4,367.6,380.4,393.6,406.3,418.6,440.3,441.9,467.1,550.2,
+			570.3,589.8,608.7,627,644.7,662,678.7,695,710.8,832.6,
+			852.3,871.5,890.1,908.4,926.1,943.4,960.1,976.6,992.6,1000],*/
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"Aggression": 1,
+				"EnergyCost": 60,
+				"TargetDistance": 10,
+				"TargetShapes": "Frustum",
+				"CasterAnimation": "Gale",
+				"ProjectileResource": "Gale",
+				"CastTime": 0.5,
+				"Cooldown": 4,
+				"GlobalCooldown": 1,
+				"AoEDuration": 3, /* each time the aoe ticks (5 times), it will perform the splash effects */
+				"AoERadius": 10,
+				"ConeAngle": 40,
+				"FrustumAspectRatio": 1, 
+				"FrustumFieldOfViewY": 60,
+				"SplashEffects": [
+					{
+						"SubId": 0,
+						"Stat": "Tension",
+					},
+					{
+						"SubId": 1,
+						"Stat": "Health",
+						"Amount": 85,
+						"IsMultiplier": false,
+					},
+				],
+			},
+			{
+				"ID": 1, /* stun upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"EnergyCost": 34,
+			},
+			{
+				"ID": 2, /* stun upgrade */
+				"Tier": 3,
+				"ParentID": 1,
+				"EnergyCost": 33,
+			},
+			{
+				"ID": 3, /* stun upgrade */
+				"Tier": 4,
+				"ParentID": 2,
+				"EnergyCost": 32,
+			},
+			{
+				"ID": 4, /* stun upgrade */
+				"Tier": 5,
+				"ParentID": 3,
+				"EnergyCost": 31,
+			},
+			{
+				"ID": 5, /* Modifier upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"Cooldown": 2.3,
+			},
+			{
+				"ID": 6, /* Modifier upgrade */
+				"Tier": 3,
+				"ParentID": 5,
+				"Cooldown": 2.2,
+			},
+			{
+				"ID": 7, /* Modifier upgrade */
+				"Tier": 4,
+				"ParentID": 6,
+				"Cooldown": 2.1,
+			},
+			{
+				"ID": 8, /* Modifier upgrade */
+				"Tier": 5,
+				"ParentID": 7,
+				"Cooldown": 2.0,
+			}
+		]
+	},
+	{
+		"ID": 27,
+		"Name": "Guidance",
+		"Description": "kick things",
+		"MaxLevel": 50,
+		"Icon": "horseshoeshot",
+		"Classes": "Animal",
+		"DamageType": "Physical",
+		"Races": "Earth",
+		/*"DamageByLevel": [
+			97.7, 107.3, 111.9, 116.3, 122.1,126.6,130.8,137.3,141.8,188.5,
+			195.3,202.4,219.1,228.4,237.3,245.9,254.1,262,269.6,338.8,
+			353.4,367.6,380.4,393.6,406.3,418.6,440.3,441.9,467.1,550.2,
+			570.3,589.8,608.7,627,644.7,662,678.7,695,710.8,832.6,
+			852.3,871.5,890.1,908.4,926.1,943.4,960.1,976.6,992.6,1000],*/
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"EnergyCost": 35,
+				"Aggression": 1,
+				"TargetDistance": 2,
+				"TargetShapes": "Frustum",
+				"CasterAnimation": "SeismicBuck",
+				"ProjectileResource": "GroundRockHit Gray1",
+				"Cooldown": 2.5,
+				"GlobalCooldown": 1,
+				"CastTime": 0.5,
+				"AoERadius": 10,
+				"ConeAngle": 60,
+				"FrustumAspectRatio": 1, 
+				"FrustumFieldOfViewY": 60,
+				"TargetEffects": [
+					{
+						"Stat": "Tension",
+					},
+					{
+						"Stat": "Health",
+						"Amount": 85,
+						"IsMultiplier": false,
+					},
+				],
+			},
+			{
+				"ID": 1, /* stun upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"EnergyCost": 34,
+			},
+			{
+				"ID": 2, /* stun upgrade */
+				"Tier": 3,
+				"ParentID": 1,
+				"EnergyCost": 33,
+			},
+			{
+				"ID": 3, /* stun upgrade */
+				"Tier": 4,
+				"ParentID": 2,
+				"EnergyCost": 32,
+			},
+			{
+				"ID": 4, /* stun upgrade */
+				"Tier": 5,
+				"ParentID": 3,
+				"EnergyCost": 31,
+			},
+			{
+				"ID": 5, /* Modifier upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"Cooldown": 2.3,
+			},
+			{
+				"ID": 6, /* Modifier upgrade */
+				"Tier": 3,
+				"ParentID": 5,
+				"Cooldown": 2.2,
+			},
+			{
+				"ID": 7, /* Modifier upgrade */
+				"Tier": 4,
+				"ParentID": 6,
+				"Cooldown": 2.1,
+			},
+			{
+				"ID": 8, /* Modifier upgrade */
+				"Tier": 5,
+				"ParentID": 7,
+				"Cooldown": 2.0,
+			},
+			{
+				"ID": 9, /* StacksNeeded upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"CastTime": 0.4,
+			},
+			{
+				"ID": 10, /* StacksNeeded upgrade */
+				"Tier": 3,
+				"ParentID": 9,
+				"CastTime": 0.3,
+			},
+			{
+				"ID": 11, /* StacksNeeded upgrade */
+				"Tier": 4,
+				"ParentID": 10,
+				"CastTime": 0.2,
+			},
+			{
+				"ID": 12, /* StacksNeeded upgrade */
+				"Tier": 5,
+				"ParentID": 11,
+				"CastTime": 0.1,
+			}
+		]
+	},
+	{
+		"ID": 28,
+		"Name": "Friends Forever",
+		"Description": "kick things",
+		"MaxLevel": 50,
+		"Icon": "horseshoeshot",
+		"Classes": "Animal",
+		"DamageType": "Ground",
+		"Races": "Earth",
+		/*"DamageByLevel": [
+			97.7, 107.3, 111.9, 116.3, 122.1,126.6,130.8,137.3,141.8,188.5,
+			195.3,202.4,219.1,228.4,237.3,245.9,254.1,262,269.6,338.8,
+			353.4,367.6,380.4,393.6,406.3,418.6,440.3,441.9,467.1,550.2,
+			570.3,589.8,608.7,627,644.7,662,678.7,695,710.8,832.6,
+			852.3,871.5,890.1,908.4,926.1,943.4,960.1,976.6,992.6,1000],*/
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"EnergyCost": 35,
+				"Aggression": 1,
+				"TargetDistance": 0,
+				"TargetShapes": "Sphere",
+				"CasterAnimation": "SeismicBuck",
+				"ProjectileResource": "GroundRockHit Gray1",
+				"Cooldown": 0,
+				"GlobalCooldown": 0,
+				"CastTime": 0,
+				"AoEDuration": 1,
+				"AoERadius": 40,
+				"SplashEffects": [
+					{
+						"Targets": "Friendly, Self",
+						"Stat": "Armor",
+						"Amount": 15,
+						"IsMultiplier": false,
+						"Duration": 10,
+					},
+					{
+						"SubId": 1,
+						"Targets": "Friendly, Self",
+						"Stat": "Health",
+						"Amount": 35,
+						"IsMultiplier": false,
+						"Duration": 10,
+						"TickDuration": 1,
+					},
+					{
+						"SubId": 2,
+						"Targets": "Friendly, Self",
+						"Stat": "Health",
+						"Amount": 135,
+						"IsMultiplier": false,
+						"Duration": 10,
+					},
+				],
+			},
+			{
+				"ID": 1, /* stun upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"EnergyCost": 34,
+			},
+			{
+				"ID": 2, /* stun upgrade */
+				"Tier": 3,
+				"ParentID": 1,
+				"EnergyCost": 33,
+			},
+			{
+				"ID": 3, /* stun upgrade */
+				"Tier": 4,
+				"ParentID": 2,
+				"EnergyCost": 32,
+			},
+			{
+				"ID": 4, /* stun upgrade */
+				"Tier": 5,
+				"ParentID": 3,
+				"EnergyCost": 31,
+			},
+			{
+				"ID": 5, /* Modifier upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"Cooldown": 2.3,
+			},
+			{
+				"ID": 6, /* Modifier upgrade */
+				"Tier": 3,
+				"ParentID": 5,
+				"Cooldown": 2.2,
+			},
+			{
+				"ID": 7, /* Modifier upgrade */
+				"Tier": 4,
+				"ParentID": 6,
+				"Cooldown": 2.1,
+			},
+			{
+				"ID": 8, /* Modifier upgrade */
+				"Tier": 5,
+				"ParentID": 7,
+				"Cooldown": 2.0,
+			},
+			{
+				"ID": 9, /* StacksNeeded upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"CastTime": 0.4,
+			},
+			{
+				"ID": 10, /* StacksNeeded upgrade */
+				"Tier": 3,
+				"ParentID": 9,
+				"CastTime": 0.3,
+			},
+			{
+				"ID": 11, /* StacksNeeded upgrade */
+				"Tier": 4,
+				"ParentID": 10,
+				"CastTime": 0.2,
+			},
+			{
+				"ID": 12, /* StacksNeeded upgrade */
+				"Tier": 5,
+				"ParentID": 11,
+				"CastTime": 0.1,
+			},
+			{
+				"ID": 13, /* Self upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"CastTime": 0.4,
+			},
+			{
+				"ID": 14, /* Self upgrade */
+				"Tier": 3,
+				"ParentID": 13,
+				"CastTime": 0.3,
+			},
+			{
+				"ID": 15, /* Self upgrade */
+				"Tier": 4,
+				"ParentID": 14,
+				"CastTime": 0.2,
+			},
+			{
+				"ID": 16, /* Self upgrade */
+				"Tier": 5,
+				"ParentID": 15,
+				"CastTime": 0.1,
+			}
+		]
+	},
+	{
+		"ID": 29,
+		"Name": "Home Field Advantage",
+		"Description": "Create a field of flowers that puts your enemies to sleep",
+		"MaxLevel": 50,
+		"Races": "Earth",
+		"Classes": "Combat",
+		"Icon": "rainbowfields",
+		"DamageType": "Magical",
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"Aggression": 1,
+				"EnergyCost": 40,
+				"TargetDistance": 8,
+				"TargetShapes": "Sphere",
+				"CasterAnimation": "RainbowFields",
+				"ProjectileResource": "PoppyFlowers",
+				"CastTime": 0.5,
+				"Cooldown": 6,
+				"GlobalCooldown": 0.75,
+				"AoEDuration": 5, /* each time the aoe ticks (5 times), it will perform the splash effects */
+				"AoERadius": 3.5,
+				"SplashEffects": [
+					{
+						"Stat": "Speed",
+						"Amount": -0.7,
+						"IsMultiplier": true,
+						"Duration": 1,
+					},
+					{
+						"Stat": "Tension",
+					}
+				]
+			},
+			{
+				"ID": 1, /* stun upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"EnergyCost": 34,
+			},
+			{
+				"ID": 2, /* stun upgrade */
+				"Tier": 3,
+				"ParentID": 1,
+				"EnergyCost": 33,
+			},
+			{
+				"ID": 3, /* stun upgrade */
+				"Tier": 4,
+				"ParentID": 2,
+				"EnergyCost": 32,
+			},
+			{
+				"ID": 4, /* stun upgrade */
+				"Tier": 5,
+				"ParentID": 3,
+				"EnergyCost": 31,
+			},
+			{
+				"ID": 5, /* Modifier upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"Cooldown": 2.3,
+			},
+			{
+				"ID": 6, /* Modifier upgrade */
+				"Tier": 3,
+				"ParentID": 5,
+				"Cooldown": 2.2,
+			},
+			{
+				"ID": 7, /* Modifier upgrade */
+				"Tier": 4,
+				"ParentID": 6,
+				"Cooldown": 2.1,
+			},
+			{
+				"ID": 8, /* Modifier upgrade */
+				"Tier": 5,
+				"ParentID": 7,
+				"Cooldown": 2.0,
+			},
+			{
+				"ID": 9, /* StacksNeeded upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"CastTime": 0.4,
+			},
+			{
+				"ID": 10, /* StacksNeeded upgrade */
+				"Tier": 3,
+				"ParentID": 9,
+				"CastTime": 0.3,
+			},
+			{
+				"ID": 11, /* StacksNeeded upgrade */
+				"Tier": 4,
+				"ParentID": 10,
+				"CastTime": 0.2,
+			},
+			{
+				"ID": 12, /* StacksNeeded upgrade */
+				"Tier": 5,
+				"ParentID": 11,
+				"CastTime": 0.1,
+			},
+			{
+				"ID": 13, /* Self upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"CastTime": 0.4,
+			},
+			{
+				"ID": 14, /* Self upgrade */
+				"Tier": 3,
+				"ParentID": 13,
+				"CastTime": 0.3,
+			},
+			{
+				"ID": 15, /* Self upgrade */
+				"Tier": 4,
+				"ParentID": 14,
+				"CastTime": 0.2,
+			},
+			{
+				"ID": 16, /* Self upgrade */
+				"Tier": 5,
+				"ParentID": 15,
+				"CastTime": 0.1,
+			}
+		]
+	},
+	{
+		"ID": 30,
+		"Name": "Hypnotize",
+		"Description": "kick things",
+		"MaxLevel": 50,
+		"Icon": "magicarrow",
+		"Classes": "Magic",
+		"DamageType": "Physical",
+		/*"DamageByLevel": [
+			97.7, 107.3, 111.9, 116.3, 122.1,126.6,130.8,137.3,141.8,188.5,
+			195.3,202.4,219.1,228.4,237.3,245.9,254.1,262,269.6,338.8,
+			353.4,367.6,380.4,393.6,406.3,418.6,440.3,441.9,467.1,550.2,
+			570.3,589.8,608.7,627,644.7,662,678.7,695,710.8,832.6,
+			852.3,871.5,890.1,908.4,926.1,943.4,960.1,976.6,992.6,1000],*/
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"EnergyCost": 35,
+				"Aggression": 1,
+				"TargetDistance": 20,
+				"TargetShapes": "Target",
+				"CasterAnimation": "RainbowFields",
+				"ProjectileResource": "Magical Arrow",
+				"Cooldown": 60.5,
+				"GlobalCooldown": 1,
+				"CastTime": 0.5,
+				"TargetEffects": [
+					{
+						"SubId": 0,
+						"Statuses": "Hypnotized",
+						"Duration": 30,
+						"IsDPS": true,
+					},
+				],
+			},
+			{
+				"ID": 1, /* stun upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"EnergyCost": 34,
+			},
+			{
+				"ID": 2, /* stun upgrade */
+				"Tier": 3,
+				"ParentID": 1,
+				"EnergyCost": 33,
+			},
+			{
+				"ID": 3, /* stun upgrade */
+				"Tier": 4,
+				"ParentID": 2,
+				"EnergyCost": 32,
+			},
+			{
+				"ID": 4, /* stun upgrade */
+				"Tier": 5,
+				"ParentID": 3,
+				"EnergyCost": 31,
+			},
+			{
+				"ID": 5, /* Modifier upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"Cooldown": 2.3,
+			},
+			{
+				"ID": 6, /* Modifier upgrade */
+				"Tier": 3,
+				"ParentID": 5,
+				"Cooldown": 2.2,
+			},
+			{
+				"ID": 7, /* Modifier upgrade */
+				"Tier": 4,
+				"ParentID": 6,
+				"Cooldown": 2.1,
+			},
+			{
+				"ID": 8, /* Modifier upgrade */
+				"Tier": 5,
+				"ParentID": 7,
+				"Cooldown": 2.0,
+			},
+			{
+				"ID": 9, /* StacksNeeded upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"CastTime": 0.4,
+			},
+			{
+				"ID": 10, /* StacksNeeded upgrade */
+				"Tier": 3,
+				"ParentID": 9,
+				"CastTime": 0.3,
+			},
+			{
+				"ID": 11, /* StacksNeeded upgrade */
+				"Tier": 4,
+				"ParentID": 10,
+				"CastTime": 0.2,
+			},
+			{
+				"ID": 12, /* StacksNeeded upgrade */
+				"Tier": 5,
+				"ParentID": 11,
+				"CastTime": 0.1,
+			}
+		]
+	},
+	{
+		"ID": 31,
+		"Name": "Sphere of Protection",
+		"Description": "kick things",
+		"MaxLevel": 50,
+		"Icon": "horseshoeshot",
+		"Classes": "Magic",
+		"DamageType": "Physical",
+		"Races": "Unicorn",
+		/*"DamageByLevel": [
+			97.7, 107.3, 111.9, 116.3, 122.1,126.6,130.8,137.3,141.8,188.5,
+			195.3,202.4,219.1,228.4,237.3,245.9,254.1,262,269.6,338.8,
+			353.4,367.6,380.4,393.6,406.3,418.6,440.3,441.9,467.1,550.2,
+			570.3,589.8,608.7,627,644.7,662,678.7,695,710.8,832.6,
+			852.3,871.5,890.1,908.4,926.1,943.4,960.1,976.6,992.6,1000],*/
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"EnergyCost": 35,
+				"Aggression": 1,
+				"TargetDistance": 0,
+				"TargetShapes": "Self",
+				"CasterAnimation": "SeismicBuck",
+				"ProjectileResource": "ShieldSpellAttach",
+				"Cooldown": 30,
+				"GlobalCooldown": 1,
+				"CastTime": 0.5,
+				"AoERadius": 10,
+				"ConeAngle": 60,
+				"FrustumAspectRatio": 1, 
+				"FrustumFieldOfViewY": 60,
+				"TargetEffects": [
+					{
+						"SubId": 0,
+						"Stat": "Tension",
+					},
+					{
+						"SubId": 1,
+						"Targets": "Friendly, Self",
+						"Stat": "MagicResist",
+						"Amount": 150,
+						"IsMultiplier": false,
+						"Duration": 10,
+					},
+				],
+			},
+		]
+	},
+	{
+		"ID": 32,
+		"Name": "Transfusion",
+		"Description": "kick things",
+		"MaxLevel": 50,
+		"Icon": "minor_heal1",
+		"Classes": "Medical",
+		"DamageType": "Physical",
+		"SkillProcessingType": "CSScript",
+		"Races": "Earth",
+		/*"DamageByLevel": [
+			97.7, 107.3, 111.9, 116.3, 122.1,126.6,130.8,137.3,141.8,188.5,
+			195.3,202.4,219.1,228.4,237.3,245.9,254.1,262,269.6,338.8,
+			353.4,367.6,380.4,393.6,406.3,418.6,440.3,441.9,467.1,550.2,
+			570.3,589.8,608.7,627,644.7,662,678.7,695,710.8,832.6,
+			852.3,871.5,890.1,908.4,926.1,943.4,960.1,976.6,992.6,1000],*/
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"EnergyCost": 35,
+				"Aggression": 1,
+				"TargetDistance": 0,
+				"TargetShapes": "Self",
+				"CasterAnimation": "SeismicBuck",
+				"ProjectileResource": "GroundRockHit Gray1",
+				"Cooldown": 2.5,
+				"GlobalCooldown": 1,
+				"CastTime": 0.5,
+				"TargetEffects": [
+					{
+						"SubId": 1,
+						"Amount": 2, /* This is the number of players to affect, 1 is only the target, 2> auto finds targets based on distance from the first target*/
+					},
+					{
+						"SubId": 2,
+						"Amount": 2, /* This is the number of enemies to siphon off */
+					},
+					{
+						"SubId": 3,
+						"Amount": 0.07, /* This is the potency of the heal in a Percent of the current HP */
+					},
+					{
+						"Targets": "Friendly, Self",
+						"SubId": 21, /* this coorelates to a server side script, Applies Recently Aided */
+						"Stat": "None",
+						"Amount": 1,
+						"IsMultiplier": false,
+						"Duration": 5,
+					},
+				],
+			},
+		]
+	},
+	{
+		"ID": 33,
+		"Name": "Resurrect",
+		"Description": "kick things",
+		"MaxLevel": 50,
+		"Icon": "horseshoeshot",
+		"Classes": "Medical",
+		"DamageType": "Physical",
+		"SkillProcessingType": "CSScript",
+		"Races": "Earth",
+		/*"DamageByLevel": [
+			97.7, 107.3, 111.9, 116.3, 122.1,126.6,130.8,137.3,141.8,188.5,
+			195.3,202.4,219.1,228.4,237.3,245.9,254.1,262,269.6,338.8,
+			353.4,367.6,380.4,393.6,406.3,418.6,440.3,441.9,467.1,550.2,
+			570.3,589.8,608.7,627,644.7,662,678.7,695,710.8,832.6,
+			852.3,871.5,890.1,908.4,926.1,943.4,960.1,976.6,992.6,1000],*/
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"EnergyCost": 35,
+				"Aggression": 1,
+				"TargetDistance": 20,
+				"TargetShapes": "Target",
+				"CasterAnimation": "SeismicBuck",
+				"ProjectileResource": "ResurrectionEffect",
+				"Cooldown": 2.5,
+				"GlobalCooldown": 1,
+				"CastTime": 0.5,
+				"AoERadius": 10,
+				"ConeAngle": 60,
+				"FrustumAspectRatio": 1, 
+				"FrustumFieldOfViewY": 60,
+			},
+		]
+	},
+	{
+		"ID": 34,
+		"Name": "Triage",
+		"Description": "kick things",
+		"MaxLevel": 50,
+		"Icon": "minor_heal1",
+		"Classes": "Medical",
+		"DamageType": "Physical",
+		"SkillProcessingType": "CSScript",
+		"Races": "Earth",
+		/*"DamageByLevel": [
+			97.7, 107.3, 111.9, 116.3, 122.1,126.6,130.8,137.3,141.8,188.5,
+			195.3,202.4,219.1,228.4,237.3,245.9,254.1,262,269.6,338.8,
+			353.4,367.6,380.4,393.6,406.3,418.6,440.3,441.9,467.1,550.2,
+			570.3,589.8,608.7,627,644.7,662,678.7,695,710.8,832.6,
+			852.3,871.5,890.1,908.4,926.1,943.4,960.1,976.6,992.6,1000],*/
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"EnergyCost": 35,
+				"Aggression": 1,
+				"TargetDistance": 20,
+				"TargetShapes": "Target",
+				"CasterAnimation": "SeismicBuck",
+				"ProjectileResource": "GroundRockHit Gray1",
+				"Cooldown": 2.5,
+				"GlobalCooldown": 1,
+				"CastTime": 0.5,
+				"TargetEffects": [
+					{
+						"SubId": 1,
+						"Amount": 0.33, /* This is the Base Heal Percent */
+					},
+					{
+						"SubId": 2,
+						"Amount": 0.05, /* This is the Bonus Heal Percent */
+					},
+					{
+						"Targets": "Friendly, Self",
+						"SubId": 21, /* this coorelates to a server side script */
+						"Stat": "None",
+						"Amount": 1,
+						"IsMultiplier": false,
+						"Duration": 5,
+					},
+				],
+			},
+		]
+	},
+	{
+		"ID": 35,
+		"Name": "Regenerative Aura",
+		"Description": "kick things",
+		"MaxLevel": 50,
+		"Icon": "horseshoeshot",
+		"Classes": "Magic",
+		"DamageType": "Physical",
+		"Races": "Earth",
+		/*"DamageByLevel": [
+			97.7, 107.3, 111.9, 116.3, 122.1,126.6,130.8,137.3,141.8,188.5,
+			195.3,202.4,219.1,228.4,237.3,245.9,254.1,262,269.6,338.8,
+			353.4,367.6,380.4,393.6,406.3,418.6,440.3,441.9,467.1,550.2,
+			570.3,589.8,608.7,627,644.7,662,678.7,695,710.8,832.6,
+			852.3,871.5,890.1,908.4,926.1,943.4,960.1,976.6,992.6,1000],*/
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"EnergyCost": 15,
+				"Aggression": 1,
+				"TargetDistance": 0,
+				"TargetShapes": "Sphere",
+				"CasterAnimation": "SeismicBuck",
+				"ProjectileResource": "InquisitveLightEffect",
+				"IsToggleCast": true,
+				"Cooldown": 1,
+				"GlobalCooldown": 1,
+				"CastTime": 0.5,
+				"AoERadius": 10,
+				"AoEDuration": 5000,
+				"TargetEffects": [
+					{
+						"Targets": "Self",
+						"SubId": 1,
+						"Stat": "Energy",
+						"Amount": -10,
+						"IsMultiplier": false,
+						"Duration": 100000,
+						"IsDPS": true,
+					},
+				],
+				"SplashEffects": [
+					{
+						"Targets": "Friendly, Self",
+						"Stat": "Speed",
+						"Amount": 0.8,
+						"IsMultiplier": true,
+						"IsDPS": true,
+						"Duration": 1,
+					},
+					{
+						"Targets": "Friendly, Self",
+						"SubId": 21, /* this coorelates to a server side script */
+						"Stat": "None",
+						"Amount": 1,
+						"IsMultiplier": false,
+						"Duration": 5,
+					},
+				],
+			},
+		]
+	},
+	{
+		"ID": 36,
+		"Name": "Harmonic Melody",
+		"Description": "kick things",
+		"MaxLevel": 50,
+		"Icon": "horseshoeshot",
+		"Classes": "Music",
+		"DamageType": "Physical",
+		/*"DamageByLevel": [
+			97.7, 107.3, 111.9, 116.3, 122.1,126.6,130.8,137.3,141.8,188.5,
+			195.3,202.4,219.1,228.4,237.3,245.9,254.1,262,269.6,338.8,
+			353.4,367.6,380.4,393.6,406.3,418.6,440.3,441.9,467.1,550.2,
+			570.3,589.8,608.7,627,644.7,662,678.7,695,710.8,832.6,
+			852.3,871.5,890.1,908.4,926.1,943.4,960.1,976.6,992.6,1000],*/
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"EnergyCost": 35,
+				"Aggression": 1,
+				"TargetDistance": 2,
+				"TargetShapes": "Frustum",
+				"CasterAnimation": "SeismicBuck",
+				"ProjectileResource": "GroundRockHit Gray1",
+				"Cooldown": 2.5,
+				"GlobalCooldown": 1,
+				"CastTime": 0.5,
+				"AoERadius": 10,
+				"ConeAngle": 60,
+				"FrustumAspectRatio": 1, 
+				"FrustumFieldOfViewY": 60,
+				"TargetEffects": [
+					{
+						"Stat": "Tension",
+					},
+					{
+						"Stat": "Health",
+						"Amount": 85,
+						"IsMultiplier": false,
+					},
+				],
+			},
+			{
+				"ID": 1, /* stun upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"EnergyCost": 34,
+			},
+			{
+				"ID": 2, /* stun upgrade */
+				"Tier": 3,
+				"ParentID": 1,
+				"EnergyCost": 33,
+			},
+			{
+				"ID": 3, /* stun upgrade */
+				"Tier": 4,
+				"ParentID": 2,
+				"EnergyCost": 32,
+			},
+			{
+				"ID": 4, /* stun upgrade */
+				"Tier": 5,
+				"ParentID": 3,
+				"EnergyCost": 31,
+			},
+			{
+				"ID": 5, /* Modifier upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"Cooldown": 2.3,
+			},
+			{
+				"ID": 6, /* Modifier upgrade */
+				"Tier": 3,
+				"ParentID": 5,
+				"Cooldown": 2.2,
+			},
+			{
+				"ID": 7, /* Modifier upgrade */
+				"Tier": 4,
+				"ParentID": 6,
+				"Cooldown": 2.1,
+			},
+			{
+				"ID": 8, /* Modifier upgrade */
+				"Tier": 5,
+				"ParentID": 7,
+				"Cooldown": 2.0,
+			},
+			{
+				"ID": 9, /* StacksNeeded upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"CastTime": 0.4,
+			},
+			{
+				"ID": 10, /* StacksNeeded upgrade */
+				"Tier": 3,
+				"ParentID": 9,
+				"CastTime": 0.3,
+			},
+			{
+				"ID": 11, /* StacksNeeded upgrade */
+				"Tier": 4,
+				"ParentID": 10,
+				"CastTime": 0.2,
+			},
+			{
+				"ID": 12, /* StacksNeeded upgrade */
+				"Tier": 5,
+				"ParentID": 11,
+				"CastTime": 0.1,
+			}
+		]
+	},
+	{
+		"ID": 37,
+		"Name": "Forte",
+		"Description": "kick things",
+		"MaxLevel": 50,
+		"Icon": "horseshoeshot",
+		"Classes": "Music",
+		"DamageType": "Physical",
+		/*"DamageByLevel": [
+			97.7, 107.3, 111.9, 116.3, 122.1,126.6,130.8,137.3,141.8,188.5,
+			195.3,202.4,219.1,228.4,237.3,245.9,254.1,262,269.6,338.8,
+			353.4,367.6,380.4,393.6,406.3,418.6,440.3,441.9,467.1,550.2,
+			570.3,589.8,608.7,627,644.7,662,678.7,695,710.8,832.6,
+			852.3,871.5,890.1,908.4,926.1,943.4,960.1,976.6,992.6,1000],*/
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"EnergyCost": 35,
+				"Aggression": 1,
+				"TargetDistance": 2,
+				"TargetShapes": "Frustum",
+				"CasterAnimation": "SeismicBuck",
+				"ProjectileResource": "GroundRockHit Gray1",
+				"Cooldown": 2.5,
+				"GlobalCooldown": 1,
+				"CastTime": 0.5,
+				"AoERadius": 10,
+				"ConeAngle": 60,
+				"FrustumAspectRatio": 1, 
+				"FrustumFieldOfViewY": 60,
+				"TargetEffects": [
+					{
+						"Stat": "Tension",
+					},
+					{
+						"Stat": "Health",
+						"Amount": 85,
+						"IsMultiplier": false,
+					},
+				],
+			},
+			{
+				"ID": 1, /* stun upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"EnergyCost": 34,
+			},
+			{
+				"ID": 2, /* stun upgrade */
+				"Tier": 3,
+				"ParentID": 1,
+				"EnergyCost": 33,
+			},
+			{
+				"ID": 3, /* stun upgrade */
+				"Tier": 4,
+				"ParentID": 2,
+				"EnergyCost": 32,
+			},
+			{
+				"ID": 4, /* stun upgrade */
+				"Tier": 5,
+				"ParentID": 3,
+				"EnergyCost": 31,
+			},
+			{
+				"ID": 5, /* Modifier upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"Cooldown": 2.3,
+			},
+			{
+				"ID": 6, /* Modifier upgrade */
+				"Tier": 3,
+				"ParentID": 5,
+				"Cooldown": 2.2,
+			},
+			{
+				"ID": 7, /* Modifier upgrade */
+				"Tier": 4,
+				"ParentID": 6,
+				"Cooldown": 2.1,
+			},
+			{
+				"ID": 8, /* Modifier upgrade */
+				"Tier": 5,
+				"ParentID": 7,
+				"Cooldown": 2.0,
+			},
+			{
+				"ID": 9, /* StacksNeeded upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"CastTime": 0.4,
+			},
+			{
+				"ID": 10, /* StacksNeeded upgrade */
+				"Tier": 3,
+				"ParentID": 9,
+				"CastTime": 0.3,
+			},
+			{
+				"ID": 11, /* StacksNeeded upgrade */
+				"Tier": 4,
+				"ParentID": 10,
+				"CastTime": 0.2,
+			},
+			{
+				"ID": 12, /* StacksNeeded upgrade */
+				"Tier": 5,
+				"ParentID": 11,
+				"CastTime": 0.1,
+			}
+		]
+	},
+	{
+		"ID": 38,
+		"Name": "Rhythm",
+		"Description": "kick things",
+		"MaxLevel": 50,
+		"Icon": "horseshoeshot",
+		"Classes": "Music",
+		"DamageType": "Physical",
+		/*"DamageByLevel": [
+			97.7, 107.3, 111.9, 116.3, 122.1,126.6,130.8,137.3,141.8,188.5,
+			195.3,202.4,219.1,228.4,237.3,245.9,254.1,262,269.6,338.8,
+			353.4,367.6,380.4,393.6,406.3,418.6,440.3,441.9,467.1,550.2,
+			570.3,589.8,608.7,627,644.7,662,678.7,695,710.8,832.6,
+			852.3,871.5,890.1,908.4,926.1,943.4,960.1,976.6,992.6,1000],*/
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"EnergyCost": 35,
+				"Aggression": 1,
+				"TargetDistance": 2,
+				"TargetShapes": "Frustum",
+				"CasterAnimation": "SeismicBuck",
+				"ProjectileResource": "GroundRockHit Gray1",
+				"Cooldown": 2.5,
+				"GlobalCooldown": 1,
+				"CastTime": 0.5,
+				"AoERadius": 10,
+				"ConeAngle": 60,
+				"FrustumAspectRatio": 1, 
+				"FrustumFieldOfViewY": 60,
+				"TargetEffects": [
+					{
+						"Stat": "Tension",
+					},
+					{
+						"Stat": "Health",
+						"Amount": 85,
+						"IsMultiplier": false,
+					},
+				],
+			},
+			{
+				"ID": 1, /* stun upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"EnergyCost": 34,
+			},
+			{
+				"ID": 2, /* stun upgrade */
+				"Tier": 3,
+				"ParentID": 1,
+				"EnergyCost": 33,
+			},
+			{
+				"ID": 3, /* stun upgrade */
+				"Tier": 4,
+				"ParentID": 2,
+				"EnergyCost": 32,
+			},
+			{
+				"ID": 4, /* stun upgrade */
+				"Tier": 5,
+				"ParentID": 3,
+				"EnergyCost": 31,
+			},
+			{
+				"ID": 5, /* Modifier upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"Cooldown": 2.3,
+			},
+			{
+				"ID": 6, /* Modifier upgrade */
+				"Tier": 3,
+				"ParentID": 5,
+				"Cooldown": 2.2,
+			},
+			{
+				"ID": 7, /* Modifier upgrade */
+				"Tier": 4,
+				"ParentID": 6,
+				"Cooldown": 2.1,
+			},
+			{
+				"ID": 8, /* Modifier upgrade */
+				"Tier": 5,
+				"ParentID": 7,
+				"Cooldown": 2.0,
+			},
+			{
+				"ID": 9, /* StacksNeeded upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"CastTime": 0.4,
+			},
+			{
+				"ID": 10, /* StacksNeeded upgrade */
+				"Tier": 3,
+				"ParentID": 9,
+				"CastTime": 0.3,
+			},
+			{
+				"ID": 11, /* StacksNeeded upgrade */
+				"Tier": 4,
+				"ParentID": 10,
+				"CastTime": 0.2,
+			},
+			{
+				"ID": 12, /* StacksNeeded upgrade */
+				"Tier": 5,
+				"ParentID": 11,
+				"CastTime": 0.1,
+			}
+		]
+	},
+	{
+		"ID": 39,
+		"Name": "Spectral Tunes",
+		"Description": "kick things",
+		"MaxLevel": 50,
+		"Icon": "horseshoeshot",
+		"Classes": "Music",
+		"DamageType": "Physical",
+		/*"DamageByLevel": [
+			97.7, 107.3, 111.9, 116.3, 122.1,126.6,130.8,137.3,141.8,188.5,
+			195.3,202.4,219.1,228.4,237.3,245.9,254.1,262,269.6,338.8,
+			353.4,367.6,380.4,393.6,406.3,418.6,440.3,441.9,467.1,550.2,
+			570.3,589.8,608.7,627,644.7,662,678.7,695,710.8,832.6,
+			852.3,871.5,890.1,908.4,926.1,943.4,960.1,976.6,992.6,1000],*/
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"EnergyCost": 35,
+				"Aggression": 1,
+				"TargetDistance": 2,
+				"TargetShapes": "Frustum",
+				"CasterAnimation": "SeismicBuck",
+				"ProjectileResource": "GroundRockHit Gray1",
+				"Cooldown": 2.5,
+				"GlobalCooldown": 1,
+				"CastTime": 0.5,
+				"AoERadius": 10,
+				"ConeAngle": 60,
+				"FrustumAspectRatio": 1, 
+				"FrustumFieldOfViewY": 60,
+				"TargetEffects": [
+					{
+						"Stat": "Tension",
+					},
+					{
+						"Stat": "Health",
+						"Amount": 85,
+						"IsMultiplier": false,
+					},
+				],
+			},
+			{
+				"ID": 1, /* stun upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"EnergyCost": 34,
+			},
+			{
+				"ID": 2, /* stun upgrade */
+				"Tier": 3,
+				"ParentID": 1,
+				"EnergyCost": 33,
+			},
+			{
+				"ID": 3, /* stun upgrade */
+				"Tier": 4,
+				"ParentID": 2,
+				"EnergyCost": 32,
+			},
+			{
+				"ID": 4, /* stun upgrade */
+				"Tier": 5,
+				"ParentID": 3,
+				"EnergyCost": 31,
+			},
+			{
+				"ID": 5, /* Modifier upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"Cooldown": 2.3,
+			},
+			{
+				"ID": 6, /* Modifier upgrade */
+				"Tier": 3,
+				"ParentID": 5,
+				"Cooldown": 2.2,
+			},
+			{
+				"ID": 7, /* Modifier upgrade */
+				"Tier": 4,
+				"ParentID": 6,
+				"Cooldown": 2.1,
+			},
+			{
+				"ID": 8, /* Modifier upgrade */
+				"Tier": 5,
+				"ParentID": 7,
+				"Cooldown": 2.0,
+			},
+			{
+				"ID": 9, /* StacksNeeded upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"CastTime": 0.4,
+			},
+			{
+				"ID": 10, /* StacksNeeded upgrade */
+				"Tier": 3,
+				"ParentID": 9,
+				"CastTime": 0.3,
+			},
+			{
+				"ID": 11, /* StacksNeeded upgrade */
+				"Tier": 4,
+				"ParentID": 10,
+				"CastTime": 0.2,
+			},
+			{
+				"ID": 12, /* StacksNeeded upgrade */
+				"Tier": 5,
+				"ParentID": 11,
+				"CastTime": 0.1,
+			}
+		]
+	},
+	{
+		"ID": 41,
+		"Name": "Candy Shower",
+		"Description": "Create a field of rocks that harms and slows enemies",
+		"MaxLevel": 50,
+		"Races": "Earth",
+		"Classes": "Combat",
+		"Icon": "roughterrain",
+		"DamageType": "Physical",
+		"Races": "Earth",
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"Aggression": 1,
+				"EnergyCost": 50,
+				"TargetDistance": 0,
+				"TargetShapes": "Sphere",
+				"CasterAnimation": "RoughTerrain",
+				"ProjectileResource": "Candy Shower",
+				"CastTime": 0.5,
+				"Cooldown": 15,
+				"GlobalCooldown": 1,
+				"AoEDuration": 12, /* each time the aoe ticks (5 times), it will perform the splash effects */
+				"AoERadius": 7,
+				"SplashEffects": [
+					{
+						"Stat": "Health",
+						"Amount": 9,
+						"IsMultiplier": false,
+					},
+					{
+						"Stat": "Speed",
+						"Amount": -0.5,
+						"IsMultiplier": true,
+						"Duration": 1,
+					},
+				]
+			}
+		]
+	},
+	{
+		"ID": 42,
+		"Name": "Party Foul",
+		"Description": "kick things",
+		"MaxLevel": 50,
+		"Icon": "horseshoeshot",
+		"Classes": "Partying",
+		"DamageType": "Physical",
+		"Races": "Earth",
+		/*"DamageByLevel": [
+			97.7, 107.3, 111.9, 116.3, 122.1,126.6,130.8,137.3,141.8,188.5,
+			195.3,202.4,219.1,228.4,237.3,245.9,254.1,262,269.6,338.8,
+			353.4,367.6,380.4,393.6,406.3,418.6,440.3,441.9,467.1,550.2,
+			570.3,589.8,608.7,627,644.7,662,678.7,695,710.8,832.6,
+			852.3,871.5,890.1,908.4,926.1,943.4,960.1,976.6,992.6,1000],*/
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"EnergyCost": 35,
+				"Aggression": 1,
+				"TargetDistance": 2,
+				"TargetShapes": "Target",
+				"CasterAnimation": "SeismicBuck",
+				"ProjectileResource": "GroundRockHit Gray1",
+				"Cooldown": 2.5,
+				"GlobalCooldown": 1,
+				"CastTime": 0.5,
+				"AoERadius": 10,
+				"ConeAngle": 60,
+				"FrustumAspectRatio": 1, 
+				"FrustumFieldOfViewY": 60,
+				"TargetEffects": [
+					{
+						"Stat": "Tension",
+					},
+					{
+						"SubId": 1,
+						"Statuses": "Paralyzed",
+						"Duration": 5,
+						"IsDPS": true,
+					},
+					{
+						"SubId": 2,
+						"Stat": "Speed",
+						"Amount": -0.7,
+						"IsMultiplier": true,
+						"Duration": 10,
+					},
+				],
+			},
+			{
+				"ID": 1, /* stun upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"EnergyCost": 34,
+			},
+			{
+				"ID": 2, /* stun upgrade */
+				"Tier": 3,
+				"ParentID": 1,
+				"EnergyCost": 33,
+			},
+			{
+				"ID": 3, /* stun upgrade */
+				"Tier": 4,
+				"ParentID": 2,
+				"EnergyCost": 32,
+			},
+			{
+				"ID": 4, /* stun upgrade */
+				"Tier": 5,
+				"ParentID": 3,
+				"EnergyCost": 31,
+			},
+			{
+				"ID": 5, /* Modifier upgrade */
+				"Tier": 2,
+				"ParentID": 0,
+				"Cooldown": 2.3,
+			},
+			{
+				"ID": 6, /* Modifier upgrade */
+				"Tier": 3,
+				"ParentID": 5,
+				"Cooldown": 2.2,
+			},
+			{
+				"ID": 7, /* Modifier upgrade */
+				"Tier": 4,
+				"ParentID": 6,
+				"Cooldown": 2.1,
+			},
+			{
+				"ID": 8, /* Modifier upgrade */
+				"Tier": 5,
+				"ParentID": 7,
+				"Cooldown": 2.0,
+			}
+		]
+	},
+	{
+		"ID": 43,
+		"Name": "Change of Heart",
+		"Description": "kick things",
+		"MaxLevel": 50,
+		"Icon": "horseshoeshot",
+		"Classes": "Partying",
+		"DamageType": "Physical",
+		"Races": "Earth",
+		/*"DamageByLevel": [
+			97.7, 107.3, 111.9, 116.3, 122.1,126.6,130.8,137.3,141.8,188.5,
+			195.3,202.4,219.1,228.4,237.3,245.9,254.1,262,269.6,338.8,
+			353.4,367.6,380.4,393.6,406.3,418.6,440.3,441.9,467.1,550.2,
+			570.3,589.8,608.7,627,644.7,662,678.7,695,710.8,832.6,
+			852.3,871.5,890.1,908.4,926.1,943.4,960.1,976.6,992.6,1000],*/
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"EnergyCost": 35,
+				"Aggression": 1,
+				"TargetDistance": 10,
+				"TargetShapes": "Target",
+				"CasterAnimation": "SeismicBuck",
+				"ProjectileResource": "GroundRockHit Gray1",
+				"Cooldown": 2.5,
+				"GlobalCooldown": 1,
+				"CastTime": 0.5,
+				"AoERadius": 10,
+				"ConeAngle": 60,
+				"FrustumAspectRatio": 1, 
+				"FrustumFieldOfViewY": 60,
+				"TargetEffects": [
+					{
+						"SubId": 23, /* this coorelates to a server side script */
+						"Stat": "None",
+						"Amount": 1,
+						"IsMultiplier": false,
+						"Duration": 1,
+					},
+				],
+			},
+		]
+	},
+	{
+		"ID": 44,
+		"Name": "Cute Stare",
+		"Description": "Pony smash!",
+		"MaxLevel": 50,
+		"Icon": "groundpound",
+		"Classes": "CombatRelated",
+		"Races": "Unicorn, Earth, Pegasus",
+		"DamageType": "Physical",
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"Aggression": 1,
+				"EnergyCost": 15,
+				"TargetDistance": 2,
+				"TargetShapes": "Sphere",
+				"CasterAnimation": "GroundPound",
+				"ProjectileResource": "GroundRockHit Gray1",
+				"CastTime": 0.5,
+				"Cooldown": 1.5,
+				"GlobalCooldown": 0.75,
+				"AoERadius": 2.0,
+				"SplashEffects": [
+					{
+						"SubId": 0,
+						"Stat": "Health",
+						"Amount": 35,
+						"IsMultiplier": false,
+					},
+					{
+						"SubId": 1,
+						"Stat": "Tension",
+						"Amount": -35,
+						"IsMultiplier": false,
+					},
+					{
+						"Targets": "Self",
+						"SubId": 17, /* this coorelates to a server side script */
+						"Stat": "None",
+						"Amount": 1,
+						"IsMultiplier": false,
+					},
+				]
+			}
+		]
+	},
+	{
+		"ID": 45,
+		"Name": "Inquisitive Light",
+		"Description": "kick things",
+		"MaxLevel": 50,
+		"Icon": "horseshoeshot",
+		"Classes": "Magic",
+		"DamageType": "Physical",
+		/*"DamageByLevel": [
+			97.7, 107.3, 111.9, 116.3, 122.1,126.6,130.8,137.3,141.8,188.5,
+			195.3,202.4,219.1,228.4,237.3,245.9,254.1,262,269.6,338.8,
+			353.4,367.6,380.4,393.6,406.3,418.6,440.3,441.9,467.1,550.2,
+			570.3,589.8,608.7,627,644.7,662,678.7,695,710.8,832.6,
+			852.3,871.5,890.1,908.4,926.1,943.4,960.1,976.6,992.6,1000],*/
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"EnergyCost": 15,
+				"Aggression": 1,
+				"TargetDistance": 0,
+				"TargetShapes": "Sphere",
+				"CasterAnimation": "SeismicBuck",
+				"ProjectileResource": "InquisitveLightEffect",
+				"IsToggleCast": true,
+				"Cooldown": 1,
+				"GlobalCooldown": 1,
+				"CastTime": 0.5,
+				"AoERadius": 10,
+				"AoEDuration": 5000, /* each time the aoe ticks (5 times), it will perform the splash effects */
+				"ConeAngle": 60,
+				"FrustumAspectRatio": 1, 
+				"FrustumFieldOfViewY": 60,
+				"TargetEffects": [
+					{
+						"Targets": "Self",
+						"SubId": 1,
+						"Stat": "Energy",
+						"Amount": -20,
+						"IsMultiplier": false,
+						"Duration": 100000,
+						"IsDPS": true,
+					},
+				],
+				"SplashEffects": [
+					{
+						"SubId": 22, /* this coorelates to a server side script */
+						"Stat": "None",
+						"Amount": 1,
+						"Duration": 1.2,
+						"IsMultiplier": false,
+					},
+				],
+			},
+		]
+	},
 
 ]
 	

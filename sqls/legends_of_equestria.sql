@@ -42,22 +42,10 @@ CREATE TABLE IF NOT EXISTS `loe_character` (
   `cutiemark2` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `CHAR NAME` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_character: ~5 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_character: ~0 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_character` DISABLE KEYS */;
-INSERT INTO `loe_character` (`id`, `user`, `level`, `map`, `data`, `name`, `race`, `gender`, `eye`, `tail`, `hoof`, `mane`, `bodysize`, `hornsize`, `eyecolor`, `hoofcolor`, `bodycolor`, `haircolor0`, `haircolor1`, `haircolor2`, `cutiemark0`, `cutiemark1`, `cutiemark2`) VALUES
-	(1, 1, 50, 20, _binary 0x10CFA5031815220F0D4D59934015020169401D9778EC402A0F0D0000000015014648C01D000000003204081F10673204080B106A3204080610663204080810683204080510693A04080A10003A04080210003A04080910003A04080C10003A04080F100052040801100B52040802101E5204080310056A0D08808002120708ACA09C041032, 'Golden Heart', 2, 2, 1, 12, 0, 8, 1.02, 0.934981, 4980581, 0, 6740734, 9862655, 11575295, 8359935, 53, 0, 0);
-INSERT INTO `loe_character` (`id`, `user`, `level`, `map`, `data`, `name`, `race`, `gender`, `eye`, `tail`, `hoof`, `mane`, `bodysize`, `hornsize`, `eyecolor`, `hoofcolor`, `bodycolor`, `haircolor0`, `haircolor1`, `haircolor2`, `cutiemark0`, `cutiemark1`, `cutiemark2`) VALUES
-	(2, 1, 1, 3, _binary 0x100F1815220F0D33339CC3153DBA83421D353375422A0F0D000000001514ED8DBF1D000000003A04080A10003A04080B10003A04080E10006A0A08808002120408001001, 'Wires Shark', 3, 2, 1, 12, 0, 13, 0.905, 1.04997, 16710750, 0, 12672317, 16709375, 16761471, 16751231, 237, 0, 0);
-INSERT INTO `loe_character` (`id`, `user`, `level`, `map`, `data`, `name`, `race`, `gender`, `eye`, `tail`, `hoof`, `mane`, `bodysize`, `hornsize`, `eyecolor`, `hoofcolor`, `bodycolor`, `haircolor0`, `haircolor1`, `haircolor2`, `cutiemark0`, `cutiemark1`, `cutiemark2`) VALUES
-	(3, 2, 3, 2, _binary 0x100F1815220F0D3DE0AD43158EA3FB421D645CAF432A0F0D000000001584EDDF3F1D000000003A04080A10003A04080210003A04080910003A04080C10003A04080F100062080800120408471001620808011204084710146A0B08808002120508F0031003, 'Sapphire Gazer', 2, 2, 1, 0, 0, 0, 0.955, 0.879988, 16748671, 0, 8377599, 16761727, 16765598, 16761727, 214, 0, 0);
-INSERT INTO `loe_character` (`id`, `user`, `level`, `map`, `data`, `name`, `race`, `gender`, `eye`, `tail`, `hoof`, `mane`, `bodysize`, `hornsize`, `eyecolor`, `hoofcolor`, `bodycolor`, `haircolor0`, `haircolor1`, `haircolor2`, `cutiemark0`, `cutiemark1`, `cutiemark2`) VALUES
-	(4, 3, 1, 2, _binary 0x100F1819220F0D115BA94315A1A4FB421D66EDB1432A0F0D000000001562590C401D000000003A04080A10003A04080510003A04081010003A04081510006208080012040847101462080801120408471014620808021204084710146208080312040847100F6A0A08808002120408001001, 'Carrot Dominguez', 1, 3, 0, 0, 0, 4, 0.93, 0.809979, 11468671, 0, 16743875, 8314111, 10413055, 8314111, 150, 0, 0);
-INSERT INTO `loe_character` (`id`, `user`, `level`, `map`, `data`, `name`, `race`, `gender`, `eye`, `tail`, `hoof`, `mane`, `bodysize`, `hornsize`, `eyecolor`, `hoofcolor`, `bodycolor`, `haircolor0`, `haircolor1`, `haircolor2`, `cutiemark0`, `cutiemark1`, `cutiemark2`) VALUES
-	(5, 4, 1, 2, _binary 0x10161819220F0D0FE5A84315DCA3FB421D55DEB2432A0F0D0000000015CA0A2F401D000000003A04080A10003A04080510003A04081010003A04081510006A0A08808002120408001001, 'Tropical Redheart', 1, 2, 0, 10, 0, 5, 0.98, 0.99498, 8248319, 0, 14155646, 16744145, 16752350, 16744145, 38, 0, 0);
-INSERT INTO `loe_character` (`id`, `user`, `level`, `map`, `data`, `name`, `race`, `gender`, `eye`, `tail`, `hoof`, `mane`, `bodysize`, `hornsize`, `eyecolor`, `hoofcolor`, `bodycolor`, `haircolor0`, `haircolor1`, `haircolor2`, `cutiemark0`, `cutiemark1`, `cutiemark2`) VALUES
-	(6, 6, 1, 2, _binary 0x100F1815220F0D95CBA943158EA3FB421DFA41B0432A0F0D00000000154050FCBD1D000000003A04080A10003A04080B10003A04080E10006A0A08808002120408001001, 'Fire Vera', 3, 3, 0, 11, 0, 13, 0.96, 1.06499, 16762751, 0, 9731839, 10092413, 11730846, 10092413, 71, 0, 0);
 /*!40000 ALTER TABLE `loe_character` ENABLE KEYS */;
 
 
@@ -276,7 +264,7 @@ CREATE TABLE IF NOT EXISTS `loe_item` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_item: ~140 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_item: ~296 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_item` DISABLE KEYS */;
 INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
 	(0, 'Green Apple', 3, 1, 10, 3, 0);
@@ -558,6 +546,318 @@ INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`
 	(140, 'Gems', 3, 1, 10, 30, 0);
 INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
 	(141, 'Hornet\'s Nest', 1, 1, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(142, 'Linen Scrap', 3, 1, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(143, 'Canvas Scrap', 3, 1, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(144, 'Temporal Scrap', 3, 1, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(145, 'Copper Ingot', 3, 1, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(146, 'Bronze Ingot', 3, 1, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(147, 'Iron Ingot', 3, 1, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(148, 'Steel Ingot', 3, 1, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(149, 'Alicium Ingot', 3, 1, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(150, 'Titanium Ingot', 3, 1, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(151, 'Elementium Ingot', 3, 1, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(152, 'Spacial Ingot', 3, 1, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(153, 'Heating Catalyst', 3, 1, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(154, 'Magical Catalyst', 3, 1, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(155, 'Pouch Template', 3, 1, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(156, 'Linen Strap', 3, 1, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(157, 'Linen Padding', 3, 1, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(158, 'Linen Square', 3, 1, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(159, 'Canvas Strap', 3, 20, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(160, 'Canvas Padding', 3, 20, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(162, 'Canvas Square', 3, 20, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(163, 'Woven Strap', 3, 40, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(164, 'Woven Padding', 3, 40, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(165, 'Temporal Strip', 3, 50, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(166, 'Temporal Padding', 3, 50, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(167, 'Temporal Square', 3, 50, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(168, 'Copper Strip', 3, 1, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(169, 'Copper Sheet', 3, 1, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(170, 'Copper Casing', 3, 1, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(171, 'Bronze Strip', 3, 10, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(172, 'Bronze Sheet', 3, 10, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(173, 'Bronze Casing', 3, 10, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(174, 'Iton Strip', 3, 20, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(175, 'Iron Sheet', 3, 20, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(176, 'Iron Casing', 3, 20, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(177, 'Steel Strip', 3, 30, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(178, 'Steel Sheet', 3, 30, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(179, 'Steel Casing', 3, 30, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(180, 'Alicium Strip', 3, 40, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(181, 'Alicium Sheet', 3, 40, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(182, 'Alicium Casing', 3, 40, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(183, 'Titanium Strip', 3, 40, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(184, 'Titanium Sheet', 3, 40, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(185, 'Titanium Casing', 3, 40, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(186, 'Elementium Strip', 3, 40, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(187, 'Elementium Sheet', 3, 40, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(188, 'Elementium Casing', 3, 40, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(189, 'Spacial Cast', 3, 50, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(190, 'Copper Back Plate', 3, 3, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(191, 'Copper Chest Plate', 3, 6, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(192, 'Copper Helmet', 3, 9, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(193, 'Bronze Back Plate', 3, 12, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(194, 'Bronze Chest Plate', 3, 14, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(195, 'Bronze Front Legs', 3, 16, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(196, 'Bronze Helmet', 3, 18, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(197, 'Iron Back Legs', 3, 21, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(198, 'Iron Back Plate', 3, 23, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(199, 'Iron Chest Plate', 3, 25, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(200, 'Iron Front Legs', 3, 27, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(201, 'Iron Helmet', 3, 29, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(202, 'Steel Back Legs', 3, 31, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(203, 'Steel Back Plate', 3, 33, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(204, 'Steel Chest Plate', 3, 35, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(205, 'Steel Front Legs', 3, 37, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(206, 'Steel Helmet', 3, 39, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(207, 'Alicium Back Legs', 3, 41, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(208, 'Alicium Back Plate', 3, 43, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(209, 'Alicium Chest Plate', 3, 45, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(210, 'Alicium Front Legs', 3, 47, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(211, 'Alicium Helmet', 3, 49, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(212, 'Titanium Back legs', 3, 41, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(213, 'Titanium Back Plate', 3, 43, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(214, 'Titanium Chest Plate', 3, 45, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(215, 'Titanium Front Legs', 3, 47, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(216, 'Titanium Helmet', 3, 49, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(217, 'Elementium Back Legs', 3, 41, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(218, 'Elementium Back Plate', 3, 43, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(219, 'Elementium Chest Plate', 3, 45, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(220, 'Elementium Front Legs', 3, 47, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(221, 'Elementium Helmet', 3, 49, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(222, 'Harmonious Back Legs', 3, 50, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(223, 'Harmonious Back Plate', 3, 50, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(224, 'Harmonious Chest Plate', 3, 50, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(225, 'Harmonious Front Legs', 3, 50, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(226, 'Harmonious Helmet', 3, 50, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(227, 'Mage Cloak', 3, 3, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(228, 'Sanguine Back Legs', 3, 4, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(229, 'Sanguine Back Plate', 3, 4, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(230, 'Sanguine Chest Plate', 3, 4, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(231, 'Sanguine Front Legs', 3, 4, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(232, 'Sanguine Helmet', 3, 4, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(233, 'Linen Pouch', 3, 1, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(234, 'Canvas Pouch', 3, 20, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(235, 'Woven Pouch', 3, 40, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(236, 'Amor Harmony 1', 3, 1, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(237, 'Amor Harmony 2', 3, 10, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(238, 'Amor Harmony 3', 3, 20, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(239, 'Amor Harmony 4', 3, 30, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(240, 'Amor Harmony 5', 3, 40, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(241, 'Amor Harmony 6', 3, 50, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(242, 'Magic Resist Harmony 1', 3, 1, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(243, 'Magic Resist Harmony 2', 3, 10, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(244, 'Magic Resist Harmony 3', 3, 20, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(245, 'Magic Resist Harmony 4', 3, 30, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(246, 'Magic Resist Harmony 5', 3, 40, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(247, 'Magic Resist Harmony 6', 3, 50, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(248, 'Health Harmony 1', 3, 2, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(249, 'Health Harmony 2', 3, 12, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(250, 'Health Harmony 3', 3, 22, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(251, 'Health Harmony 4', 3, 32, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(252, 'Health Harmony 5', 3, 42, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(253, 'Health Harmony 6', 3, 50, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(254, 'Health Regen Harmony 1', 3, 2, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(255, 'Health Regen Harmony 2', 3, 12, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(256, 'Health Regen Harmony 3', 3, 22, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(257, 'Health Regen Harmony 4', 3, 32, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(258, 'Health Regen Harmony 5', 3, 42, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(259, 'Health Regen Harmony 6', 3, 50, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(260, 'Energy Harmony 1', 3, 4, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(261, 'Energy Harmony 2', 3, 14, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(262, 'Energy Harmony 3', 3, 24, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(263, 'Energy Harmony 4', 3, 34, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(264, 'Energy Harmony 5', 3, 44, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(265, 'Energy Harmony 6', 3, 50, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(266, 'Energy Regen Harmony 1', 3, 4, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(267, 'Energy Regen Harmony 2', 3, 14, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(268, 'Energy Regen Harmony 3', 3, 24, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(269, 'Energy Regen Harmony 4', 3, 34, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(270, 'Energy Regen Harmony 5', 3, 44, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(271, 'Energy Regen Harmony 6', 3, 50, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(272, 'Movement Speed Harmony 1', 3, 6, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(273, 'Movement Speed Harmony 2', 3, 16, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(274, 'Movement Speed Harmony 3', 3, 26, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(275, 'Movement Speed Harmony 4', 3, 36, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(276, 'Movement Speed Harmony 5', 3, 46, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(277, 'Movement Speed Harmony 6', 3, 50, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(278, 'Ability Damage Harmony 1', 3, 8, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(279, 'Ability Damage Harmony 2', 3, 18, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(280, 'Ability Damage Harmony 3', 3, 28, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(281, 'Ability Damage Harmony 4', 3, 38, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(282, 'Ability Damage Harmony 5', 3, 48, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(283, 'Ability Damage Harmony 6', 3, 50, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(284, 'Ability Healing Harmony 1', 3, 8, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(285, 'Ability Healing Harmony 2', 3, 18, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(286, 'Ability Healing Harmony 3', 3, 28, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(287, 'Ability Healing Harmony 4', 3, 38, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(288, 'Ability Healing Harmony 5', 3, 48, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(289, 'Ability Healing Harmony 6', 3, 50, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(290, 'Payback Harmony 4', 3, 38, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(291, 'Payback Harmony 5', 3, 48, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(292, 'Payback Harmony 6', 3, 50, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(293, 'Starlight Harmony 4', 3, 38, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(294, 'Starlight Harmony 5', 3, 48, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(295, 'Starlight Harmony 6', 3, 50, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(296, 'Silky Roads\' Letter', 3, 1, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(297, 'Lavender Bloom\'s Letter', 3, 1, 10, 1, 0);
+INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
+	(298, 'Sempai Dress', 2, 1, 10, 20, 8320);
 /*!40000 ALTER TABLE `loe_item` ENABLE KEYS */;
 
 
@@ -957,16 +1257,18 @@ CREATE TABLE IF NOT EXISTS `loe_map_object` (
   PRIMARY KEY (`map`,`guid`,`object`,`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_map_object: ~67 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_map_object: ~86 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_map_object` DISABLE KEYS */;
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(1, 0, -1, 0, 0, -72.8009, 0.305817, 152.089, 0, 18.8273, 0, -1, -1, -1, -1);
+INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
+	(1, 1, -1, 1, 0, -57.86, 9.72, -186.51, 0, -1.76447, 0, -1, 19, 0, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(1, 3, -1, 1, 0, -57.86, 9.72, -186.51, 0, -1.76447, 0, -1, 2, 3, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(1, 4, -1, 1, 0, 593.948, 124.772, -86.292, 0, -174.743, 0, -1, 3, 1, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
-	(1, 5, -1, 1, 0, -522.124, 15.2979, -395.044, 0, 12.0613, 0, -1, 4, 2, -1);
+	(1, 5, -1, 1, 0, -522.124, 15.2979, -395.044, 0, 12.0613, 0, -1, 4, 3, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(1, 6, -1, 1, 0, -57.86, 9.72, -186.51, 0, -1.76447, 0, -1, 14, 3, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
@@ -979,6 +1281,8 @@ INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`,
 	(2, 0, 5, 0, 0, 348.541, 125.819, 354.404, 0, 105.883, 0, -1, -1, -1, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(2, 0, 71, 1, 1, 338.203, 125.92, 354.019, 0, 81.3118, 0, 5, 1, 6, -1);
+INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
+	(2, 1, -1, 1, 0, 527.15, 128.88, 256.512, 0, -90.9747, 0, -1, 19, 0, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(2, 1, 4, 2, 1, 321.916, 125.82, 360.091, 0, 9.88238, 0, 15, 45, 50, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
@@ -1008,17 +1312,19 @@ INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`,
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(2, 24, -1, 1, 0, 527.15, 128.88, 256.512, 0, -90.9747, 0, -1, 14, 1, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
-	(3, 0, -1, 0, 0, -312.4, 66.1, 61.3, -0.00000823365, -62.7836, -0.00000439808, -1, -1, -1, -1);
+	(3, 0, -1, 0, 0, -312.4, 66.1, 61.3, 0, -62.7836, 0, -1, -1, -1, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
-	(3, 1, -1, 1, 0, -609.316, 193.066, -304.525, -0.000009181, -24.2635, 0.00000168682, -1, 1, 4, -1);
+	(3, 1, -1, 1, 0, -609.316, 193.066, -304.525, 0, -24.2635, 0, -1, 1, 4, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
-	(3, 2, -1, 1, 0, -603.556, 193.066, -322.172, -0.00000421281, -97.8467, -0.00000832996, -1, 4, 1, -1);
+	(3, 2, -1, 1, 0, -603.556, 193.066, -322.172, 0, -97.8467, 0, -1, 4, 1, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
-	(4, 0, -1, 0, 0, 3071.46, 181.794, 2879.31, 0, -135.319, 0, -1, -1, -1, -1);
+	(4, 0, -1, 0, 0, 3073.05, 182.394, 2875.16, 0, -135.319, 0, -1, -1, -1, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
-	(4, 1, -1, 1, 0, 2433.14, 204.533, 3137.68, 0, 148.531, 0, -1, 3, 2, -1);
+	(4, 1, -1, 1, 0, 2433.14, 204.992, 3137.68, 0, 148.531, 0, -1, 3, 2, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
-	(4, 2, -1, 1, 0, 3347.8, 194.254, 3316.62, 0, -124.558, 0, -1, 1, 5, -1);
+	(4, 2, -1, 1, 0, 2870.94, 179.653, 2647.77, 0, 12.0613, 0, -1, 20, 2, -1);
+INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
+	(4, 3, -1, 1, 0, 3347.8, 194.254, 3316.62, 0, -124.558, 0, -1, 1, 5, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(4, 4, -1, 1, 0, 2527.34, 133.042, 1985.55, 0, 42.2593, 0, -1, 2, 21, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
@@ -1036,19 +1342,19 @@ INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`,
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(7, 0, -1, 0, 0, 54.5055, -106.394, 19.2626, 0, 0, 0, -1, -1, -1, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
-	(7, 2, -1, 1, 0, 60.51, -110.086, 60.8552, -0.0000000301543, -167.036, -2.83497, -1, 2, 10, -1);
+	(7, 2, -1, 1, 0, 60.51, -110.086, 60.8552, 0, -167.036, 0, -1, 2, 10, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
-	(8, 0, -1, 0, 0, 623.618, 25.5159, -293.03, -0.00000634192, -111.796, -0.00000936624, -1, -1, -1, -1);
+	(8, 0, -1, 0, 0, 623.618, 25.5159, -293.03, 0, -111.796, 0, -1, -1, -1, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
-	(8, 1, -1, 1, 0, 626.284, 26.165, -292.638, -0.545825, -114.379, 4.16068, -1, 10, 3, -1);
+	(8, 1, -1, 1, 0, 626.284, 26.165, -292.638, 0, -114.379, 0, -1, 10, 3, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
-	(9, 2, -1, 1, 0, -208.365, 0, -0.460869, 0, 57.5907, 0, -1, 10, 2, -1);
+	(9, 1, -1, 1, 0, -208.365, 0, -0.460869, 0, 57.5907, 0, -1, 10, 2, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(10, 0, -1, 0, 0, 306.293, 17.3703, -450.612, 0, 0, 0, -1, -1, -1, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(10, 1, -1, 1, 0, 306.553, 17.3703, -451.984, 0, -8.47344, 0, -1, 2, 22, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
-	(10, 2, -1, 1, 0, -324.417, 52.4534, -416.503, 0, -6.13475, 0, -1, 9, 2, -1);
+	(10, 2, -1, 1, 0, -324.417, 52.4534, -416.503, 0, -6.13475, 0, -1, 9, 1, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(10, 3, -1, 1, 0, 440.692, 17.4075, 60.1733, 0, -51.7289, 0, -1, 8, 1, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
@@ -1066,13 +1372,13 @@ INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`,
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(13, 1, -1, 1, 0, 31.6424, -1.03606, -62.5336, 0, -44.0279, 0, -1, 2, 23, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
-	(14, 0, -1, 0, 0, 8.71502, 70.0995, 379.802, 0.000000823768, -153.066, -0.000000494325, -1, -1, -1, -1);
+	(14, 0, -1, 0, 0, 8.66502, 70.0975, 379.862, 0, -153.066, 0, -1, -1, -1, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(14, 1, -1, 1, 0, -231.228, 41.0413, -26.2142, 0, 37.1243, 0, -1, 2, 24, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(14, 3, -1, 1, 0, -231.228, 41.0413, -26.2142, 0, 37.1243, 0, -1, 1, 6, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
-	(14, 5, -1, 1, 0, -111.476, 71.746, 487.568, 0, 35.9571, 0, -1, 18, 2, -1);
+	(14, 5, -1, 1, 0, -112.07, 71.746, 487.774, 0, 35.9571, 0, -1, 18, 2, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(14, 6, -1, 1, 0, 15.9, 71.99, 352.863, 0, -16.5206, 0, -1, 17, 2, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
@@ -1080,9 +1386,9 @@ INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`,
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(14, 8, -1, 1, 0, 168.3, 70.92, 370.63, 0, 12.0614, 0, -1, 15, 2, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
-	(15, 0, -1, 0, 0, -0.414463, 0, -8.4752, 0.00000122443, 137.8, -0.000000221706, -1, -1, -1, -1);
+	(15, 0, -1, 0, 0, -0.414463, 0, -8.4752, 0, 137.8, 0, -1, -1, -1, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
-	(15, 2, -1, 1, 0, 0.151571, 0.54816, -11.2205, 0.000000760523, 179.861, -0.000000984875, -1, 14, 8, -1);
+	(15, 2, -1, 1, 0, 0.151571, 0.54816, -11.2205, 0, 179.861, 0, -1, 14, 8, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(16, 0, -1, 0, 0, -0.0275289, 0.1659, -20.2115, 0, -89.9999, 0, -1, -1, -1, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
@@ -1099,6 +1405,32 @@ INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`,
 	(18, 0, -1, 0, 0, -0.406367, 1.035, 3.75125, 0, 0, 0, -1, -1, -1, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(18, 2, -1, 1, 0, -0.453039, 1.575, 1.08087, 0, 1.66141, 0, -1, 14, 5, -1);
+INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
+	(19, 0, -1, 0, 0, -0.0650635, 0.0760002, -0.00601196, 0, 0, 0, -1, -1, -1, -1);
+INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
+	(20, 0, -1, 0, 0, -1.149, 0.005, -0.565, 0, 89.9995, 0, -1, -1, -1, -1);
+INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
+	(20, 2, -1, 1, 0, -4.361, 0.553149, 1.196, 0, 12.0613, 0, -1, 4, 2, -1);
+INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
+	(21, 0, -1, 0, 0, 407.922, 125.152, 363.127, 0, 159.052, 0, -1, -1, -1, -1);
+INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
+	(21, 21, -1, 1, 0, 395.974, 125.267, 374.598, 0, -26.6491, 0, -1, 3, 0, -1);
+INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
+	(21, 22, -1, 1, 0, 386.964, 125.267, 378.439, 0, -26.6491, 0, -1, 1, 0, -1);
+INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
+	(21, 23, -1, 1, 0, 380.364, 125.267, 375.728, 0, -26.6491, 0, -1, 2, 0, -1);
+INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
+	(21, 24, -1, 1, 0, 396.534, 125.631, 366.978, 0, -26.6491, 0, -1, 14, 0, -1);
+INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
+	(21, 25, -1, 1, 0, 377.663, 125.267, 369.244, 0, -26.6491, 0, -1, 4, 0, -1);
+INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
+	(21, 28, -1, 1, 0, -114.16, 113.991, 973.1, 0, 93.205, 0, -1, 22, 20, -1);
+INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
+	(21, 29, -1, 1, 0, 527.15, 128.88, 256.512, 0, -90.9747, 0, -1, 19, 0, -1);
+INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
+	(22, 0, -1, 0, 0, 99.3614, 62.641, -205.404, 0, 146.991, 0, -1, -1, -1, -1);
+INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
+	(22, 20, -1, 1, 0, 102.73, 61.85, -205.48, 0, 12.0614, 0, -1, 21, 28, -1);
 /*!40000 ALTER TABLE `loe_map_object` ENABLE KEYS */;
 
 
@@ -1598,20 +1930,10 @@ CREATE TABLE IF NOT EXISTS `loe_user` (
   `data` blob,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_user: ~5 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_user: ~3 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_user` DISABLE KEYS */;
-INSERT INTO `loe_user` (`id`, `login`, `phash`, `access`, `session`, `data`) VALUES
-	(1, 'Ghost', '47925c4c8e61fd096fa3d4da465c45a3aaad349e', 255, NULL, _binary '');
-INSERT INTO `loe_user` (`id`, `login`, `phash`, `access`, `session`, `data`) VALUES
-	(2, 'Venom', '213358d9d176361a831986f7619d06af43ff75bd', 255, NULL, _binary '');
-INSERT INTO `loe_user` (`id`, `login`, `phash`, `access`, `session`, `data`) VALUES
-	(3, 'Frost', '778f1cf8c990823b854bc165aaf602a1dd16b7d7', 255, NULL, _binary '');
-INSERT INTO `loe_user` (`id`, `login`, `phash`, `access`, `session`, `data`) VALUES
-	(4, 'Fire', '68b8a1435a4136cf4b0811aae624f11b97c889cd', 255, NULL, _binary '');
-INSERT INTO `loe_user` (`id`, `login`, `phash`, `access`, `session`, `data`) VALUES
-	(6, 'Anon', '4938ae59216591a8f02d84314bf5931a8035698a', 255, NULL, _binary '');
 /*!40000 ALTER TABLE `loe_user` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
