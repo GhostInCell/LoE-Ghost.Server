@@ -11,9 +11,9 @@ namespace Ghost.Server.Core.Movment
     public class MobMovement : MovementGenerator, IUpdatable
     {
         private int _update;
-        private WO_MOB _mob;
         private bool _locked;
         private SyncEntry _entry;
+        private ScriptedAI _scriptedAI;
         public override int Animation
         {
             get { return 0; }
@@ -46,24 +46,15 @@ namespace Ghost.Server.Core.Movment
                 return true;
             }
         }
-        public MobMovement(WO_MOB obj) 
-            : base(obj)
+        public MobMovement(WO_MOB parent) 
+            : base(parent)
         {
-            _mob = obj;
             _entry = new SyncEntry();
-            _position = obj.SpawnPosition;
-            _object.OnSpawn += MobMovement_OnSpawn;
-            _rotation = obj.SpawnRotation.ToRadians();
-            _object.OnDespawn += MobMovement_OnDespawn;
-        }
-        public override void Destroy()
-        {
-            _locked = true;
-            _object.View.GettingPosition -= View_GettingPosition;
-            _object.View.GettingRotation -= View_GettingRotation;
-            _mob = null;
-            _entry = null;
-            _object = null;
+            _position = _creature.SpawnPosition;
+            _rotation = _creature.SpawnRotation.ToRadians();
+            parent.OnSpawn += MobMovement_OnSpawn;
+            parent.OnDestroy += MobMovement_OnDestroy;
+            parent.OnInitialize += MobMovement_OnInitialize;
         }
         public override void Unlock()
         {
@@ -73,28 +64,28 @@ namespace Ghost.Server.Core.Movment
         {
             if (!_locked)
             {
-                if (_mob.Target?.IsSpawned ?? false)
+                if (!(_scriptedAI.Target?.IsDead ?? true))
                 {
-                    if (Vector3.Distance(_position, _mob.Target.Position) > Constants.MeleeCombatDistance)
+                    _direction = Vector3.Normalize(_scriptedAI.Target.Position - _position);
+                    _rotation = MathHelper.GetRotation(Vector3.UnitZ, _direction, Vector3.UnitY);
+                    if (Vector3.Distance(_position, _scriptedAI.Target.Position) > Constants.MeleeCombatDistance)
                     {
-                        _direction = Vector3.Normalize(_mob.Target.Position - _position);
-                        _rotation = MathHelper.GetRotation(Vector3.UnitZ, _direction, Vector3.UnitY);
                         var offset = (_direction * ((time.Milliseconds / 1000f) * _speed / 45f));
-                        if (Vector3.Distance(_position, _mob.Target.Position) > Constants.MeleeCombatDistance + offset.Length())
+                        if (Vector3.Distance(_position, _scriptedAI.Target.Position) > Constants.MeleeCombatDistance + offset.Length())
                             _position += offset;
                         else
-                            _position = _mob.Target.Position - (_direction * (Constants.MeleeCombatDistance - 0.05f));
+                            _position = _scriptedAI.Target.Position - (_direction * (Constants.MeleeCombatDistance - 0.05f));
                     }
                 }
-                else if (Vector3.Distance(_position, _mob.SpawnPosition) > 0)
+                else if (Vector3.Distance(_position, _creature.SpawnPosition) > 0)
                 {
-                    _direction = Vector3.Normalize(_mob.SpawnPosition - _position);
+                    _direction = Vector3.Normalize(_creature.SpawnPosition - _position);
                     _rotation = MathHelper.GetRotation(Vector3.UnitZ, _direction, Vector3.UnitY);
                     var offset = (_direction * ((time.Milliseconds / 1000f) * _speed / 45f));
-                    if (Vector3.Distance(_position, _mob.SpawnPosition) > offset.Length())
+                    if (Vector3.Distance(_position, _creature.SpawnPosition) > offset.Length())
                         _position += offset;
                     else
-                        _position = _mob.SpawnPosition;
+                        _position = _creature.SpawnPosition;
                 }
             }
             if ((_update -= time.Milliseconds) <= 0)
@@ -103,8 +94,8 @@ namespace Ghost.Server.Core.Movment
                 _entry.Position = _position;
                 _entry.Rotation = _rotation;
                 _entry.Time = PNet.Utilities.Now;
-                var msg = _object.View.CreateStream(_entry.AllocSize);
-                _entry.OnSerialize(msg); _object.View.SendStream(msg);
+                var msg = _creature.View.CreateStream(_entry.AllocSize);
+                _entry.OnSerialize(msg); _creature.View.SendStream(msg);
             }
         }
         public override void Lock(bool reset = true)
@@ -117,14 +108,18 @@ namespace Ghost.Server.Core.Movment
         #region Events Handlers
         private void MobMovement_OnSpawn()
         {
-            _speed = _object.Stats.Speed;
-            _object.View.GettingPosition += View_GettingPosition;
-            _object.View.GettingRotation += View_GettingRotation;
+            _speed = _creature.Stats.Speed;
+            _creature.View.GettingPosition += View_GettingPosition;
+            _creature.View.GettingRotation += View_GettingRotation;
         }
-        private void MobMovement_OnDespawn()
+        private void MobMovement_OnDestroy()
         {
-            _object.View.GettingPosition -= View_GettingPosition;
-            _object.View.GettingRotation -= View_GettingRotation;
+            _entry = null;
+            _scriptedAI = null;
+        }
+        private void MobMovement_OnInitialize()
+        {
+            _scriptedAI = _parent.RequiredComponent<ScriptedAI>();
         }
         private Vector3 View_GettingRotation()
         {

@@ -56,7 +56,10 @@ namespace Ghost.Server.Core.Objects
             _position = at.Position;
             _rotation = at.Rotation;
             _loot = DataMgr.SelectLoot(id);
-            _resource = DataMgr.SelectResource(3);
+            _resource = DataMgr.SelectResource(Constants.LootResource);
+            OnSpawn += WO_Loot_OnSpawn;
+            OnDespawn += WO_Loot_OnDespawn;
+            OnDestroy += WO_Loot_OnDestroy;
             Spawn();
         }
         #region RPC Handlers
@@ -82,27 +85,28 @@ namespace Ghost.Server.Core.Objects
         #region Events Handlers
         private void WO_Loot_OnSpawn()
         {
-            _destroy?.Destroy(); _destroy = null;
+            if (_resource == null) return;
             _view = _server.Room.Instantiate(_resource, _position, _rotation);
             _view.SubscribeToRpc(50, 52, RPC_50_52);
             _view.GettingPosition += View_GettingPosition;
             _view.GettingRotation += View_GettingRotation;
+            _view.CheckVisibility += View_CheckVisibility;
             _destroy = new AutoDestroy(this, TimeSpan.FromSeconds(Constants.LootDespawnTime));
         }
         private void WO_Loot_OnDespawn()
         {
-            _view.ClearSubscriptions();
-            _server.Room.Destroy(_view);
-            _view.GettingPosition -= View_GettingPosition;
-            _view.GettingRotation -= View_GettingRotation;
-        }
-        private void WO_Loot_OnDestroy()
-        {
             _destroy?.Destroy(); _destroy = null;
             _view.ClearSubscriptions();
             _server.Room.Destroy(_view);
-            _view.GettingPosition -= View_GettingPosition;
-            _view.GettingRotation -= View_GettingRotation;
+        }
+        private void WO_Loot_OnDestroy()
+        {
+            _destroy?.Destroy();
+            _view.ClearSubscriptions();
+            _server.Room.Destroy(_view);
+            _view = null;
+            _onwer = null;
+            _destroy = null;
         }
         private Vector3 View_GettingRotation()
         {
@@ -111,6 +115,10 @@ namespace Ghost.Server.Core.Objects
         private Vector3 View_GettingPosition()
         {
             return _position;
+        }
+        private bool View_CheckVisibility(Player arg)
+        {
+            return arg.Id == _onwer.Player.Id;
         }
         #endregion
     }

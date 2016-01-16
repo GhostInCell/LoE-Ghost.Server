@@ -68,21 +68,21 @@ namespace Ghost.Server.Core.Movment
                 return true;
             }
         }
-        public ScriptedMovement(ushort id, CreatureObject obj)
-            : base(obj)
+        public ScriptedMovement(ushort id, CreatureObject parent)
+            : base(parent)
         {
             _state = 0;
             _entry = new SyncEntry();
             _direction = Vector3.UnitZ;
-            _position = obj.SpawnPosition;
-            _rotation = obj.SpawnRotation;
-            obj.OnSpawn += ScriptedMovement_OnSpawn;
-            obj.OnDespawn += ScriptedMovement_OnDespawn;
+            _position = _creature.SpawnPosition;
+            _rotation = _creature.SpawnRotation.ToRadians();
             if (DataMgr.Select(id, out _entries))
                 Execute();
+            parent.OnSpawn += ScriptedMovement_OnSpawn;
+            parent.OnDestroy += ScriptedMovement_OnDestroy;
         }
-        public ScriptedMovement(ScriptedMovement original, CreatureObject obj)
-            : base(obj)
+        public ScriptedMovement(ScriptedMovement original, CreatureObject clone)
+            : base(clone)
         {
             _speed = original._speed;
             _state = original._state;
@@ -93,8 +93,8 @@ namespace Ghost.Server.Core.Movment
             _position = original.Position;
             _rotation = original.Rotation;
             _direction = original._direction;
-            obj.OnSpawn += ScriptedMovement_OnSpawn;
-            obj.OnDespawn += ScriptedMovement_OnDespawn;
+            clone.OnSpawn += ScriptedMovement_OnSpawn;
+            clone.OnDestroy += ScriptedMovement_OnDestroy;
         }
         public void ResetWait()
         {
@@ -109,17 +109,6 @@ namespace Ghost.Server.Core.Movment
                 _rotation = MathHelper.GetRotation(Vector3.UnitZ, _direction, Vector3.UnitY);
             }
         }
-        public override void Destroy()
-        {
-            Interlocked.Increment(ref _locked);
-            _wait?.Destroy();
-            _object.View.GettingPosition -= View_GettingPosition;
-            _object.View.GettingRotation -= View_GettingRotation;
-            _wait = null;
-            _entry = null;
-            _object = null;
-            _current = null;
-        }
         public void Update(TimeSpan time)
         {
             if (_locked <= 0 && _current != null)
@@ -127,16 +116,28 @@ namespace Ghost.Server.Core.Movment
                 if (_position != _current.Position)
                 {
                     var offset = (_direction * ((time.Milliseconds / 1000f) * _speed / 45f));
-                    if (Vector3.Distance(_position, _current.Position) > offset.Length())
+                    if (Vector3.Distance(_position, _current.Position) > (offset.Length() + 0.1f))
                         _position += offset;
                     else
                     {
-                        _position = _current.Position;
-                        if (!_waiting) Execute();
+                        if (!_waiting)
+                        {
+                            Execute();
+                            offset = (_direction * ((time.Milliseconds / 1000f) * _speed / 45f));
+                            _position += offset;
+                        }
+                        else
+                            _position = _current.Position;
                     }
                 }
                 else if (_waiting)
+                {
                     _rotation = _current.Rotation.ToRadians();
+                    if (_wait == null && _current.Data01 > 0)
+                        _wait = new MovementWait(this, (_current.Data01 < _current.Data02 ?
+                            TimeSpan.FromSeconds(Constants.RND.Next(_current.Data01, _current.Data02)) :
+                            TimeSpan.FromSeconds(_current.Data01)));
+                }
                 else
                     Execute();
             }
@@ -146,8 +147,8 @@ namespace Ghost.Server.Core.Movment
                 _entry.Position = _position;
                 _entry.Rotation = _rotation;
                 _entry.Time = PNet.Utilities.Now;
-                var msg = _object.View.CreateStream(_entry.AllocSize);
-                _entry.OnSerialize(msg); _object.View.SendStream(msg);
+                var msg = _creature.View.CreateStream(_entry.AllocSize);
+                _entry.OnSerialize(msg); _creature.View.SendStream(msg);
             }
         }
         public override void Lock(bool reset = true)
@@ -173,10 +174,6 @@ namespace Ghost.Server.Core.Movment
                 {
                     case MovementType.Stay:
                         _waiting = true;
-                        if (_current.Data01 > 0)
-                            _wait = new MovementWait(this, (_current.Data01 < _current.Data02 ?
-                                TimeSpan.FromSeconds(Constants.RND.Next(_current.Data01, _current.Data02)) :
-                                TimeSpan.FromSeconds(_current.Data01)));
                         break;
                 }
                 switch (_current.Command)
@@ -194,13 +191,15 @@ namespace Ghost.Server.Core.Movment
         #region Events Handlers
         private void ScriptedMovement_OnSpawn()
         {
-            _object.View.GettingPosition += View_GettingPosition;
-            _object.View.GettingRotation += View_GettingRotation;
+            _creature.View.GettingPosition += View_GettingPosition;
+            _creature.View.GettingRotation += View_GettingRotation;
         }
-        private void ScriptedMovement_OnDespawn()
+        private void ScriptedMovement_OnDestroy()
         {
-            _object.View.GettingPosition -= View_GettingPosition;
-            _object.View.GettingRotation -= View_GettingRotation;
+            _wait?.Destroy();
+            _wait = null;
+            _entry = null;
+            _current = null;
         }
         private Vector3 View_GettingRotation()
         {

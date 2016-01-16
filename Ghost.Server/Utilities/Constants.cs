@@ -32,7 +32,11 @@ namespace Ghost.Server.Utilities
 
         public const uint PlayerVarPet = 0xF0000000;
 
+        public const int ArrayCapacity = 5;
+
         public const byte Killed = 1;
+        public const byte Fainted = 3;
+        public const int LootResource = 3;
         public const int MaxServerName = 10;
         public const byte MaxWornItems = 32;
         public const string Master = "Master";
@@ -54,6 +58,6 @@ namespace Ghost.Server.Utilities
         public const string NoErrors = "no errors or warnings";
         public const string NoScripts = "scripts directory not found or empty";
         public const string ChatWarning = "CAPSLOCK and spamming not allowed!";
-        public static readonly string DeadMsg = $"Rest In Peace...\r\nRespawn in {PlayerRespawnTime} seconds";
+        public static readonly string DeadMsg = $"Respawn in {PlayerRespawnTime} seconds";
     }
 }

@@ -143,9 +143,6 @@ namespace Ghost.Server.Core.Players
             _server = server;
             _player = player;
             _user = player.TnUser<UserData>();
-            _trade = new TradeMgr(this);
-            _items = new ItemsMgr(this);
-            _skills = new SkillsMgr(this);
             _clones = new Dictionary<int, WO_NPC>();
             _player.NetUserDataChanged += Player_NetUserDataChanged;
         }
@@ -154,9 +151,6 @@ namespace Ghost.Server.Core.Players
             _player.NetUserDataChanged -= Player_NetUserDataChanged;
             _save.Destroy();
             _object.Destroy();
-            _trade.Destroy();
-            _items.Destroy();
-            _skills.Destroy();
             _pet?.Destroy();
             CharsMgr.SaveCharacter(_char);
             if (_dialog != null)
@@ -165,7 +159,8 @@ namespace Ghost.Server.Core.Players
                 _shop.Movement.Unlock();
             foreach (var item in _clones.Values.ToArray())
                 item.Destroy();
-            _clones.Clear();
+            _pet = null;
+            _save = null;
             _shop = null;
             _user = null;
             _char = null;
@@ -239,11 +234,11 @@ namespace Ghost.Server.Core.Players
             else
             {
                 _player.SetBounds();
-                _save = new AutoSaveChar(this);
                 _object = new WO_Player(this);
-                _items.Initialize();
-                _trade.Initialize();
-                _skills.Initialize();
+                _save = new AutoSaveChar(this);
+                _items = _object.GetComponent<ItemsMgr>();
+                _trade = _object.GetComponent<TradeMgr>();
+                _skills = _object.GetComponent<SkillsMgr>();
                 SetPet();
                 _user.Map = _server.Map.ID;
                 _char.Map = _user.Map;

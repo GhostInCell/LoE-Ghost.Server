@@ -47,33 +47,25 @@ namespace Ghost.Server.Core.Movment
                 return true;
             }
         }
-        public PetMovement(WO_Pet obj)
-            : base(obj)
+        public PetMovement(CreatureObject parent)
+            : base(parent)
         {
             _entry = new SyncEntry();
-            _position = obj.SpawnPosition;
-            _rotation = obj.SpawnRotation;
-            _object.OnSpawn += PetMovement_OnSpawn;
-            _object.OnDespawn += PetMovement_OnDespawn;
+            _position = _creature.SpawnPosition;
+            _rotation = _creature.SpawnRotation;
+            parent.OnSpawn += PetMovement_OnSpawn;
+            parent.OnDestroy += PetMovement_OnDestroy;
         }
         public override void Unlock()
         {
-        }
-        public override void Destroy()
-        {
-            _object.View.ReceivedStream -= View_ReceivedStream;
-            _object.View.GettingPosition -= View_GettingPosition;
-            _object.View.GettingRotation -= View_GettingRotation;
-            _entry = null;
-            _object = null;
         }
         public void Update(TimeSpan time)
         {
             if ((_update -= time.Milliseconds) <= 0)
             {
                 _update = _interval;
-                var msg = _object.View.CreateStream(_entry.AllocSize);
-                _entry.OnSerialize(msg); _object.View.SendStream(msg);
+                var msg = _creature.View.CreateStream(_entry.AllocSize);
+                _entry.OnSerialize(msg); _creature.View.SendStream(msg);
             }
         }
         public override void Lock(bool reset = true)
@@ -85,15 +77,13 @@ namespace Ghost.Server.Core.Movment
         #region Events Handlers
         private void PetMovement_OnSpawn()
         {
-            _object.View.ReceivedStream += View_ReceivedStream;
-            _object.View.GettingPosition += View_GettingPosition;
-            _object.View.GettingRotation += View_GettingRotation;
+            _creature.View.ReceivedStream += View_ReceivedStream;
+            _creature.View.GettingPosition += View_GettingPosition;
+            _creature.View.GettingRotation += View_GettingRotation;
         }
-        private void PetMovement_OnDespawn()
+        private void PetMovement_OnDestroy()
         {
-            _object.View.ReceivedStream -= View_ReceivedStream;
-            _object.View.GettingPosition -= View_GettingPosition;
-            _object.View.GettingRotation -= View_GettingRotation;
+            _entry = null;
         }
         private Vector3 View_GettingRotation()
         {

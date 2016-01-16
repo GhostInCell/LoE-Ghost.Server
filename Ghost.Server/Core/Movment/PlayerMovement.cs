@@ -55,43 +55,33 @@ namespace Ghost.Server.Core.Movment
                 return true;
             }
         }
-        public PlayerMovement(WO_Player obj) 
-            : base(obj)
+        public PlayerMovement(WO_Player parent) 
+            : base(parent)
         {
-            _player = obj.Player;
+            _player = parent.Player;
             _entry = new SyncEntry();
-            _position = obj.Player.Data.Position;
-            _rotation = obj.Player.Data.Rotation;
-            _object.OnSpawn += PlayerMovement_OnSpawn;
-            _object.OnDespawn += PlayerMovement_OnDespawn;
+            _position = _player.Data.Position;
+            _rotation = _player.Data.Rotation;
+            parent.OnSpawn += PlayerMovement_OnSpawn;
+            parent.OnDestroy += PlayerMovement_OnDestroy;
         }
         public override void Unlock()
         {
-            _object.View?.Lock(_locked = false);
-        }
-        public override void Destroy()
-        {
-            _locked = true;
-            _object.View.ReceivedStream -= View_ReceivedStream;
-            _object.View.GettingPosition -= View_GettingPosition;
-            _object.View.GettingRotation -= View_GettingRotation;
-            _entry = null;
-            _object = null;
-            _player = null;
+            _creature.View?.Lock(_locked = false);
         }
         public void Update(TimeSpan time)
         {
             if ((_update -= time.Milliseconds) <= 0)
             {
                 _update = _interval;
-                var msg = _object.View.CreateStream(_entry.AllocSize);
-                _entry.OnSerialize(msg);_object.View.SendStream(msg);
+                var msg = _creature.View.CreateStream(_entry.AllocSize);
+                _entry.OnSerialize(msg);_creature.View.SendStream(msg);
             }
         }
         public override void Lock(bool reset = true)
         {
             _resetLock = reset;
-            _object.View?.Lock(_locked = true);
+            _creature.View?.Lock(_locked = true);
         }
         public override void LookAt(WorldObject obj)
         {
@@ -101,29 +91,30 @@ namespace Ghost.Server.Core.Movment
         private void RPC_02_201(NetMessage arg1, NetMessageInfo arg2)
         {
             _position = arg1.ReadVector3();
-            _object.View.Teleport(_position);
+            _creature.View.Teleport(_position);
         }
         [Rpc(202)]
         private void RPC_02_202(NetMessage arg1, NetMessageInfo arg2)
         {
             _lastAnimation = arg1.ReadInt32();
             _flying = (_player.Char.Pony.Race == 3 && _lastAnimation == 1);
-            _object.View.Rpc(2, 202, RpcMode.OthersOrdered, _lastAnimation);
+            _creature.View.Rpc(2, 202, RpcMode.OthersOrdered, _lastAnimation);
         }
         #endregion
         #region Events Handlers
         private void PlayerMovement_OnSpawn()
         {
-            _object.View.SubscribeMarkedRpcsOnComponent(this);
-            _object.View.ReceivedStream += View_ReceivedStream;
-            _object.View.GettingPosition += View_GettingPosition;
-            _object.View.GettingRotation += View_GettingRotation;
+            _creature.View.SubscribeMarkedRpcsOnComponent(this);
+            _creature.View.ReceivedStream += View_ReceivedStream;
+            _creature.View.GettingPosition += View_GettingPosition;
+            _creature.View.GettingRotation += View_GettingRotation;
         }
-        private void PlayerMovement_OnDespawn()
+        private void PlayerMovement_OnDestroy()
         {
-            _object.View.ReceivedStream -= View_ReceivedStream;
-            _object.View.GettingPosition -= View_GettingPosition;
-            _object.View.GettingRotation -= View_GettingRotation;
+            _player.Data.Position = _position;
+            _player.Data.Rotation = _rotation;
+            _entry = null;
+            _player = null;
         }
         private Vector3 View_GettingRotation()
         {
@@ -136,7 +127,7 @@ namespace Ghost.Server.Core.Movment
         private void View_ReceivedStream(NetMessage arg1, Player arg2)
         {
             if (_resetLock)
-                _object.View.Lock(_resetLock = _locked = false);
+                _creature.View.Lock(_resetLock = _locked = false);
             else if (_locked) return;
             _entry.OnDeserialize(arg1);
             float distance = Vector3.Distance(_position, _entry.Position);

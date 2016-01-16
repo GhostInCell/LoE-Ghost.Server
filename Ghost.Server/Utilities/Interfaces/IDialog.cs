@@ -2,9 +2,9 @@
 using Ghost.Server.Core.Players;
 using Ghost.Server.Core.Servers;
 
-namespace Ghost.Server.Utilities.Interfaces.Script
+namespace Ghost.Server.Utilities.Interfaces
 {
-    public interface IScriptedDialog
+    public interface IDialog
     {
         ushort ID { get; }
         WO_NPC[] NPC { get; }

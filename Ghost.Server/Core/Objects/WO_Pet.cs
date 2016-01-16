@@ -47,7 +47,9 @@ namespace Ghost.Server.Core.Objects
                 ServerLogger.LogError($"Creature id {id} doesn't exist");
             else if (string.IsNullOrEmpty(_resource = DataMgr.SelectResource(_creature.Resource)))
                 ServerLogger.LogError($"Resource id {_creature.Resource} doesn't exist");
-            _movement = new PetMovement(this);
+            OnSpawn += WO_Pet_OnSpawn;
+            OnDestroy += WO_Pet_OnDestroy;
+            AddComponent(new PetMovement(this));
             Spawn();
         }
         #region RPC Handlers
@@ -63,14 +65,9 @@ namespace Ghost.Server.Core.Objects
             _view = _server.Room.Instantiate(_resource, _owner.Position, _owner.Rotation, _owner.Player.Player);
             _view.SubscribeToRpc(4, 53, RPC_04_53);
         }
-        private void WO_Pet_OnDespawn()
-        {
-            Destroy();
-        }
         private void WO_Pet_OnDestroy()
         {
             _owner = null;
-            _movement = null;
         }
         #endregion
     }

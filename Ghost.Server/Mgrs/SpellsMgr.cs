@@ -13,35 +13,35 @@ namespace Ghost.Server.Mgrs
     {
         public static bool CanCast(MapPlayer player, TargetEntry target)
         {
-            DB_Spell spell; DB_SpellEffect main; WorldObject targetWO;
+            DB_Spell spell; DB_SpellEffect main; CreatureObject targetCO;
             if (DataMgr.Select(target.SkillID, out spell) &&
                 spell.Effects.TryGetValue(0, out main) &&
                 player.Stats.Energy >= main.Data01)
             {
                 if (target.HasGuid)
                 {
-                    if (player.Server.Objects.TryGetNVObject((ushort)target.Guid, out targetWO) && targetWO.IsSpawned)
+                    if (player.Server.Objects.TryGetCreature((ushort)target.Guid, out targetCO) && !targetCO.IsDead)
                     {
-                        if (Vector3.Distance(targetWO.Position, player.Object.Position) <= main.Data02)
+                        if (Vector3.Distance(targetCO.Position, player.Object.Position) <= main.Data02)
                         {
-                            var isSelf = targetWO == player.Object;
+                            var isSelf = targetCO == player.Object;
                             if ((main.Target & SpellTarget.Creature) != 0)
                             {
-                                if (targetWO.IsPlayer)
+                                if (targetCO.IsPlayer)
                                 {
                                     if ((main.Target & SpellTarget.Self) != 0 && isSelf)
                                         return true;
                                     else if ((main.Target & SpellTarget.Player) != 0)
-                                        return targetWO.IsPlayer && !isSelf;
+                                        return targetCO.IsPlayer && !isSelf;
                                 }
                                 else
-                                    return targetWO.IsCreature && (targetWO as CreatureObject).HasStats;
+                                    return targetCO.HasStats;
                             }
                             else if ((main.Target & SpellTarget.Player) != 0)
                             {
                                 if (isSelf)
                                     return (main.Target & SpellTarget.Self) != 0;
-                                return targetWO.IsPlayer;
+                                return targetCO.IsPlayer;
                             }
                             else if ((main.Target & SpellTarget.Self) != 0)
                                 return isSelf;
@@ -56,13 +56,13 @@ namespace Ghost.Server.Mgrs
         public static void PerformSkill(MapPlayer player, TargetEntry target)
         {
             DB_Spell spell = DataMgr.SelectSpell(target.SkillID); bool area = false, magick;
-            DB_SpellEffect main = spell.Effects[0]; WorldObject targetWO;
+            DB_SpellEffect main = spell.Effects[0]; CreatureObject targetCO;
             player.View.PerformSkill(target);
             player.Skills.AddCooldown(spell.ID, main.Data03);
             player.Stats.ModCurren(Stats.Energy, -main.Data01);
             if (target.HasGuid)
             {
-                player.Server.Objects.TryGetNVObject((ushort)target.Guid, out targetWO);
+                player.Server.Objects.TryGetCreature((ushort)target.Guid, out targetCO);
                 foreach (var item in spell.Effects.Values)
                 {
                     float effect = item.BaseConst + (item.LevelModifer * player.Object.Stats.Level) + (item.AttackModifer * player.Stats.Attack);
@@ -70,8 +70,8 @@ namespace Ghost.Server.Mgrs
                     {
                         case SpellEffectType.Damage:
                         case SpellEffectType.MagickDamage:
-                            if (targetWO != player.Object)
-                                (targetWO as CreatureObject).Stats.DoDamage(player.Object, effect, item.Type == SpellEffectType.MagickDamage);
+                            if (targetCO != player.Object)
+                                targetCO.Stats.DoDamage(player.Object, effect, item.Type == SpellEffectType.MagickDamage);
                             break;
                         case SpellEffectType.FrontAreaDamage:
                         case SpellEffectType.MagicFrontAreaDamage:
@@ -84,14 +84,14 @@ namespace Ghost.Server.Mgrs
                         case SpellEffectType.SplashDamage:
                         case SpellEffectType.MagicSplashDamage:
                             magick = item.Type == SpellEffectType.MagicSplashDamage;
-                            if ((item.Target & SpellTarget.NotMain) == 0 && targetWO != player.Object)
-                                (targetWO as CreatureObject).Stats.DoDamage(player.Object, effect, magick);
+                            if ((item.Target & SpellTarget.NotMain) == 0 && targetCO != player.Object)
+                                targetCO.Stats.DoDamage(player.Object, effect, magick);
                             if ((item.Target & SpellTarget.Creature) != 0)
-                                foreach (var entry in player.Server.Objects.GetMobsInRadiusExcept(player.Object, targetWO, item.Data02).ToArray())
+                                foreach (var entry in player.Server.Objects.GetMobsInRadiusExcept(player.Object, targetCO, item.Data02).ToArray())
                                     entry.Stats?.DoDamage(player.Object, effect, magick);
                             break;
                         case SpellEffectType.Heal:
-                            (targetWO as CreatureObject).Stats.DoHeal(player.Object, effect);
+                            targetCO.Stats.DoHeal(player.Object, effect);
                             break;
                         case SpellEffectType.AreaInit:
                             if (!area)

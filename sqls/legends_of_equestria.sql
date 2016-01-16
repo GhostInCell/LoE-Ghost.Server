@@ -42,10 +42,22 @@ CREATE TABLE IF NOT EXISTS `loe_character` (
   `cutiemark2` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `CHAR NAME` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_character: ~0 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_character: ~5 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_character` DISABLE KEYS */;
+INSERT INTO `loe_character` (`id`, `user`, `level`, `map`, `data`, `name`, `race`, `gender`, `eye`, `tail`, `hoof`, `mane`, `bodysize`, `hornsize`, `eyecolor`, `hoofcolor`, `bodycolor`, `haircolor0`, `haircolor1`, `haircolor2`, `cutiemark0`, `cutiemark1`, `cutiemark2`) VALUES
+	(1, 1, 50, 20, _binary 0x10CFA5031815220F0D4D59934015020169401D9778EC402A0F0D0000000015014648C01D000000003204081F10673204080B106A3204080610663204080810683204080510693A04080A10003A04080210003A04080910003A04080C10003A04080F100052040801100B52040802101E5204080310056A0D08808002120708ACA09C041032, 'Golden Heart', 2, 2, 1, 12, 0, 8, 1.02, 0.934981, 4980581, 0, 6740734, 9862655, 11575295, 8359935, 53, 0, 0);
+INSERT INTO `loe_character` (`id`, `user`, `level`, `map`, `data`, `name`, `race`, `gender`, `eye`, `tail`, `hoof`, `mane`, `bodysize`, `hornsize`, `eyecolor`, `hoofcolor`, `bodycolor`, `haircolor0`, `haircolor1`, `haircolor2`, `cutiemark0`, `cutiemark1`, `cutiemark2`) VALUES
+	(2, 1, 1, 3, _binary 0x100F1815220F0D33339CC3153DBA83421D353375422A0F0D000000001514ED8DBF1D000000003A04080A10003A04080B10003A04080E10006A0A08808002120408001001, 'Wires Shark', 3, 2, 1, 12, 0, 13, 0.905, 1.04997, 16710750, 0, 12672317, 16709375, 16761471, 16751231, 237, 0, 0);
+INSERT INTO `loe_character` (`id`, `user`, `level`, `map`, `data`, `name`, `race`, `gender`, `eye`, `tail`, `hoof`, `mane`, `bodysize`, `hornsize`, `eyecolor`, `hoofcolor`, `bodycolor`, `haircolor0`, `haircolor1`, `haircolor2`, `cutiemark0`, `cutiemark1`, `cutiemark2`) VALUES
+	(3, 2, 3, 2, _binary 0x100F1815220F0D3DE0AD43158EA3FB421D645CAF432A0F0D000000001584EDDF3F1D000000003A04080A10003A04080210003A04080910003A04080C10003A04080F100062080800120408471001620808011204084710146A0B08808002120508F0031003, 'Sapphire Gazer', 2, 2, 1, 0, 0, 0, 0.955, 0.879988, 16748671, 0, 8377599, 16761727, 16765598, 16761727, 214, 0, 0);
+INSERT INTO `loe_character` (`id`, `user`, `level`, `map`, `data`, `name`, `race`, `gender`, `eye`, `tail`, `hoof`, `mane`, `bodysize`, `hornsize`, `eyecolor`, `hoofcolor`, `bodycolor`, `haircolor0`, `haircolor1`, `haircolor2`, `cutiemark0`, `cutiemark1`, `cutiemark2`) VALUES
+	(4, 3, 1, 2, _binary 0x100F1819220F0D115BA94315A1A4FB421D66EDB1432A0F0D000000001562590C401D000000003A04080A10003A04080510003A04081010003A04081510006208080012040847101462080801120408471014620808021204084710146208080312040847100F6A0A08808002120408001001, 'Carrot Dominguez', 1, 3, 0, 0, 0, 4, 0.93, 0.809979, 11468671, 0, 16743875, 8314111, 10413055, 8314111, 150, 0, 0);
+INSERT INTO `loe_character` (`id`, `user`, `level`, `map`, `data`, `name`, `race`, `gender`, `eye`, `tail`, `hoof`, `mane`, `bodysize`, `hornsize`, `eyecolor`, `hoofcolor`, `bodycolor`, `haircolor0`, `haircolor1`, `haircolor2`, `cutiemark0`, `cutiemark1`, `cutiemark2`) VALUES
+	(5, 4, 1, 2, _binary 0x10161819220F0D0FE5A84315DCA3FB421D55DEB2432A0F0D0000000015CA0A2F401D000000003A04080A10003A04080510003A04081010003A04081510006A0A08808002120408001001, 'Tropical Redheart', 1, 2, 0, 10, 0, 5, 0.98, 0.99498, 8248319, 0, 14155646, 16744145, 16752350, 16744145, 38, 0, 0);
+INSERT INTO `loe_character` (`id`, `user`, `level`, `map`, `data`, `name`, `race`, `gender`, `eye`, `tail`, `hoof`, `mane`, `bodysize`, `hornsize`, `eyecolor`, `hoofcolor`, `bodycolor`, `haircolor0`, `haircolor1`, `haircolor2`, `cutiemark0`, `cutiemark1`, `cutiemark2`) VALUES
+	(6, 6, 1, 2, _binary 0x100F1815220F0D95CBA943158EA3FB421DFA41B0432A0F0D00000000154050FCBD1D000000003A04080A10003A04080B10003A04080E10006A0A08808002120408001001, 'Fire Vera', 3, 3, 0, 11, 0, 13, 0.96, 1.06499, 16762751, 0, 9731839, 10092413, 11730846, 10092413, 71, 0, 0);
 /*!40000 ALTER TABLE `loe_character` ENABLE KEYS */;
 
 
@@ -103,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `loe_dialog` (
   PRIMARY KEY (`id`,`state`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_dialog: ~72 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_dialog: ~65 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_dialog` DISABLE KEYS */;
 INSERT INTO `loe_dialog` (`id`, `state`, `npc`, `type`, `message`, `condition`, `cndData01`, `cndData02`, `command`, `cmdData01`, `cmdData02`) VALUES
 	(1, -1, 0, 255, -1, 35, 6, -1, 2, 0, -1);
@@ -874,38 +886,38 @@ CREATE TABLE IF NOT EXISTS `loe_map` (
   `flags` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_map: ~19 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_map: ~22 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_map` DISABLE KEYS */;
 INSERT INTO `loe_map` (`id`, `name`, `flags`) VALUES
-	(1, 'Canterlot', 0);
+	(1, 'Cantermore', 0);
 INSERT INTO `loe_map` (`id`, `name`, `flags`) VALUES
 	(2, 'Ponydale', 0);
 INSERT INTO `loe_map` (`id`, `name`, `flags`) VALUES
-	(3, 'Cloudsdale', 0);
+	(3, 'Cloudopolis', 0);
 INSERT INTO `loe_map` (`id`, `name`, `flags`) VALUES
-	(4, 'TM01', 0);
+	(4, 'Heartlands', 0);
 INSERT INTO `loe_map` (`id`, `name`, `flags`) VALUES
-	(5, 'SugarCubeCorner', 0);
+	(5, 'Ponydale_SugarCaneCorner', 0);
 INSERT INTO `loe_map` (`id`, `name`, `flags`) VALUES
-	(6, 'GemMines', 0);
+	(6, 'Ponydale_GemMines', 0);
 INSERT INTO `loe_map` (`id`, `name`, `flags`) VALUES
-	(7, 'SweetAppleAcres', 0);
+	(7, 'SweetAppleOrchards', 0);
 INSERT INTO `loe_map` (`id`, `name`, `flags`) VALUES
-	(8, 'Everfree1', 0);
+	(8, 'Evershade_CastleGrounds', 0);
 INSERT INTO `loe_map` (`id`, `name`, `flags`) VALUES
-	(9, 'Zecoras', 0);
+	(9, 'Evershade_Seclude', 0);
 INSERT INTO `loe_map` (`id`, `name`, `flags`) VALUES
-	(10, 'Everfree3', 0);
+	(10, 'Evershade', 0);
 INSERT INTO `loe_map` (`id`, `name`, `flags`) VALUES
-	(11, 'Ponyville Library 1st floor', 0);
+	(11, 'Ponydale_Library', 0);
 INSERT INTO `loe_map` (`id`, `name`, `flags`) VALUES
-	(12, 'Ponyville Library 2nd floor', 0);
+	(12, 'Ponydale_Library_2ndFloor', 0);
 INSERT INTO `loe_map` (`id`, `name`, `flags`) VALUES
-	(13, 'RaritysBoutique', 0);
+	(13, 'Ponydale_TheBoutique', 0);
 INSERT INTO `loe_map` (`id`, `name`, `flags`) VALUES
-	(14, 'Crystal Kingdom', 0);
+	(14, 'CK', 0);
 INSERT INTO `loe_map` (`id`, `name`, `flags`) VALUES
 	(15, 'CK_Spa', 0);
 INSERT INTO `loe_map` (`id`, `name`, `flags`) VALUES
@@ -917,9 +929,11 @@ INSERT INTO `loe_map` (`id`, `name`, `flags`) VALUES
 INSERT INTO `loe_map` (`id`, `name`, `flags`) VALUES
 	(19, 'Appaloosa', 0);
 INSERT INTO `loe_map` (`id`, `name`, `flags`) VALUES
-	(20, 'Cottage', 0);
+	(20, 'Heartlands_Cottage', 0);
 INSERT INTO `loe_map` (`id`, `name`, `flags`) VALUES
 	(21, 'DevPlayground', 0);
+INSERT INTO `loe_map` (`id`, `name`, `flags`) VALUES
+	(22, 'DevPlayground_Castle', 0);
 /*!40000 ALTER TABLE `loe_map` ENABLE KEYS */;
 
 
@@ -943,7 +957,7 @@ CREATE TABLE IF NOT EXISTS `loe_map_object` (
   PRIMARY KEY (`map`,`guid`,`object`,`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_map_object: ~68 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_map_object: ~67 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_map_object` DISABLE KEYS */;
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(1, 0, -1, 0, 0, -72.8009, 0.305817, 152.089, 0, 18.8273, 0, -1, -1, -1, -1);
@@ -1218,102 +1232,100 @@ CREATE TABLE IF NOT EXISTS `loe_movement` (
   PRIMARY KEY (`id`,`state`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_movement: ~63 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_movement: ~62 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_movement` DISABLE KEYS */;
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 0, 0, -1, -1, 1, 115, -1, 354.903, 125.819, 352.864, 0, 0, 0);
+	(1, 0, 0, -1, -1, 1, 100, -1, 354.903, 125.819, 352.864, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 1, 0, -1, -1, 0, -1, -1, 352.591, 125.819, 354.902, 0, 0, 0);
+	(1, 1, 0, -1, -1, 0, -1, -1, 350.273, 125.819, 357.024, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 2, 0, -1, -1, 0, -1, -1, 350.273, 125.819, 357.024, 0, 0, 0);
+	(1, 2, 0, -1, -1, 0, -1, -1, 347.959, 125.82, 359.155, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 3, 0, -1, -1, 0, -1, -1, 347.959, 125.82, 359.155, 0, 0, 0);
+	(1, 3, 0, -1, -1, 0, -1, -1, 345.648, 125.819, 361.283, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 4, 0, -1, -1, 0, -1, -1, 345.648, 125.819, 361.283, 0, 0, 0);
+	(1, 4, 0, -1, -1, 0, -1, -1, 343.336, 125.819, 363.412, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 5, 0, -1, -1, 0, -1, -1, 343.336, 125.819, 363.412, 0, 0, 0);
+	(1, 5, 0, -1, -1, 0, -1, -1, 341.01, 125.819, 365.529, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 6, 0, -1, -1, 0, -1, -1, 341.01, 125.819, 365.529, 0, 0, 0);
+	(1, 6, 0, -1, -1, 0, -1, -1, 338.622, 125.82, 367.569, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 7, 0, -1, -1, 0, -1, -1, 338.622, 125.82, 367.569, 0, 0, 0);
+	(1, 7, 0, -1, -1, 0, -1, -1, 336.097, 125.819, 369.44, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 8, 0, -1, -1, 0, -1, -1, 336.097, 125.819, 369.44, 0, 0, 0);
+	(1, 8, 0, -1, -1, 0, -1, -1, 333.418, 125.819, 371.082, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 9, 0, -1, -1, 0, -1, -1, 333.418, 125.819, 371.082, 0, 0, 0);
+	(1, 9, 0, -1, -1, 0, -1, -1, 330.674, 125.819, 372.615, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 10, 0, -1, -1, 0, -1, -1, 330.674, 125.819, 372.615, 0, 0, 0);
+	(1, 10, 0, -1, -1, 0, -1, -1, 327.858, 125.819, 374.011, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 11, 0, -1, -1, 0, -1, -1, 327.858, 125.819, 374.011, 0, 0, 0);
+	(1, 11, 0, -1, -1, 0, -1, -1, 324.986, 125.819, 375.288, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 12, 0, -1, -1, 0, -1, -1, 324.986, 125.819, 375.288, 0, 0, 0);
+	(1, 12, 0, -1, -1, 0, -1, -1, 321.993, 125.819, 376.245, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 13, 0, -1, -1, 0, -1, -1, 321.993, 125.819, 376.245, 0, 0, 0);
+	(1, 13, 0, -1, -1, 0, -1, -1, 318.946, 125.819, 377.014, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 14, 0, -1, -1, 0, -1, -1, 318.946, 125.819, 377.014, 0, 0, 0);
+	(1, 14, 0, -1, -1, 1, 350, -1, 315.839, 125.819, 377.489, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 15, 0, -1, -1, 1, 350, -1, 315.839, 125.819, 377.489, 0, 0, 0);
+	(1, 15, 0, -1, -1, 0, -1, -1, 312.707, 125.819, 377.72, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 16, 0, -1, -1, 0, -1, -1, 312.707, 125.819, 377.72, 0, 0, 0);
+	(1, 16, 0, -1, -1, 0, -1, -1, 309.565, 125.811, 377.681, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 17, 0, -1, -1, 0, -1, -1, 309.565, 125.811, 377.681, 0, 0, 0);
+	(1, 17, 0, -1, -1, 0, -1, -1, 306.466, 125.819, 377.198, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 18, 0, -1, -1, 0, -1, -1, 306.466, 125.819, 377.198, 0, 0, 0);
+	(1, 18, 0, -1, -1, 0, -1, -1, 303.445, 125.819, 376.329, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 19, 0, -1, -1, 0, -1, -1, 303.445, 125.819, 376.329, 0, 0, 0);
+	(1, 19, 0, -1, -1, 0, -1, -1, 300.446, 125.819, 375.388, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 20, 0, -1, -1, 0, -1, -1, 300.446, 125.819, 375.388, 0, 0, 0);
+	(1, 20, 0, -1, -1, 0, -1, -1, 297.548, 125.82, 374.202, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 21, 0, -1, -1, 0, -1, -1, 297.548, 125.82, 374.202, 0, 0, 0);
+	(1, 21, 0, -1, -1, 0, -1, -1, 295.165, 125.82, 372.169, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 22, 0, -1, -1, 0, -1, -1, 295.165, 125.82, 372.169, 0, 0, 0);
+	(1, 22, 0, -1, -1, 0, -1, -1, 293.446, 125.827, 369.561, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 23, 0, -1, -1, 0, -1, -1, 293.446, 125.827, 369.561, 0, 0, 0);
+	(1, 23, 0, -1, -1, 0, -1, -1, 292.948, 125.881, 366.475, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 24, 0, -1, -1, 0, -1, -1, 292.948, 125.881, 366.475, 0, 0, 0);
+	(1, 24, 0, -1, -1, 0, -1, -1, 293.889, 125.823, 363.498, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 25, 0, -1, -1, 0, -1, -1, 293.889, 125.823, 363.498, 0, 0, 0);
+	(1, 25, 0, -1, -1, 0, -1, -1, 295.471, 125.819, 360.787, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 26, 0, -1, -1, 0, -1, -1, 295.471, 125.819, 360.787, 0, 0, 0);
+	(1, 26, 0, -1, -1, 0, -1, -1, 297.142, 125.84, 358.126, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 27, 0, -1, -1, 0, -1, -1, 297.142, 125.84, 358.126, 0, 0, 0);
+	(1, 27, 0, -1, -1, 0, -1, -1, 299.078, 125.865, 355.657, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 28, 0, -1, -1, 0, -1, -1, 299.078, 125.865, 355.657, 0, 0, 0);
+	(1, 28, 0, -1, -1, 0, -1, -1, 301.402, 125.886, 353.547, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 29, 0, -1, -1, 0, -1, -1, 301.402, 125.886, 353.547, 0, 0, 0);
+	(1, 29, 0, -1, -1, 0, -1, -1, 303.94, 125.866, 351.692, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 30, 0, -1, -1, 0, -1, -1, 303.94, 125.866, 351.692, 0, 0, 0);
+	(1, 30, 1, 6, 10, 0, -1, -1, 306.521, 125.849, 349.9, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 31, 1, 6, 10, 0, -1, -1, 306.521, 125.849, 349.9, 0, 0, 0);
+	(1, 31, 0, -1, -1, 0, -1, -1, 309.281, 125.838, 348.398, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 32, 0, -1, -1, 0, -1, -1, 309.281, 125.838, 348.398, 0, 0, 0);
+	(1, 32, 0, -1, -1, 0, -1, -1, 312.172, 125.82, 347.165, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 33, 0, -1, -1, 0, -1, -1, 312.172, 125.82, 347.165, 0, 0, 0);
+	(1, 33, 0, -1, -1, 0, -1, -1, 315.146, 125.819, 346.151, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 34, 0, -1, -1, 0, -1, -1, 315.146, 125.819, 346.151, 0, 0, 0);
+	(1, 34, 0, -1, -1, 0, -1, -1, 318.213, 125.819, 345.467, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 35, 0, -1, -1, 0, -1, -1, 318.213, 125.819, 345.467, 0, 0, 0);
+	(1, 35, 0, -1, -1, 0, -1, -1, 321.326, 125.819, 345.022, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 36, 0, -1, -1, 0, -1, -1, 321.326, 125.819, 345.022, 0, 0, 0);
+	(1, 36, 0, -1, -1, 0, -1, -1, 324.456, 125.819, 344.767, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 37, 0, -1, -1, 0, -1, -1, 324.456, 125.819, 344.767, 0, 0, 0);
+	(1, 37, 0, -1, -1, 0, -1, -1, 327.599, 125.819, 344.716, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 38, 0, -1, -1, 0, -1, -1, 327.599, 125.819, 344.716, 0, 0, 0);
+	(1, 38, 0, -1, -1, 0, -1, -1, 330.738, 125.819, 344.859, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 39, 0, -1, -1, 0, -1, -1, 330.738, 125.819, 344.859, 0, 0, 0);
+	(1, 39, 0, -1, -1, 0, -1, -1, 333.868, 125.819, 345.143, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 40, 0, -1, -1, 0, -1, -1, 333.868, 125.819, 345.143, 0, 0, 0);
+	(1, 40, 0, -1, -1, 0, -1, -1, 336.976, 125.819, 345.612, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 41, 0, -1, -1, 0, -1, -1, 336.976, 125.819, 345.612, 0, 0, 0);
+	(1, 41, 0, -1, -1, 0, -1, -1, 340.065, 125.819, 346.19, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 42, 0, -1, -1, 0, -1, -1, 340.065, 125.819, 346.19, 0, 0, 0);
+	(1, 42, 0, -1, -1, 0, -1, -1, 343.116, 125.819, 346.944, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 43, 0, -1, -1, 0, -1, -1, 343.116, 125.819, 346.944, 0, 0, 0);
+	(1, 43, 0, -1, -1, 0, -1, -1, 346.111, 125.819, 347.891, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 44, 0, -1, -1, 0, -1, -1, 346.111, 125.819, 347.891, 0, 0, 0);
+	(1, 44, 0, -1, -1, 0, -1, -1, 349.008, 125.819, 349.108, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 45, 0, -1, -1, 0, -1, -1, 349.008, 125.819, 349.108, 0, 0, 0);
-INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
-	(1, 46, 0, -1, -1, 5, 0, -1, 351.592, 125.819, 350.653, 0, 0, 0);
+	(1, 45, 0, -1, -1, 5, 0, -1, 351.592, 125.819, 350.653, 0, 0, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
 	(2, 0, 1, -1, -1, 1, 125, -1, 348.541, 125.819, 354.404, 0, 105.883, 0);
 INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`, `cmdData01`, `cmdData02`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES
@@ -1378,7 +1390,7 @@ CREATE TABLE IF NOT EXISTS `loe_npc` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_npc: ~5 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_npc: ~4 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_npc` DISABLE KEYS */;
 INSERT INTO `loe_npc` (`id`, `flags`, `level`, `dialog`, `index`, `movement`, `name`, `race`, `gender`, `eye`, `tail`, `hoof`, `mane`, `bodysize`, `hornsize`, `eyecolor`, `hoofcolor`, `bodycolor`, `haircolor0`, `haircolor1`, `haircolor2`, `cutiemark0`, `cutiemark1`, `cutiemark2`) VALUES
 	(1, 7, 5, 1, 0, 0, 'Frederic Dash', 2, 2, 1, 10, 0, 16, 0.9, 0.98497, 8322980, 0, 16767615, 16744172, 16752626, 16744172, 54, 0, 0);
@@ -1570,7 +1582,7 @@ INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`,
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
 	(16, 0, 250, 15, 80, 32, 18, 9, 14, 16);
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
-	(16, 1, 252, 3, 0, 0, 0, 6, 7.5, 0.75);
+	(16, 1, 252, 2, 0, 0, 0, 6, 7.5, 0.75);
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
 	(21, 0, 1, 2, 50, 16, 2.5, 25, 25, 1.5);
 /*!40000 ALTER TABLE `loe_spell` ENABLE KEYS */;
@@ -1586,10 +1598,20 @@ CREATE TABLE IF NOT EXISTS `loe_user` (
   `data` blob,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_user: ~0 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_user: ~5 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_user` DISABLE KEYS */;
+INSERT INTO `loe_user` (`id`, `login`, `phash`, `access`, `session`, `data`) VALUES
+	(1, 'Ghost', '47925c4c8e61fd096fa3d4da465c45a3aaad349e', 255, NULL, _binary '');
+INSERT INTO `loe_user` (`id`, `login`, `phash`, `access`, `session`, `data`) VALUES
+	(2, 'Venom', '213358d9d176361a831986f7619d06af43ff75bd', 255, NULL, _binary '');
+INSERT INTO `loe_user` (`id`, `login`, `phash`, `access`, `session`, `data`) VALUES
+	(3, 'Frost', '778f1cf8c990823b854bc165aaf602a1dd16b7d7', 255, NULL, _binary '');
+INSERT INTO `loe_user` (`id`, `login`, `phash`, `access`, `session`, `data`) VALUES
+	(4, 'Fire', '68b8a1435a4136cf4b0811aae624f11b97c889cd', 255, NULL, _binary '');
+INSERT INTO `loe_user` (`id`, `login`, `phash`, `access`, `session`, `data`) VALUES
+	(6, 'Anon', '4938ae59216591a8f02d84314bf5931a8035698a', 255, NULL, _binary '');
 /*!40000 ALTER TABLE `loe_user` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

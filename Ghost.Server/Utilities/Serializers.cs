@@ -81,7 +81,7 @@ namespace Ghost.Server.Utilities
         {
             get
             {
-                return 4 + _data.Count * 12;
+                return 4 + _data.Count * 16;
             }
         }
         public void OnSerialize(NetMessage message)
@@ -92,6 +92,7 @@ namespace Ghost.Server.Utilities
                 message.Write((uint)item.Key);
                 message.Write((uint)item.Value.Current);
                 message.Write((uint)item.Value.Max);
+                message.Write((uint)item.Value.Min);
             }
         }
         public void OnDeserialize(NetMessage message)
@@ -216,6 +217,8 @@ namespace Ghost.Server.Utilities
                 message.Write(item.Key);
                 message.Write(item.Value.Item1);
                 message.Write((int)item.Value.Item2);   
+                message.Write(0u);
+                message.Write(0u);
                 message.Write(0u);
             }
         }

@@ -6,10 +6,15 @@
         private float stat_item;
         private float stat_base;
 
+        private float min_chace;
         private float max_chace;
         public float Max
         {
             get { return max_chace; }
+        }
+        public float Min
+        {
+            get { return min_chace; }
         }
         public float Current
         {
@@ -17,6 +22,7 @@
         }
         public StatHelper(float val)
         {
+            min_chace = 0f;
             stat_base = val;
             stat_curr = val;
             max_chace = stat_base;
@@ -31,9 +37,16 @@
             stat_item += val;
             Recalculate();
         }
-        public void UpdateCurrent(float val)
+        public void IncreaseCurrent(float val)
         {
             float @new = stat_curr + val;
+            if (@new < 0) @new = 0;
+            else if (@new > max_chace) @new = max_chace;
+            stat_curr = @new;
+        }
+        public void DecreaseCurrent(float val)
+        {
+            float @new = stat_curr - val;
             if (@new < 0) @new = 0;
             else if (@new > max_chace) @new = max_chace;
             stat_curr = @new;

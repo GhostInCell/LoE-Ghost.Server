@@ -42,7 +42,7 @@ namespace Ghost.Server.Core.Objects
         {
             get
             {
-                return _player.Data.Rotation;
+                return _player.Data.Rotation.ToRadians();
             }
         }
         public WO_Player(MapPlayer player)
@@ -50,14 +50,16 @@ namespace Ghost.Server.Core.Objects
         {
             _player = player;
             _entry = new SyncEntry();
-            _stats = new PlayerStatsMgr(this);
-            _movement = new PlayerMovement(this);
-            if (_player.User.Map != 0 && _player.User.Spawn != 0)
-                _manager.SetPosition(this, _player.User.Spawn);
-            else if (_manager.MapID != _player.Char.Map)
-                _manager.SetPosition(this);
-            _player.Data.Position = _movement.Position;
-            _player.Data.Rotation = _movement.Rotation;
+            OnSpawn += WO_Player_OnSpawn;
+            OnKilled += WO_Player_OnKilled;
+            OnDestroy += WO_Player_OnDestroy;
+            OnDespawn += WO_Player_OnDespawn;
+            OnInitialize += WO_Player_OnInitialize;
+            AddComponent(new ItemsMgr(this));
+            AddComponent(new TradeMgr(this));
+            AddComponent(new SkillsMgr(this));
+            AddComponent(new PlayerMovement(this));
+            AddComponent(new PlayerStatsMgr(this));
             Spawn();
         }
         public void Teleport(Vector3 position)
@@ -67,7 +69,7 @@ namespace Ghost.Server.Core.Objects
         #region Events Handlers
         private void WO_Player_OnSpawn()
         {
-            _respawn?.Destroy(); _respawn = null;
+            Enabled = true;
             _view = _server.Room.Instantiate("PlayerBase", _movement.Position, _movement.Rotation.ToDegrees(), _player.Player);
             _view.FinishedInstantiation += View_FinishedInstantiation;
         }
@@ -77,14 +79,27 @@ namespace Ghost.Server.Core.Objects
             _respawn = new AutoRespawn(this, respTime);
             _manager.SetPosition(this, _player.User.Spawn);
             _player.Announce(Constants.DeadMsg, 8f);
-            _view.FinishedInstantiation -= View_FinishedInstantiation;
         }
         private void WO_Player_OnDestroy()
         {
-            _respawn?.Destroy(); _respawn = null;
+            _respawn?.Destroy(); 
+            _entry = null;
+            _player = null;
+            _respawn = null;
+        }
+        private void WO_Player_OnInitialize()
+        {
+            if (_player.User.Map != 0 && _player.User.Spawn != 0)
+                _manager.SetPosition(this, _player.User.Spawn);
+            else if (_manager.MapID != _player.Char.Map)
+                _manager.SetPosition(this);
             _player.Data.Position = _movement.Position;
             _player.Data.Rotation = _movement.Rotation;
-            _view.FinishedInstantiation -= View_FinishedInstantiation;
+        }
+        private void WO_Player_OnKilled(CreatureObject obj)
+        {
+            _view.FaintPony();
+            Enabled = false;
         }
         private void View_FinishedInstantiation(Player obj)
         {
@@ -92,7 +107,6 @@ namespace Ghost.Server.Core.Objects
             {
                 _view.Rpc(2, 200, _player.Player, _player.Char);
                 _player.Player.Rpc(4, _player.Data.SerTalents);
-                _view.Rpc(4, 52, _player.Player, _player.Stats.SerStats);
                 _view.Rpc(5, 195, _player.Player, _player.Data.SerSkills);
                 _view.Rpc(7, 5, _player.Player, _player.Data.SerInventory);
             }
@@ -100,7 +114,6 @@ namespace Ghost.Server.Core.Objects
             {
                 _view.Rpc(2, 200, obj, _player.Char);
                 _view.Rpc(2, 202, obj, _movement.Animation);
-                _stats.SendStats(obj);
             }
         }
         #endregion

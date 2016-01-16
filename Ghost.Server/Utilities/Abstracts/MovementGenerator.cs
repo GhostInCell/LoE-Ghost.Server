@@ -1,12 +1,10 @@
-﻿using Ghost.Server.Utilities.Interfaces;
-using System;
-using System.Numerics;
+﻿using System.Numerics;
 
 namespace Ghost.Server.Utilities.Abstracts
 {
-    public abstract class MovementGenerator
+    public abstract class MovementGenerator : ObjectComponent
     {
-        protected static readonly int _interval = 400;
+        protected static readonly int _interval;
         static MovementGenerator()
         {
             _interval = Configs.Get<int>(Configs.Movement_SyncInterval);
@@ -15,7 +13,7 @@ namespace Ghost.Server.Utilities.Abstracts
         protected Vector3 _position;
         protected Vector3 _rotation;
         protected Vector3 _direction;
-        protected CreatureObject _object;
+        protected CreatureObject _creature;
         public float Speed
         {
             get { return _speed; }
@@ -56,13 +54,20 @@ namespace Ghost.Server.Utilities.Abstracts
         {
             get;
         }
-        public MovementGenerator(CreatureObject obj)
+        public MovementGenerator(CreatureObject parent)
+            : base(parent)
         {
-            _object = obj;
+            _creature = parent;
+            parent.OnDestroy += MovementGenerator_OnDestroy;
         }
         public abstract void Unlock();
-        public abstract void Destroy();
         public abstract void Lock(bool reset = true);
         public abstract void LookAt(WorldObject obj);
+        #region Events Handlers
+        private void MovementGenerator_OnDestroy()
+        {
+            _creature = null;
+        }
+        #endregion
     }
 }

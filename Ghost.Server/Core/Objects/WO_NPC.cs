@@ -83,10 +83,13 @@ namespace Ghost.Server.Core.Objects
                         else _wears[slot] = item;
                     }
             }
+            OnSpawn += WO_NPC_OnSpawn;
+            OnDespawn += WO_NPC_OnDespawn;
+            OnDestroy += WO_NPC_OnDestroy;
             if ((_npc.Flags & NPCFlags.ScriptedMovement) > 0)
-                _movement = new ScriptedMovement(original._movement as ScriptedMovement, this);
+                AddComponent(new ScriptedMovement(original._movement as ScriptedMovement, this));
             else
-                _movement = new NullMovement(this);
+                AddComponent(new NullMovement(this));
             Spawn();
         }
         public WO_NPC(DB_WorldObject data, ObjectsMgr manager)
@@ -113,10 +116,13 @@ namespace Ghost.Server.Core.Objects
                         else _wears[slot] = item;
                     }
             }
+            OnSpawn += WO_NPC_OnSpawn;
+            OnDespawn += WO_NPC_OnDespawn;
+            OnDestroy += WO_NPC_OnDestroy;
             if ((_npc.Flags & NPCFlags.ScriptedMovement) > 0)
-                _movement = new ScriptedMovement(_npc.Movement, this);
+                AddComponent(new ScriptedMovement(_npc.Movement, this));
             else
-                _movement = new NullMovement(this);
+                AddComponent(new NullMovement(this));
             Spawn();
         }
         public void Clone(MapPlayer player)
@@ -221,9 +227,8 @@ namespace Ghost.Server.Core.Objects
         }
         private void WO_NPC_OnDespawn()
         {
-            if (_dialog != null) _dialog.NPC[_npc.DialogIndex] = null;
-            _view.CheckVisibility -= View_CheckVisibility;
-            _view.FinishedInstantiation -= View_FinishedInstantiation;
+            if (_dialog != null)
+                _dialog.NPC[_npc.DialogIndex] = null;
         }
         private void WO_NPC_OnDestroy()
         {
@@ -233,13 +238,16 @@ namespace Ghost.Server.Core.Objects
                 if (_owner != null)
                     _server.Dialogs.RemoveClone(_dialog.ID, _owner);
             }
-            if (_owner != null) _owner.Clones.Remove(_npc.ID);
-            _view.CheckVisibility -= View_CheckVisibility;
-            _view.FinishedInstantiation -= View_FinishedInstantiation;
-            if (_original != null && _original.IsSpawned)
+            if (_owner != null)
+                _owner.Clones.Remove(_npc.ID);
+            if (_original != null && !_original.IsDead)
                 _original._view.RebuildVisibility();
+            _wears = null;
+            _owner = null;
             _dialog = null;
             shop_ser = null;
+            wears_ser = null;
+            _original = null;
         }
         private bool View_CheckVisibility(Player arg)
         {

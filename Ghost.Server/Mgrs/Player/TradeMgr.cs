@@ -1,21 +1,24 @@
 ﻿using Ghost.Server.Core.Events;
+using Ghost.Server.Core.Objects;
 using Ghost.Server.Core.Players;
 using Ghost.Server.Utilities;
+using Ghost.Server.Utilities.Abstracts;
 using PNet;
 using PNetR;
-using System;
 using System.Collections.Generic;
 
 namespace Ghost.Server.Mgrs.Player
 {
     [NetComponent(9)]
-    public class TradeMgr
+    public class TradeMgr : ObjectComponent
     {
         private static readonly object _lock = new object();
         private bool _ready;
         private bool _trading;
         private bool _requested;
-        private MapPlayer _player;
+        private NetworkView _view;
+        private WO_Player _wPlayer;
+        private MapPlayer _mPlayer;
         private MapPlayer _target;
         private SER_Trade _offerItems;
         private TradeRejector _regected;
@@ -28,31 +31,24 @@ namespace Ghost.Server.Mgrs.Player
         {
             get { return _target; }
         }
-        public TradeMgr(MapPlayer player)
+        public TradeMgr(WO_Player parent)
+            : base(parent)
         {
-            _player = player;
+            _wPlayer = parent;
+            _mPlayer = _wPlayer.Player;
             _offer = new Dictionary<int, int>();
             _offerItems = new SER_Trade(_offer);
+            parent.OnSpawn += TradeMgr_OnSpawn;
+            parent.OnDestroy += TradeMgr_OnDestroy;
+            parent.OnDespawn += TradeMgr_OnDespawn;
         }
         public void Close()
         {
             if (_trading)
             {
-                _player.View.CloseTrade();
+                _view.CloseTrade();
                 ResetState();
             }
-        }
-        public void Destroy()
-        {
-            _regected?.Destroy();
-            if (_trading && _target.Trade._trading)
-                _target.Trade.Close();
-            lock (_lock) _offer.Clear();
-            _offer = null;
-            _player = null;
-            _target = null;
-            _regected = null;
-            _offerItems = null;
         }
         public void CloseBoth()
         {
@@ -68,12 +64,6 @@ namespace Ghost.Server.Mgrs.Player
             _regected = null;
             _requested = false;
             lock (_lock) _offer.Clear();
-        }
-        public void Initialize()
-        {
-            _player.Object.OnSpawn += TradeMgr_OnSpawn;
-            _player.Object.OnDespawn += TradeMgr_OnDespawn;
-            _player.View.SubscribeMarkedRpcsOnComponent(this);
         }
         public void UpdateState()
         {
@@ -91,7 +81,7 @@ namespace Ghost.Server.Mgrs.Player
                 }
                 else
                 {
-                    _player.View.SendTradeState(_offerItems, _target.Trade._offerItems, _ready, _target.Trade._ready);
+                    _view.SendTradeState(_offerItems, _target.Trade._offerItems, _ready, _target.Trade._ready);
                     _target.View.SendTradeState(_target.Trade._offerItems, _offerItems, _target.Trade._ready, _ready);
                 }
             }
@@ -102,7 +92,7 @@ namespace Ghost.Server.Mgrs.Player
             {
                 foreach (var item in _offer)
                 {
-                    if (!_player.Items.HasItems(item.Key, item.Value))
+                    if (!_mPlayer.Items.HasItems(item.Key, item.Value))
                     {
                         CloseBoth();
                         return;
@@ -117,22 +107,22 @@ namespace Ghost.Server.Mgrs.Player
             lock (_lock)
             {
                 foreach (var item in _offer)
-                    _player.Items.RemoveItems(item.Key, item.Value);
+                    _mPlayer.Items.RemoveItems(item.Key, item.Value);
                 foreach (var item in _toffer)
-                    _player.Items.AddItems(item.Key, item.Value);
+                    _mPlayer.Items.AddItems(item.Key, item.Value);
             }
         }
         #region RPC Handlers
         [Rpc(1)]//Trade Request
         private void RPC_001(NetMessage arg1, NetMessageInfo arg2)
         {
-            MapPlayer sender = _player.Server[arg2.Sender.Id];
+            MapPlayer sender = _mPlayer.Server[arg2.Sender.Id];
             if (_trading)
             {
                 sender.View?.FailedTrade();
                 return;
             }
-            else if (sender.Trade._requested && sender.Trade._target == _player)
+            else if (sender.Trade._requested && sender.Trade._target == _mPlayer)
             {
                 _target = sender;
                 sender.Trade._regected.Destroy();
@@ -144,8 +134,8 @@ namespace Ghost.Server.Mgrs.Player
             {
                 _target = sender;
                 _requested = true;
-                _player.View.RequestTrade(arg2.Sender.Id);
-                _regected = new TradeRejector(_player, _target);
+                _view.RequestTrade(arg2.Sender.Id);
+                _regected = new TradeRejector(_mPlayer, _target);
             }
         }
         [Rpc(4)]//Trade Cancle
@@ -185,7 +175,21 @@ namespace Ghost.Server.Mgrs.Player
         #region Events Handlers
         private void TradeMgr_OnSpawn()
         {
-            _player.View.SubscribeMarkedRpcsOnComponent(this);
+            _view = _wPlayer.View;
+            _view.SubscribeMarkedRpcsOnComponent(this);
+        }
+        private void TradeMgr_OnDestroy()
+        {
+            _regected?.Destroy();
+            if (_trading && _target.Trade._trading)
+                _target.Trade.Close();
+            _view = null;
+            _offer = null;
+            _target = null;
+            _wPlayer = null;
+            _mPlayer = null;
+            _regected = null;
+            _offerItems = null;
         }
         private void TradeMgr_OnDespawn()
         {

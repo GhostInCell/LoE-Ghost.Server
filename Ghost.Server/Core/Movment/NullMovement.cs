@@ -1,19 +1,16 @@
-﻿using Ghost.Server.Utilities;
-using Ghost.Server.Utilities.Abstracts;
-using System;
+﻿using Ghost.Server.Utilities.Abstracts;
 using System.Numerics;
 
 namespace Ghost.Server.Core.Movment
 {
     public class NullMovement : MovementGenerator
     {
-        public NullMovement(CreatureObject obj) 
-            : base(obj)
+        public NullMovement(CreatureObject parent) 
+            : base(parent)
         {
-            _object.OnSpawn += NullMovement_OnSpawn;
-            _object.OnDespawn += NullMovement_OnDespawn;
-            _position = obj.SpawnPosition;
-            _rotation = obj.SpawnRotation;
+            _position = _creature.SpawnPosition;
+            _rotation = _creature.SpawnRotation;
+            parent.OnSpawn += NullMovement_OnSpawn;
         }
         public override int Animation
         {
@@ -50,12 +47,6 @@ namespace Ghost.Server.Core.Movment
         public override void Unlock()
         {
         }
-        public override void Destroy()
-        {
-            _object.View.GettingPosition -= View_GettingPosition;
-            _object.View.GettingRotation -= View_GettingRotation;
-            _object = null;
-        }
         public override void Lock(bool reset = true)
         {
         }
@@ -65,13 +56,8 @@ namespace Ghost.Server.Core.Movment
         #region Events Handlers
         private void NullMovement_OnSpawn()
         {
-            _object.View.GettingPosition += View_GettingPosition;
-            _object.View.GettingRotation += View_GettingRotation;
-        }
-        private void NullMovement_OnDespawn()
-        {
-            _object.View.GettingPosition -= View_GettingPosition;
-            _object.View.GettingRotation -= View_GettingRotation;
+            _creature.View.GettingPosition += View_GettingPosition;
+            _creature.View.GettingRotation += View_GettingRotation;
         }
         private Vector3 View_GettingRotation()
         {

@@ -14,14 +14,35 @@ namespace Ghost.Server.Mgrs.Mob
         private WO_MOB _mob;
         private float _dmg_min;
         private float _dmg_max;
-        public int RandomDamage
+        private int _meleeSkill;
+        private float _attackRate;
+        public override int MeleeSkill
         {
-            get { return (int)_stats[Stats.Attack].Max + Constants.RND.Next((int)_dmg_min, (int)_dmg_max); }
+            get
+            {
+                return _meleeSkill;
+            }
         }
-        public MobStatsMgr(WO_MOB mob)
-            : base(mob)
+        public override float AttackRate
         {
-            _mob = mob;
+            get
+            {
+                return _attackRate;
+            }
+        }
+        public override float MeleeDamage
+        {
+            get
+            {
+                return _stats[Stats.Attack].Max + Constants.RND.Next((int)_dmg_min, (int)_dmg_max);
+            }
+        }
+        public MobStatsMgr(WO_MOB parent)
+            : base(parent)
+        {
+            _mob = parent;
+            _meleeSkill = _mob.Creature.SpellID;
+            _attackRate = _mob.Creature.Attack_Rate;
         }
         public override void UpdateStats()
         {
@@ -39,19 +60,6 @@ namespace Ghost.Server.Mgrs.Mob
             _stats[Stats.HealthRegen] = new StatHelper(_level * _mob.Creature.Base_HP_Reg);
             _stats[Stats.MagicResist] = new StatHelper(_level * _mob.Creature.Base_Resists);
         }
-        public override void SendStats(PNetR.Player player)
-        {
-            var hp = _stats[Stats.Health];
-            _creature.View.Rpc(4, 51, player, (byte)Stats.Health, hp.Max);
-            _creature.View.Rpc(4, 50, player, (byte)Stats.Health, hp.Current);
-        }
-        public override void Destroy()
-        {
-            _stats.Clear();
-            _mob = null;
-            _stats = null;
-            _creature = null;
-        }
         public override void Update(TimeSpan time)
         {
             if ((_update -= time.Milliseconds) > 0) return;
@@ -60,21 +68,20 @@ namespace Ghost.Server.Mgrs.Mob
             var ep = _stats[Stats.Energy];
             if (hp.Max != hp.Current)
             {
-                hp.UpdateCurrent(_stats[Stats.HealthRegen].Max * (interval / 1000f));
-                _mob.View.Rpc(4, 50, RpcMode.AllOrdered, (byte)Stats.Health, hp.Current);
+                hp.IncreaseCurrent(_stats[Stats.HealthRegen].Max * (interval / 1000f));
+                _view.Rpc(4, 50, RpcMode.AllOrdered, (byte)Stats.Health, hp.Current);
             }
             if (ep.Max != ep.Current)
-                ep.UpdateCurrent(_stats[Stats.EnergyRegen].Max * (interval / 1000f));
+                ep.IncreaseCurrent(_stats[Stats.EnergyRegen].Max * (interval / 1000f));
         }
-        public override void DoDamage(CreatureObject other, float damage, bool isMagic = false)
+        #region Events Handlers
+        private void MobStatsMgr_OnDestroy()
         {
-            if (!_creature.IsSpawned) return;
-            StatHelper hStat = _stats[Stats.Health];
-            StatHelper pStat = isMagic ? _stats[Stats.MagicResist] : _stats[Stats.Armor];
-            hStat.UpdateCurrent(-CalculateDamage(other.Stats.Level, damage, pStat.Max));
-            if (other.IsPlayer) _mob.ThreatMgr.AddThreat(other as WO_Player, (int)damage);
-            _mob.View.Rpc(4, 50, RpcMode.AllOrdered, (byte)Stats.Health, hStat.Current);
-            if (hStat.Current == 0f) _mob.Kill();
+            _mob = null;
+            _view = null;
+            _stats = null;
+            _creature = null;
         }
+        #endregion
     }
 }

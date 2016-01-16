@@ -1,7 +1,10 @@
-﻿using Ghost.Server.Core.Players;
+﻿using Ghost.Server.Core.Classes;
+using Ghost.Server.Core.Objects;
+using Ghost.Server.Core.Players;
 using Ghost.Server.Core.Structs;
 using Ghost.Server.Scripts;
 using Ghost.Server.Utilities;
+using Ghost.Server.Utilities.Abstracts;
 using PNet;
 using PNetR;
 using System;
@@ -11,34 +14,32 @@ using System.Linq;
 namespace Ghost.Server.Mgrs.Player
 {
     [NetComponent(7)]
-    public class ItemsMgr
+    public class ItemsMgr : ObjectComponent
     {
         private static readonly Tuple<int, int> Empty = new Tuple<int, int>(-1, -1);
-        private MapPlayer _player;
+        private CharData _data;
+        private NetworkView _view;
+        private WO_Player _wPlayer;
+        private MapPlayer _mPlayer;
+        private PNetR.Player _player;
         private HashSet<int> _itemsHash;
         private Dictionary<byte, int> _wears;
         private Dictionary<byte, Tuple<int, int>> _items;
-        public ItemsMgr(MapPlayer player)
+        public ItemsMgr(WO_Player parent)
+            : base(parent)
         {
-            _player = player;
+            _wPlayer = parent;
+            _mPlayer = _wPlayer.Player;
+            _player = _mPlayer.Player;
+            _data = _mPlayer.Data;
+            _items = _data.Items;
+            _wears = _data.Wears;
             _itemsHash = new HashSet<int>();
-        }
-        public void Destroy()
-        {
-            _itemsHash.Clear();
-            _items = null;
-            _wears = null;
-            _player = null;
-            _itemsHash = null;
-        }
-        public void Initialize()
-        {
-            _items = _player.Data.Items;
-            _wears = _player.Data.Wears;
-            _player.Object.OnSpawn += ItemsMgr_OnSpawn;
-            _player.View.SubscribeMarkedRpcsOnComponent(this);
             foreach (var item in _items)
-                if (!_itemsHash.Contains(item.Value.Item1)) _itemsHash.Add(item.Value.Item1);
+                if (!_itemsHash.Contains(item.Value.Item1))
+                    _itemsHash.Add(item.Value.Item1);
+            parent.OnSpawn += ItemsMgr_OnSpawn;
+            parent.OnDestroy += ItemsMgr_OnDestroy;
         }
         public bool HasItems(int id)
         {
@@ -48,25 +49,26 @@ namespace Ghost.Server.Mgrs.Player
         {
             _items.Clear();
             _itemsHash.Clear();
-            _player.View.SetInventory(_player.Data);
+            _view.SetInventory(_data);
         }
         public void AddBits(int bits)
         {
-            _player.Data.Bits += bits;
-            _player.View.SetBits(_player.Data.Bits);
+            _data.Bits += bits;
+            _view.SetBits(_data.Bits);
         }
         public void RemoveItems(int id)
         {
             if (!_itemsHash.Contains(id)) return;
             _itemsHash.Remove(id);
-            for (byte i = 0, cnt = (byte)_items.Count; i < _player.Data.InvSlots && cnt > 0; i++)
-                if (_items.ContainsKey(i))
+            Tuple<int, int> item;
+            for (byte i = 0, cnt = (byte)_items.Count; i < _data.InvSlots && cnt > 0; i++)
+                if (_items.TryGetValue(i, out item))
                 {
                     cnt--;
-                    if (_items[i].Item1 == id)
+                    if (item.Item1 == id)
                     {
-                        _player.View.DeleteItem(i, _items[i].Item2);
                         _items.Remove(i);
+                        _view.DeleteItem(i, item.Item2);
                     }
                 }
         }
@@ -80,13 +82,14 @@ namespace Ghost.Server.Mgrs.Player
             if (slot.Item1 != -1)
             {
                 _items.Remove(islot);
-                _player.View.DeleteItem(islot, slot.Item2);
+                _view.DeleteItem(islot, slot.Item2);
             }
         }
         public int AddItems(int id, int amount)
         {
             DB_Item item;
-            if (DataMgr.Select(id, out item)) return AddItem(item, amount);
+            if (DataMgr.Select(id, out item))
+                return AddItem(item, amount);
             return amount;
         }
         public bool HasItems(int id, int amount)
@@ -101,8 +104,9 @@ namespace Ghost.Server.Mgrs.Player
                 RemoveItems(id);
             else
             {
-                for (byte i = 0; i < _player.Data.InvSlots; i++)
-                    if (_items.ContainsKey(i) && _items[i].Item1 == id)
+                Tuple<int, int> item;
+                for (byte i = 0; i < _data.InvSlots; i++)
+                    if (_items.TryGetValue(i, out item) && item.Item1 == id)
                         amount = RemoveSlot(i, id, amount);
                 return amount;
             }
@@ -115,7 +119,7 @@ namespace Ghost.Server.Mgrs.Player
         }
         private int GetFreeSlot()
         {
-            for (byte i = 0; i < _player.Data.InvSlots; i++)
+            for (byte i = 0; i < _data.InvSlots; i++)
                 if (!_items.ContainsKey(i))
                     return i;
             return -1;
@@ -156,14 +160,14 @@ namespace Ghost.Server.Mgrs.Player
             if (slotAmount <= amount)
             {
                 _items.Remove(slot);
-                _player.View.DeleteItem(slot, slotAmount);
+                _view.DeleteItem(slot, slotAmount);
                 return amount - slotAmount;
             }
             else
             {
                 slotAmount -= amount;
                 _items[slot] = new Tuple<int, int>(id, slotAmount);
-                _player.View.DeleteItem(slot, amount);
+                _view.DeleteItem(slot, amount);
                 return 0;
             }
         }
@@ -178,14 +182,14 @@ namespace Ghost.Server.Mgrs.Player
             if ((item.Flags & ItemFlags.Stackable) == 0)
             {
                 _items[slot] = new Tuple<int, int>(item.ID, 1);
-                _player.View.AddItem(item.ID, 1, slot);
+                _view.AddItem(item.ID, 1, slot);
                 return --amount;
             }
             else
             {
                 int added = amount < item.Stack ? amount : item.Stack;
                 _items[slot] = new Tuple<int, int>(item.ID, added);
-                _player.View.AddItem(item.ID, added, slot);
+                _view.AddItem(item.ID, added, slot);
                 return amount - added;
             }
         }
@@ -195,23 +199,23 @@ namespace Ghost.Server.Mgrs.Player
             amount += _items[slot].Item2;
             int slotAmount = amount < item.Stack ? amount : item.Stack;
             _items[slot] = new Tuple<int, int>(item.ID, slotAmount);
-            _player.View.AddItem(item.ID, slotAmount, slot);
+            _view.AddItem(item.ID, slotAmount, slot);
             return amount - slotAmount;
         }
         #region RPC Handlers
         [Rpc(4)]//Worn Items
         private void RPC_004(NetMessage arg1, NetMessageInfo arg2)
         {
-            _player.View.WornItems(arg2.Sender, _player.Data);
+            _view.WornItems(arg2.Sender, _data);
         }
         [Rpc(6)]//Add item
         private void RPC_006(NetMessage arg1, NetMessageInfo arg2)
         {
-            if (arg2.Sender.Id != _player.Player.Id) return;
+            if (arg2.Sender.Id != _player.Id) return;
             DB_Item item;
             int itemID = arg1.ReadInt32();
             int amount = arg1.ReadInt32();
-            if (_player.User.Access >= AccessLevel.TeamMember)
+            if (_mPlayer.User.Access >= AccessLevel.TeamMember)
             {
                 if (DataMgr.Select(itemID, out item))
                 {
@@ -227,7 +231,7 @@ namespace Ghost.Server.Mgrs.Player
         [Rpc(7)]//Remove item
         private void RPC_007(NetMessage arg1, NetMessageInfo arg2)
         {
-            if (arg2.Sender.Id != _player.Player.Id) return;
+            if (arg2.Sender.Id != _player.Id) return;
             byte islot = arg1.ReadByte();
             int amount = arg1.ReadInt32();
             var itemSlot = GetSlot(islot);
@@ -243,7 +247,7 @@ namespace Ghost.Server.Mgrs.Player
         [Rpc(8)]//Wear item
         private void RPC_008(NetMessage arg1, NetMessageInfo arg2)
         {
-            if (arg2.Sender.Id != _player.Player.Id) return;
+            if (arg2.Sender.Id != _player.Id) return;
             DB_Item item;
             byte wslot = arg1.ReadByte();
             byte islot = arg1.ReadByte();
@@ -254,13 +258,13 @@ namespace Ghost.Server.Mgrs.Player
                 if ((item.Slot & wslotType) == wslotType)
                 {
                     _items.Remove(islot);
-                    _player.View.DeleteItem(islot, 1);
+                    _view.DeleteItem(islot, 1);
                     if (_wears.ContainsKey(wslot))
                         AddItem(DataMgr.SelectItem(_wears[wslot]), 1);
                     _wears[wslot] = item.ID;
                     if ((item.Flags & ItemFlags.Stats) > 0)
-                        _player.Stats.UpdateStats();
-                    _player.View.WearItem(item.ID, wslot);
+                        _mPlayer.Stats.UpdateStats();
+                    _view.WearItem(item.ID, wslot);
                 }
                 else _player.Error($"You can't whear item {item.Name ?? item.ID.ToString()} in slot {wslotType}");
             }
@@ -269,7 +273,7 @@ namespace Ghost.Server.Mgrs.Player
         [Rpc(9)]//Unwear item
         private void RPC_009(NetMessage arg1, NetMessageInfo arg2)
         {
-            if (arg2.Sender.Id != _player.Player.Id) return;
+            if (arg2.Sender.Id != _player.Id) return;
             DB_Item item; int itemSlot;
             byte wslot = arg1.ReadByte();
             byte islot = arg1.ReadByte();
@@ -281,15 +285,15 @@ namespace Ghost.Server.Mgrs.Player
                 if (AddItem((byte)itemSlot, item, 1) == 0)
                 {
                     _wears.Remove(wearSlot);
-                    _player.View.UnwearItem(wslot);
+                    _view.UnwearItem(wslot);
                     if ((item.Flags & ItemFlags.Stats) > 0)
-                        _player.Stats.UpdateStats();
+                        _mPlayer.Stats.UpdateStats();
                 }
                 else
-                    _player.View.WearItem(item.ID, wearSlot);
+                    _view.WearItem(item.ID, wearSlot);
             }
             else
-                _player.View.WearItem(_wears[wearSlot], wearSlot);
+                _view.WearItem(_wears[wearSlot], wearSlot);
         }
         [Rpc(12)]//Use item
         private void RPC_012(NetMessage arg1, NetMessageInfo arg2)
@@ -300,7 +304,7 @@ namespace Ghost.Server.Mgrs.Player
             if (itemSlot.Item1 != -1 && DataMgr.Select(itemSlot.Item1, out item))
             {
                 if ((item.Flags & ItemFlags.Usable) > 0)
-                    ItemsScript.Use(item.ID, _player);
+                    ItemsScript.Use(item.ID, _mPlayer);
                 else _player.Error($"You can't use item {item.Name ?? item.ID.ToString()}");
             }
             else _player.Error($"Inventory slot {islot} is empty or item not found");
@@ -308,7 +312,7 @@ namespace Ghost.Server.Mgrs.Player
         [Rpc(20)]//Move item
         private void RPC_020(NetMessage arg1, NetMessageInfo arg2)
         {
-            if (arg2.Sender.Id != _player.Player.Id) return;
+            if (arg2.Sender.Id != _player.Id) return;
             DB_Item item01;
             byte slot01 = (byte)arg1.ReadInt32();
             byte slot02 = (byte)arg1.ReadInt32();
@@ -325,7 +329,19 @@ namespace Ghost.Server.Mgrs.Player
         #region Events Handlers
         private void ItemsMgr_OnSpawn()
         {
-            _player.Object.View.SubscribeMarkedRpcsOnComponent(this);
+            _view = _wPlayer.View;
+            _view.SubscribeMarkedRpcsOnComponent(this);
+        }
+        private void ItemsMgr_OnDestroy()
+        {
+            _view = null;
+            _data = null;
+            _wears = null;
+            _items = null;
+            _player = null;
+            _mPlayer = null;
+            _wPlayer = null;
+            _itemsHash = null;
         }
         #endregion
     }

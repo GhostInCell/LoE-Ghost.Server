@@ -571,6 +571,11 @@ namespace Ghost.Server.Utilities
     public static class NetworkViewRPCExtension
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void FaintPony(this PNetR.NetworkView view)
+        {
+            view.Rpc(4, 57, RpcMode.OwnerOrdered);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void CloseTrade(this PNetR.NetworkView view)
         {
             view.Rpc(9, 4, RpcMode.OwnerOrdered);
@@ -634,6 +639,11 @@ namespace Ghost.Server.Utilities
         public static void AddItem(this PNetR.NetworkView view, int id, int amount, byte slot)
         {
             view.Rpc(7, 6, RpcMode.OwnerOrdered, id, amount, slot);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetCombat(this PNetR.NetworkView view, PNetR.Player player, bool inCombat)
+        {
+            view.Rpc(4, 59, player, inCombat);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void WornItems(this PNetR.NetworkView view, PNetR.Player player, CharData data)

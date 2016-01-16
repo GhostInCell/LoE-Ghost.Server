@@ -15,8 +15,7 @@ namespace Ghost.Server.Mgrs.Player
         private const int interval = 200;
         private int _update;
         private string _status;
-        private MapPlayer _player;
-        public readonly SER_Stats SerStats;
+        private MapPlayer _mPlayer;
         public string Status
         {
             get
@@ -24,19 +23,40 @@ namespace Ghost.Server.Mgrs.Player
                 return _status;
             }
         }
-        public PlayerStatsMgr(WO_Player obj) 
-            : base(obj)
+        public override int MeleeSkill
         {
-            _player = obj.Player;
-            SerStats = new SER_Stats(_stats);
+            get
+            {
+                return 0;
+            }
+        }
+        public override float AttackRate
+        {
+            get
+            {
+                return 0f;
+            }
+        }
+        public override float MeleeDamage
+        {
+            get
+            {
+                return 0f;
+            }
+        }
+        public PlayerStatsMgr(WO_Player parent)
+            : base(parent)
+        {
+            _mPlayer = parent.Player;
             if (_stats.Count == 0) CreateBase();
+            parent.OnDestroy += PlayerStatsMgr_OnDestroy;
             UpdateStats();
         }
         public override void UpdateStats()
         {
             foreach (var stat in _stats)
                 stat.Value.Clean();
-            foreach (var item in _player.Char.Data.Wears)
+            foreach (var item in _mPlayer.Char.Data.Wears)
             {
                 var entry = DataMgr.SelectItem(item.Value);
                 if ((entry.Flags & ItemFlags.Stats) > 0)
@@ -46,35 +66,7 @@ namespace Ghost.Server.Mgrs.Player
                         else
                             ServerLogger.LogWarn($"Player stat {stat.Item1} not found");
             }
-            if (_creature.View != null) SendStatsAll();
-        }
-        public void SendStatsAll()
-        {
-            _creature.View.Rpc(4, 52, RpcMode.OwnerOrdered, SerStats);
-            var toSend = _stats[Stats.Health];
-            _creature.View.Rpc(4, 51, RpcMode.OthersOrdered, (byte)Stats.Health, toSend.Max);
-            _creature.View.Rpc(4, 50, RpcMode.OthersOrdered, (byte)Stats.Health, toSend.Current);
-            toSend = _stats[Stats.Energy];
-            _creature.View.Rpc(4, 51, RpcMode.OthersOrdered, (byte)Stats.Energy, toSend.Max);
-            _creature.View.Rpc(4, 50, RpcMode.OthersOrdered, (byte)Stats.Energy, toSend.Current);
-        }
-        public override void SendStats(PNetR.Player player)
-        {
-            var toSend = _stats[Stats.Health];
-            _creature.View.Rpc(4, 51, player, (byte)Stats.Health, toSend.Max);
-            _creature.View.Rpc(4, 50, player, (byte)Stats.Health, toSend.Current);
-            toSend = _stats[Stats.Energy];
-            _creature.View.Rpc(4, 51, player, (byte)Stats.Energy, toSend.Max);
-            _creature.View.Rpc(4, 50, player, (byte)Stats.Energy, toSend.Current);
-        }
-        public override void Destroy()
-        {
-            _player.Char.Level = GetLevel();
-            _stats.Clear();
-            _stats = null;
-            _player = null;
-            _status = null;
-            _creature = null;
+            if (_view != null) SendStats();
         }
         public override void Update(TimeSpan time)
         {
@@ -82,82 +74,70 @@ namespace Ghost.Server.Mgrs.Player
             _update = interval;
             var hp = _stats[Stats.Health];
             var ep = _stats[Stats.Energy];
-            if (_creature.Movement.IsRunning)
+            if (_creature.Movement.IsRunning && _mPlayer.User.Access < AccessLevel.TeamMember)
             {
-                ep.UpdateCurrent(runMod * (interval / 1000f));
+                ep.IncreaseCurrent(runMod * (interval / 1000f));
                 if (ep.Current == 0) _creature.Movement.Lock();
             }
             if (hp.Max != hp.Current)
             {
-                hp.UpdateCurrent(_stats[Stats.HealthRegen].Max * (interval / 1000f));
-                _creature.View.Rpc(4, 50, RpcMode.AllOrdered, (byte)Stats.Health, hp.Current);
+                hp.IncreaseCurrent(_stats[Stats.HealthRegen].Max * (interval / 1000f));
+                _view.Rpc(4, 50, RpcMode.AllOrdered, (byte)Stats.Health, hp.Current);
             }
             if (ep.Max != ep.Current)
             {
-                ep.UpdateCurrent(_stats[Stats.EnergyRegen].Max * (interval / 1000f));
-                _creature.View.Rpc(4, 50, RpcMode.AllOrdered, (byte)Stats.Energy, ep.Current);
+                ep.IncreaseCurrent(_stats[Stats.EnergyRegen].Max * (interval / 1000f));
+                _view.Rpc(4, 50, RpcMode.AllOrdered, (byte)Stats.Energy, ep.Current);
             }
             _status = $"HP {hp.Current}/{hp.Max}; EP {ep.Current}/{ep.Max}";
         }
         public void ModCurren(Stats stat, float value)
         {
             if (!_stats.ContainsKey(stat)) return;
-            _stats[stat].UpdateCurrent(value);
+            _stats[stat].IncreaseCurrent(value);
             if (stat == Stats.Health && Health == 0f)
             {
-                _creature.View.Rpc(4, 50, RpcMode.AllOrdered, (byte)Stats.Health, 0f);
+                _view.Rpc(4, 50, RpcMode.AllOrdered, (byte)Stats.Health, 0f);
                 _creature.Despawn();
             }
         }
         public void AddExpAll(uint exp, uint bonusExp = 0)
         {
-            int[] talents = _player.Data.Talents.Keys.ToArray();
+            int[] talents = _mPlayer.Data.Talents.Keys.ToArray();
             for (int i = 0; i < talents.Length; i++)
                 AddExp((Talent)talents[i], exp, bonusExp);
             talents = null;
         }
         public void AddExp(Talent talant, uint exp, uint bonusExp = 0)
         {
-            var talantState = _player.Data.Talents[(int)talant];
+            var talantState = _mPlayer.Data.Talents[(int)talant];
             if (talantState.Item2 >= CharsMgr.MaxLevel) return;
             var cExp = talantState.Item1 + exp + bonusExp;
             var level = CalculateNewLevel(talantState.Item2, ref cExp);
-            _player.Data.Talents[(int)talant] = new Tuple<uint, short>(cExp, level);
+            _mPlayer.Data.Talents[(int)talant] = new Tuple<uint, short>(cExp, level);
             if (talantState.Item2 != level)
             {
                 UpdateBase();
-                _player.Player.Rpc(4, _player.Data.SerTalents);
-                _player.Player.Rpc(3, (int)talant, cExp, (int)level);
-                _creature.View.Rpc(4, 53, RpcMode.AllUnordered, _player.Char.Level);
+                _mPlayer.Player.Rpc(4, _mPlayer.Data.SerTalents);
+                _mPlayer.Player.Rpc(3, (int)talant, cExp, (int)level);
+                _view.Rpc(4, 53, RpcMode.AllUnordered, _mPlayer.Char.Level);
             }
-            else _player.Player.Rpc(2, (int)talant, exp, bonusExp);
-        }
-        public override void DoDamage(CreatureObject other, float damage, bool isMagic = false)
-        {
-            if (!_creature.IsSpawned) return;
-            StatHelper hStat = _stats[Stats.Health];
-            StatHelper pStat = isMagic ? _stats[Stats.MagicResist] : _stats[Stats.Armor];
-            hStat.UpdateCurrent(-CalculateDamage(other.Stats.Level, damage, pStat.Max));
-            if (hStat.Current == 0f)
-            {
-                _creature.View.Rpc(4, 50, RpcMode.AllOrdered, (byte)Stats.Health, 0f);
-                _creature.Despawn();
-            } 
+            else _mPlayer.Player.Rpc(2, (int)talant, exp, bonusExp);
         }
         private short GetLevel()
         {
-            short ret = (short)_player.Data.Talents.Values.Sum(x => x.Item2);
+            short ret = (short)_mPlayer.Data.Talents.Values.Sum(x => x.Item2);
             return ret > CharsMgr.MaxLevel ? CharsMgr.MaxLevel : ret;
         }
         private void CreateBase()
         {
-            _level = (short)(_player.Char.Level == 0 ? 1 : _player.Char.Level);
+            _level = (short)(_mPlayer.Char.Level == 0 ? 1 : _mPlayer.Char.Level);
             _stats[Stats.Dodge] = new StatHelper(0);
             _stats[Stats.Armor] = new StatHelper(0);
             _stats[Stats.MagicResist] = new StatHelper(0);
             _stats[Stats.Health] = new StatHelper(250 + _level * 100);
             _stats[Stats.Attack] = new StatHelper(1 + (_level - 1) * 17);
-            switch (_player.Char.Pony.Race)
+            switch (_mPlayer.Char.Pony.Race)
             {
                 case 1:
                     _stats[Stats.Speed] = new StatHelper(350);
@@ -181,10 +161,10 @@ namespace Ghost.Server.Mgrs.Player
         }
         private void UpdateBase()
         {
-            _player.Char.Level = _level = GetLevel();
+            _mPlayer.Char.Level = _level = GetLevel();
             _stats[Stats.Health].SetBase(250 + _level * 100);
             _stats[Stats.Attack].SetBase(1 + (_level - 1) * 17);
-            switch (_player.Char.Pony.Race)
+            switch (_mPlayer.Char.Pony.Race)
             {
                 case 1:
                     _stats[Stats.HealthRegen].SetBase(20 + _level * 10);
@@ -194,7 +174,7 @@ namespace Ghost.Server.Mgrs.Player
                     _stats[Stats.HealthRegen].SetBase(28 + (_level - 1) * 9.5f);
                     break;
             }
-            SendStatsAll();
+            SendStats();
         }
         private short CalculateNewLevel(short level, ref uint cExp)
         {
@@ -210,5 +190,13 @@ namespace Ghost.Server.Mgrs.Player
             }
             return level;
         }
+        #region Events Handlers
+        private void PlayerStatsMgr_OnDestroy()
+        {
+            _mPlayer.Char.Level = GetLevel();
+            _status = null;
+            _mPlayer = null;
+        }
+        #endregion
     }
 }

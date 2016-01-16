@@ -13,10 +13,10 @@ namespace Ghost.Server.Utilities
         private const int DEF_Game_SaveChar = 60;
         private const short DEF_Game_MaxLevel = 50;
         private const int DEF_Game_SpamDelay = 600;
-        private const string DEF_Game_UnicornStart = "Canterlot";
-        private const string DEF_Game_PegasusStart = "Cloudsdale";
+        private const string DEF_Game_UnicornStart = "Cantermore";
+        private const string DEF_Game_PegasusStart = "Cloudopolis";
         private const string DEF_Game_EarthPonyStart = "Ponydale";
-        private const int DEF_Movement_SyncInterval = 200;
+        private const int DEF_Movement_SyncInterval = 150;
         private const int DEF_Server_MaxMaps = 256;
         private const bool DEF_Server_Master = true;
         private const bool DEF_Server_AllMaps = true;
@@ -30,13 +30,13 @@ namespace Ghost.Server.Utilities
         private const string DEF_Server_Maps_Hosts = "127.0.0.1";
 
 
-        private const int DEF_Map_Tick = 66;
+        private const int DEF_Map_Tick = 16;
         private const int DEF_Map_Port = 14100;
         private const int DEF_Map_MaxPlayers = 100;
         private const int DEF_Map_Reconnect = 2000;
         private const string DEF_Map_Host = "127.0.0.1";
 
-        private const int DEF_Char_Tick = 66;
+        private const int DEF_Char_Tick = 8;
         private const int DEF_Char_Port = 14010;
         private const int DEF_Char_MaxPlayers = 500;
         private const string DEF_Char_Host = "127.0.0.1";
@@ -104,6 +104,11 @@ namespace Ghost.Server.Utilities
                 }
                 foreach (var item in File.ReadAllLines(ConfigFile))
                 {
+                    if (item.Length == 0 || item[0] == '#')
+                    {
+                        _cfgs[item] = null;
+                        continue;
+                    }
                     var index1 = item.IndexOf('@');
                     var index2 = item.IndexOf('=');
                     if (index1 > 0 && index2 > 0)
@@ -135,8 +140,10 @@ namespace Ghost.Server.Utilities
                 {
                     foreach (var item in _cfgs)
                     {
-                        var type = item.Value.GetType();
-                        writer.WriteLine($"{item.Key}@{type.FullName}={item.Value.ToString()}");
+                        if (item.Value == null)
+                            writer.WriteLine(item.Key);
+                        else
+                            writer.WriteLine($"{item.Key}@{item.Value.GetType().FullName}={item.Value.ToString()}");
                     }
                 }
             }

@@ -61,6 +61,9 @@ namespace Ghost.Server.Core.Objects
             if (!DataMgr.Select(data.ObjectID, out _item))
                 ServerLogger.LogError($"Item id {data.ObjectID} doesn't exist");
             _resource = DataMgr.SelectResource(data.Data02);
+            OnSpawn += WO_Pickup_OnSpawn;
+            OnDespawn += WO_Pickup_OnDespawn;
+            OnDestroy += WO_Pickup_OnDestroy;
             Spawn();
         }
         #region RPC Handlers
@@ -94,16 +97,14 @@ namespace Ghost.Server.Core.Objects
             _respawn?.Destroy(); _respawn = null;
             _view.ClearSubscriptions();
             _server.Room.Destroy(_view);
-            _view.GettingPosition -= View_GettingPosition;
-            _view.GettingRotation -= View_GettingRotation;
         }
         private void WO_Pickup_OnDestroy()
         {
-            _respawn?.Destroy(); _respawn = null;
+            _respawn?.Destroy();
             _view.ClearSubscriptions();
             _server.Room.Destroy(_view);
-            _view.GettingPosition -= View_GettingPosition;
-            _view.GettingRotation -= View_GettingRotation;
+            _view = null;
+            _respawn = null;
         }
         private Vector3 View_GettingRotation()
         {

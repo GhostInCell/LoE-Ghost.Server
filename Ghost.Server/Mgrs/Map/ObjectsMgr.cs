@@ -4,7 +4,6 @@ using Ghost.Server.Core.Servers;
 using Ghost.Server.Core.Structs;
 using Ghost.Server.Utilities;
 using Ghost.Server.Utilities.Abstracts;
-using Ghost.Server.Utilities.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +12,7 @@ namespace Ghost.Server.Mgrs.Map
 {
     public class ObjectsMgr
     {
+        private static readonly WorldObject[] Empty = new WorldObject[0];
         private ushort _currentN;
         private MapServer _server;
         private readonly int _mapID;
@@ -186,33 +186,37 @@ namespace Ghost.Server.Mgrs.Map
             return _nvObjects.TryGetValue(guid, out obj) || 
                 _plObjects.TryGetValue(guid, out obj);
         }
+        public bool TryGetCreature(ushort guid, out CreatureObject obj)
+        {
+            WorldObject ret; obj = null;
+            if (_nvObjects.TryGetValue(guid, out ret) || _plObjects.TryGetValue(guid, out ret))
+                obj = ret as CreatureObject;
+            return obj != null;
+        }
         public IEnumerable<WO_MOB> GetMobsInRadius(Vector3 origin, float radius)
         {
-            if (origin == null) yield break;
-            foreach (var item in _nvObjects.Values.Where(x => x is WO_MOB && Vector3.Distance(x.Position, origin) <= radius))
-                yield return item as WO_MOB;
+            if (origin == null) return Enumerable.Empty<WO_MOB>();
+            return _nvObjects.Values.Where(x => x is WO_MOB && Vector3.Distance(x.Position, origin) <= radius).Select(x => x as WO_MOB);
         }
         public IEnumerable<WO_MOB> GetMobsInRadius(WorldObject origin, float radius)
         {
-            if (origin == null) yield break;
-            foreach (var item in _nvObjects.Values.Where(x => x is WO_MOB && Vector3.Distance(x.Position, origin.Position) <= radius))
-                yield return item as WO_MOB;
+            if (origin == null) return Enumerable.Empty<WO_MOB>();
+            return _nvObjects.Values.Where(x => x is WO_MOB && Vector3.Distance(x.Position, origin.Position) <= radius).Select(x => x as WO_MOB);
         }
         public IEnumerable<WO_Player> GetPlayersInRadius(Vector3 origin, float radius)
         {
-            return _plObjects.Where(x => Vector3.Distance(x.Value.Position, origin) <= radius).Select(x => x.Value as WO_Player);
+            if (origin == null) return Enumerable.Empty<WO_Player>();
+            return _plObjects.Values.Select(x => x as WO_Player).Where(x => Vector3.Distance(x.Position, origin) <= radius && !x.IsDead);
         }
         public IEnumerable<WO_Player> GetPlayersInRadius(WorldObject origin, float radius)
         {
-            if (origin == null) yield break;
-            foreach (var item in _plObjects.Values.Where(x => Vector3.Distance(x.Position, origin.Position) <= radius))
-                yield return item as WO_Player;
+            if (origin == null) return Enumerable.Empty<WO_Player>();
+            return _plObjects.Values.Select(x => x as WO_Player).Where(x => Vector3.Distance(x.Position, origin.Position) <= radius && !x.IsDead);
         }
         public IEnumerable<WO_MOB> GetMobsInRadiusExcept(WorldObject origin, WorldObject except, float radius)
         {
-            if (origin == null) yield break;
-            foreach (var item in _nvObjects.Values.Where(x => x is WO_MOB && x != except && Vector3.Distance(x.Position, origin.Position) <= radius))
-                yield return item as WO_MOB;
+            if (origin == null) return Enumerable.Empty<WO_MOB>();
+            return _nvObjects.Values.Where(x => x is WO_MOB && x != except && Vector3.Distance(x.Position, origin.Position) <= radius).Select(x => x as WO_MOB);
         }
         private uint CreateNSObject(DB_WorldObject obj)
         {

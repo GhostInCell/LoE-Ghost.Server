@@ -1,11 +1,7 @@
 ﻿using Ghost.Server.Core.Events;
-using Ghost.Server.Core.Players;
 using Ghost.Server.Core.Structs;
-using Ghost.Server.Mgrs;
-using Ghost.Server.Mgrs.Map;
 using Ghost.Server.Utilities;
 using Ghost.Server.Utilities.Abstracts;
-using PNetR;
 using System;
 using System.Linq;
 using System.Numerics;
@@ -68,11 +64,13 @@ namespace Ghost.Server.Core.Objects
             _ticks = main.AttackModifer;
             _time = TimeSpan.FromSeconds(main.LevelModifer);
             _period = TimeSpan.FromSeconds(_time.TotalSeconds / _ticks);
+            OnSpawn += WO_VoidZone_OnSpawn;
+            OnDestroy += WO_VoidZone_OnDestroy;
             Spawn();
         }
         public void Tick()
         {
-            if (_onwer.IsSpawned)
+            if (!_onwer.IsDead)
             {
                 if (--_ticks >= 0)
                 {

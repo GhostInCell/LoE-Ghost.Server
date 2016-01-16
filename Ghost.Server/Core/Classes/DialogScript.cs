@@ -5,13 +5,13 @@ using Ghost.Server.Core.Servers;
 using Ghost.Server.Core.Structs;
 using Ghost.Server.Mgrs;
 using Ghost.Server.Utilities;
-using Ghost.Server.Utilities.Interfaces.Script;
+using Ghost.Server.Utilities.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Ghost.Server.Core.Classes
 {
-    public class DialogScript: IScriptedDialog
+    public class DialogScript: IDialog
     {
         private readonly ushort _id;
         private WO_NPC[] _npcs;

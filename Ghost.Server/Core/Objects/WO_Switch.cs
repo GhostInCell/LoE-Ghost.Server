@@ -31,13 +31,16 @@ namespace Ghost.Server.Core.Objects
                 _view = _server.Room.SceneViewManager.CreateNetworkedSceneObjectView(_data.Guid);
                 _view.SubscribeToRpc(1, RPC_001);
             }
+            OnDespawn += WO_Switch_OnDestroy;
             Spawn();
         }
+        #region Events Handlers
         private void WO_Switch_OnDestroy()
         {
             _view.UnsubscribeFromRpc(1);
             _view = null;
         }
+        #endregion
         private void RPC_001(NetMessage arg1, NetMessageInfo arg2)
         {
             MapPlayer player = _server[arg2.Sender.Id];

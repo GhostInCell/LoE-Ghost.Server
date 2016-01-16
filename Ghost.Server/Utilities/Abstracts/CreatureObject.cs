@@ -1,16 +1,29 @@
 ﻿using Ghost.Server.Mgrs.Map;
-using Ghost.Server.Utilities.Interfaces;
 using PNetR;
+using System;
 using System.Numerics;
 
 namespace Ghost.Server.Utilities.Abstracts
 {
     public abstract class CreatureObject : WorldObject
     {
-        protected bool _isKilled;
+        protected bool _dead;
+        protected bool _killed;
         protected StatsMgr _stats;
         protected NetworkView _view;
         protected MovementGenerator _movement;
+        public bool IsDead
+        {
+            get { return _dead; }
+        }
+        public Player Owner
+        {
+            get { return _view.Owner; }
+        }
+        public bool HasStats
+        {
+            get { return _stats != null; }
+        }
         public StatsMgr Stats
         {
             get { return _stats; }
@@ -18,10 +31,6 @@ namespace Ghost.Server.Utilities.Abstracts
         public NetworkView View
         {
             get { return _view; }
-        }
-        public bool HasStats
-        {
-            get { return _stats != null; }
         }
         public override ushort SGuid
         {
@@ -40,6 +49,10 @@ namespace Ghost.Server.Utilities.Abstracts
             get { return _movement.Rotation; }
             set { _movement.Rotation = value; }
         }
+        public MovementGenerator Movement
+        {
+            get { return _movement; }
+        }
         public abstract Vector3 SpawnPosition
         {
             get;
@@ -48,42 +61,46 @@ namespace Ghost.Server.Utilities.Abstracts
         {
             get;
         }
-        public MovementGenerator Movement
-        {
-            get { return _movement; }
-        }
+        public event Action<CreatureObject> OnKilled;
         public CreatureObject(uint guid, ObjectsMgr manager)
             : base(Constants.CreatureObject | guid, manager)
-        { }
+        {
+            OnSpawn += CreatureObject_OnSpawn;
+            OnDespawn += CreatureObject_OnDespawn;
+            OnDestroy += CreatureObject_OnDestroy;
+            OnInitialize += CreatureObject_OnInitialize;
+        }
+        public void Kill(CreatureObject killer)
+        {
+            lock (this)
+            {
+                if (_dead) return;
+                _dead = true;
+            }
+            OnKilled?.Invoke(killer);
+        }
         #region Events Handlers
         private void CreatureObject_OnSpawn()
         {
-            if (_stats != null)
-                _server.RigisterOnUpdate(_stats);
-            if (_movement is IUpdatable)
-                _server.RigisterOnUpdate((IUpdatable)_movement);
-        }       
+            _dead = false;
+        }
         private void CreatureObject_OnDespawn()
         {
             _view.ClearSubscriptions();
-            _server.Room.Destroy(_view, Constants.Killed);
-            if (_stats != null)
-                _server.RemoveFromUpdate(_stats);
-            if (_movement is IUpdatable)
-                _server.RemoveFromUpdate((IUpdatable)_movement);
+            _server.Room.Destroy(_view, IsPlayer ? Constants.Fainted : Constants.Killed);
         }
         private void CreatureObject_OnDestroy()
         {
             _view.ClearSubscriptions();
-            _server.Room.Destroy(_view, _isKilled ? Constants.Killed : (byte)0);
-            if (_stats != null)
-            {
-                _stats.Destroy();
-                _server.RemoveFromUpdate(_stats);
-            }
-            if (_movement is IUpdatable)
-                _server.RemoveFromUpdate((IUpdatable)_movement);
-            _movement.Destroy();
+            _server.Room.Destroy(_view, _dead ? Constants.Killed : (byte)0);
+            _view = null;
+            _stats = null;
+            _movement = null;
+        }
+        private void CreatureObject_OnInitialize()
+        {
+            _stats = GetComponent<StatsMgr>();
+            _movement = GetComponent<MovementGenerator>();
         }
         #endregion
     }
