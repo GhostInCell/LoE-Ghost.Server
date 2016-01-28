@@ -1,4 +1,5 @@
 ﻿using ProtoBuf;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -8,10 +9,10 @@ namespace Ghost.Server.Core.Classes
     public class UserSave
     {
         [ProtoMember(1)]
-        public Dictionary<int, byte> Friends;
+        public Dictionary<int, Tuple<byte, string, short, DateTime>> Friends;
         public UserSave()
         {
-            Friends = new Dictionary<int, byte>();
+            Friends = new Dictionary<int, Tuple<byte, string, short, DateTime>>();
         }
         public byte[] GetBytes()
         {

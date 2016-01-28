@@ -50,6 +50,8 @@ namespace Ghost.Server.Utilities
         MagicSplashDamage = 6,
         MagicFrontAreaDamage = 7,
         Heal = 10,
+        Modifier = 20,
+        AuraModifier = 127,
         AreaInit = 250,
         AreaPeriodicDamage = 252,
         AreaPeriodicHeal = 253,
@@ -344,6 +346,13 @@ namespace Ghost.Server.Utilities
                     case "race":
                         literal = player.Char.Pony.Race.GetRaceName();
                         break;
+                    case "level":
+                        literal = player.Stats.Level.ToString();
+                        break;
+                    case "gender":
+                        literal = player.Char.Pony.Gender.GetGenderName();
+                        break;
+
                 }
                 if (mod != '\0')
                 {
@@ -352,13 +361,23 @@ namespace Ghost.Server.Utilities
                     {
                         case 'l':
                             literal = literal.ToLowerInvariant();
-                            break;                            
+                            break;
+                        case 'u':
+                            literal = literal.ToUpperInvariant();
+                            break;
                     }
                 }
                 msg = msg.Remove(--index01) + literal + msg.Substring(++index02);
             }
             return msg;
         }
+    }
+    public enum Gender : byte
+    {
+        Filly,
+        Colt,
+        Mare,
+        Stallion
     }
     public static class PlayeRPCExtension
     {
@@ -477,6 +496,18 @@ namespace Ghost.Server.Utilities
                 case 1: return "Earth Pony";
                 case 2: return "Unicorn";
                 case 3: return "Pegasus";
+                default: return string.Empty;
+            }
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static string GetGenderName(this byte gender)
+        {
+            switch (gender)
+            {
+                case 0: return "Filly";
+                case 1: return "Colt";
+                case 2: return "Mare";
+                case 3: return "Stallion";
                 default: return string.Empty;
             }
         }

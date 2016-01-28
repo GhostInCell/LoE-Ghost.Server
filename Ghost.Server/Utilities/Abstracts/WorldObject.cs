@@ -12,6 +12,7 @@ namespace Ghost.Server.Utilities.Abstracts
         protected readonly uint _guid;
         protected MapServer _server;
         protected ObjectsMgr _manager;
+        
         private bool _enabled;
         private bool _updating;
         private bool _spawned;
@@ -20,6 +21,7 @@ namespace Ghost.Server.Utilities.Abstracts
         private int _componentsLength;
         private IUpdatable[] _updatable;
         private ObjectComponent[] _components;
+        private Action<TimeSpan> eventOnUpdate;
         public uint Guid
         {
             get
@@ -94,6 +96,21 @@ namespace Ghost.Server.Utilities.Abstracts
         public event Action OnDespawn;
         public event Action OnDestroy;
         public event Action OnInitialize;
+        public event Action<TimeSpan> OnUpdate
+        {
+            add
+            {
+                if (_updatable?.Length == 0 && eventOnUpdate == null)
+                    _server.RigisterOnUpdate(this);
+                eventOnUpdate += value;
+            }
+            remove
+            {
+                eventOnUpdate -= value;
+                if (_updatable.Length == 0 && eventOnUpdate == null)
+                    _server.RemoveFromUpdate(this);
+            }
+        }
         public abstract byte TypeID { get; }
         public abstract ushort SGuid { get; }
         public abstract Vector3 Position { get; set; }
@@ -115,14 +132,14 @@ namespace Ghost.Server.Utilities.Abstracts
                 Initialize();
             OnSpawn?.Invoke();
             _manager.AddView(this);
-            if (_updatable.Length > 0)
+            if (_updatable.Length > 0 || eventOnUpdate != null)
                 _server.RigisterOnUpdate(this);
         }
         public void Despawn()
         {
             _spawned = false;
             _manager.RemoveView(this);
-            if (_updatable.Length > 0)
+            if (_updatable.Length > 0 || eventOnUpdate != null)
                 _server.RemoveFromUpdate(this);
             OnDespawn?.Invoke();
         }
@@ -133,7 +150,7 @@ namespace Ghost.Server.Utilities.Abstracts
             _manager.Remove(this);
             if ((_guid & Constants.ReleaseGuide) > 0)
                 _manager.ReleaseGuid(_guid);
-            if (_updatable.Length > 0)
+            if (_updatable.Length > 0 || eventOnUpdate != null)
                 _server.RemoveFromUpdate(this);
             OnDestroy?.Invoke();
             _server = null;
@@ -172,6 +189,7 @@ namespace Ghost.Server.Utilities.Abstracts
             for (int i = 0; i < _updatable.Length; i++)
                 if (_updatable[i].Enabled)
                     _updatable[i].Update(time);
+            eventOnUpdate?.Invoke(time);
         }
         public void AddComponent<T>(T component)
             where T : ObjectComponent

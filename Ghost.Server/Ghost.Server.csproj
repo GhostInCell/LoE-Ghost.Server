@@ -90,8 +90,8 @@
     <Compile Include="Core\Events\AutoSaveChar.cs" />
     <Compile Include="Core\Events\CooldownReset..cs" />
     <Compile Include="Core\Events\MovementWait.cs" />
+    <Compile Include="Core\Events\TimedModifer.cs" />
     <Compile Include="Core\Events\TradeRejector.cs" />
-    <Compile Include="Core\Events\VoidZoneTick.cs" />
     <Compile Include="Core\Movment\MobMovement.cs" />
     <Compile Include="Core\Movment\NullMovement.cs" />
     <Compile Include="Core\Movment\PetMovement.cs" />
@@ -185,6 +185,7 @@
       <Name>PNet2</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

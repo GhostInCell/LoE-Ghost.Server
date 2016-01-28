@@ -1,20 +1,25 @@
 ﻿using Ghost.Server.Core.Classes;
+using Ghost.Server.Core.Events;
 using Ghost.Server.Utilities.Interfaces;
 using PNet;
 using PNetR;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Ghost.Server.Utilities.Abstracts
 {
     public abstract class StatsMgr : ObjectComponent, IUpdatable
     {
+        private readonly object _modifersLock = new object();
         protected short _level;
         protected Player _player;
         protected NetworkView _view;
         protected CreatureObject _creature;
         protected Dictionary<Stats, StatHelper> _stats;
         private SER_Stats stats_ser;
+        private List<TimedModifer> _modifers;
+        private Dictionary<uint, List<Tuple<Stats, float, bool>>> _auras;
         public float Armor
         {
             get { return _stats[Stats.Armor].Max; }
@@ -64,9 +69,12 @@ namespace Ghost.Server.Utilities.Abstracts
             : base(parent)
         {
             _creature = parent;
+            _modifers = new List<TimedModifer>();
             _stats = new Dictionary<Stats, StatHelper>();
+            _auras = new Dictionary<uint, List<Tuple<Stats, float, bool>>>();
             stats_ser = new SER_Stats(_stats);
             parent.OnSpawn += StatsMgr_OnSpawn;
+            parent.OnDespawn += StatsMgr_OnDespawn;
             parent.OnDestroy += StatsMgr_OnDestroy;
         }
         public abstract void UpdateStats();
@@ -75,10 +83,82 @@ namespace Ghost.Server.Utilities.Abstracts
         {
             _view.Rpc(4, 52, RpcMode.AllUnordered, stats_ser);
         }
+        public void RemoveAuraEffects(uint guid)
+        {
+            List<Tuple<Stats, float, bool>> aura;
+            lock (_modifersLock)
+            {
+                if (_auras.TryGetValue(guid, out aura))
+                {
+                    ServerLogger.LogInfo($"Aura[{guid:X8}] removed from {_creature.Guid:X8}");
+                    foreach (var item in aura)
+                        if (item.Item3)
+                            _stats[item.Item1].RemoveMultiplier(item.Item2);
+                        else
+                            _stats[item.Item1].RemoveModifer(item.Item2);
+                    aura.Clear();
+                    _auras.Remove(guid);
+                }
+            }
+        }
+        public void RemoveModifier(TimedModifer modifer)
+        {
+            StatHelper hStat; Stats stat = modifer.Stat;
+            if (_stats.TryGetValue(stat, out hStat))
+            {
+                lock (_modifersLock)
+                {
+                    if (modifer.IsMultiplier)
+                        hStat.RemoveMultiplier(modifer.Value);
+                    else
+                        hStat.RemoveModifer(modifer.Value);
+                    _view.Rpc(4, 51, RpcMode.AllUnordered, (byte)stat, hStat.Max);
+                    _view.Rpc(4, 50, RpcMode.AllUnordered, (byte)stat, hStat.Current);
+                    _modifers.Remove(modifer);
+                }
+            }
+        }
         public void DoHeal(CreatureObject other, float amount)
         {
             _stats[Stats.Health].IncreaseCurrent(amount);
             OnHealReceived?.Invoke(other, amount);
+        }
+        public void AddModifier(Stats stat, float value, float time, bool isMul)
+        {
+            StatHelper mStat;
+            if (_stats.TryGetValue(stat, out mStat))
+            {
+                lock (_modifersLock)
+                {
+                    if (isMul)
+                        mStat.AddMultiplier(value);
+                    else
+                        mStat.AddModifer(value);
+                    _view.Rpc(4, 51, RpcMode.AllUnordered, (byte)stat, mStat.Max);
+                    _view.Rpc(4, 50, RpcMode.AllUnordered, (byte)stat, mStat.Current);
+                    _modifers.Add(new TimedModifer(this, stat, value, isMul, time));
+                }
+            }
+        }
+        public void AddAuraEffect(uint guid, Stats stat, float value, bool isMul)
+        {
+            ServerLogger.LogInfo($"Creature[{_creature.Guid}] Aura[{guid:X8}] added stat {(isMul ? "multipler" : "modifer")} {value} for {stat} ");
+            StatHelper mStat; List<Tuple<Stats, float, bool>> aura;
+            if (_stats.TryGetValue(stat, out mStat))
+            {
+                lock (_modifersLock)
+                {
+                    if (!_auras.TryGetValue(guid, out aura))
+                        _auras[guid] = aura = new List<Tuple<Stats, float, bool>>();
+                    aura.Add(new Tuple<Stats, float, bool>(stat, value, isMul));
+                    if (isMul)
+                        mStat.AddMultiplier(value);
+                    else
+                        mStat.AddModifer(value);
+                    _view.Rpc(4, 51, RpcMode.AllUnordered, (byte)stat, mStat.Max);
+                    _view.Rpc(4, 50, RpcMode.AllUnordered, (byte)stat, mStat.Current);
+                }
+            }
         }
         public void DoDamage(CreatureObject other, float damage, bool isMagic = false)
         {
@@ -130,12 +210,30 @@ namespace Ghost.Server.Utilities.Abstracts
             _view.SubscribeToRpc(4, 56, RPC_056);
             _view.SubscribeToRpc(4, 58, RPC_058);
         }
+        private void StatsMgr_OnDespawn()
+        {
+            foreach (var item in _modifers.ToArray())
+            {
+                item.Destroy();
+                RemoveModifier(item);
+            }
+            foreach (var item in _auras.Keys.ToArray())
+                RemoveAuraEffects(item);
+        }
         private void StatsMgr_OnDestroy()
         {
+            foreach (var item in _modifers.ToArray())
+            {
+                item.Destroy();
+                RemoveModifier(item);
+            }
+            foreach (var item in _auras.Keys.ToArray())
+                RemoveAuraEffects(item);
             _view = null;
             _stats = null;
             _player = null;
             _creature = null;
+            _modifers = null;
         }
         #endregion
     }

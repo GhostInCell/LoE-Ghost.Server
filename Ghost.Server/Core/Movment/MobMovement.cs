@@ -64,6 +64,7 @@ namespace Ghost.Server.Core.Movment
         {
             if (!_locked)
             {
+                _speed = _creature.Stats.Speed;
                 if (!(_scriptedAI.Target?.IsDead ?? true))
                 {
                     _direction = Vector3.Normalize(_scriptedAI.Target.Position - _position);
@@ -108,7 +109,6 @@ namespace Ghost.Server.Core.Movment
         #region Events Handlers
         private void MobMovement_OnSpawn()
         {
-            _speed = _creature.Stats.Speed;
             _creature.View.GettingPosition += View_GettingPosition;
             _creature.View.GettingRotation += View_GettingRotation;
         }

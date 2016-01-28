@@ -93,6 +93,9 @@ namespace Ghost.Server.Mgrs
                         case SpellEffectType.Heal:
                             targetCO.Stats.DoHeal(player.Object, effect);
                             break;
+                        case SpellEffectType.Modifier:
+                            targetCO.Stats.AddModifier((Stats)item.Data01, effect, item.Data03, item.Data02 == 1);
+                            break;
                         case SpellEffectType.AreaInit:
                             if (!area)
                             {

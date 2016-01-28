@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `loe_creature` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_creature: ~4 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_creature: ~5 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_creature` DISABLE KEYS */;
 INSERT INTO `loe_creature` (`id`, `loot`, `flags`, `spell`, `speed`, `resource`, `kill_credit`, `attack_rate`, `base_resist`, `base_armor`, `base_dodge`, `base_power`, `base_health`, `base_energy`, `base_hp_reg`, `base_ep_reg`, `base_dmg_min`, `base_dmg_max`) VALUES
 	(1, -1, 0, -1, 350, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `loe_dialog` (
   PRIMARY KEY (`id`,`state`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_dialog: ~65 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_dialog: ~72 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_dialog` DISABLE KEYS */;
 INSERT INTO `loe_dialog` (`id`, `state`, `npc`, `type`, `message`, `condition`, `cndData01`, `cndData02`, `command`, `cmdData01`, `cmdData02`) VALUES
 	(1, -1, 0, 255, -1, 35, 6, -1, 2, 0, -1);
@@ -1722,7 +1722,7 @@ CREATE TABLE IF NOT EXISTS `loe_npc` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_npc: ~4 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_npc: ~5 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_npc` DISABLE KEYS */;
 INSERT INTO `loe_npc` (`id`, `flags`, `level`, `dialog`, `index`, `movement`, `name`, `race`, `gender`, `eye`, `tail`, `hoof`, `mane`, `bodysize`, `hornsize`, `eyecolor`, `hoofcolor`, `bodycolor`, `haircolor0`, `haircolor1`, `haircolor2`, `cutiemark0`, `cutiemark1`, `cutiemark2`) VALUES
 	(1, 7, 5, 1, 0, 0, 'Frederic Dash', 2, 2, 1, 10, 0, 16, 0.9, 0.98497, 8322980, 0, 16767615, 16744172, 16752626, 16744172, 54, 0, 0);
@@ -1744,7 +1744,7 @@ CREATE TABLE IF NOT EXISTS `loe_npc_trade` (
   PRIMARY KEY (`id`,`item`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_npc_trade: ~9 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_npc_trade: ~10 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_npc_trade` DISABLE KEYS */;
 INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
 	(1, 102);
@@ -1783,7 +1783,7 @@ CREATE TABLE IF NOT EXISTS `loe_npc_wear` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_npc_wear: ~0 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_npc_wear: ~1 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_npc_wear` DISABLE KEYS */;
 INSERT INTO `loe_npc_wear` (`id`, `slot01`, `slot02`, `slot03`, `slot04`, `slot05`, `slot06`, `slot07`, `slot08`) VALUES
 	(1, 134, 135, 20, -1, -1, -1, -1, -1);
@@ -1881,20 +1881,22 @@ CREATE TABLE IF NOT EXISTS `loe_spell` (
   `mod_level` float NOT NULL DEFAULT '0',
   `mod_attack` float NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`,`index`,`effect`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_spell: ~16 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_spell: ~19 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_spell` DISABLE KEYS */;
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
-	(2, 0, 255, 7, 80, 32, 2.5, 0, 0, 0);
+	(2, 0, 255, 7, 80, 32, 1.5, 0, 0, 0);
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
 	(5, 0, 1, 2, 60, 2.5, 3, 40, 25, 2);
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
-	(9, 0, 250, 15, 80, 32, 12, 6, 6, 8);
+	(9, 0, 250, 15, 40, 8, 8, 3.5, 5, 5);
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
 	(9, 1, 254, 2, 0, 0, 0, 5, 6.5, 0.55);
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
 	(9, 2, 253, 4, 0, 0, 0, 2.5, 5.5, 0.45);
+INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
+	(9, 3, 127, 2, 13, 1, 0, -0.5, 0, 0);
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
 	(10, 0, 0, 15, 40, 2.5, 1.5, 0, 0, 0);
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
@@ -1917,6 +1919,10 @@ INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`,
 	(16, 1, 252, 2, 0, 0, 0, 6, 7.5, 0.75);
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
 	(21, 0, 1, 2, 50, 16, 2.5, 25, 25, 1.5);
+INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
+	(31, 0, 0, 12, 35, 32, 30, 0, 0, 0);
+INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
+	(31, 1, 20, 12, 8, 0, 10, 5, 3.5, 0);
 /*!40000 ALTER TABLE `loe_spell` ENABLE KEYS */;
 
 
@@ -1932,7 +1938,7 @@ CREATE TABLE IF NOT EXISTS `loe_user` (
   UNIQUE KEY `login` (`login`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_user: ~3 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_user: ~0 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_user` DISABLE KEYS */;
 /*!40000 ALTER TABLE `loe_user` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

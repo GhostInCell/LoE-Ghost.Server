@@ -1,10 +1,15 @@
-﻿namespace Ghost.Server.Core.Classes
+﻿using Ghost.Server.Utilities;
+
+namespace Ghost.Server.Core.Classes
 {
     public class StatHelper
     {
-        private float stat_curr;
+        private float stat_muls;
+        private float stat_mods;
         private float stat_item;
+
         private float stat_base;
+        private float stat_curr;
 
         private float min_chace;
         private float max_chace;
@@ -23,33 +28,64 @@
         public StatHelper(float val)
         {
             min_chace = 0f;
+            stat_muls = 1f;
             stat_base = val;
             stat_curr = val;
             max_chace = stat_base;
         }
-        public void Clean()
+        public void CleanAll()
+        {
+            stat_item = 0;
+            stat_mods = 0;
+            Recalculate();
+        }
+        public void CleanItems()
         {
             stat_item = 0;
             Recalculate();
         }
-        public void UpdateItem(float val)
+        public void CleanModifers()
+        {
+            stat_mods = 0;
+            Recalculate();
+        }
+        public void CleanMultipliers()
+        {
+            stat_muls = 1f;
+            Recalculate();
+        }
+        public void AddModifer(float val)
+        {
+            stat_mods += val;
+            Recalculate();
+        }
+        public void AddMultiplier(float val)
+        {
+            stat_muls += val;
+            Recalculate();
+        }
+        public void RemoveModifer(float val)
+        {
+            stat_mods -= val;
+            Recalculate();
+        }
+        public void RemoveMultiplier(float val)
+        {
+            stat_muls -= val;
+            Recalculate();
+        }
+        public void AddItemModifer(float val)
         {
             stat_item += val;
             Recalculate();
         }
         public void IncreaseCurrent(float val)
         {
-            float @new = stat_curr + val;
-            if (@new < 0) @new = 0;
-            else if (@new > max_chace) @new = max_chace;
-            stat_curr = @new;
+            stat_curr = MathHelper.Clamp(stat_curr + val, min_chace, max_chace);
         }
         public void DecreaseCurrent(float val)
         {
-            float @new = stat_curr - val;
-            if (@new < 0) @new = 0;
-            else if (@new > max_chace) @new = max_chace;
-            stat_curr = @new;
+            stat_curr = MathHelper.Clamp(stat_curr - val, min_chace, max_chace);
         }
         public void SetBase(float val)
         {
@@ -59,12 +95,13 @@
         public void Recalculate()
         {
             float coff = stat_curr / max_chace;
-            max_chace = stat_item + stat_base;
+            max_chace = (stat_base + stat_item + stat_mods) * stat_muls;
+            if (max_chace < min_chace) max_chace = min_chace;
             if (stat_curr > 0) stat_curr = (int)(max_chace * coff);
         }
         public override string ToString()
         {
-            return $"{stat_curr}/{max_chace}({stat_base}:{stat_item})";
+            return $"{stat_curr}/{max_chace}({stat_base}:{stat_item}:{stat_mods}:{stat_muls})";
         }
     }
 }

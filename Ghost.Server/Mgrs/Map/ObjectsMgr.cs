@@ -8,11 +8,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Threading;
+
 namespace Ghost.Server.Mgrs.Map
 {
     public class ObjectsMgr
     {
-        private static readonly WorldObject[] Empty = new WorldObject[0];
         private ushort _currentN;
         private MapServer _server;
         private readonly int _mapID;
@@ -217,6 +218,22 @@ namespace Ghost.Server.Mgrs.Map
         {
             if (origin == null) return Enumerable.Empty<WO_MOB>();
             return _nvObjects.Values.Where(x => x is WO_MOB && x != except && Vector3.Distance(x.Position, origin.Position) <= radius).Select(x => x as WO_MOB);
+        }
+        public void GetMobsInRadius(WorldObject origin, float radius, List<CreatureObject> result)
+        {
+            if (origin == null) return;
+            result.AddRange(_nvObjects.Values.Where(x => x is WO_MOB && Vector3.Distance(x.Position, origin.Position) <= radius).Select(x => (CreatureObject)x));
+        }
+        public void GetPlayersInRadius(WorldObject origin, float radius, List<CreatureObject> result)
+        {
+            if (origin == null) return;
+            result.AddRange(_plObjects.Values.Select(x => (CreatureObject)x).Where(x => !x.IsDead && Vector3.Distance(x.Position, origin.Position) <= radius));
+        }
+        public void GetCreaturesInRadius(WorldObject origin, float radius, List<CreatureObject> result)
+        {
+            if (origin == null) return;
+            result.AddRange(_plObjects.Values.Select(x => (CreatureObject)x).Where(x => !x.IsDead && Vector3.Distance(x.Position, origin.Position) <= radius));
+            result.AddRange(_nvObjects.Values.Where(x => x is WO_MOB && Vector3.Distance(x.Position, origin.Position) <= radius).Select(x => (CreatureObject)x));
         }
         private uint CreateNSObject(DB_WorldObject obj)
         {

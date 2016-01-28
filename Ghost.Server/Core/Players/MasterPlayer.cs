@@ -125,13 +125,13 @@ namespace Ghost.Server.Core.Players
             //MasterPlayer target;
             _player.ClearSubscriptions();
             CharsMgr.RemoveCharacter(_user.Char);
-            //ServerDB.UpdateUserSave(_user.ID, _save);
+            ServerDB.UpdateUserSave(_user.ID, _save);
             _player.NetUserDataChanged -= Player_NetUserDataChanged;
             _player.FinishedSwitchingRooms -= Player_FinishedSwitchingRooms;
             //foreach (var item in _save.Friends)
             //{
-            //    if (item.Value == 1 && _server.TryGetByUserId(item.Key, out target))
-            //        target.Player.PlayerRpc(20, (byte)21, _status.Fill(this, OnlineStatus.Offline));
+            //    if (item.Value.Item1 == 1 && _server.TryGetByUserId(item.Key, out target))
+            //        target.Player.UpdateFriend(_status.Fill(this, OnlineStatus.Offline));
             //}
             _char = null;
             _save = null;
@@ -192,18 +192,17 @@ namespace Ghost.Server.Core.Players
             }
             else _lastWhisper = null;
         }
-        [Rpc(20, false)]
-        private void RPC_020(NetMessage arg1, PlayerMessageInfo arg2)
-        {
-            //MasterPlayer target;
-            switch (arg1.ReadByte())
-            {
-                case 21:
-                    //_status.OnDeserialize(arg1);
-                    //UpdateStatus();
-                    break;
-            }
-        }
+        //[Rpc(20, false)]
+        //private void RPC_020(NetMessage arg1, PlayerMessageInfo arg2)
+        //{
+        //    switch (arg1.ReadByte())
+        //    {
+        //        case 21:
+        //            _status.OnDeserialize(arg1);
+        //            UpdateStatus();
+        //            break;
+        //    }
+        //}
         [Rpc(150, false)]
         private void RPC_150(NetMessage arg1, PlayerMessageInfo arg2)
         {
@@ -227,7 +226,7 @@ namespace Ghost.Server.Core.Players
         #endregion
         private void UpdateStatus()
         {
-            MasterPlayer target = null; byte state;
+            MasterPlayer target = null; Tuple<byte, string, short, DateTime> state;
             if (_status.ID != 0)
             {
                 switch (_status.Status)
@@ -255,16 +254,21 @@ namespace Ghost.Server.Core.Players
                         {
                             if (_save.Friends.TryGetValue(target._user.ID, out state))
                             {
-                                _save.Friends[target._user.ID] = (byte)OnlineStatus.Online;
-                                target._save.Friends[_user.ID] = (byte)OnlineStatus.Online;
+                                _save.Friends[target._user.ID] =
+                                   new Tuple<byte, string, short, DateTime>((byte)OnlineStatus.Online, target._char.Pony.Name, (short)target._char.Pony.CutieMark0, DateTime.Now);
+                                target._save.Friends[_user.ID] =
+                                    new Tuple<byte, string, short, DateTime>((byte)OnlineStatus.Online, _char.Pony.Name, (short)_char.Pony.CutieMark0, DateTime.Now);
                                 _player.UpdateFriend(_status.Fill(target, OnlineStatus.Online));
                                 target._player.UpdateFriend(_status.Fill(this, OnlineStatus.Online));
                             }
                             else
                             {
-                                _save.Friends[target._user.ID] = (byte)OnlineStatus.Outgoing;
-                                target._save.Friends[_user.ID] = (byte)OnlineStatus.Incoming;
+                                _save.Friends[target._user.ID] =
+                                    new Tuple<byte, string, short, DateTime>((byte)OnlineStatus.Outgoing, target._char.Pony.Name, (short)target._char.Pony.CutieMark0, DateTime.Now);
+                                target._save.Friends[_user.ID] =
+                                    new Tuple<byte, string, short, DateTime>((byte)OnlineStatus.Incoming, _char.Pony.Name, (short)_char.Pony.CutieMark0, DateTime.Now);
                                 target._player.UpdateFriend(_status.Fill(this, OnlineStatus.Incoming));
+                                _player.UpdateFriend(_status.Fill(target, OnlineStatus.Outgoing));
                             }
                         }
                         else
@@ -292,16 +296,21 @@ namespace Ghost.Server.Core.Players
                         {
                             if (_save.Friends.TryGetValue(target._user.ID, out state))
                             {
-                                _save.Friends[target._user.ID] = (byte)OnlineStatus.Online;
-                                target._save.Friends[_user.ID] = (byte)OnlineStatus.Online;
+                                _save.Friends[target._user.ID] =
+                                   new Tuple<byte, string, short, DateTime>((byte)OnlineStatus.Online, target._char.Pony.Name, (short)target._char.Pony.CutieMark0, DateTime.Now);
+                                target._save.Friends[_user.ID] =
+                                    new Tuple<byte, string, short, DateTime>((byte)OnlineStatus.Online, _char.Pony.Name, (short)_char.Pony.CutieMark0, DateTime.Now);
                                 _player.UpdateFriend(_status.Fill(target, OnlineStatus.Online));
                                 target._player.UpdateFriend(_status.Fill(this, OnlineStatus.Online));
                             }
                             else
                             {
-                                _save.Friends[target._user.ID] = (byte)OnlineStatus.Outgoing;
-                                target._save.Friends[_user.ID] = (byte)OnlineStatus.Incoming;
+                                _save.Friends[target._user.ID] =
+                                    new Tuple<byte, string, short, DateTime>((byte)OnlineStatus.Outgoing, target._char.Pony.Name, (short)target._char.Pony.CutieMark0, DateTime.Now);
+                                target._save.Friends[_user.ID] =
+                                    new Tuple<byte, string, short, DateTime>((byte)OnlineStatus.Incoming, _char.Pony.Name, (short)_char.Pony.CutieMark0, DateTime.Now);
                                 target._player.UpdateFriend(_status.Fill(this, OnlineStatus.Incoming));
+                                _player.UpdateFriend(_status.Fill(target, OnlineStatus.Outgoing));
                             }
                         }
                         break;
@@ -328,22 +337,22 @@ namespace Ghost.Server.Core.Players
             //{
             //    if (_server.TryGetByUserId(item.Key, out target))
             //    {
-            //        if (item.Value == 1)
+            //        if (item.Value.Item1 == 1)
             //        {
-            //            _player.PlayerRpc(20, (byte)21, _status.Fill(target, OnlineStatus.Online));
-            //            target._player.PlayerRpc(20, (byte)21, _status.Fill(this, OnlineStatus.Online));
+            //            _player.UpdateFriend(_status.Fill(target, OnlineStatus.Online));
+            //            _player.UpdateFriend(_status.Fill(this, OnlineStatus.Online));
             //        }
-            //        else if (item.Value == 25)
-            //            _player.PlayerRpc(20, (byte)21, _status.Fill(target, OnlineStatus.Incoming));
+            //        else if (item.Value.Item1 == 25)
+            //            _player.UpdateFriend(_status.Fill(target, OnlineStatus.Incoming));
             //    }
             //    else
             //    {
             //        if (ServerDB.SelectUser(item.Key, out user))
             //        {
-            //            if (item.Value == 1)
-            //                _player.PlayerRpc(20, (byte)21, _status.Fill(user, OnlineStatus.Offline));
-            //            else if (item.Value == 25)
-            //                _player.PlayerRpc(20, (byte)21, _status.Fill(user, OnlineStatus.Incoming));
+            //            if (item.Value.Item1 == 1)
+            //                _player.UpdateFriend(_status.Fill(user, OnlineStatus.Offline));
+            //            else if (item.Value.Item1 == 25)
+            //                _player.UpdateFriend(_status.Fill(user, OnlineStatus.Incoming));
             //        }
             //    }
             //}

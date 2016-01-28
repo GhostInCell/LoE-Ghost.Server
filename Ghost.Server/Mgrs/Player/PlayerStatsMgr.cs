@@ -11,7 +11,7 @@ namespace Ghost.Server.Mgrs.Player
 {
     public class PlayerStatsMgr : StatsMgr
     {
-        private const int runMod = -18;
+        private const int runMod = 18;
         private const int interval = 200;
         private int _update;
         private string _status;
@@ -55,14 +55,14 @@ namespace Ghost.Server.Mgrs.Player
         public override void UpdateStats()
         {
             foreach (var stat in _stats)
-                stat.Value.Clean();
+                stat.Value.CleanItems();
             foreach (var item in _mPlayer.Char.Data.Wears)
             {
                 var entry = DataMgr.SelectItem(item.Value);
                 if ((entry.Flags & ItemFlags.Stats) > 0)
                     foreach (var stat in entry.Stats)
                         if (_stats.ContainsKey(stat.Item1))
-                            _stats[stat.Item1].UpdateItem(stat.Item2);
+                            _stats[stat.Item1].AddItemModifer(stat.Item2);
                         else
                             ServerLogger.LogWarn($"Player stat {stat.Item1} not found");
             }
@@ -76,7 +76,7 @@ namespace Ghost.Server.Mgrs.Player
             var ep = _stats[Stats.Energy];
             if (_creature.Movement.IsRunning && _mPlayer.User.Access < AccessLevel.TeamMember)
             {
-                ep.IncreaseCurrent(runMod * (interval / 1000f));
+                ep.DecreaseCurrent(runMod * (interval / 1000f));
                 if (ep.Current == 0) _creature.Movement.Lock();
             }
             if (hp.Max != hp.Current)
