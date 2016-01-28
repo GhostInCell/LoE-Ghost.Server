@@ -181,13 +181,16 @@ namespace Ghost.Server.Core.Servers
         }
         private void MasterServer_PlayerRemoved(Player obj)
         {
-            var player = _players[obj.Id];
+            MasterPlayer player;
             lock (_lock)
             {
-                _players.Remove(obj.Id);
-                _users.Remove(player.User.ID);
+                if (_players.TryGetValue(obj.Id, out player))
+                {
+                    _players.Remove(obj.Id);
+                    _users.Remove(player.User.ID);
+                    player.Destroy();
+                }
             }
-            player.Destroy();
         }
         private INetSerializable MasterServer_ConstructNetData()
         {
@@ -199,9 +202,10 @@ namespace Ghost.Server.Core.Servers
             var Name = arg2.ReadString();
             var SID = arg2.ReadString();
             var id = arg2.ReadInt32();
-            if (_users.ContainsKey(id))
-                arg1.Disconnect("Already Logged In!");
-            else if (ServerDB.SelectUser(id, out user))
+            MasterPlayer player;
+            if (_users.ContainsKey(id) && TryGetByUserId(id, out player))
+                player.Player.Disconnect("Only one session!");
+            if (ServerDB.SelectUser(id, out user))
             {
                 if (user.SID == SID && user.Name == Name)
                 {

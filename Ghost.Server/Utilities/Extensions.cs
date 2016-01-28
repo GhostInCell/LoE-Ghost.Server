@@ -674,7 +674,7 @@ namespace Ghost.Server.Utilities
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetCombat(this PNetR.NetworkView view, PNetR.Player player, bool inCombat)
         {
-            view.Rpc(4, 59, player, inCombat);
+            view.Rpc(4, 55, player, inCombat);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void WornItems(this PNetR.NetworkView view, PNetR.Player player, CharData data)

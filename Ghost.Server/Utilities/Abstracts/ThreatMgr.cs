@@ -53,7 +53,10 @@ namespace Ghost.Server.Utilities.Abstracts
                 if (_threat.ContainsKey(arg1))
                     _threat[arg1] += arg2;
                 else
+                {
                     _threat[arg1] = arg2;
+                    _creature.View.SetCombat(arg1.Owner, true);
+                }
             }
         }
         #endregion

@@ -30,9 +30,10 @@ namespace Ghost.Server.Mgrs.Mob
                 if (_threat.Count > 0)
                 {
                     foreach (var item in _threat.ToArray())
-                        if (item.Key.IsDead || Vector3.Distance(item.Key.Position, _creature.Position) > Constants.MaxSkillsDistance)
+                        if (!item.Key.IsSpawned || item.Key.IsDead || Vector3.Distance(item.Key.Position, _creature.Position) > Constants.MaxSkillsDistance)
                         {
-                            _creature.View.SetCombat(item.Key.Owner, false);
+                            if (item.Key.IsSpawned)
+                                _creature.View.SetCombat(item.Key.Owner, false);
                             _threat.Remove(item.Key);
                         }
                 }
