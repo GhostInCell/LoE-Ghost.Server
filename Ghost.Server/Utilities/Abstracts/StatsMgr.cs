@@ -90,7 +90,6 @@ namespace Ghost.Server.Utilities.Abstracts
             {
                 if (_auras.TryGetValue(guid, out aura))
                 {
-                    ServerLogger.LogInfo($"Aura[{guid:X8}] removed from {_creature.Guid:X8}");
                     foreach (var item in aura)
                         if (item.Item3)
                             _stats[item.Item1].RemoveMultiplier(item.Item2);
@@ -142,7 +141,6 @@ namespace Ghost.Server.Utilities.Abstracts
         }
         public void AddAuraEffect(uint guid, Stats stat, float value, bool isMul)
         {
-            ServerLogger.LogInfo($"Creature[{_creature.Guid}] Aura[{guid:X8}] added stat {(isMul ? "multipler" : "modifer")} {value} for {stat} ");
             StatHelper mStat; List<Tuple<Stats, float, bool>> aura;
             if (_stats.TryGetValue(stat, out mStat))
             {
@@ -172,7 +170,7 @@ namespace Ghost.Server.Utilities.Abstracts
         }
         protected float CalculateDamage(short level, float damage, float protection)
         {
-            return damage * (1f - MathHelper.Clamp(0.08f / (_level >= level ? _level : level) * protection + (0.005f * (_level - level)), 0f, 0.75f));
+            return damage * (1f - MathHelper.Clamp((0.08f / _level) * protection + (0.05f * (_level - level)), 0f, 0.75f));
         }
         #region RPC Handlers
         private void RPC_051(NetMessage arg1, NetMessageInfo arg2)

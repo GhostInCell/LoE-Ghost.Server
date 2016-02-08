@@ -1,5 +1,4 @@
-﻿using Ghost.Server.Core.Events;
-using Ghost.Server.Core.Structs;
+﻿using Ghost.Server.Core.Structs;
 using Ghost.Server.Utilities;
 using Ghost.Server.Utilities.Abstracts;
 using System;
@@ -17,7 +16,6 @@ namespace Ghost.Server.Core.Objects
         private bool _hasAura;
         private WO_Player _onwer;
         private Vector3 _position;
-        private SpellTarget _auraTargets;
         private readonly DB_Spell _spell;
         private readonly DB_SpellEffect _main;
         private List<CreatureObject> _targets;
@@ -158,7 +156,7 @@ namespace Ghost.Server.Core.Objects
                     UpdateAuraEffects();
                 if ((_update -= time.Milliseconds) <= 0)
                 {
-
+                    _update = _period;
                     UpdateAreaEffects();
                     _ticks--;
                 }

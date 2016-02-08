@@ -1,0 +1,4 @@
+{
+  "LoginServer": "http://localhost/login.php",
+  "DataLocation": "http://localhost/data/"
+}

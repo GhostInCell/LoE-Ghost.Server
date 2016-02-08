@@ -1,7 +1,6 @@
 ﻿using Ghost.Server.Utilities;
 using PNet;
 using ProtoBuf;
-using ProtoBuf.Meta;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -83,6 +82,5 @@ namespace Ghost.Server.Core.Classes
             Dialogs.TryGetValue(id, out ret);
             return ret;
         }
-
     }
 }
