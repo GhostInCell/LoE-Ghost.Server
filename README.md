@@ -5,15 +5,20 @@ Server only has testing content (npcs, dialogs, monsters) and not any content fr
 # How to use
 You need php+mysql web server like this <a href="http://sourceforge.net/projects/wampserver/">Wamp Server</a>
 <ol>
-<li>Execute legends_of_equestria.sql on mysql server.</li>
-<li>Compile and run Server.exe for generating default configs file.</li>
-<li>For local using just replace mysql user and password in loe_server.cfg and config.php by your own.</li>
-<li>Copy files from www folder to web server www folder.</li>
-<li>Run Server.exe and wait full loading them type command: <b>user create</b> <i>login password access</i>.
-<br>access Player = 1, TeamMember = 20, Implementer = 25, Moderator = 30, 	Admin = 255
-<br>type help for full commands list</li>
-<li>For local using run: Proxy.exe <i>localhost</i>
-<br><b>Warning:</b> Close Proxy.exe only by typing <b>exit</b> command or system proxy wouldn't be cleared.</li>
+<li>Execute <i>legends_of_equestria.sql</i> on mysql server.</li>
+<li>Compile and run <i>Server.exe</i> for generating default configs file.</li>
+<li>For local using:<ul>
+<li>Copy <i>connection_s.json</i> to you Legends of Equestria game folder.</i></li>
+<li>Replace mysql user and password in <i>loe_server.cfg</i> and <i>config.php</i> by your own.</li></ul></li>
+<li>Copy files from <i>www</i> folder to web server <i>www</i> folder.</li>
+<li>Run <i>Server.exe</i> and wait full loading them type command: 
+<b>user create</b> <ins>login</ins> <ins>password</ins> <ins>access</ins>
+<br>access:<ul>
+<li>Player = 1</li>
+<li>TeamMember = 20</li>
+<li>Implementer = 25</li>
+<li>Moderator = 30</li>
+<li>Admin = 255</li></ul>
+type help for full commands list</li>
 <li>?????</li>
-<li>PROFIT!</li>
-</ol>
+<li>PROFIT!</li></ol>
