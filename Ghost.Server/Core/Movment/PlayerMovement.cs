@@ -75,7 +75,8 @@ namespace Ghost.Server.Core.Movment
             {
                 _update = _interval;
                 var msg = _creature.View.CreateStream(_entry.AllocSize);
-                _entry.OnSerialize(msg);_creature.View.SendStream(msg);
+                _entry.OnSerialize(msg);
+                _creature.View.SendStream(msg);
             }
         }
         public override void Lock(bool reset = true)
@@ -154,9 +155,9 @@ namespace Ghost.Server.Core.Movment
                             break;
                     }
                 }
-                if (_player.Shop != null && Vector3.Distance(_position, _player.Shop.Position) > Constants.MaxInteractionDistance)
+                if (_player.Shop != null && Vector3.DistanceSquared(_position, _player.Shop.Position) > Constants.MaxInteractionDistanceSquared)
                     _player.Shop.CloseShop(_player);
-                if (_player.Trade.IsTrading && Vector3.Distance(_position, _player.Trade.Target.Object.Position) > Constants.MaxInteractionDistance)
+                if (_player.Trade.IsTrading && Vector3.DistanceSquared(_position, _player.Trade.Target.Object.Position) > Constants.MaxInteractionDistanceSquared)
                     _player.Trade.CloseBoth();
             }
             else _running = false;

@@ -35,7 +35,7 @@ namespace Ghost.Server.Utilities.Abstracts
                     _threat.Remove(_target);
                     _target = null;
                 }
-                else if (Vector3.Distance(_movement.Position, _target.Position) <= (Constants.MeleeCombatDistance + 0.1f))
+                else if (Vector3.DistanceSquared(_movement.Position, _target.Position) <= (Constants.MaxMeleeCombatDistanceSquared + Constants.EpsilonX1))
                 {
                     _creature.View.PerformSkill(_tEntry.Fill(_target));
                     _target.Stats.DoDamage(_creature, _stats.MeleeDamage);
@@ -65,7 +65,7 @@ namespace Ghost.Server.Utilities.Abstracts
             _stats = _parent.RequiredComponent<StatsMgr>();
             _threat = _parent.RequiredComponent<ThreatMgr>();
             _movement = _parent.RequiredComponent<MovementGenerator>();
-            _tEntry = new TargetEntry() { SkillID = _stats.MeleeSkill, Upgrade = 0 };
+            _tEntry = new TargetEntry() { SpellID = _stats.MeleeSkill, Upgrade = 0 };
         }
         #endregion
     }

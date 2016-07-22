@@ -109,7 +109,7 @@ namespace Lidgren.Network
 		/// </summary>
 		public override string ToString()
 		{
-			return "[NetIncomingMessage #" + m_sequenceNumber + " " + this.LengthBytes + " bytes]";
+			return "[NetIncomingMessage #" + m_sequenceNumber + " " + LengthBytes + " bytes]";
 		}
 	}
 }

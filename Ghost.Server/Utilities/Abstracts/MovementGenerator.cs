@@ -7,7 +7,7 @@ namespace Ghost.Server.Utilities.Abstracts
         protected static readonly int _interval;
         static MovementGenerator()
         {
-            _interval = Configs.Get<int>(Configs.Movement_SyncInterval);
+            _interval = Configs.Get<int>(Configs.Sync_Movement);
         }
         protected float _speed;
         protected Vector3 _position;
@@ -32,7 +32,7 @@ namespace Ghost.Server.Utilities.Abstracts
         public Vector3 Direction
         {
             get { return _direction; }
-            set { _direction = Vector3.Normalize(_direction); }
+            set { _direction = Vector3.Normalize(value); }
         }
         public abstract int Animation
         {

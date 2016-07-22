@@ -14,8 +14,8 @@ namespace Ghost.Server.Core.Objects
         private int _period;
         private int _update;
         private bool _hasAura;
-        private WO_Player _onwer;
         private Vector3 _position;
+        private CreatureObject _onwer;
         private readonly DB_Spell _spell;
         private readonly DB_SpellEffect _main;
         private List<CreatureObject> _targets;
@@ -57,7 +57,7 @@ namespace Ghost.Server.Core.Objects
                 throw new NotSupportedException();
             }
         }
-        public WO_VoidZone(WO_Player onwer, DB_Spell spell, DB_SpellEffect main)
+        public WO_VoidZone(CreatureObject onwer, DB_Spell spell, DB_SpellEffect main)
             : base(onwer.Manager.GetNewGuid() | Constants.DRObject, onwer.Manager)
         {
             _main = main;
@@ -102,8 +102,9 @@ namespace Ghost.Server.Core.Objects
         {
             _addedTargets.Clear();
             _removedTargets.Clear();
+            var range = _main.BaseConst; range *= range;
             foreach (var item in _targets)
-                if ((item.IsDead || !item.IsSpawned) || Vector3.Distance(_position, item.Position) > _main.BaseConst)
+                if ((item.IsDead || !item.IsSpawned) || Vector3.DistanceSquared(_position, item.Position) > range)
                 {
                     item.Stats.RemoveAuraEffects(_guid);
                     _removedTargets.Add(item);

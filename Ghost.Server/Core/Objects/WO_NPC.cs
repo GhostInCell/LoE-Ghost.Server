@@ -179,7 +179,7 @@ namespace Ghost.Server.Core.Objects
         private void RPC_06_22(NetMessage arg1, NetMessageInfo arg2)
         {
             MapPlayer player = _server[arg2.Sender.Id];
-            if ((_npc.Flags & NPCFlags.Trader) > 0 && Vector3.Distance(player.Object.Position, _movement.Position) <= Constants.MaxInteractionDistance)
+            if ((_npc.Flags & NPCFlags.Trader) > 0 && Vector3.DistanceSquared(player.Object.Position, _movement.Position) <= Constants.MaxInteractionDistanceSquared)
             {
                 _movement.Lock(false);
                 _movement.LookAt(player.Object);

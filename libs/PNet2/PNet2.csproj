@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PNet</RootNamespace>
     <AssemblyName>PNet2</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -58,7 +58,6 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Collections\ConcurrentDictionary.cs" />
     <Compile Include="ConnectionStatus.cs" />
     <Compile Include="Utilities\DefaultConsoleLogger.cs" />
     <Compile Include="Utilities\ILogger.cs" />

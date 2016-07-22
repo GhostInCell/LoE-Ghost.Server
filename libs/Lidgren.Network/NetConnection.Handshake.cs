@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Net;
 using System.Threading;
 
 namespace Lidgren.Network
 {
-	public partial class NetConnection
+    public partial class NetConnection
 	{
 		internal bool m_connectRequested;
 		internal bool m_disconnectRequested;
@@ -167,7 +166,7 @@ namespace Lidgren.Network
 			if (onLibraryThread)
 				m_peer.SendLibrary(om, m_remoteEndPoint);
 			else
-				m_peer.m_unsentUnconnectedMessages.Enqueue(new Tuple<System.Net.IPEndPoint, NetOutgoingMessage>(m_remoteEndPoint, om));
+				m_peer.m_unsentUnconnectedMessages.Enqueue(new Tuple<IPEndPoint, NetOutgoingMessage>(m_remoteEndPoint, om));
 
 			m_lastHandshakeSendTime = now;
 			m_handshakeAttempts++;
@@ -305,7 +304,7 @@ namespace Lidgren.Network
 								NetIncomingMessage appMsg = m_peer.CreateIncomingMessage(NetIncomingMessageType.ConnectionApproval, (m_remoteHailMessage == null ? 0 : m_remoteHailMessage.LengthBytes));
 								appMsg.m_receiveTime = now;
 								appMsg.m_senderConnection = this;
-								appMsg.m_senderEndPoint = this.m_remoteEndPoint;
+								appMsg.m_senderEndPoint = m_remoteEndPoint;
 								if (m_remoteHailMessage != null)
 									appMsg.Write(m_remoteHailMessage.m_data, 0, m_remoteHailMessage.LengthBytes);
 								SetStatus(NetConnectionStatus.RespondedAwaitingApproval, "Awaiting approval");

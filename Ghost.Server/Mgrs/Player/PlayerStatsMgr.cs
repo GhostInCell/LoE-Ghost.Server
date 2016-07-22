@@ -70,7 +70,7 @@ namespace Ghost.Server.Mgrs.Player
         }
         public override void Update(TimeSpan time)
         {
-            if ((_update -= time.Milliseconds) > 0) return;
+            if (_creature.IsDead || (_update -= time.Milliseconds) > 0) return;
             _update = interval;
             var hp = _stats[Stats.Health];
             var ep = _stats[Stats.Energy];
@@ -82,24 +82,14 @@ namespace Ghost.Server.Mgrs.Player
             if (hp.Max != hp.Current)
             {
                 hp.IncreaseCurrent(_stats[Stats.HealthRegen].Max * (interval / 1000f));
-                _view.Rpc(4, 50, RpcMode.AllOrdered, (byte)Stats.Health, hp.Current);
+                _view.Rpc(4, 50, RpcMode.AllUnordered, (byte)Stats.Health, hp.Current);
             }
             if (ep.Max != ep.Current)
             {
                 ep.IncreaseCurrent(_stats[Stats.EnergyRegen].Max * (interval / 1000f));
-                _view.Rpc(4, 50, RpcMode.AllOrdered, (byte)Stats.Energy, ep.Current);
+                _view.Rpc(4, 50, RpcMode.AllUnordered, (byte)Stats.Energy, ep.Current);
             }
             _status = $"HP {hp.Current}/{hp.Max}; EP {ep.Current}/{ep.Max}";
-        }
-        public void ModCurren(Stats stat, float value)
-        {
-            if (!_stats.ContainsKey(stat)) return;
-            _stats[stat].IncreaseCurrent(value);
-            if (stat == Stats.Health && Health == 0f)
-            {
-                _view.Rpc(4, 50, RpcMode.AllOrdered, (byte)Stats.Health, 0f);
-                _creature.Despawn();
-            }
         }
         public void AddExpAll(uint exp, uint bonusExp = 0)
         {
@@ -132,30 +122,30 @@ namespace Ghost.Server.Mgrs.Player
         private void CreateBase()
         {
             _level = (short)(_mPlayer.Char.Level == 0 ? 1 : _mPlayer.Char.Level);
-            _stats[Stats.Dodge] = new StatHelper(0);
-            _stats[Stats.Armor] = new StatHelper(0);
-            _stats[Stats.MagicResist] = new StatHelper(0);
-            _stats[Stats.Health] = new StatHelper(250 + _level * 100);
-            _stats[Stats.Attack] = new StatHelper(1 + (_level - 1) * 17);
+            _stats[Stats.Dodge] = new StatValue(0);
+            _stats[Stats.Armor] = new StatValue(0);
+            _stats[Stats.MagicResist] = new StatValue(0);
+            _stats[Stats.Health] = new StatValue(250 + _level * 100);
+            _stats[Stats.Attack] = new StatValue(1 + (_level - 1) * 17);
             switch (_mPlayer.Char.Pony.Race)
             {
                 case 1:
-                    _stats[Stats.Speed] = new StatHelper(350);
-                    _stats[Stats.Energy] = new StatHelper(125);
-                    _stats[Stats.EnergyRegen] = new StatHelper(10);
-                    _stats[Stats.HealthRegen] = new StatHelper(20 + _level * 10);
+                    _stats[Stats.Speed] = new StatValue(350);
+                    _stats[Stats.Energy] = new StatValue(125);
+                    _stats[Stats.EnergyRegen] = new StatValue(10);
+                    _stats[Stats.HealthRegen] = new StatValue(20 + _level * 10);
                     break;
                 case 2:
-                    _stats[Stats.Speed] = new StatHelper(307);
-                    _stats[Stats.Energy] = new StatHelper(100);
-                    _stats[Stats.EnergyRegen] = new StatHelper(11);
-                    _stats[Stats.HealthRegen] = new StatHelper(28 + (_level - 1) * 9.5f);
+                    _stats[Stats.Speed] = new StatValue(307);
+                    _stats[Stats.Energy] = new StatValue(100);
+                    _stats[Stats.EnergyRegen] = new StatValue(11);
+                    _stats[Stats.HealthRegen] = new StatValue(28 + (_level - 1) * 9.5f);
                     break;
                 case 3:
-                    _stats[Stats.Speed] = new StatHelper(310);
-                    _stats[Stats.Energy] = new StatHelper(100);
-                    _stats[Stats.EnergyRegen] = new StatHelper(11);
-                    _stats[Stats.HealthRegen] = new StatHelper(28 + (_level - 1) * 9.5f);
+                    _stats[Stats.Speed] = new StatValue(310);
+                    _stats[Stats.Energy] = new StatValue(100);
+                    _stats[Stats.EnergyRegen] = new StatValue(11);
+                    _stats[Stats.HealthRegen] = new StatValue(28 + (_level - 1) * 9.5f);
                     break;
             }
         }

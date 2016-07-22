@@ -70,8 +70,8 @@ namespace Ghost.Server.Utilities
     }
     public class SER_Stats : INetSerializable
     {
-        private readonly Dictionary<Stats, StatHelper> _data;
-        public SER_Stats(Dictionary<Stats, StatHelper> data)
+        private readonly Dictionary<Stats, StatValue> _data;
+        public SER_Stats(Dictionary<Stats, StatValue> data)
         {
             if (data == null) throw new ArgumentNullException();
             _data = data;
@@ -215,10 +215,11 @@ namespace Ghost.Server.Utilities
             {
                 message.Write(item.Key);
                 message.Write(item.Value.Item1);
-                message.Write((int)item.Value.Item2);   
+                message.Write((int)item.Value.Item2);
                 message.Write(0u);
-                message.Write(0u);
-                message.Write(0u);
+                var exp = (uint)(item.Value.Item2 * 500 + (item.Value.Item2 - 1) * 500);
+                message.Write(exp - item.Value.Item1);
+                message.Write(exp);
             }
         }
         public void OnDeserialize(NetMessage message)

@@ -46,9 +46,7 @@ namespace Ghost.Server.Core.Players
         {
             get
             {
-                return $"Player[{_player.Id}|{_user.ID}:{_user.Name}]: map {_server.Map.Name} id {_server.ID}\r\n" +
-                    $"Character[{_char?.ID}|{_char?.Level}|{_char.Pony?.Name}]: at pos <{_object?.Position.X:0.00}, " +
-                    $"{_object?.Position.Y:0.00}, {_object?.Position.Z:0.00}> rot {_object?.Rotation.Y:0.00} stats {(_object.Stats as PlayerStatsMgr).Status}";
+                return $"Player[{_player.Id}|{_user.ID}:{_user.Name}]: map {_server.Map.Name} id {_server.ID}{Environment.NewLine}Character[{_char?.ID}|{_char?.Level}|{_char.Pony?.Name}]: at pos <{_object?.Position.X:0.00}, {_object?.Position.Y:0.00}, {_object?.Position.Z:0.00}> rot {_object?.Rotation.Y:0.00} stats {(_object?.Stats as PlayerStatsMgr)?.Status}";
             }
         }
         public Player Player

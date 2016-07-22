@@ -1,6 +1,5 @@
 ﻿using Ghost.Server.Core.Classes;
 using Ghost.Server.Core.Players;
-using Ghost.Server.Utilities.Abstracts;
 using MySql.Data.MySqlClient;
 using PNet;
 using System;
@@ -15,6 +14,13 @@ using System.Text;
 namespace Ghost.Server.Utilities
 {
     #region Enums
+    public enum Gender : byte
+    {
+        Filly,
+        Colt,
+        Mare,
+        Stallion
+    }
     public enum MovementType : byte
     {
         Move = 0,
@@ -174,6 +180,7 @@ namespace Ghost.Server.Utilities
         System = 2,
         Admin = 3
     }
+    [Flags]
     public enum ItemSlot : int
     {
         None = 0,
@@ -237,18 +244,31 @@ namespace Ghost.Server.Utilities
         Moderator = 30,
         Admin = 255
     }
+    public enum ContainmentType : int
+    {
+        Disjoint,
+        Contains,
+        Intersects
+    }
+
+    public enum PlaneIntersectionType : int
+    {
+        Back,
+        Front,
+        Intersecting
+    }
     #endregion
     public static class MathHelper
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float Clamp(float @value, float min, float max)
+        public static float Clamp(float value, float min, float max)
         {
-            if (@value > max) return max;
-            if (@value < min) return min;
-            return @value;
+            if (value > max) return max;
+            if (value < min) return min;
+            return value;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector3 GetDirection(WorldObject obj)
+        public static Vector3 GetDirection(Abstracts.WorldObject obj)
         {
             return Vector3.Transform(Vector3.UnitZ, Quaternion.CreateFromAxisAngle(Vector3.UnitY, obj.Rotation.Y));
         }
@@ -261,6 +281,14 @@ namespace Ghost.Server.Utilities
             if (Math.Abs(dot - 1.0f) < 0.000001f)
                 return Quaternion.Identity.QuatToEul2();
             return Quaternion.CreateFromAxisAngle(Vector3.Normalize(Vector3.Cross(source, dest)), (float)Math.Acos(dot)).QuatToEul2();
+        }
+    }
+    public static class HashCodeHelper
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int CombineHashCodes(int h1, int h2)
+        {
+            return (((h1 << 5) + h1) ^ h2);
         }
     }
     public static class StringExtension
@@ -372,13 +400,6 @@ namespace Ghost.Server.Utilities
             return msg;
         }
     }
-    public enum Gender : byte
-    {
-        Filly,
-        Colt,
-        Mare,
-        Stallion
-    }
     public static class PlayeRPCExtension
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -460,12 +481,12 @@ namespace Ghost.Server.Utilities
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 ToDegrees(this Vector3 vec)
         {
-            return vec * (float)(180f / Math.PI);
+            return vec * (180f / (float)Math.PI);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 ToRadians(this Vector3 vec)
         {
-            return vec * (float)(Math.PI / 180f);
+            return vec * ((float)Math.PI / 180f);
         }
     }
     public static class ValueTypeExtension
@@ -604,7 +625,7 @@ namespace Ghost.Server.Utilities
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void FaintPony(this PNetR.NetworkView view)
         {
-            view.Rpc(4, 57, RpcMode.OwnerOrdered);
+            view.Rpc(4, 57, RpcMode.AllUnordered);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void CloseTrade(this PNetR.NetworkView view)
@@ -670,6 +691,17 @@ namespace Ghost.Server.Utilities
         public static void AddItem(this PNetR.NetworkView view, int id, int amount, byte slot)
         {
             view.Rpc(7, 6, RpcMode.OwnerOrdered, id, amount, slot);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SendStatUpdate(this PNetR.NetworkView view, Stats stat, StatValue value)
+        {
+            view.Rpc(4, 50, RpcMode.AllOrdered, (byte)stat, value.Current);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SendStatFullUpdate(this PNetR.NetworkView view, Stats stat, StatValue value)
+        {
+            view.Rpc(4, 51, RpcMode.AllOrdered, (byte)stat, value.Max);
+            view.Rpc(4, 50, RpcMode.AllOrdered, (byte)stat, value.Current);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetCombat(this PNetR.NetworkView view, PNetR.Player player, bool inCombat)

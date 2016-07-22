@@ -13,10 +13,10 @@ namespace Ghost.Server.Utilities.Abstracts
     {
         private readonly object _modifersLock = new object();
         protected short _level;
-        protected Player _player;
+        protected Player _player;     
         protected NetworkView _view;
         protected CreatureObject _creature;
-        protected Dictionary<Stats, StatHelper> _stats;
+        protected Dictionary<Stats, StatValue> _stats;
         private SER_Stats stats_ser;
         private List<TimedModifer> _modifers;
         private Dictionary<uint, List<Tuple<Stats, float, bool>>> _auras;
@@ -56,11 +56,11 @@ namespace Ghost.Server.Utilities.Abstracts
         {
             get;
         }
-        public StatHelper this[Stats stat]
+        public StatValue this[Stats stat]
         {
             get
             {
-                StatHelper ret; _stats.TryGetValue(stat, out ret); return ret;
+                StatValue ret; _stats.TryGetValue(stat, out ret); return ret;
             }
         }
         public event Action<CreatureObject, float> OnHealReceived;
@@ -70,7 +70,7 @@ namespace Ghost.Server.Utilities.Abstracts
         {
             _creature = parent;
             _modifers = new List<TimedModifer>();
-            _stats = new Dictionary<Stats, StatHelper>();
+            _stats = new Dictionary<Stats, StatValue>();
             _auras = new Dictionary<uint, List<Tuple<Stats, float, bool>>>();
             stats_ser = new SER_Stats(_stats);
             parent.OnSpawn += StatsMgr_OnSpawn;
@@ -82,6 +82,19 @@ namespace Ghost.Server.Utilities.Abstracts
         public void SendStats()
         {
             _view.Rpc(4, 52, RpcMode.AllUnordered, stats_ser);
+        }
+        public void CleanModifers()
+        {
+            lock (_modifersLock)
+            {
+                for (int i = _modifers.Count - 1; i >= 0; i--)
+                {
+                    RemoveModifier(_modifers[i]);
+                    _modifers.RemoveAt(i);
+                } 
+                foreach (var item in _auras.Keys.ToArray())
+                    RemoveAuraEffects(item);
+            }
         }
         public void RemoveAuraEffects(uint guid)
         {
@@ -102,7 +115,7 @@ namespace Ghost.Server.Utilities.Abstracts
         }
         public void RemoveModifier(TimedModifer modifer)
         {
-            StatHelper hStat; Stats stat = modifer.Stat;
+            StatValue hStat; Stats stat = modifer.Stat;
             if (_stats.TryGetValue(stat, out hStat))
             {
                 lock (_modifersLock)
@@ -111,11 +124,28 @@ namespace Ghost.Server.Utilities.Abstracts
                         hStat.RemoveMultiplier(modifer.Value);
                     else
                         hStat.RemoveModifer(modifer.Value);
-                    _view.Rpc(4, 51, RpcMode.AllUnordered, (byte)stat, hStat.Max);
-                    _view.Rpc(4, 50, RpcMode.AllUnordered, (byte)stat, hStat.Current);
+                    _view.SendStatFullUpdate(stat, hStat);
                     _modifers.Remove(modifer);
                 }
             }
+        }
+        public void IncreaseCurren(Stats stat, float value)
+        {
+            StatValue hStat;
+            if (!_stats.TryGetValue(stat, out hStat))
+                return;
+            hStat.IncreaseCurrent(value);
+            _view.SendStatUpdate(stat, hStat);
+        }
+        public void DecreaseCurrent(Stats stat, float value)
+        {
+            StatValue hStat;
+            if (!_stats.TryGetValue(stat, out hStat))
+                return;
+            hStat.DecreaseCurrent(value);
+            _view.SendStatUpdate(stat, hStat);
+            if (stat == Stats.Health && hStat.Current == 0f)
+                _creature.Kill(null);
         }
         public void DoHeal(CreatureObject other, float amount)
         {
@@ -124,7 +154,7 @@ namespace Ghost.Server.Utilities.Abstracts
         }
         public void AddModifier(Stats stat, float value, float time, bool isMul)
         {
-            StatHelper mStat;
+            StatValue mStat;
             if (_stats.TryGetValue(stat, out mStat))
             {
                 lock (_modifersLock)
@@ -133,15 +163,14 @@ namespace Ghost.Server.Utilities.Abstracts
                         mStat.AddMultiplier(value);
                     else
                         mStat.AddModifer(value);
-                    _view.Rpc(4, 51, RpcMode.AllUnordered, (byte)stat, mStat.Max);
-                    _view.Rpc(4, 50, RpcMode.AllUnordered, (byte)stat, mStat.Current);
+                    _view.SendStatFullUpdate(stat, mStat);
                     _modifers.Add(new TimedModifer(this, stat, value, isMul, time));
                 }
             }
         }
         public void AddAuraEffect(uint guid, Stats stat, float value, bool isMul)
         {
-            StatHelper mStat; List<Tuple<Stats, float, bool>> aura;
+            StatValue mStat; List<Tuple<Stats, float, bool>> aura;
             if (_stats.TryGetValue(stat, out mStat))
             {
                 lock (_modifersLock)
@@ -153,19 +182,18 @@ namespace Ghost.Server.Utilities.Abstracts
                         mStat.AddMultiplier(value);
                     else
                         mStat.AddModifer(value);
-                    _view.Rpc(4, 51, RpcMode.AllUnordered, (byte)stat, mStat.Max);
-                    _view.Rpc(4, 50, RpcMode.AllUnordered, (byte)stat, mStat.Current);
+                    _view.SendStatFullUpdate(stat, mStat);
                 }
             }
         }
         public void DoDamage(CreatureObject other, float damage, bool isMagic = false)
         {
             if (_creature.IsDead) return;
-            StatHelper hStat = _stats[Stats.Health];
-            StatHelper pStat = isMagic ? _stats[Stats.MagicResist] : _stats[Stats.Armor];
+            StatValue hStat = _stats[Stats.Health];
+            StatValue pStat = isMagic ? _stats[Stats.MagicResist] : _stats[Stats.Armor];
             hStat.DecreaseCurrent(damage = CalculateDamage(other.Stats.Level, damage, pStat.Max));
             OnDamageReceived?.Invoke(other, damage);
-            _view.Rpc(4, 50, RpcMode.AllOrdered, (byte)Stats.Health, hStat.Current);
+            _view.SendStatUpdate(Stats.Health, hStat);
             if (hStat.Current == 0f) _creature.Kill(other);
         }
         protected float CalculateDamage(short level, float damage, float protection)
@@ -175,15 +203,14 @@ namespace Ghost.Server.Utilities.Abstracts
         #region RPC Handlers
         private void RPC_051(NetMessage arg1, NetMessageInfo arg2)
         {
-            Stats stat = (Stats)arg1.ReadByte(); StatHelper rStat;
+            Stats stat = (Stats)arg1.ReadByte(); StatValue rStat;
             if (_stats.TryGetValue(stat, out rStat))
+                _view.SendStatFullUpdate(stat, rStat);
+            else
             {
-                _view.Rpc(4, 51, arg2.Sender, (byte)stat, rStat.Max);
-                _view.Rpc(4, 50, arg2.Sender, (byte)stat, rStat.Current);
-                return;
+                _view.Rpc(4, 51, arg2.Sender, (byte)stat, 0f);
+                _view.Rpc(4, 50, arg2.Sender, (byte)stat, 0f);
             }
-            _view.Rpc(4, 51, arg2.Sender, (byte)stat, 0f);
-            _view.Rpc(4, 50, arg2.Sender, (byte)stat, 0f);
         }
         private void RPC_053(NetMessage arg1, NetMessageInfo arg2)
         {
@@ -210,23 +237,11 @@ namespace Ghost.Server.Utilities.Abstracts
         }
         private void StatsMgr_OnDespawn()
         {
-            foreach (var item in _modifers.ToArray())
-            {
-                item.Destroy();
-                RemoveModifier(item);
-            }
-            foreach (var item in _auras.Keys.ToArray())
-                RemoveAuraEffects(item);
+            CleanModifers();
         }
         private void StatsMgr_OnDestroy()
         {
-            foreach (var item in _modifers.ToArray())
-            {
-                item.Destroy();
-                RemoveModifier(item);
-            }
-            foreach (var item in _auras.Keys.ToArray())
-                RemoveAuraEffects(item);
+            CleanModifers();
             _view = null;
             _stats = null;
             _player = null;

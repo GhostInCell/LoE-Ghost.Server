@@ -5,24 +5,24 @@ namespace Ghost.Server.Utilities
 {
     public static class ServerLogger
     {
-        private const string _info = "Info";
-        private const string _warn = "Warn";
-        private const string _error = "Error";
+        private const string m_info = "Info";
+        private const string m_warn = "Warn";
+        private const string m_error = "Error";
         public static void Log(string msg)
         {
             Console.WriteLine($"[{DateTime.Now:HH:mm:ss}]: {msg}");
         }
         public static void LogInfo(string msg)
         {
-            Console.WriteLine($"[{DateTime.Now:HH:mm:ss}]{_info}: {msg}");
+            Console.WriteLine($"[{DateTime.Now:HH:mm:ss}]{m_info}: {msg}");
         }
         public static void LogWarn(string msg)
         {
-            Console.WriteLine($"[{DateTime.Now:HH:mm:ss}]{_warn}: {msg}");
+            Console.WriteLine($"[{DateTime.Now:HH:mm:ss}]{m_warn}: {msg}");
         }
         public static void LogError(string msg)
         {
-            Console.WriteLine($"[{DateTime.Now:HH:mm:ss}]{_error}: {msg}");
+            Console.WriteLine($"[{DateTime.Now:HH:mm:ss}]{m_error}: {msg}");
         }
         public static void LogServer(IServer server, string msg)
         {
@@ -35,9 +35,8 @@ namespace Ghost.Server.Utilities
         public static void LogException(Exception exp, string msg = null)
         {
             var timeStamp = DateTime.Now.ToString("HH:mm:ss");
-            Console.WriteLine($"[{timeStamp}]{_error}: Exception {exp.GetType().Name}");
-            if (msg != null)
-                Console.WriteLine($"[{timeStamp}]{_error}: {msg}");
+            if (msg != null) Console.WriteLine($"[{timeStamp}]{m_error}: {msg}");
+            Console.WriteLine($"[{timeStamp}]{m_error}: Exception {exp.GetType().Name}");
             Console.WriteLine(exp.Message);
             Console.WriteLine(exp.StackTrace);
         }

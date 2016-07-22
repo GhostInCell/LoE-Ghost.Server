@@ -7,8 +7,10 @@ class AccountsMgr
 	private $db_loe_accounts;
 	private $game_login;
 	private $game_account;
+	private $game_passhash;
 	private $game_account_id;
 	private $game_account_data;
+	private $game_account_access;
 	private $game_account_session;
 	function __construct() 
 	{
@@ -24,6 +26,7 @@ class AccountsMgr
 			{
 				$this->game_account_data = $this->game_account->fetch_assoc();
 				$this->game_account_id = $this->game_account_data["id"];
+				$this->game_account_access = $this->game_account_data["access"];
 				$this->game_account_session = $this->game_account_data["session"];
 				$this->game_account->free();
 			}
@@ -54,11 +57,7 @@ class AccountsMgr
 	}
 	function AccessLevel() 
 	{
-		if($this->game_account_data)
-		{
-			return $this->game_account_data["access"];
-		}
-		return 0;
+		return $this->game_account_access;
 	}
 	function Login() 
 	{
@@ -68,7 +67,25 @@ class AccountsMgr
 			{
 				$this->game_account_session = base64_encode(hash("tiger192,3", "Celestia".time()."Luna".$this->game_login."~zbKG5tGWqv"));
 				if($this->db_conn->query("UPDATE $this->db_loe_accounts SET session='$this->game_account_session' WHERE id=$this->game_account_id"))
-				{				
+				{		
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	function Create() 
+	{
+		if(!$this->game_account_data)
+		{
+			if (isset($_POST["passhash"]) && !empty($_POST["passhash"])) 
+			{
+				$this->game_account_access = 1;
+				$this->game_passhash = $this->db_conn->real_escape_string($_POST["passhash"]);
+				$this->game_account_session = base64_encode(hash("tiger192,3", "Celestia".time()."Luna".$this->game_login."~zbKG5tGWqv"));
+				if($this->db_conn->query("INSERT INTO $this->db_loe_accounts (login, phash, access, session) VALUES ('$this->game_login', '$this->game_passhash', 1, '$this->game_account_session')"))
+				{	
+					$this->game_account_id = $this->db_conn->insert_id;
 					return true;
 				}
 			}

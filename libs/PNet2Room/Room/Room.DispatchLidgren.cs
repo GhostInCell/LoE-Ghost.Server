@@ -46,7 +46,7 @@ namespace PNetR
         {
             if (DispatchClient == null) return;
 
-            var messages = new List<NetIncomingMessage>(_lastDispatchSize * 2);
+            var messages = m_messages;
             _lastDispatchSize = DispatchClient.ReadMessages(messages);
             // ReSharper disable once ForCanBeConvertedToForeach
             for (int i = 0; i < messages.Count; i++)
@@ -119,6 +119,7 @@ namespace PNetR
 
                 NetMessage.RecycleMessage(msg);
             }
+            messages.Clear();
         }
 
         partial void ImplDispatchDisconnect(string reason)

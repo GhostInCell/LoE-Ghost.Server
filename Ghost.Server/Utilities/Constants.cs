@@ -43,21 +43,34 @@ namespace Ghost.Server.Utilities
         public const float LootDespawnTime = 32f;
         public const float PlayerRespawnTime = 8f;
 
-        public const float MaxSkillsDistance = 32f;
         public const float AnnounceDuration = 1.5f;
-
-        public const float MeleeCombatDistance = 1.5f;
 
         public static readonly Vector3 DefaultRoomBoundsMin = new Vector3(-2500f, -1000f, -2500f);
         public static readonly Vector3 DefaultRoomBoundsMax = new Vector3(4250f, 2500f, 4250f);
 
         public const string StuckCommand = "unstuck me";
         public const string Characters = "Characters";
-        public const float MaxInteractionDistance = 8f;
-        public const string Configs = "loe_server.cfg";
+        public const string Configs = "loe_server.cfg";       
         public const string NoErrors = "no errors or warnings";
         public const string NoScripts = "scripts directory not found or empty";
         public const string ChatWarning = "CAPSLOCK and spamming not allowed!";
         public static readonly string DeadMsg = $"Respawn in {PlayerRespawnTime} seconds";
+
+        public const float EpsilonX1 = 0.1f;
+        public const float EpsilonX2 = 0.01f;
+        public const float EpsilonX3 = 0.001f;
+
+
+        public const float MaxCombatDistance = 64f;
+        public const float MaxSpellsDistance = 32f;
+        public const float MaxVisibleDistance = 128f;
+        public const float MaxInteractionDistance = 8f;
+        public const float MaxMeleeCombatDistance = 2.5f;
+
+        public const float MaxCombatDistanceSquared = MaxCombatDistance * MaxCombatDistance;
+        public const float MaxSpellsDistanceSquared = MaxSpellsDistance * MaxSpellsDistance;
+        public const float MaxVisibleDistanceSquared = MaxVisibleDistance * MaxVisibleDistance;
+        public const float MaxMeleeCombatDistanceSquared = MaxMeleeCombatDistance * MaxMeleeCombatDistance;
+        public const float MaxInteractionDistanceSquared = MaxInteractionDistance * MaxInteractionDistance;
     }
 }

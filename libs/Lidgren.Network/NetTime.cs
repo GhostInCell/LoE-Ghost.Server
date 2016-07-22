@@ -20,20 +20,18 @@ USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define IS_STOPWATCH_AVAILABLE
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Diagnostics;
 
 namespace Lidgren.Network
 {
-	/// <summary>
-	/// Time service
-	/// </summary>
-	public static class NetTime
+    /// <summary>
+    /// Time service
+    /// </summary>
+    public static class NetTime
 	{
 #if IS_STOPWATCH_AVAILABLE
 		private static readonly long s_timeInitialized = Stopwatch.GetTimestamp();
-		private static readonly double s_dInvFreq = 1.0 / (double)Stopwatch.Frequency;
+		private static readonly double s_dInvFreq = 1.0 / Stopwatch.Frequency;
 
 		/// <summary>
 		/// Get number of seconds since the application started

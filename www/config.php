@@ -1,4 +1,5 @@
 <?php
+$game_autologin = false;
 $game_version = "20150812";
 $game_servers = "Local;127.0.0.1;14000\n";
 $db_user = "loedata";

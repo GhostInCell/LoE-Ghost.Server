@@ -1,4 +1,5 @@
-﻿using PNet;
+﻿using Lidgren.Network;
+using PNet;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -36,8 +37,11 @@ namespace PNetR
         public event Action<Player> PlayerRemoved;
         public event Action ServerStatusChanged;
 
+        private List<NetIncomingMessage> m_messages;
+
         public Room(NetworkConfiguration configuration)
         {
+            m_messages = new List<NetIncomingMessage>();
             NetworkManager = new NetworkViewManager(this);
             SceneViewManager = new SceneViewManager(this);
             _players[0] = Player.Server;

@@ -69,16 +69,10 @@ namespace Lidgren.Network
 			if (m_receiveCallbacks == null)
 				return;
 
-			// remove all callbacks regardless of sync context
-		RestartRemoveCallbacks:
-			for (int i = 0; i < m_receiveCallbacks.Count; i++)
-			{
-				if (m_receiveCallbacks[i].Item2.Equals(callback))
-				{
-					m_receiveCallbacks.RemoveAt(i);
-					goto RestartRemoveCallbacks;
-				}
-			}
+            for (int i = m_receiveCallbacks.Count - 1; i >= 0; i--)
+                if (m_receiveCallbacks[i].Item2.Equals(callback))
+                    m_receiveCallbacks.RemoveAt(i);
+
 			if (m_receiveCallbacks.Count < 1)
 				m_receiveCallbacks = null;
 		}
@@ -128,7 +122,7 @@ namespace Lidgren.Network
 				m_socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
 			if (reBind)
-				m_socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, (int)1); 
+				m_socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, 1); 
 
 			m_socket.ReceiveBufferSize = m_configuration.ReceiveBufferSize;
 			m_socket.SendBufferSize = m_configuration.SendBufferSize;
@@ -331,7 +325,7 @@ namespace Lidgren.Network
 			int maxCHBpS = 1250 - m_connections.Count;
 			if (maxCHBpS < 250)
 				maxCHBpS = 250;
-			if (delta > (1.0 / (double)maxCHBpS) || delta < 0.0) // max connection heartbeats/second max
+			if (delta > (1.0 / maxCHBpS) || delta < 0.0) // max connection heartbeats/second max
 			{
 				m_frameCounter++;
 				m_lastHeartbeat = now;

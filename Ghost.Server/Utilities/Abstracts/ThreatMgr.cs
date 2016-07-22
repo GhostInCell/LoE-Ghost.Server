@@ -4,7 +4,6 @@ namespace Ghost.Server.Utilities.Abstracts
 {
     public abstract class ThreatMgr : ObjectComponent
     {
-        protected readonly object _lock = new object();
         protected Dictionary<CreatureObject, float> _threat;
         protected CreatureObject _creature;
         public ThreatMgr(CreatureObject parent) 
@@ -18,18 +17,14 @@ namespace Ghost.Server.Utilities.Abstracts
         }
         public void Clear()
         {
-            lock (_lock)
-            {
-                foreach (var item in _threat)
-                    _creature.View.SetCombat(item.Key.Owner, false);
-                _threat.Clear();
-            }
+            foreach (var item in _threat)
+                _creature.View.SetCombat(item.Key.Owner, false);
+            _threat.Clear();
         }
         public void Remove(CreatureObject creature)
         {
-            lock (_lock)
-                _threat.Remove(creature);
-            _creature.View.SetCombat(creature.Owner, false);
+            _threat.Remove(creature);
+            creature.View.SetCombat(creature.Owner, false);
         }
         public abstract bool SelectTarget(out CreatureObject target);
         #region Events Handlers
@@ -48,15 +43,12 @@ namespace Ghost.Server.Utilities.Abstracts
         }
         private void ThreatMgr_OnDamageReceived(CreatureObject arg1, float arg2)
         {
-            lock (_lock)
+            if (_threat.ContainsKey(arg1))
+                _threat[arg1] += arg2;
+            else
             {
-                if (_threat.ContainsKey(arg1))
-                    _threat[arg1] += arg2;
-                else
-                {
-                    _threat[arg1] = arg2;
-                    _creature.View.SetCombat(arg1.Owner, true);
-                }
+                _threat[arg1] = arg2;
+                arg1.View.SetCombat(arg1.Owner, true);
             }
         }
         #endregion

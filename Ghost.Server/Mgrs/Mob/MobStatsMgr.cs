@@ -50,15 +50,15 @@ namespace Ghost.Server.Mgrs.Mob
             _level = (short)Constants.RND.Next(_mob.Data.Data01, _mob.Data.Data02);
             _dmg_min = _level * _mob.Creature.Base_Dmg_Min;
             _dmg_max = _level * _mob.Creature.Base_Dmg_Max;
-            _stats[Stats.Speed] = new StatHelper(_mob.Creature.Speed);
-            _stats[Stats.Armor] = new StatHelper(_level * _mob.Creature.Base_Armor);
-            _stats[Stats.Dodge] = new StatHelper(_level * _mob.Creature.Base_Dodge);
-            _stats[Stats.Attack] = new StatHelper(_level * _mob.Creature.Base_Power);
-            _stats[Stats.Energy] = new StatHelper(_level * _mob.Creature.Base_Energy);
-            _stats[Stats.Health] = new StatHelper(_level * _mob.Creature.Base_Health);
-            _stats[Stats.EnergyRegen] = new StatHelper(_level * _mob.Creature.Base_EP_Reg);
-            _stats[Stats.HealthRegen] = new StatHelper(_level * _mob.Creature.Base_HP_Reg);
-            _stats[Stats.MagicResist] = new StatHelper(_level * _mob.Creature.Base_Resists);
+            _stats[Stats.Speed] = new StatValue(_mob.Creature.Speed);
+            _stats[Stats.Armor] = new StatValue(_level * _mob.Creature.Base_Armor);
+            _stats[Stats.Dodge] = new StatValue(_level * _mob.Creature.Base_Dodge);
+            _stats[Stats.Attack] = new StatValue(_level * _mob.Creature.Base_Power);
+            _stats[Stats.Energy] = new StatValue(_level * _mob.Creature.Base_Energy);
+            _stats[Stats.Health] = new StatValue(_level * _mob.Creature.Base_Health);
+            _stats[Stats.EnergyRegen] = new StatValue(_level * _mob.Creature.Base_EP_Reg);
+            _stats[Stats.HealthRegen] = new StatValue(_level * _mob.Creature.Base_HP_Reg);
+            _stats[Stats.MagicResist] = new StatValue(_level * _mob.Creature.Base_Resists);
         }
         public override void Update(TimeSpan time)
         {

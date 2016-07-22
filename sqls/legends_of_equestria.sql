@@ -11,11 +11,13 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 -- Дамп структуры базы данных legends_of_equestria
+DROP DATABASE IF EXISTS `legends_of_equestria`;
 CREATE DATABASE IF NOT EXISTS `legends_of_equestria` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `legends_of_equestria`;
 
 
 -- Дамп структуры для таблица legends_of_equestria.loe_character
+DROP TABLE IF EXISTS `loe_character`;
 CREATE TABLE IF NOT EXISTS `loe_character` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user` int(11) NOT NULL,
@@ -50,8 +52,9 @@ CREATE TABLE IF NOT EXISTS `loe_character` (
 
 
 -- Дамп структуры для таблица legends_of_equestria.loe_creature
+DROP TABLE IF EXISTS `loe_creature`;
 CREATE TABLE IF NOT EXISTS `loe_creature` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `loot` int(11) NOT NULL DEFAULT '-1',
   `flags` tinyint(3) unsigned NOT NULL,
   `spell` int(11) NOT NULL DEFAULT '-1',
@@ -70,9 +73,9 @@ CREATE TABLE IF NOT EXISTS `loe_creature` (
   `base_dmg_min` float NOT NULL,
   `base_dmg_max` float NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_creature: ~5 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_creature: ~6 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_creature` DISABLE KEYS */;
 INSERT INTO `loe_creature` (`id`, `loot`, `flags`, `spell`, `speed`, `resource`, `kill_credit`, `attack_rate`, `base_resist`, `base_armor`, `base_dodge`, `base_power`, `base_health`, `base_energy`, `base_hp_reg`, `base_ep_reg`, `base_dmg_min`, `base_dmg_max`) VALUES
 	(1, -1, 0, -1, 350, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -88,6 +91,7 @@ INSERT INTO `loe_creature` (`id`, `loot`, `flags`, `spell`, `speed`, `resource`,
 
 
 -- Дамп структуры для таблица legends_of_equestria.loe_dialog
+DROP TABLE IF EXISTS `loe_dialog`;
 CREATE TABLE IF NOT EXISTS `loe_dialog` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `state` smallint(6) NOT NULL DEFAULT '-1',
@@ -103,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `loe_dialog` (
   PRIMARY KEY (`id`,`state`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_dialog: ~72 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_dialog: ~65 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_dialog` DISABLE KEYS */;
 INSERT INTO `loe_dialog` (`id`, `state`, `npc`, `type`, `message`, `condition`, `cndData01`, `cndData02`, `command`, `cmdData01`, `cmdData02`) VALUES
 	(1, -1, 0, 255, -1, 35, 6, -1, 2, 0, -1);
@@ -253,6 +257,7 @@ INSERT INTO `loe_dialog` (`id`, `state`, `npc`, `type`, `message`, `condition`, 
 
 
 -- Дамп структуры для таблица legends_of_equestria.loe_item
+DROP TABLE IF EXISTS `loe_item`;
 CREATE TABLE IF NOT EXISTS `loe_item` (
   `id` int(11) NOT NULL,
   `name` varchar(64) DEFAULT NULL,
@@ -862,6 +867,7 @@ INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`
 
 
 -- Дамп структуры для таблица legends_of_equestria.loe_item_stat
+DROP TABLE IF EXISTS `loe_item_stat`;
 CREATE TABLE IF NOT EXISTS `loe_item_stat` (
   `id` int(11) NOT NULL,
   `stat` tinyint(3) unsigned NOT NULL,
@@ -869,7 +875,7 @@ CREATE TABLE IF NOT EXISTS `loe_item_stat` (
   PRIMARY KEY (`id`,`stat`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_item_stat: ~141 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_item_stat: ~156 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_item_stat` DISABLE KEYS */;
 INSERT INTO `loe_item_stat` (`id`, `stat`, `value`) VALUES
 	(54, 1, 33);
@@ -1157,6 +1163,7 @@ INSERT INTO `loe_item_stat` (`id`, `stat`, `value`) VALUES
 
 
 -- Дамп структуры для таблица legends_of_equestria.loe_loot
+DROP TABLE IF EXISTS `loe_loot`;
 CREATE TABLE IF NOT EXISTS `loe_loot` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `item` int(11) NOT NULL DEFAULT '0',
@@ -1180,6 +1187,7 @@ INSERT INTO `loe_loot` (`id`, `item`, `min`, `max`, `chance`, `condition`, `cnd_
 
 
 -- Дамп структуры для таблица legends_of_equestria.loe_map
+DROP TABLE IF EXISTS `loe_map`;
 CREATE TABLE IF NOT EXISTS `loe_map` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
@@ -1238,6 +1246,7 @@ INSERT INTO `loe_map` (`id`, `name`, `flags`) VALUES
 
 
 -- Дамп структуры для таблица legends_of_equestria.loe_map_object
+DROP TABLE IF EXISTS `loe_map_object`;
 CREATE TABLE IF NOT EXISTS `loe_map_object` (
   `map` int(11) NOT NULL DEFAULT '0',
   `guid` smallint(5) unsigned NOT NULL DEFAULT '0',
@@ -1435,6 +1444,7 @@ INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`,
 
 
 -- Дамп структуры для таблица legends_of_equestria.loe_message
+DROP TABLE IF EXISTS `loe_message`;
 CREATE TABLE IF NOT EXISTS `loe_message` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `emotion` smallint(5) unsigned NOT NULL DEFAULT '0',
@@ -1546,6 +1556,7 @@ INSERT INTO `loe_message` (`id`, `emotion`, `message`) VALUES
 
 
 -- Дамп структуры для таблица legends_of_equestria.loe_movement
+DROP TABLE IF EXISTS `loe_movement`;
 CREATE TABLE IF NOT EXISTS `loe_movement` (
   `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
   `state` smallint(6) unsigned NOT NULL DEFAULT '0',
@@ -1694,6 +1705,7 @@ INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`
 
 
 -- Дамп структуры для таблица legends_of_equestria.loe_npc
+DROP TABLE IF EXISTS `loe_npc`;
 CREATE TABLE IF NOT EXISTS `loe_npc` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `flags` tinyint(3) unsigned NOT NULL,
@@ -1722,7 +1734,7 @@ CREATE TABLE IF NOT EXISTS `loe_npc` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_npc: ~5 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_npc: ~4 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_npc` DISABLE KEYS */;
 INSERT INTO `loe_npc` (`id`, `flags`, `level`, `dialog`, `index`, `movement`, `name`, `race`, `gender`, `eye`, `tail`, `hoof`, `mane`, `bodysize`, `hornsize`, `eyecolor`, `hoofcolor`, `bodycolor`, `haircolor0`, `haircolor1`, `haircolor2`, `cutiemark0`, `cutiemark1`, `cutiemark2`) VALUES
 	(1, 7, 5, 1, 0, 0, 'Frederic Dash', 2, 2, 1, 10, 0, 16, 0.9, 0.98497, 8322980, 0, 16767615, 16744172, 16752626, 16744172, 54, 0, 0);
@@ -1738,13 +1750,14 @@ INSERT INTO `loe_npc` (`id`, `flags`, `level`, `dialog`, `index`, `movement`, `n
 
 
 -- Дамп структуры для таблица legends_of_equestria.loe_npc_trade
+DROP TABLE IF EXISTS `loe_npc_trade`;
 CREATE TABLE IF NOT EXISTS `loe_npc_trade` (
   `id` int(11) NOT NULL,
   `item` int(11) NOT NULL,
   PRIMARY KEY (`id`,`item`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_npc_trade: ~10 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_npc_trade: ~9 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_npc_trade` DISABLE KEYS */;
 INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
 	(1, 102);
@@ -1770,6 +1783,7 @@ INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
 
 
 -- Дамп структуры для таблица legends_of_equestria.loe_npc_wear
+DROP TABLE IF EXISTS `loe_npc_wear`;
 CREATE TABLE IF NOT EXISTS `loe_npc_wear` (
   `id` int(11) NOT NULL,
   `slot01` int(11) NOT NULL,
@@ -1783,7 +1797,7 @@ CREATE TABLE IF NOT EXISTS `loe_npc_wear` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_npc_wear: ~1 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_npc_wear: ~0 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_npc_wear` DISABLE KEYS */;
 INSERT INTO `loe_npc_wear` (`id`, `slot01`, `slot02`, `slot03`, `slot04`, `slot05`, `slot06`, `slot07`, `slot08`) VALUES
 	(1, 134, 135, 20, -1, -1, -1, -1, -1);
@@ -1791,13 +1805,14 @@ INSERT INTO `loe_npc_wear` (`id`, `slot01`, `slot02`, `slot03`, `slot04`, `slot0
 
 
 -- Дамп структуры для таблица legends_of_equestria.loe_resource
+DROP TABLE IF EXISTS `loe_resource`;
 CREATE TABLE IF NOT EXISTS `loe_resource` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `path` varchar(64) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_resource: ~33 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_resource: ~39 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_resource` DISABLE KEYS */;
 INSERT INTO `loe_resource` (`id`, `path`) VALUES
 	(0, 'playerbase');
@@ -1865,10 +1880,21 @@ INSERT INTO `loe_resource` (`id`, `path`) VALUES
 	(31, 'effects/groundrockhit gray1');
 INSERT INTO `loe_resource` (`id`, `path`) VALUES
 	(32, 'effects/finishteleportsparks');
+INSERT INTO `loe_resource` (`id`, `path`) VALUES
+	(33, 'pets/personalguard');
+INSERT INTO `loe_resource` (`id`, `path`) VALUES
+	(34, 'picks/khikes pickaxe');
+INSERT INTO `loe_resource` (`id`, `path`) VALUES
+	(35, 'mobs/naiad');
+INSERT INTO `loe_resource` (`id`, `path`) VALUES
+	(36, 'mobs/karkadann');
+INSERT INTO `loe_resource` (`id`, `path`) VALUES
+	(37, 'mobs/corgi');
 /*!40000 ALTER TABLE `loe_resource` ENABLE KEYS */;
 
 
 -- Дамп структуры для таблица legends_of_equestria.loe_spell
+DROP TABLE IF EXISTS `loe_spell`;
 CREATE TABLE IF NOT EXISTS `loe_spell` (
   `id` smallint(6) NOT NULL AUTO_INCREMENT,
   `index` tinyint(3) unsigned NOT NULL DEFAULT '0',
@@ -1883,7 +1909,7 @@ CREATE TABLE IF NOT EXISTS `loe_spell` (
   PRIMARY KEY (`id`,`index`,`effect`)
 ) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_spell: ~19 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_spell: ~18 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_spell` DISABLE KEYS */;
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
 	(2, 0, 255, 7, 80, 32, 1.5, 0, 0, 0);
@@ -1927,6 +1953,7 @@ INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`,
 
 
 -- Дамп структуры для таблица legends_of_equestria.loe_user
+DROP TABLE IF EXISTS `loe_user`;
 CREATE TABLE IF NOT EXISTS `loe_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `login` char(32) NOT NULL,

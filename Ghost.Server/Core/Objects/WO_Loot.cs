@@ -66,7 +66,7 @@ namespace Ghost.Server.Core.Objects
         private void RPC_50_52(NetMessage arg1, NetMessageInfo arg2)
         {
             if (arg2.Sender.Id != _onwer.Player.Id) return;
-            if (_view != null && Vector3.Distance(_onwer.Object.Position, _position) <= Constants.MaxInteractionDistance)
+            if (_view != null && Vector3.DistanceSquared(_onwer.Object.Position, _position) <= Constants.MaxInteractionDistanceSquared)
             {
                 foreach (var item in _loot.Loot)
                 {
@@ -91,6 +91,7 @@ namespace Ghost.Server.Core.Objects
             _view.GettingPosition += View_GettingPosition;
             _view.GettingRotation += View_GettingRotation;
             _view.CheckVisibility += View_CheckVisibility;
+            _view.RebuildVisibility();
             _destroy = new AutoDestroy(this, TimeSpan.FromSeconds(Constants.LootDespawnTime));
         }
         private void WO_Loot_OnDespawn()

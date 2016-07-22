@@ -44,7 +44,7 @@ namespace Ghost.Server.Mgrs
             var data = new CharData();
             data.Bits = 15;
             data.Skills[10] = 0;//Ground Pound
-            data.Skills[44] = 0;//Cute Stare
+            //data.Skills[44] = 0;//Cute Stare
             data.Talents[(int)Talent.Combat] = new Tuple<uint, short>(0, entry.Level);
             switch (entry.Pony.Race)
             {
@@ -52,18 +52,18 @@ namespace Ghost.Server.Mgrs
                     data.Skills[5] = 0;//Seismic Buck
                     data.Skills[16] = 0;//Rough Terrain
                     data.Skills[21] = 0;//Pillow Barrage
-                    data.Skills[23] = 0;//Field Tactician
-                    data.Skills[24] = 0;//Jeering Shout
-                    data.Skills[27] = 0;//Guidance
-                    data.Skills[28] = 0;//Friends Forever
-                    data.Skills[29] = 0;//Home Field Advantage
-                    data.Skills[32] = 0;//Transfusion
-                    data.Skills[33] = 0;//Resurrect
-                    data.Skills[34] = 0;//Triage
-                    data.Skills[35] = 0;//Regenerative Aura
-                    data.Skills[41] = 0;//Candy Shower
-                    data.Skills[42] = 0;//Party Foul
-                    data.Skills[43] = 0;//Change of Heart
+                    //data.Skills[23] = 0;//Field Tactician
+                    //data.Skills[24] = 0;//Jeering Shout
+                    //data.Skills[27] = 0;//Guidance
+                    //data.Skills[28] = 0;//Friends Forever
+                    //data.Skills[29] = 0;//Home Field Advantage
+                    //data.Skills[32] = 0;//Transfusion
+                    //data.Skills[33] = 0;//Resurrect
+                    //data.Skills[34] = 0;//Triage
+                    //data.Skills[35] = 0;//Regenerative Aura
+                    //data.Skills[41] = 0;//Candy Shower
+                    //data.Skills[42] = 0;//Party Foul
+                    //data.Skills[43] = 0;//Change of Heart
                     data.InvSlots = 25;
                     break;
                 case 2:
@@ -76,8 +76,8 @@ namespace Ghost.Server.Mgrs
                 case 3:
                     data.Skills[11] = 0;//Dual Cyclone
                     data.Skills[14] = 0;//Gale
-                    data.Skills[25] = 0;//Airstep
-                    data.Skills[26] = 0;//Rapier
+                    //data.Skills[25] = 0;//Airstep
+                    //data.Skills[26] = 0;//Rapier
                     data.InvSlots = 21;
                     break;
             }

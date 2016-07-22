@@ -13,8 +13,6 @@ namespace Ghost.Server.Utilities.Abstracts
         protected MapServer _server;
         protected ObjectsMgr _manager;
         
-        private bool _enabled;
-        private bool _updating;
         private bool _spawned;
         private bool _initialized;
         private int _updatableLength;
@@ -27,16 +25,6 @@ namespace Ghost.Server.Utilities.Abstracts
             get
             {
                 return _guid;
-            }
-        }
-        public bool Enabled
-        {
-            get { return _enabled; }
-            set
-            {
-                _enabled = value;
-                for (int i = 0; i < _components.Length; i++)
-                    _components[i].Enabled = value;
             }
         }
         public bool IsClone
@@ -115,9 +103,9 @@ namespace Ghost.Server.Utilities.Abstracts
         public abstract ushort SGuid { get; }
         public abstract Vector3 Position { get; set; }
         public abstract Vector3 Rotation { get; set; }
+
         public WorldObject(uint guid, ObjectsMgr manager)
         {
-            _enabled = true;
             _manager = manager;
             _lock = new object();
             _server = manager.Server;
@@ -158,13 +146,6 @@ namespace Ghost.Server.Utilities.Abstracts
             _updatable = null;
             _components = null;
         }
-        //public void Enable<T>()
-        //    where T : ObjectComponent, IUpdatable
-        //{
-        //    for (int i = 0; i < _componentsLength; i++)
-        //        if (_components[i] is T)
-        //            RegisterToUpdate((T)_components[i]);
-        //}
         public T GetComponent<T>()
             where T : class
         {
@@ -179,15 +160,10 @@ namespace Ghost.Server.Utilities.Abstracts
                 if (_components[i] is T) return _components[i] as T;
             throw new InvalidOperationException();
         }
-        //public void RemoveComponent<T>()
-        //{
-        //    throw new NotImplementedException();
-        //}
         public void Update(TimeSpan time)
         {
-            if (!_enabled || !_spawned) return;
+            if (!_spawned) return;
             for (int i = 0; i < _updatable.Length; i++)
-                if (_updatable[i].Enabled)
                     _updatable[i].Update(time);
             eventOnUpdate?.Invoke(time);
         }
@@ -212,16 +188,6 @@ namespace Ghost.Server.Utilities.Abstracts
                 Array.Resize(ref _updatable, index);
             OnInitialize?.Invoke();
             _initialized = true;
-        }
-        private void RegisterToUpdate<T>(T component)
-            where T : IUpdatable
-        {
-
-        }
-        private void RemoveFromUpdate<T>(T component)
-            where T : IUpdatable
-        {
-
         }
     }
 }

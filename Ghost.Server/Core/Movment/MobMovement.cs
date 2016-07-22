@@ -69,24 +69,29 @@ namespace Ghost.Server.Core.Movment
                 {
                     _direction = Vector3.Normalize(_scriptedAI.Target.Position - _position);
                     _rotation = MathHelper.GetRotation(Vector3.UnitZ, _direction, Vector3.UnitY);
-                    if (Vector3.Distance(_position, _scriptedAI.Target.Position) > Constants.MeleeCombatDistance)
+                    var distanceSquared = Vector3.DistanceSquared(_position, _scriptedAI.Target.Position);
+                    if (distanceSquared > (Constants.MaxMeleeCombatDistanceSquared + Constants.EpsilonX1))
                     {
                         var offset = (_direction * ((time.Milliseconds / 1000f) * _speed / 45f));
-                        if (Vector3.Distance(_position, _scriptedAI.Target.Position) > Constants.MeleeCombatDistance + offset.Length())
+                        if (distanceSquared > Constants.MaxMeleeCombatDistanceSquared + offset.LengthSquared() + Constants.EpsilonX1)
                             _position += offset;
                         else
-                            _position = _scriptedAI.Target.Position - (_direction * (Constants.MeleeCombatDistance - 0.05f));
+                            _position = _scriptedAI.Target.Position - (_direction * Constants.MaxMeleeCombatDistance);
                     }
                 }
-                else if (Vector3.Distance(_position, _creature.SpawnPosition) > 0)
+                else
                 {
-                    _direction = Vector3.Normalize(_creature.SpawnPosition - _position);
-                    _rotation = MathHelper.GetRotation(Vector3.UnitZ, _direction, Vector3.UnitY);
-                    var offset = (_direction * ((time.Milliseconds / 1000f) * _speed / 45f));
-                    if (Vector3.Distance(_position, _creature.SpawnPosition) > offset.Length())
-                        _position += offset;
-                    else
-                        _position = _creature.SpawnPosition;
+                    var distanceSquared = Vector3.DistanceSquared(_position, _creature.SpawnPosition);
+                    if (distanceSquared > 0)
+                    {
+                        _direction = Vector3.Normalize(_creature.SpawnPosition - _position);
+                        _rotation = MathHelper.GetRotation(Vector3.UnitZ, _direction, Vector3.UnitY);
+                        var offset = (_direction * ((time.Milliseconds / 1000f) * _speed / 45f));
+                        if (distanceSquared > offset.LengthSquared())
+                            _position += offset;
+                        else
+                            _position = _creature.SpawnPosition;
+                    }
                 }
             }
             if ((_update -= time.Milliseconds) <= 0)

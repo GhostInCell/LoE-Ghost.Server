@@ -46,7 +46,7 @@ namespace PNetR
         {
             if (PlayerServer == null) return;
 
-            var messages = new List<NetIncomingMessage>(_lastRoomFrameSize * 2);
+            var messages = m_messages;
             _lastRoomFrameSize = PlayerServer.ReadMessages(messages);
 
 // ReSharper disable once ForCanBeConvertedToForeach
@@ -130,7 +130,7 @@ namespace PNetR
 
                 NetMessage.RecycleMessage(msg);
             }
-
+            messages.Clear();
             VerifyWaitingPlayers();
         }
 

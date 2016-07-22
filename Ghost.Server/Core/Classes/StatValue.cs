@@ -2,7 +2,7 @@
 
 namespace Ghost.Server.Core.Classes
 {
-    public class StatHelper
+    public class StatValue
     {
         private float stat_muls;
         private float stat_mods;
@@ -11,97 +11,122 @@ namespace Ghost.Server.Core.Classes
         private float stat_base;
         private float stat_curr;
 
-        private float min_chace;
-        private float max_chace;
+        private float min_cache;
+        private float max_cache;
+
         public float Max
         {
-            get { return max_chace; }
+            get { return max_cache; }
         }
+
         public float Min
         {
-            get { return min_chace; }
+            get { return min_cache; }
         }
+
         public float Current
         {
             get { return stat_curr; }
         }
-        public StatHelper(float val)
+
+        public StatValue(float value)
         {
-            min_chace = 0f;
+            min_cache = 0f;
             stat_muls = 1f;
-            stat_base = val;
-            stat_curr = val;
-            max_chace = stat_base;
+            stat_base = value;
+            stat_curr = value;
+            max_cache = value;
         }
+
         public void CleanAll()
         {
             stat_item = 0;
             stat_mods = 0;
+            stat_muls = 1f;
             Recalculate();
         }
+
         public void CleanItems()
         {
             stat_item = 0;
             Recalculate();
         }
+
         public void CleanModifers()
         {
             stat_mods = 0;
             Recalculate();
         }
+
         public void CleanMultipliers()
         {
             stat_muls = 1f;
             Recalculate();
         }
-        public void AddModifer(float val)
-        {
-            stat_mods += val;
-            Recalculate();
-        }
-        public void AddMultiplier(float val)
-        {
-            stat_muls += val;
-            Recalculate();
-        }
-        public void RemoveModifer(float val)
-        {
-            stat_mods -= val;
-            Recalculate();
-        }
-        public void RemoveMultiplier(float val)
-        {
-            stat_muls -= val;
-            Recalculate();
-        }
-        public void AddItemModifer(float val)
-        {
-            stat_item += val;
-            Recalculate();
-        }
-        public void IncreaseCurrent(float val)
-        {
-            stat_curr = MathHelper.Clamp(stat_curr + val, min_chace, max_chace);
-        }
-        public void DecreaseCurrent(float val)
-        {
-            stat_curr = MathHelper.Clamp(stat_curr - val, min_chace, max_chace);
-        }
+
         public void SetBase(float val)
         {
             stat_base = val;
             Recalculate();
         }
-        public void Recalculate()
+
+        public void AddModifer(float val)
         {
-            float coff = stat_curr / max_chace;
-            max_chace = (stat_base + stat_item + stat_mods) * stat_muls;
-            if (max_chace < min_chace) max_chace = min_chace;
-            if (stat_curr > 0) stat_curr = (int)(max_chace * coff);
+            stat_mods += val;
+            Recalculate();
         }
+
+        public void AddMultiplier(float val)
+        {
+            stat_muls += val;
+            Recalculate();
+        }
+
+        public void AddItemModifer(float val)
+        {
+            stat_item += val;
+            Recalculate();
+        }
+
+        public void RemoveModifer(float val)
+        {
+            stat_mods -= val;
+            Recalculate();
+        }
+
+        public void RemoveMultiplier(float val)
+        {
+            stat_muls -= val;
+            Recalculate();
+        }
+
+        public void RemoveItemModifer(float val)
+        {
+            stat_item -= val;
+            Recalculate();
+        }
+
+        public void IncreaseCurrent(float val)
+        {
+            stat_curr = MathHelper.Clamp(stat_curr + val, min_cache, max_cache);
+        }
+
+        public void DecreaseCurrent(float val)
+        {
+            stat_curr = MathHelper.Clamp(stat_curr - val, min_cache, max_cache);
+        }
+
         public override string ToString()
         {
-            return $"{stat_curr}/{max_chace}({stat_base}:{stat_item}:{stat_mods}:{stat_muls})";
+            return $"{stat_curr}/{max_cache}[({stat_base}+{stat_item}+{stat_mods})*{stat_muls}]";
+        }
+
+        private void Recalculate()
+        {
+            float coff = stat_curr / max_cache;
+            max_cache = (stat_base + stat_item + stat_mods) * stat_muls;
+            if (max_cache < min_cache) max_cache = min_cache;
+            if (stat_curr > 0) stat_curr = (int)(max_cache * coff);
         }
     }
 }

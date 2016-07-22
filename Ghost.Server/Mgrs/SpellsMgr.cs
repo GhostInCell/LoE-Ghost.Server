@@ -1,6 +1,5 @@
 ﻿using Ghost.Server.Core.Classes;
 using Ghost.Server.Core.Objects;
-using Ghost.Server.Core.Players;
 using Ghost.Server.Core.Structs;
 using Ghost.Server.Utilities;
 using Ghost.Server.Utilities.Abstracts;
@@ -11,20 +10,20 @@ namespace Ghost.Server.Mgrs
 {
     public static class SpellsMgr
     {
-        public static bool CanCast(MapPlayer player, TargetEntry target)
+        public static bool CanCast(CreatureObject creature, TargetEntry target)
         {
             DB_Spell spell; DB_SpellEffect main; CreatureObject targetCO;
-            if (DataMgr.Select(target.SkillID, out spell) &&
+            if (DataMgr.Select(target.SpellID, out spell) &&
                 spell.Effects.TryGetValue(0, out main) &&
-                player.Stats.Energy >= main.Data01)
+                creature.Stats.Energy >= main.Data01)
             {
                 if (target.HasGuid)
                 {
-                    if (player.Server.Objects.TryGetCreature((ushort)target.Guid, out targetCO) && !targetCO.IsDead)
+                    if (creature.Server.Objects.TryGetCreature((ushort)target.Guid, out targetCO) && !targetCO.IsDead)
                     {
-                        if (Vector3.Distance(targetCO.Position, player.Object.Position) <= main.Data02)
+                        if (Vector3.DistanceSquared(targetCO.Position, creature.Position) <= main.Data02 * main.Data02)
                         {
-                            var isSelf = targetCO == player.Object;
+                            var isSelf = targetCO == creature;
                             if ((main.Target & SpellTarget.Creature) != 0)
                             {
                                 if (targetCO.IsPlayer)
@@ -49,49 +48,52 @@ namespace Ghost.Server.Mgrs
                     }
                 }
                 else if ((main.Target & SpellTarget.Position) != 0)
-                    return Vector3.Distance(target.Position, player.Object.Position) <= main.Data02;
+                    return Vector3.DistanceSquared(target.Position, creature.Position) <= main.Data02 * main.Data02;
             }
             return false;
         }
-        public static void PerformSkill(MapPlayer player, TargetEntry target)
+        public static void PerformSkill(CreatureObject creature, TargetEntry target)
         {
-            DB_Spell spell = DataMgr.SelectSpell(target.SkillID); bool area = false, magick;
+            DB_Spell spell = DataMgr.SelectSpell(target.SpellID); bool area = false, magick;
             DB_SpellEffect main = spell.Effects[0]; CreatureObject targetCO;
-            player.View.PerformSkill(target);
-            player.Skills.AddCooldown(spell.ID, main.Data03);
-            player.Stats.ModCurren(Stats.Energy, -main.Data01);
+            creature.View.PerformSkill(target);
+            if (creature.IsPlayer)
+            {
+                ((WO_Player)creature).Player.Skills.AddCooldown(spell.ID, main.Data03);
+            }
+            creature.Stats.DecreaseCurrent(Stats.Energy, main.Data01);
             if (target.HasGuid)
             {
-                player.Server.Objects.TryGetCreature((ushort)target.Guid, out targetCO);
+                creature.Server.Objects.TryGetCreature((ushort)target.Guid, out targetCO);
                 foreach (var item in spell.Effects.Values)
                 {
-                    float effect = item.BaseConst + (item.LevelModifer * player.Object.Stats.Level) + (item.AttackModifer * player.Stats.Attack);
+                    float effect = item.BaseConst + (item.LevelModifer * creature.Stats.Level) + (item.AttackModifer * creature.Stats.Attack);
                     switch (item.Type)
                     {
                         case SpellEffectType.Damage:
                         case SpellEffectType.MagickDamage:
-                            if (targetCO != player.Object)
-                                targetCO.Stats.DoDamage(player.Object, effect, item.Type == SpellEffectType.MagickDamage);
+                            if (targetCO != creature)
+                                targetCO.Stats.DoDamage(creature, effect, item.Type == SpellEffectType.MagickDamage);
                             break;
                         case SpellEffectType.FrontAreaDamage:
                         case SpellEffectType.MagicFrontAreaDamage:
                             magick = item.Type == SpellEffectType.MagicFrontAreaDamage;
-                            Vector3 direction = MathHelper.GetDirection(player.Object);
+                            Vector3 direction = MathHelper.GetDirection(creature);
                             if ((item.Target & SpellTarget.Creature) != 0)
-                                foreach (var entry in player.Server.Objects.GetMobsInRadius(player.Object.Position + direction * item.Data01, item.Data02).ToArray())
-                                    entry.Stats?.DoDamage(player.Object, effect, magick);
+                                foreach (var entry in creature.Server.Objects.GetMobsInRadius(creature.Position + direction * item.Data01, item.Data02).ToArray())
+                                    entry.Stats?.DoDamage(creature, effect, magick);
                             break;
                         case SpellEffectType.SplashDamage:
                         case SpellEffectType.MagicSplashDamage:
                             magick = item.Type == SpellEffectType.MagicSplashDamage;
-                            if ((item.Target & SpellTarget.NotMain) == 0 && targetCO != player.Object)
-                                targetCO.Stats.DoDamage(player.Object, effect, magick);
+                            if ((item.Target & SpellTarget.NotMain) == 0 && targetCO != creature)
+                                targetCO.Stats.DoDamage(creature, effect, magick);
                             if ((item.Target & SpellTarget.Creature) != 0)
-                                foreach (var entry in player.Server.Objects.GetMobsInRadiusExcept(player.Object, targetCO, item.Data02).ToArray())
-                                    entry.Stats?.DoDamage(player.Object, effect, magick);
+                                foreach (var entry in creature.Server.Objects.GetMobsInRadiusExcept(creature, targetCO, item.Data02).ToArray())
+                                    entry.Stats?.DoDamage(creature, effect, magick);
                             break;
                         case SpellEffectType.Heal:
-                            targetCO.Stats.DoHeal(player.Object, effect);
+                            targetCO.Stats.DoHeal(creature, effect);
                             break;
                         case SpellEffectType.Modifier:
                             targetCO.Stats.AddModifier((Stats)item.Data01, effect, item.Data03, item.Data02 == 1);
@@ -99,7 +101,7 @@ namespace Ghost.Server.Mgrs
                         case SpellEffectType.AreaInit:
                             if (!area)
                             {
-                                new WO_VoidZone(player.Object, spell, item);
+                                new WO_VoidZone(creature, spell, item);
                                 area = true;
                             }
                             break;
@@ -110,30 +112,30 @@ namespace Ghost.Server.Mgrs
             {
                 foreach (var item in spell.Effects.Values)
                 {
-                    float effect = item.BaseConst + (item.LevelModifer * player.Object.Stats.Level) + (item.AttackModifer * player.Stats.Attack);
+                    float effect = item.BaseConst + (item.LevelModifer * creature.Stats.Level) + (item.AttackModifer * creature.Stats.Attack);
                     switch (item.Type)
                     {
                         case SpellEffectType.AreaInit:
                             if (!area)
                             {
-                                new WO_VoidZone(player.Object, spell, item);
+                                new WO_VoidZone(creature, spell, item);
                                 area = true;
                             }
                             break;
                         case SpellEffectType.FrontAreaDamage:
                         case SpellEffectType.MagicFrontAreaDamage:
                             magick = item.Type == SpellEffectType.MagicFrontAreaDamage;
-                            Vector3 direction = MathHelper.GetDirection(player.Object);
+                            Vector3 direction = MathHelper.GetDirection(creature);
                             if ((item.Target & SpellTarget.Creature) != 0)
-                                foreach (var entry in player.Server.Objects.GetMobsInRadius(player.Object.Position + direction * item.Data01, item.Data02).ToArray())
-                                    entry.Stats?.DoDamage(player.Object, effect, magick);
+                                foreach (var entry in creature.Server.Objects.GetMobsInRadius(creature.Position + direction * item.Data01, item.Data02).ToArray())
+                                    entry.Stats?.DoDamage(creature, effect, magick);
                             break;
                         case SpellEffectType.SplashDamage:
                         case SpellEffectType.MagicSplashDamage:
                             magick = item.Type == SpellEffectType.MagicSplashDamage;
                             if ((item.Target & SpellTarget.Creature) != 0)
-                                foreach (var entry in player.Server.Objects.GetMobsInRadius(player.Object, item.Data02).ToArray())
-                                    entry.Stats?.DoDamage(player.Object, effect, magick);
+                                foreach (var entry in creature.Server.Objects.GetMobsInRadius(creature, item.Data02).ToArray())
+                                    entry.Stats?.DoDamage(creature, effect, magick);
                             break;
                     }
                 }

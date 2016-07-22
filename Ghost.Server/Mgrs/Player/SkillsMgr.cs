@@ -24,7 +24,7 @@ namespace Ghost.Server.Mgrs.Player
             _wPlayer = parent;
             _mPlayer = _wPlayer.Player;
             _entry = new TargetEntry();
-            _skills = _mPlayer.Data.Skills;
+            _skills = _wPlayer.Player.Data.Skills;
             _cooldown = new Dictionary<int, CooldownReset>();
             parent.OnSpawn += SkillsMgr_OnSpawn;
             parent.OnDestroy += SkillsMgr_OnDestroy;
@@ -42,10 +42,10 @@ namespace Ghost.Server.Mgrs.Player
         private void RPC_061(NetMessage arg1, NetMessageInfo arg2)
         {
             _entry.OnDeserialize(arg1);
-            if (!_skills.ContainsKey(_entry.SkillID) || _cooldown.ContainsKey(_entry.SkillID))
+            if (!_skills.ContainsKey(_entry.SpellID) || _cooldown.ContainsKey(_entry.SpellID))
                 return;
-            if (SpellsMgr.CanCast(_mPlayer, _entry))
-                SpellsMgr.PerformSkill(_mPlayer, _entry);
+            if (SpellsMgr.CanCast(_wPlayer, _entry))
+                SpellsMgr.PerformSkill(_wPlayer, _entry);
         }
         [Rpc(62, false)]//Cancel Skill
         private void RPC_062(NetMessage arg1, NetMessageInfo arg2)

@@ -8,7 +8,6 @@ namespace Ghost.Server.Utilities
     public static class Configs
     {
         public const string ConfigFile = "loe_server.cfg";
-
         private const int DEF_Game_MaxChars = 5;
         private const int DEF_Game_SaveChar = 60;
         private const short DEF_Game_MaxLevel = 50;
@@ -16,7 +15,8 @@ namespace Ghost.Server.Utilities
         private const string DEF_Game_UnicornStart = "Cantermore";
         private const string DEF_Game_PegasusStart = "Cloudopolis";
         private const string DEF_Game_EarthPonyStart = "Ponydale";
-        private const int DEF_Movement_SyncInterval = 150;
+        private const int DEF_Sync_Stats = 200;
+        private const int DEF_Sync_Movement = 150;
         private const int DEF_Server_MaxMaps = 256;
         private const bool DEF_Server_Master = true;
         private const bool DEF_Server_AllMaps = true;
@@ -61,6 +61,8 @@ namespace Ghost.Server.Utilities
         public const string Map_Tick = "map_tick";
         public const string Map_Reconnect = "map_reconnect";
         public const string Map_MaxPlayers = "map_maxplayers";
+        public const string Sync_Stats = "sync_stats";
+        public const string Sync_Movement = "sync_movement";
         public const string Game_SaveChar = "game_savechar";
         public const string Game_MaxChars = "game_maxchars";
         public const string Game_MaxLevel = "game_maxlevel";
@@ -68,7 +70,6 @@ namespace Ghost.Server.Utilities
         public const string Game_UnicornStart = "game_unicornstart";
         public const string Game_PegasusStart = "game_pegasusstart";
         public const string Game_EarthPonyStart = "game_earthponystart";
-        public const string Movement_SyncInterval = "movement_syncinterval";
         public const string Server_Host = "server_host";
         public const string Server_Master = "server_master";
         public const string Server_Scripts = "server_scripts";
@@ -81,11 +82,11 @@ namespace Ghost.Server.Utilities
         public const string Server_Characters = "server_characters";
         public const string Server_Players_Port = "server_players_port";
 
-        private static Dictionary<string, object> _cfgs;
+        private static Dictionary<string, object> m_cfgs;
         public static bool IsLoaded { get; private set; }
         static Configs()
         {
-            _cfgs = new Dictionary<string, object>();
+            m_cfgs = new Dictionary<string, object>();
             if (!(IsLoaded = Load()))
                 ServerLogger.LogError($"Couldn't create configuration file: {ConfigFile}");
             else
@@ -96,7 +97,7 @@ namespace Ghost.Server.Utilities
         {
             try
             {
-                if (_cfgs.Count > 0) _cfgs.Clear();
+                if (m_cfgs.Count > 0) m_cfgs.Clear();
                 if (!File.Exists(ConfigFile))
                 {
                     ServerLogger.LogWarn($"Configuration file: {ConfigFile} not found. Creating default one ...");
@@ -106,13 +107,13 @@ namespace Ghost.Server.Utilities
                 {
                     if (item.Length == 0 || item[0] == '#')
                     {
-                        _cfgs[item] = null;
+                        m_cfgs[item] = null;
                         continue;
                     }
                     var index1 = item.IndexOf('@');
                     var index2 = item.IndexOf('=');
                     if (index1 > 0 && index2 > 0)
-                        _cfgs[item.Remove(index1)] = Convert.ChangeType(item.Substring(index2 + 1).Trim(),
+                        m_cfgs[item.Remove(index1)] = Convert.ChangeType(item.Substring(index2 + 1).Trim(),
                             Type.GetType(item.Substring(index1 + 1, index2 - index1 - 1)));
 
                 }
@@ -134,11 +135,11 @@ namespace Ghost.Server.Utilities
         {
             try
             {
-                if (_cfgs.Count == 0) return;
+                if (m_cfgs.Count == 0) return;
                 using (var cfgFile = File.OpenWrite(ConfigFile))
                 using (var writer = new StreamWriter(cfgFile))
                 {
-                    foreach (var item in _cfgs)
+                    foreach (var item in m_cfgs)
                     {
                         if (item.Value == null)
                             writer.WriteLine(item.Key);
@@ -162,14 +163,13 @@ namespace Ghost.Server.Utilities
         {
             try
             {
-
                 foreach (var entry in typeof(Configs).GetFields(BindingFlags.Static | BindingFlags.NonPublic))
                 {
                     if (entry.IsLiteral && !entry.IsInitOnly && entry.Name.StartsWith("DEF_"))
                     {
                         var name = entry.Name.Substring(4).ToLower();
-                        if (check && _cfgs.ContainsKey(name)) continue;
-                        _cfgs[name] = entry.GetValue(null);
+                        if (check && m_cfgs.ContainsKey(name)) continue;
+                        m_cfgs[name] = entry.GetValue(null);
                     }
                 }
                 return true;
@@ -188,53 +188,13 @@ namespace Ghost.Server.Utilities
         }
         public static T Get<T>(string name)
         {
-            if (_cfgs.ContainsKey(name) && (_cfgs[name] is T))
-                return (T)_cfgs[name];
+            if (m_cfgs.ContainsKey(name) && (m_cfgs[name] is T))
+                return (T)m_cfgs[name];
             throw new KeyNotFoundException();
         }
-        public static void Set(string name, int entry)
+        public static void Set<T>(string name, T entry)
         {
-            _cfgs[name] = entry;
-        }
-        public static void Set(string name, bool entry)
-        {
-            _cfgs[name] = entry;
-        }
-        public static void Set(string name, byte entry)
-        {
-            _cfgs[name] = entry;
-        }
-        public static void Set(string name, uint entry)
-        {
-            _cfgs[name] = entry;
-        }
-        public static void Set(string name, long entry)
-        {
-            _cfgs[name] = entry;
-        }
-        public static void Set(string name, sbyte entry)
-        {
-            _cfgs[name] = entry;
-        }
-        public static void Set(string name, ulong entry)
-        {
-            _cfgs[name] = entry;
-        }
-        public static void Set(string name, short entry)
-        {
-            _cfgs[name] = entry;
-        }
-        public static void Set(string name, float entry)
-        {
-            _cfgs[name] = entry;
-        }
-        public static void Set(string name, ushort entry)
-        {
-            _cfgs[name] = entry;
-        }
-        public static void Set(string name, string entry)
-        {
-            _cfgs[name] = entry;
+            m_cfgs[name] = entry;
         }
     }
 }

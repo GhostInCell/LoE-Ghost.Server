@@ -480,7 +480,10 @@ namespace Ghost.Server.Core
                         int id;
                         if (_result.HasRows)
                             while (_result.Read())
-                                data[id = _result.GetInt32(0)] = new DB_Map(id, _result.GetString(1), _result.GetByte(2));
+                            {
+                                id = _result.GetInt32(0);
+                                data[id] = new DB_Map(id, _result.GetString(1), _result.GetByte(2));
+                            }
                     }
                 }
                 return true;
@@ -660,9 +663,12 @@ namespace Ghost.Server.Core
                         int id;
                         if (_result.HasRows)
                             while (_result.Read())
-                                data[id = _result.GetInt32(0)] = new DB_Creature(id, _result.GetInt32(1), _result.GetByte(2), _result.GetInt32(3), _result.GetFloat(4), _result.GetInt32(5),
-                                    _result.GetUInt16(6), _result.GetFloat(7), _result.GetFloat(8), _result.GetFloat(9), _result.GetFloat(10), _result.GetFloat(11), _result.GetFloat(12), 
+                            {
+                                id = _result.GetInt32(0);
+                                data[id] = new DB_Creature(id, _result.GetInt32(1), _result.GetByte(2), _result.GetInt32(3), _result.GetFloat(4), _result.GetInt32(5),
+                                    _result.GetUInt16(6), _result.GetFloat(7), _result.GetFloat(8), _result.GetFloat(9), _result.GetFloat(10), _result.GetFloat(11), _result.GetFloat(12),
                                     _result.GetFloat(13), _result.GetFloat(14), _result.GetFloat(15), _result.GetFloat(16), _result.GetFloat(17));
+                            }
                     }
                 }
                 return true;

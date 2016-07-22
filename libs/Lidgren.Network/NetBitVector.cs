@@ -153,7 +153,7 @@ namespace Lidgren.Network
 		{
 			Array.Clear(m_data, 0, m_data.Length);
 			m_numBitsSet = 0;
-			NetException.Assert(this.IsEmpty());
+			NetException.Assert(IsEmpty());
 		}
 
 		/// <summary>

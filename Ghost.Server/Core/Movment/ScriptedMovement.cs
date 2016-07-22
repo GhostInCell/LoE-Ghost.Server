@@ -116,7 +116,7 @@ namespace Ghost.Server.Core.Movment
                 if (_position != _current.Position)
                 {
                     var offset = (_direction * ((time.Milliseconds / 1000f) * _speed / 45f));
-                    if (Vector3.Distance(_position, _current.Position) > (offset.Length() + 0.1f))
+                    if (Vector3.DistanceSquared(_position, _current.Position) > (offset.LengthSquared() + Constants.EpsilonX1))
                         _position += offset;
                     else
                     {

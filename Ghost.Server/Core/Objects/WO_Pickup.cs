@@ -70,7 +70,7 @@ namespace Ghost.Server.Core.Objects
         private void RPC_50_52(NetMessage arg1, NetMessageInfo arg2)
         {
             MapPlayer player = _server[arg2.Sender.Id];
-            if (_view != null && Vector3.Distance(player.Object.Position, _data.Position) <= Constants.MaxInteractionDistance)
+            if (_view != null && Vector3.DistanceSquared(player.Object.Position, _data.Position) <= Constants.MaxInteractionDistanceSquared)
             {
                 if ((_data.Flags & 1) == 1)
                 {

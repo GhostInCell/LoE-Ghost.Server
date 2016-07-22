@@ -116,7 +116,7 @@ namespace Lidgren.Network
 			int retval = NetConstants.UnfragmentedMessageHeaderSize; // regular headers
 			if (m_fragmentGroup != 0)
 				retval += NetFragmentationHelper.GetFragmentationHeaderSize(m_fragmentGroup, m_fragmentGroupTotalBits / 8, m_fragmentChunkByteSize, m_fragmentChunkNumber);
-			retval += this.LengthBytes;
+			retval += LengthBytes;
 			return retval;
 		}
 
@@ -134,9 +134,9 @@ namespace Lidgren.Network
 		public override string ToString()
 		{
 			if (m_isSent)
-				return "[NetOutgoingMessage " + m_messageType + " " + this.LengthBytes + " bytes]";
+				return "[NetOutgoingMessage " + m_messageType + " " + LengthBytes + " bytes]";
 
-			return "[NetOutgoingMessage " + this.LengthBytes + " bytes]";
+			return "[NetOutgoingMessage " + LengthBytes + " bytes]";
 		}
 	}
 }

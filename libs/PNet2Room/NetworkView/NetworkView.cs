@@ -73,8 +73,8 @@ namespace PNetR
 
         public void RebuildVisibility()
         {
-            var pos = GettingPosition?.Invoke() ?? new Vector3();
-            var rot = GettingRotation?.Invoke() ?? new Vector3();
+            var pos = GettingPosition?.Invoke() ?? Vector3.Zero;
+            var rot = GettingRotation?.Invoke() ?? Vector3.Zero;
 
             var msg = Room.ConstructInstMessage(this, pos, rot);
             RebuildVisibility(msg);

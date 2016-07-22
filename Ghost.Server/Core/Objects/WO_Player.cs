@@ -69,7 +69,6 @@ namespace Ghost.Server.Core.Objects
         #region Events Handlers
         private void WO_Player_OnSpawn()
         {
-            Enabled = true;
             _view = _server.Room.Instantiate("PlayerBase", _movement.Position, _movement.Rotation.ToDegrees(), _player.Player);
             _view.FinishedInstantiation += View_FinishedInstantiation;
         }
@@ -99,7 +98,6 @@ namespace Ghost.Server.Core.Objects
         private void WO_Player_OnKilled(CreatureObject obj)
         {
             _view.FaintPony();
-            Enabled = false;
         }
         private void View_FinishedInstantiation(Player obj)
         {

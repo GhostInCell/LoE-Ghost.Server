@@ -32,6 +32,11 @@ else
 			break;
 		}
 	}
+	else if($game_autologin && $account->Create())
+	{
+		echo "authresponse:\ntrue\n".$account->Session()."\n".$account->AccessLevel()."\n".$account->Id()."\n".$game_servers;
+		exit;	
+	}
 	echo "authresponse:\nfalse\n";
 }
 ?>

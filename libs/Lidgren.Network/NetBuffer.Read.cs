@@ -408,7 +408,7 @@ namespace Lidgren.Network
 			int num2 = 0;
 			while (m_bitLength - m_readPosition >= 8)
 			{
-				byte num3 = this.ReadByte();
+				byte num3 = ReadByte();
 				num1 |= (num3 & 0x7f) << num2;
 				num2 += 7;
 				if ((num3 & 0x80) == 0)
@@ -478,7 +478,7 @@ namespace Lidgren.Network
 				//if (num2 == 0x23)
 				//	throw new FormatException("Bad 7-bit encoded integer");
 
-				byte num3 = this.ReadByte();
+				byte num3 = ReadByte();
 				num1 |= ((UInt64)num3 & 0x7f) << num2;
 				num2 += 7;
 				if ((num3 & 0x80) == 0)
@@ -552,7 +552,7 @@ namespace Lidgren.Network
 			int byteLen = (int)ReadVariableUInt32();
 
 			if (byteLen <= 0)
-				return String.Empty;
+				return string.Empty;
 
 			if ((ulong)(m_bitLength - m_readPosition) < ((ulong)byteLen * 8))
 			{
@@ -569,13 +569,13 @@ namespace Lidgren.Network
 			if ((m_readPosition & 7) == 0)
 			{
 				// read directly
-				string retval = System.Text.Encoding.UTF8.GetString(m_data, m_readPosition >> 3, byteLen);
+				string retval = Encoding.UTF8.GetString(m_data, m_readPosition >> 3, byteLen);
 				m_readPosition += (8 * byteLen);
 				return retval;
 			}
 
 			byte[] bytes = ReadBytes(byteLen);
-			return System.Text.Encoding.UTF8.GetString(bytes, 0, bytes.Length);
+			return Encoding.UTF8.GetString(bytes, 0, bytes.Length);
 		}
 
 		/// <summary>

@@ -26,8 +26,8 @@ namespace Lidgren.Network
 		internal NetReceiverChannelBase[] m_receiveChannels;
 		internal NetOutgoingMessage m_localHailMessage;
 		internal long m_remoteUniqueIdentifier;
-        internal NetQueue<Tuple<NetMessageType, int>> m_queuedOutgoingAcks;
-        internal NetQueue<Tuple<NetMessageType, int>> m_queuedIncomingAcks;
+        internal ConcurrentQueue<Tuple<NetMessageType, int>> m_queuedOutgoingAcks;
+        internal ConcurrentQueue<Tuple<NetMessageType, int>> m_queuedIncomingAcks;
         private int m_sendBufferWritePtr;
 		private int m_sendBufferNumMessages;
 		private object m_tag;
@@ -92,8 +92,8 @@ namespace Lidgren.Network
 			m_usedSendChannels = new NetSenderChannelBase[NetConstants.NumTotalChannels];
 			m_sendChannels = new NetSenderChannelBase[NetConstants.NumTotalChannels];
 			m_receiveChannels = new NetReceiverChannelBase[NetConstants.NumTotalChannels];
-            m_queuedOutgoingAcks = new NetQueue<Tuple<NetMessageType, int>>(4);
-            m_queuedIncomingAcks = new NetQueue<Tuple<NetMessageType, int>>(4);
+            m_queuedOutgoingAcks = new ConcurrentQueue<Tuple<NetMessageType, int>>();
+            m_queuedIncomingAcks = new ConcurrentQueue<Tuple<NetMessageType, int>>();
             m_statistics = new NetConnectionStatistics(this);
 			m_averageRoundtripTime = -1.0f;
 			m_currentMTU = m_peerConfiguration.MaximumTransmissionUnit;

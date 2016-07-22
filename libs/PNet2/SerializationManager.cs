@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
-using PNet.Collections.Concurrent;
 
 namespace PNet
 {
@@ -210,6 +210,7 @@ namespace PNet
             }
             return false;
         }
+
 
         static readonly ConcurrentDictionary<Type, bool> TypesAreINet = new ConcurrentDictionary<Type, bool>();
 
