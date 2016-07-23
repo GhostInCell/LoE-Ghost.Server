@@ -366,7 +366,7 @@ namespace Ghost.Server.Utilities
                 switch (literal)
                 {
                     case "n":
-                        literal = "\r\n";
+                        literal = Environment.NewLine;
                         break;
                     case "name":
                         literal = player.Char.Pony.Name;

@@ -23,7 +23,7 @@ namespace Ghost.Server.Mgrs
         {
             get
             {
-                return $"\r\n\r\nMaps {_maps.Count}; Items {_items.Count}; NPCs {_npcs.Count}; Loots {_loots.Count}; Spells {_spells.Count}; Dialogs {_dialogs.Count}; Movements {_movements.Count}; Creatures {_creatures.Count}; Resources {_resources.Count}\r\n";
+                return $"{Environment.NewLine}{Environment.NewLine}Maps {_maps.Count}; Items {_items.Count}; NPCs {_npcs.Count}; Loots {_loots.Count}; Spells {_spells.Count}; Dialogs {_dialogs.Count}; Movements {_movements.Count}; Creatures {_creatures.Count}; Resources {_resources.Count}{Environment.NewLine}";
             }
         }
         public static bool IsLoaded
