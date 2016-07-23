@@ -226,7 +226,6 @@ namespace Ghost.Server.Mgrs.Map
 
         public IEnumerable<WO_MOB> GetMobsInRadius(Vector3 origin, float radius)
         {
-            if (origin == null) return Enumerable.Empty<WO_MOB>();
             radius *= radius;
             return _nvObjects.Values.Where(x => x is WO_MOB && Vector3.DistanceSquared(x.Position, origin) <= radius).Select(x => x as WO_MOB);
         }
@@ -240,7 +239,6 @@ namespace Ghost.Server.Mgrs.Map
 
         public IEnumerable<WO_Player> GetPlayersInRadius(Vector3 origin, float radius)
         {
-            if (origin == null) return Enumerable.Empty<WO_Player>();
             radius *= radius;
             return _plObjects.Values.Select(x => x as WO_Player).Where(x => Vector3.DistanceSquared(x.Position, origin) <= radius && !x.IsDead);
         }

@@ -15,7 +15,6 @@ namespace Ghost.Server.Utilities.Abstracts
         
         private bool _spawned;
         private bool _initialized;
-        private int _updatableLength;
         private int _componentsLength;
         private IUpdatable[] _updatable;
         private ObjectComponent[] _components;

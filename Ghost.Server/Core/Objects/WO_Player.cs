@@ -14,7 +14,6 @@ namespace Ghost.Server.Core.Objects
     public class WO_Player : CreatureObject
     {
         private static readonly TimeSpan respTime = TimeSpan.FromSeconds(Constants.PlayerRespawnTime);
-        private SyncEntry _entry;
         private MapPlayer _player;
         private AutoRespawn _respawn;
         public MapPlayer Player
@@ -49,7 +48,6 @@ namespace Ghost.Server.Core.Objects
             : base(Constants.PlayerObject | player.Player.Id, player.Server.Objects)
         {
             _player = player;
-            _entry = new SyncEntry();
             OnSpawn += WO_Player_OnSpawn;
             OnKilled += WO_Player_OnKilled;
             OnDestroy += WO_Player_OnDestroy;
@@ -82,7 +80,6 @@ namespace Ghost.Server.Core.Objects
         private void WO_Player_OnDestroy()
         {
             _respawn?.Destroy(); 
-            _entry = null;
             _player = null;
             _respawn = null;
         }

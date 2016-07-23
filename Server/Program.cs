@@ -17,6 +17,8 @@ namespace Server
                 instance.Stop();
                 Thread.Sleep(500);
             }
+            Console.WriteLine("Press any key to exit...");
+            Console.ReadKey(true);
         }
     }
 }

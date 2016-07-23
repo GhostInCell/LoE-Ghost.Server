@@ -144,7 +144,6 @@ namespace Ghost.Server.Core.Servers
         }
         private void ReloadCFG()
         {
-            var host = Configs.Get<string>(Configs.Server_Host);
             _cfg = new NetworkConfiguration(maximumRooms: Configs.Get<int>(Configs.Server_MaxMaps),
                 playerListenPort: Configs.Get<int>(Configs.Server_Players_Port),
                 roomListenPort: Configs.Get<int>(Configs.Server_Maps_Port),
