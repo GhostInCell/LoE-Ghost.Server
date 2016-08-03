@@ -1,5 +1,5 @@
 # Legends of Equestria Private Server
-Tested only on Windows 10 with 15.01.2016 client release.
+Tested on Windows 10 with 27.07.2016 client release.
 # Content
 Server only has testing content (npcs, dialogs, monsters) and not any content from oficial server.
 # How to use
