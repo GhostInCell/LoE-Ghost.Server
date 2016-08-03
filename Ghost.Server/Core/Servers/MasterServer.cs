@@ -150,10 +150,20 @@ namespace Ghost.Server.Core.Servers
                 roomHosts: Configs.Get<string>(Configs.Server_Maps_Hosts),
                 maximumPlayers: Configs.Get<int>(Configs.Server_MaxPlayers));
         }
+        #region RPC Handlers
+        private void RPC_255(NetMessage message)
+        {
+            MasterPlayer player;
+            var id = message.ReadUInt16();
+            var reason = message.ReadString();
+            if (TryGetById(id, out player))
+                player.Player.Disconnect(reason);
+        }
+        #endregion
         #region Event Handlers
         private void MasterServer_RoomAdded(Room obj)
         {
-
+            obj.SubscribeToRpc(255, RPC_255);
         }
         private void MasterServer_RoomRemoved(Room obj)
         {

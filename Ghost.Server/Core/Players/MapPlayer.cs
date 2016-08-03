@@ -202,6 +202,10 @@ namespace Ghost.Server.Core.Players
                 if (id > 0) _pet = new WO_Pet(id, _object);
             }
         }
+        public void Disconnect(string message)
+        {
+            _server.Room.Server.Rpc(255, _player.Id, message);
+        }
         public void DialogSetOptions(string[] options)
         {
             _player.Rpc(12, (object)options);

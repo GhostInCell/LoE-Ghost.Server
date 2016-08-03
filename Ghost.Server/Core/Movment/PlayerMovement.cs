@@ -135,23 +135,26 @@ namespace Ghost.Server.Core.Movment
             _speed = distance / (float)(_entry.Time - _time);
             if (distance > Constants.EpsilonX2)
             {
-                if (_speed > 625f && _player.User.Access < AccessLevel.TeamMember)
-                    _player.Player.Disconnect("MOV EAX, #DEADC0DE");
+                if (_speed > 40f && _player.User.Access < AccessLevel.TeamMember)
+                {
+                    _locked = true;
+                    _player.Disconnect("MOV EAX, #DEADC0DE");
+                }
                 else
                 {
                     switch (_player.Char.Pony.Race)
                     {
                         case 1:
-                            _running = _speed > 90.25f;
+                            _running = _speed > 6f;
                             break;
                         case 2:
-                            _running = _speed > 72.25f;
+                            _running = _speed > 5.15f;
                             break;
                         case 3:
                             if (_flying)
-                                _running = _speed > 272.25f;
+                                _running = _speed > 18f;
                             else
-                                _running = _speed > 71.44f;
+                                _running = _speed > 5.25f;
                             break;
                     }
                 }
