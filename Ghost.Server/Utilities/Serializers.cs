@@ -1,4 +1,6 @@
 ﻿using Ghost.Server.Core.Classes;
+using Ghost.Server.Core.Structs;
+using Ghost.Server.Mgrs;
 using PNet;
 using System;
 using System.Collections.Generic;
@@ -101,27 +103,37 @@ namespace Ghost.Server.Utilities
     }
     public class SER_Wears : INetSerializable
     {
-        private readonly Dictionary<byte, int> _data;
+        private readonly Dictionary<int, Item> m_data;
         public int AllocSize
         {
             get
             {
-                return 2 + _data.Count * 5;
+                return 8 + m_data.Count * 32;
             }
         }
-        public SER_Wears(Dictionary<byte, int> data)
+        public SER_Wears(Dictionary<int, Item> data)
         {
-            _data = data;
+            m_data = data;
         }
         public void OnSerialize(NetMessage message)
         {
+            Item item; WearablePosition wSlots = WearablePosition.None; DB_Item dbItem;
             message.Write(Constants.MaxWornItems);
-            message.Write((byte)_data.Count);
-            foreach (var item in _data)
+            for (int index = 0, count = m_data.Count; index < Constants.MaxWornItems; index++)
             {
-                message.Write((byte)(item.Key - 1));
-                message.Write(item.Value);
+                if (count > 0)
+                {
+                    if (m_data.TryGetValue(index, out item) && DataMgr.Select(item.Id, out dbItem))
+                    {
+                        count--;
+                        item.OnSerialize(message);
+                        wSlots |= dbItem.Slot;
+                        continue;
+                    }
+                }
+                message.Write(Item.EmptyID);
             }
+            message.Write((int)wSlots);
         }
         public void OnDeserialize(NetMessage message)
         {
@@ -214,12 +226,33 @@ namespace Ghost.Server.Utilities
             foreach (var item in _data.Talents)
             {
                 message.Write(item.Key);
-                message.Write(item.Value.Item1);
-                message.Write((int)item.Value.Item2);
                 message.Write(0u);
-                var exp = (uint)(item.Value.Item2 * 500 + (item.Value.Item2 - 1) * 500);
-                message.Write(exp - item.Value.Item1);
-                message.Write(exp);
+                message.Write((uint)item.Value.Item2);
+                message.Write((uint)item.Value.Item3);
+                message.Write(0u);
+                message.Write(0u);
+                message.Write(0u);
+                //if (item.Value.Item2 == 0)
+                //{
+                //    var exp = CharsMgr.GetExpForLevel(item.Value.Item2 + 1);
+                //    message.Write(exp);
+                //    message.Write(exp);
+                //    message.Write(0u);
+                //}
+                //else if (item.Value.Item2 == CharsMgr.MaxLevel)
+                //{
+                //    var exp = CharsMgr.GetExpForLevel(CharsMgr.MaxLevel);
+                //    message.Write(exp);
+                //    message.Write(0u);
+                //    message.Write(exp);
+                //}
+                //else
+                //{
+                //    var exp = CharsMgr.GetExpForLevel(item.Value.Item2 + 1);
+                //    message.Write(exp - item.Value.Item1);
+                //    message.Write(exp);
+                //    message.Write(CharsMgr.GetExpForLevel(item.Value.Item2));
+                //}
             }
         }
         public void OnDeserialize(NetMessage message)
@@ -229,36 +262,36 @@ namespace Ghost.Server.Utilities
     }
     public class SER_Inventory : INetSerializable
     {
-        private readonly CharData _data;
+        private readonly CharData m_data;
         public int AllocSize
         {
             get
             {
-                return 8 + _data.Items.Count * 9 + _data.Wears.Count * 5;
+                return 4 + m_data.Items.Count * 32;
             }
         }
         public SER_Inventory(CharData data)
         {
-            _data = data;
+            m_data = data;
         }
         public void OnSerialize(NetMessage message)
         {
-            message.Write(_data.InvSlots);
-            message.Write((byte)_data.Items.Count);
-            foreach (var item in _data.Items)
+            var items = m_data.Items;
+            InventorySlot slot;
+            message.Write(m_data.InventorySlots);
+            for (int index = 0, count = items.Count; index < m_data.InventorySlots; index++)
             {
-                message.Write(item.Key);
-                message.Write(item.Value.Item1);
-                message.Write(item.Value.Item2);
+                if (count > 0)
+                {
+                    if (items.TryGetValue(index, out slot))
+                    {
+                        count--;
+                        slot.OnSerialize(message);
+                        continue;
+                    }
+                }
+                message.Write(Item.EmptyID);
             }
-            message.Write(Constants.MaxWornItems);
-            message.Write((byte)_data.Wears.Count);
-            foreach (var item in _data.Wears)
-            {
-                message.Write((byte)(item.Key - 1));
-                message.Write(item.Value);
-            }
-            message.Write(_data.Bits);
         }
         public void OnDeserialize(NetMessage message)
         {

@@ -7,7 +7,6 @@ using Ghost.Server.Utilities;
 using Ghost.Server.Utilities.Abstracts;
 using PNet;
 using PNetR;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,75 +15,146 @@ namespace Ghost.Server.Mgrs.Player
     [NetComponent(7)]
     public class ItemsMgr : ObjectComponent
     {
-        private static readonly Tuple<int, int> Empty = new Tuple<int, int>(-1, -1);
-        private CharData _data;
-        private NetworkView _view;
+        public struct WornSlot : INetSerializable
+        {
+            public byte Value;
+
+            public int Index
+            {
+                get
+                {
+                    return Value - 1;
+                }
+            }
+
+            public int AllocSize
+            {
+                get
+                {
+                    return 1;
+                }
+            }
+
+            public bool IsWearable
+            {
+                get
+                {
+                    return Value > 0 && Value <= 32;
+                }
+            }
+
+            public WearablePosition Position
+            {
+                get
+                {
+                    return Value.ToWearablePosition();
+                }
+            }
+
+            public void OnSerialize(NetMessage message)
+            {
+                message.Write(Value);
+            }
+
+            public void OnDeserialize(NetMessage message)
+            {
+                Value = message.ReadByte();
+            }
+
+            public override string ToString()
+            {
+                return Position.ToString();
+            }
+        }
+
+        public static readonly int ColorItemPrice = 10;
+
+        private CharData m_data;
+        private NetworkView m_view;
         private WO_Player _wPlayer;
         private MapPlayer _mPlayer;
         private PNetR.Player _player;
-        private HashSet<int> _itemsHash;
-        private Dictionary<byte, int> _wears;
-        private Dictionary<byte, Tuple<int, int>> _items;
+        private HashSet<int> m_itemsHash;
+        private WearablePosition m_wearSlotsUsed;
+        private Dictionary<int, Item> m_wears;
+        private Dictionary<int, InventorySlot> m_items;
+
         public ItemsMgr(WO_Player parent)
             : base(parent)
         {
             _wPlayer = parent;
             _mPlayer = _wPlayer.Player;
             _player = _mPlayer.Player;
-            _data = _mPlayer.Data;
-            _items = _data.Items;
-            _wears = _data.Wears;
-            _itemsHash = new HashSet<int>();
-            foreach (var item in _items)
-                if (!_itemsHash.Contains(item.Value.Item1))
-                    _itemsHash.Add(item.Value.Item1);
+            m_data = _mPlayer.Data;
+            m_items = m_data.Items;
+            m_wears = m_data.Wears;
+            m_itemsHash = new HashSet<int>();
+            foreach (var item in m_items)
+            {
+                var value = item.Value;
+                if (!m_itemsHash.Contains(value.Item.Id))
+                    m_itemsHash.Add(value.Item.Id);
+            }
+            m_wearSlotsUsed = WearablePosition.None;
+            foreach (var item in m_wears)
+            {
+                var value = item.Value;
+                DB_Item dbitem;
+                if (DataMgr.Select(value.Id, out dbitem))
+                    m_wearSlotsUsed |= dbitem.Slot;
+            }
             parent.OnSpawn += ItemsMgr_OnSpawn;
             parent.OnDestroy += ItemsMgr_OnDestroy;
         }
+
         public bool HasItems(int id)
         {
-            return _itemsHash.Contains(id);
+            return m_itemsHash.Contains(id);
         }
+
         public void RemoveAllItems()
         {
-            _items.Clear();
-            _itemsHash.Clear();
-            _view.SetInventory(_data);
+            m_items.Clear();
+            m_itemsHash.Clear();
+            m_view.SetInventory(m_data);
         }
+
         public void AddBits(int bits)
         {
-            _data.Bits += bits;
-            _view.SetBits(_data.Bits);
+            m_data.Bits += bits;
+            m_view.SetBits(m_data.Bits);
         }
+
         public void RemoveItems(int id)
         {
-            if (!_itemsHash.Contains(id)) return;
-            _itemsHash.Remove(id);
-            Tuple<int, int> item;
-            for (byte i = 0, cnt = (byte)_items.Count; i < _data.InvSlots && cnt > 0; i++)
-                if (_items.TryGetValue(i, out item))
+            if (!m_itemsHash.Contains(id)) return;
+            m_itemsHash.Remove(id);
+            InventorySlot slot;
+            for (int index = 0, count = m_items.Count; index < m_data.InventorySlots && count > 0; index++, count--)
+            {
+                if (m_items.TryGetValue(index, out slot))
                 {
-                    cnt--;
-                    if (item.Item1 == id)
+                    if (slot.Item.Id == id)
                     {
-                        _items.Remove(i);
-                        _view.DeleteItem(i, item.Item2);
+                        m_items.Remove(index);
+                        m_view.DeleteSlot(slot, index);
                     }
                 }
-        }
-        public int GetItemsCount(int id)
-        {
-            return _items.Sum(x => x.Value.Item1 == id ? x.Value.Item2 : 0);
-        }
-        public void ClearSlot(byte islot)
-        {
-            var slot = GetSlot(islot);
-            if (slot.Item1 != -1)
-            {
-                _items.Remove(islot);
-                _view.DeleteItem(islot, slot.Item2);
             }
         }
+
+        public int GetItemsCount(int id)
+        {
+            return m_items.Sum(x => x.Value.Item.Id == id ? x.Value.Amount : 0);
+        }
+
+        public void ClearSlot(int index)
+        {
+            var slot = GetSlot(index);
+            if (slot != null && m_items.Remove(index))
+                m_view.DeleteSlot(slot, index);
+        }
+
         public int AddItems(int id, int amount)
         {
             DB_Item item;
@@ -92,256 +162,382 @@ namespace Ghost.Server.Mgrs.Player
                 return AddItem(item, amount);
             return amount;
         }
+
         public bool HasItems(int id, int amount)
         {
-            return _itemsHash.Contains(id) && GetItemsCount(id) >= amount;
+            return m_itemsHash.Contains(id) && GetItemsCount(id) >= amount;
         }
+
         public int RemoveItems(int id, int amount)
         {
-            if (!_itemsHash.Contains(id)) return amount;
+            if (!m_itemsHash.Contains(id)) return amount;
             var itemAmount = GetItemsCount(id);
             if (itemAmount <= amount)
                 RemoveItems(id);
             else
             {
-                Tuple<int, int> item;
-                for (byte i = 0; i < _data.InvSlots; i++)
-                    if (_items.TryGetValue(i, out item) && item.Item1 == id)
-                        amount = RemoveSlot(i, id, amount);
+                InventorySlot slot;
+                for (int index = 0, count = m_items.Count; index < m_data.InventorySlots && count > 0 && amount > 0; index++, count--)
+                {
+                    if (m_items.TryGetValue(index, out slot))
+                    {
+                        if (slot.Item.Id == id)
+                            amount = RemoveSlot(index, amount);
+                    }
+                }
                 return amount;
             }
             return 0;
         }
-        public bool HasInSlot(byte islot, int id, int amount)
+
+        public bool HasInSlot(int index, int id, int amount)
         {
-            Tuple<int, int> slot;
-            return _items.TryGetValue(islot, out slot) && slot.Item1 == id && slot.Item2 == amount;
+            var slot = GetSlot(index);
+            return slot.Item.Id == id && slot.Amount >= amount;
         }
+
         private int GetFreeSlot()
         {
-            for (byte i = 0; i < _data.InvSlots; i++)
-                if (!_items.ContainsKey(i))
-                    return i;
+            InventorySlot slot;
+            for (int index = 0; index < m_data.InventorySlots; index++)
+            {
+                if (!m_items.TryGetValue(index, out slot) || slot.IsEmpty)
+                    return index;
+            }
             return -1;
         }
-        private Tuple<int, int> GetSlot(byte slot)
+
+        private InventorySlot GetSlot(int index)
         {
-            Tuple<int, int> ret;
-            return _items.TryGetValue(slot, out ret) ? ret : Empty;
+            InventorySlot slot;
+            return m_items.TryGetValue(index, out slot) ? slot : null;
         }
+
         private int AddItem(DB_Item item, int amount)
         {
-            if (_itemsHash.Contains(item.ID) && (item.Flags & ItemFlags.Stackable) > 0)
+            if (m_itemsHash.Contains(item.ID) && (item.Flags & ItemFlags.Stackable) > 0)
             {
-                var slots = _items.Where(x => (x.Value.Item1 == item.ID) && (x.Value.Item2 < item.Stack)).ToArray();
-                foreach (var slot in slots)
+                InventorySlot slot;
+                for (int index = 0, count = m_items.Count; index < m_data.InventorySlots && count > 0 && amount > 0; index++, count--)
                 {
-                    if (amount == 0) break;
-                    amount = AddSlot(slot.Key, item, amount);
+                    if (m_items.TryGetValue(index, out slot))
+                    {
+                        if (slot.Item.Id == item.ID && slot.Amount < item.Stack)
+                            amount = AddSlot(index, item, amount);
+                    }
                 }
-                if (amount > 0) return AddNewSlots(item, amount);
+                if (amount > 0)
+                    return AddNewSlots(item, amount);
             }
             else
                 return AddNewSlots(item, amount);
             return 0;
         }
+
         private int AddNewSlots(DB_Item item, int amount)
         {
-            var slot = GetFreeSlot();
-            if (slot == -1) return -1;
-            if (!_itemsHash.Contains(item.ID)) _itemsHash.Add(item.ID);
-            while ((amount = SetSlot((byte)slot, item, amount)) > 0 && slot != -1)
-                slot = GetFreeSlot();
+            var index = GetFreeSlot();
+            if (index == -1)
+                return -amount;
+            if (!m_itemsHash.Contains(item.ID))
+                m_itemsHash.Add(item.ID);
+            while ((amount = SetSlot(index, item, amount)) > 0 && index != -1)
+                index = GetFreeSlot();
             return amount;
         }
-        private int RemoveSlot(byte slot, int id, int amount)
+
+        private InventorySlot GetInventorySlot(int index)
         {
-            int slotAmount = _items[slot].Item2;
+            InventorySlot slot;
+            if (!m_items.TryGetValue(index, out slot))
+            {
+                slot = new InventorySlot();
+                m_items[index] = slot;
+            }
+            return slot;
+        }
+
+        private int RemoveSlot(int index, int amount)
+        {
+            var slot = m_items[index];
+            int slotAmount = slot.Amount;
             if (slotAmount <= amount)
             {
-                _items.Remove(slot);
-                _view.DeleteItem(slot, slotAmount);
+                m_items.Remove(index);
+                m_view.DeleteSlot(slot, index);
                 return amount - slotAmount;
             }
             else
             {
-                slotAmount -= amount;
-                _items[slot] = new Tuple<int, int>(id, slotAmount);
-                _view.DeleteItem(slot, amount);
+                slot.Amount -= amount;
                 return 0;
             }
         }
-        private int AddItem(byte slot, DB_Item item, int amount)
+
+        private int AddItem(int index, DB_Item item, int amount)
         {
-            if (_items.ContainsKey(slot)) return amount;
-            if (!_itemsHash.Contains(item.ID)) _itemsHash.Add(item.ID);
-            return SetSlot(slot, item, amount);
+            if (!m_items.ContainsKey(index))
+                return amount;
+            if (!m_itemsHash.Contains(item.ID))
+                m_itemsHash.Add(item.ID);
+            return SetSlot(index, item, amount);
         }
-        private int SetSlot(byte slot, DB_Item item, int amount)
+
+        private void SetSlot(int index, InventorySlot islot)
         {
+            var slot = new InventorySlot() { Item = islot.Item, Amount = islot.Amount };
+            m_items[index] = slot;
+            m_view.UpdateSlot(slot, index);
+        }
+
+        private int SetSlot(int index, DB_Item item, int amount)
+        {
+            var slot = new InventorySlot(item.ID, 0);
             if ((item.Flags & ItemFlags.Stackable) == 0)
-            {
-                _items[slot] = new Tuple<int, int>(item.ID, 1);
-                _view.AddItem(item.ID, 1, slot);
-                return --amount;
-            }
+                slot.Amount = 1;
             else
-            {
-                int added = amount < item.Stack ? amount : item.Stack;
-                _items[slot] = new Tuple<int, int>(item.ID, added);
-                _view.AddItem(item.ID, added, slot);
-                return amount - added;
-            }
+                slot.Amount = amount < item.Stack ? amount : item.Stack;
+            m_items[index] = slot;
+            m_view.UpdateSlot(slot, index);
+            return amount - slot.Amount;
         }
-        private int AddSlot(byte slot, DB_Item item, int amount)
+
+        private int SetSlot(int index, DB_Item item, Item data, int amount)
+        {
+            var slot = new InventorySlot() { Item = data };
+            if ((item.Flags & ItemFlags.Stackable) == 0)
+                slot.Amount = 1;
+            else
+                slot.Amount = amount < item.Stack ? amount : item.Stack;
+            m_items[index] = slot;
+            m_view.UpdateSlot(slot, index);
+            return amount - slot.Amount;
+        }
+
+        private int AddSlot(int index, DB_Item item, int amount)
         {
             if ((item.Flags & ItemFlags.Stackable) == 0) return amount;
-            amount += _items[slot].Item2;
-            int slotAmount = amount < item.Stack ? amount : item.Stack;
-            _items[slot] = new Tuple<int, int>(item.ID, slotAmount);
-            _view.AddItem(item.ID, slotAmount, slot);
-            return amount - slotAmount;
+            var slot = m_items[index];
+            var nAmount = amount + slot.Amount;
+            slot.Amount = nAmount < item.Stack ? nAmount : item.Stack;
+            m_view.UpdateSlot(slot, index);
+            return amount - slot.Amount;
         }
+
         #region RPC Handlers
-        [Rpc(4)]//Worn Items
-        private void RPC_004(NetMessage arg1, NetMessageInfo arg2)
+        [Rpc(4, false)]//WornItems
+        private void RPC_004(NetMessage message, NetMessageInfo info)
         {
-            _view.WornItems(arg2.Sender, _data);
+            m_view.WornItems(info.Sender, m_data);
         }
-        [Rpc(6)]//Add item
-        private void RPC_006(NetMessage arg1, NetMessageInfo arg2)
+
+        [OwnerOnly]
+        [Rpc(6, false)]
+        private void AddItem(int itemId, int amount)
         {
-            if (arg2.Sender.Id != _player.Id) return;
             DB_Item item;
-            int itemID = arg1.ReadInt32();
-            int amount = arg1.ReadInt32();
             if (_mPlayer.User.Access >= AccessLevel.TeamMember)
             {
-                if (DataMgr.Select(itemID, out item))
+                if (itemId == -1)
                 {
-                    itemID = AddItem(item, amount);
-                    if (itemID != 0)
-                        _player.Announce($"Inventory full, added {(itemID == -1 ? 0 : amount - itemID)}/{amount} items");
-                    else _player.Announce($"Added item {item.Name ?? item.ID.ToString()} amount {amount}");
+                    AddBits(amount);
+                    _player.SystemMsg($"Added {amount} bits");
+                    return;
                 }
-                else _player.Error($"Item {itemID} not found");
-            }
-            else _player.Error($"You haven't permission to adding items");
-        }
-        [Rpc(7)]//Remove item
-        private void RPC_007(NetMessage arg1, NetMessageInfo arg2)
-        {
-            if (arg2.Sender.Id != _player.Id) return;
-            byte islot = arg1.ReadByte();
-            int amount = arg1.ReadInt32();
-            var itemSlot = GetSlot(islot);
-            if (itemSlot.Item1 != -1)
-            {
-                int ramount = RemoveItems(itemSlot.Item1, amount);
-                if (ramount == 0)
-                    _player.Announce($"Removed {amount} items {itemSlot.Item1} from {islot}");
-                else _player.Announce($"Error while removing items {itemSlot.Item1} from {islot} removed {amount - ramount}/{amount}");
-            }
-            else _player.Error($"Inventory slot {islot} is empty");
-        }
-        [Rpc(8)]//Wear item
-        private void RPC_008(NetMessage arg1, NetMessageInfo arg2)
-        {
-            if (arg2.Sender.Id != _player.Id) return;
-            DB_Item item;
-            byte wslot = arg1.ReadByte();
-            byte islot = arg1.ReadByte();
-            var itemSlot = GetSlot(islot);
-            ItemSlot wslotType = wslot.ToItemSlot();
-            if (itemSlot.Item1 != -1 && DataMgr.Select(itemSlot.Item1, out item))
-            {
-                if ((item.Slot & wslotType) == wslotType)
+                if (DataMgr.Select(itemId, out item))
                 {
-                    _items.Remove(islot);
-                    _view.DeleteItem(islot, 1);
-                    if (_wears.ContainsKey(wslot))
-                        AddItem(DataMgr.SelectItem(_wears[wslot]), 1);
-                    _wears[wslot] = item.ID;
-                    if ((item.Flags & ItemFlags.Stats) > 0)
-                        _mPlayer.Stats.UpdateStats();
-                    _view.WearItem(item.ID, wslot);
-                }
-                else _player.Error($"You can't whear item {item.Name ?? item.ID.ToString()} in slot {wslotType}");
-            }
-            else _player.Error($"Inventory slot {islot} is empty");
-        }
-        [Rpc(9)]//Unwear item
-        private void RPC_009(NetMessage arg1, NetMessageInfo arg2)
-        {
-            if (arg2.Sender.Id != _player.Id) return;
-            DB_Item item; int itemSlot;
-            byte wslot = arg1.ReadByte();
-            byte islot = arg1.ReadByte();
-            byte wearSlot = (byte)(wslot + 1);
-            if (!_wears.ContainsKey(wearSlot)) return;
-            if (GetSlot(islot).Item1 != -1) itemSlot = GetFreeSlot(); else itemSlot = islot;
-            if (itemSlot != -1 && DataMgr.Select(_wears[wearSlot], out item))
-            {
-                if (AddItem((byte)itemSlot, item, 1) == 0)
-                {
-                    _wears.Remove(wearSlot);
-                    _view.UnwearItem(wslot);
-                    if ((item.Flags & ItemFlags.Stats) > 0)
-                        _mPlayer.Stats.UpdateStats();
+                    var count = AddItem(item, amount);
+                    if (count != 0)
+                        _player.SystemMsg($"Inventory full, added {(count == -1 ? 0 : amount - count)}/{amount} items");
+                    else
+                        _player.SystemMsg($"Added item {item.Name ?? item.ID.ToString()} amount {amount}");
                 }
                 else
-                    _view.WearItem(item.ID, wearSlot);
+                    _player.SystemMsg($"Item {itemId} not found");
             }
             else
-                _view.WearItem(_wears[wearSlot], wearSlot);
+                _player.SystemMsg($"You haven't permission to adding items");
         }
-        [Rpc(12)]//Use item
-        private void RPC_012(NetMessage arg1, NetMessageInfo arg2)
+
+        [Rpc(7, false)]
+        private void DeleteItem(byte islot, int amount)
+        {
+            var itemSlot = GetSlot(islot);
+            if (!itemSlot.IsEmpty)
+            {
+                int ramount = RemoveItems(itemSlot.Item.Id, amount);
+                if (ramount == 0)
+                    _player.SystemMsg($"Removed {amount} items {itemSlot.Item.Id} from {islot}");
+                else
+
+                    _player.SystemMsg($"Error while removing items {itemSlot.Item.Id} from {islot} removed {amount - ramount}/{amount}");
+            }
+            else
+                _player.SystemMsg($"Inventory slot {islot} is empty");
+        }
+
+        [OwnerOnly]
+        [Rpc(8, false)]
+        private void WearItem(WornSlot wslot, byte islot)
+        {
+            DB_Item item; Item witem;
+            var itemSlot = GetSlot(islot);
+            if (itemSlot?.IsEmpty ?? true)
+                _player.SystemMsg($"Inventory slot {islot} is empty");
+            else
+            {
+                if (DataMgr.Select(itemSlot.Item.Id, out item))
+                {
+                    var wPosition = wslot.Position;
+                    if ((item.Slot & wPosition) == wPosition)
+                    {
+                        var flags = item.Flags;
+                        var index = wslot.Index;
+                        m_items.Remove(islot);
+                        m_view.DeleteSlot(itemSlot, islot);
+                        if (m_wears.TryGetValue(index, out witem))
+                        {
+                            item = DataMgr.SelectItem(witem.Id);
+                            SetSlot(islot, item, witem, 1);
+                            flags |= item.Flags;
+                        }
+                        m_wearSlotsUsed |= wPosition;
+                        m_wears[index] = itemSlot.Item;
+                        m_view.WearItem(itemSlot.Item, wslot.Value, m_wearSlotsUsed);
+                        if ((flags & ItemFlags.Stats) > 0)
+                            _mPlayer.Stats.UpdateStats();
+                    }
+                    else
+                        _player.SystemMsg($"You can't wear {item.Name} in {wPosition}");
+                }
+                else
+                    _player.SystemMsg($"Item {itemSlot.Item.Id} not found");
+            }
+        }
+
+        [OwnerOnly]
+        [Rpc(9, false)]
+        private void UnwearItem(WornSlot wslot, byte islot)
+        {
+            DB_Item item; Item witem;
+            var index = wslot.Index;
+            if (m_wears.TryGetValue(index, out witem))
+            {
+                if (DataMgr.Select(witem.Id, out item))
+                {
+                    int itemSlot = islot;
+                    if (!GetInventorySlot(islot).IsEmpty)
+                        itemSlot = GetFreeSlot();
+                    if (itemSlot != -1)
+                    {
+                        if (SetSlot(itemSlot, item, witem, 1) == 0)
+                        {
+                            m_wears.Remove(index);
+                            m_wearSlotsUsed &= ~wslot.Position;
+                            m_view.UnwearItem(wslot.Value, m_wearSlotsUsed);
+                            if ((item.Flags & ItemFlags.Stats) > 0)
+                                _mPlayer.Stats.UpdateStats();
+                        }
+                        else
+                        {
+                            _player.SystemMsg($"Couldn't unwear item {item.Name}");
+                            m_view.WearItem(witem, wslot.Value, m_wearSlotsUsed);
+                        }
+                    }
+                    else
+                    {
+                        _player.SystemMsg($"You inventory is full");
+                        m_view.WearItem(witem, wslot.Value, m_wearSlotsUsed);
+                    }
+                }
+                else
+                {
+                    _player.SystemMsg($"Item {witem.Id} not found");
+                    m_view.WearItem(witem, wslot.Value, m_wearSlotsUsed);
+                }
+            }
+            else
+                _player.SystemMsg($"Wear slot {wslot.Position} is empty");
+        }
+
+        [OwnerOnly]
+        [Rpc(12, false)]//Use item
+        private void UseItem(byte islot)
         {
             DB_Item item;
-            byte islot = arg1.ReadByte();
             var itemSlot = GetSlot(islot);
-            if (itemSlot.Item1 != -1 && DataMgr.Select(itemSlot.Item1, out item))
+            if (!itemSlot.IsEmpty && DataMgr.Select(itemSlot.Item.Id, out item))
             {
                 if ((item.Flags & ItemFlags.Usable) > 0)
                     ItemsScript.Use(item.ID, _mPlayer);
-                else _player.Error($"You can't use item {item.Name ?? item.ID.ToString()}");
+                else
+                    _player.SystemMsg($"You can't use item {item.Name ?? item.ID.ToString()}");
             }
-            else _player.Error($"Inventory slot {islot} is empty or item not found");
+            else
+                _player.SystemMsg($"Inventory slot {islot} is empty or item not found");
         }
-        [Rpc(20)]//Move item
-        private void RPC_020(NetMessage arg1, NetMessageInfo arg2)
+
+        [OwnerOnly]
+        [Rpc(14, false)]
+        private void ColorItem(byte islot, uint color)
         {
-            if (arg2.Sender.Id != _player.Id) return;
-            DB_Item item01;
-            byte slot01 = (byte)arg1.ReadInt32();
-            byte slot02 = (byte)arg1.ReadInt32();
-            var itemSlot01 = GetSlot(slot01);
-            var itemSlot02 = GetSlot(slot02);
-            if (itemSlot01.Item1 == -1 || itemSlot02.Item1 != -1) return;
-            if (DataMgr.Select(itemSlot01.Item1, out item01))
+            if (m_data.Bits >= ColorItemPrice)
             {
-                _items.Remove(slot01);
-                SetSlot(slot02, item01, itemSlot01.Item2);
+                var itemSlot = GetSlot(islot);
+                if (itemSlot?.IsEmpty ?? true)
+                    _player.SystemMsg($"Inventory slot {islot} is empty");
+                else
+                {
+                    AddBits(-ColorItemPrice);
+                    itemSlot.Item.Color = color;
+                    m_view.UpdateSlot(itemSlot, islot);
+                }
+            }
+            else
+                _player.SystemMsg($"You have not enough bits {ColorItemPrice - m_data.Bits}");
+        }
+
+        [OwnerOnly]
+        [Rpc(20, false)]
+        private void MoveSlotToSlot(int first, int second)
+        {
+            var slotFirst = GetSlot(first);
+            var slotSecond = GetSlot(second);
+            if (slotFirst?.IsEmpty ?? true)
+                _player.SystemMsg($"Inventory slot {first} is empty");
+            else
+            {
+                if (slotSecond?.IsEmpty ?? true)
+                {
+                    m_items.Remove(first);
+                    SetSlot(second, slotFirst);
+                    m_view.DeleteSlot(slotFirst, first);
+                }
+                else
+                {
+                    SetSlot(first, slotSecond);
+                    SetSlot(second, slotFirst);
+                }
             }
         }
         #endregion
         #region Events Handlers
         private void ItemsMgr_OnSpawn()
         {
-            _view = _wPlayer.View;
-            _view.SubscribeMarkedRpcsOnComponent(this);
+            m_view = _wPlayer.View;
+            m_view.SubscribeMarkedRpcsOnComponent(this);
         }
+
         private void ItemsMgr_OnDestroy()
         {
-            _view = null;
-            _data = null;
-            _wears = null;
-            _items = null;
+            m_view = null;
+            m_data = null;
+            m_wears = null;
+            m_items = null;
             _player = null;
             _mPlayer = null;
             _wPlayer = null;
-            _itemsHash = null;
+            m_itemsHash = null;
         }
         #endregion
     }

@@ -236,17 +236,17 @@ namespace Ghost.Server.Core.Classes
                 case DialogCondition.LastChoice_NotEqual:
                     return player.LastDialogChoice != entry.ConditionData01;
                 case DialogCondition.TalentLevel_Equal:
-                    return player.Data.GetTalentLevel(entry.ConditionData02) == entry.ConditionData01;
+                    return player.Data.GetTalentLevel((uint)entry.ConditionData02) == entry.ConditionData01;
                 case DialogCondition.TalentLevel_NotEqual:
-                    return player.Data.GetTalentLevel(entry.ConditionData02) != entry.ConditionData01;
+                    return player.Data.GetTalentLevel((uint)entry.ConditionData02) != entry.ConditionData01;
                 case DialogCondition.TalentLevel_Lower:
-                    return player.Data.GetTalentLevel(entry.ConditionData02) < entry.ConditionData01;
+                    return player.Data.GetTalentLevel((uint)entry.ConditionData02) < entry.ConditionData01;
                 case DialogCondition.TalentLevel_Greater:
-                    return player.Data.GetTalentLevel(entry.ConditionData02) > entry.ConditionData01;
+                    return player.Data.GetTalentLevel((uint)entry.ConditionData02) > entry.ConditionData01;
                 case DialogCondition.TalentLevel_LowerOrEqual:
-                    return player.Data.GetTalentLevel(entry.ConditionData02) <= entry.ConditionData01;
+                    return player.Data.GetTalentLevel((uint)entry.ConditionData02) <= entry.ConditionData01;
                 case DialogCondition.TalentLevel_GreaterOrEqual:
-                    return player.Data.GetTalentLevel(entry.ConditionData02) >= entry.ConditionData01;
+                    return player.Data.GetTalentLevel((uint)entry.ConditionData02) >= entry.ConditionData01;
                 case DialogCondition.Item_HasCount:
                     if (entry.ConditionData01 == -1)
                         return player.Data.Bits >= entry.ConditionData02;
@@ -272,7 +272,7 @@ namespace Ghost.Server.Core.Classes
                     if (entry.CommandData02 == -1)
                         player.Stats.AddExpAll((uint)entry.CommandData01);
                     else
-                        player.Stats.AddExp((Talent)entry.CommandData02, (uint)entry.CommandData01);
+                        player.Stats.AddExp((TalentMarkId)entry.CommandData02, (uint)entry.CommandData01);
                     break;
                 case DialogCommand.AddBits:
                     player.Items.AddBits(entry.CommandData01);

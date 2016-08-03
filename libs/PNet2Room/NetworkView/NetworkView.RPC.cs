@@ -51,6 +51,14 @@ namespace PNetR
             SendMessage(msg, mode);
         }
 
+        public void Rpc<T>(byte compId, byte rpcId, RpcMode mode, T arg)
+            where T : INetSerializable
+        {
+            var msg = StartMessage(compId, rpcId, mode, arg.AllocSize);
+            arg.OnSerialize(msg);
+            SendMessage(msg, mode);
+        }
+
         public void Rpc(byte compId, byte rpcId, RpcMode mode, params object[] args)
         {
             var size = 0;

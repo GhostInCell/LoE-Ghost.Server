@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-16"?>
 <ArrayOfItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Item>
     <ID>0</ID>
@@ -357,7 +357,7 @@
     <Icon>50</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
-    <Description>Legends has it that whoever's hooves can fit into these boots will look fabulous for the gala.</Description>
+    <Description>Legend has it that whoever's hooves can fit into these boots will look fabulous for the gala.</Description>
     <Name>Gala boots</Name>
     <ResourcePath>Boots/gala_boots</ResourcePath>
     <Stackable>false</Stackable>
@@ -469,7 +469,7 @@
     <Icon>43</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
-    <Description>Feeling hungry? Once you open this you can eat to your heart's content. </Description>
+    <Description>Feeling hungry? Once you open this, you can eat to your heart's content.</Description>
     <Name>Food Box</Name>
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>true</Stackable>
@@ -1186,7 +1186,7 @@
   </Item>
   <Item>
     <ID>75</ID>
-    <Icon>0</Icon>
+    <Icon>198</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>The Paso Fino Perfect Party Pastry Pack is the perfect pack for pacifying potentially perturbant party ponies. Purportedly.</Description>
@@ -2251,7 +2251,7 @@
   </Item>
   <Item>
     <ID>142</ID>
-    <Icon>0</Icon>
+    <Icon>115</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>Useful scraps of linen.</Description>
@@ -2267,7 +2267,7 @@
   </Item>
   <Item>
     <ID>143</ID>
-    <Icon>0</Icon>
+    <Icon>119</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>Pieces of canvas suitable for making armor.</Description>
@@ -2283,7 +2283,7 @@
   </Item>
   <Item>
     <ID>144</ID>
-    <Icon>0</Icon>
+    <Icon>123</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>Little bits of time. Who can't use more time?</Description>
@@ -2299,7 +2299,7 @@
   </Item>
   <Item>
     <ID>145</ID>
-    <Icon>0</Icon>
+    <Icon>124</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>An ingot of copper suitable for crafting.</Description>
@@ -2315,7 +2315,7 @@
   </Item>
   <Item>
     <ID>146</ID>
-    <Icon>0</Icon>
+    <Icon>125</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>An ingot of bronze suitable for crafting.</Description>
@@ -2331,7 +2331,7 @@
   </Item>
   <Item>
     <ID>147</ID>
-    <Icon>0</Icon>
+    <Icon>126</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>An ingot of iron suitable for crafting.</Description>
@@ -2347,7 +2347,7 @@
   </Item>
   <Item>
     <ID>148</ID>
-    <Icon>0</Icon>
+    <Icon>127</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>An ingot of steel suitable for crafting.</Description>
@@ -2363,7 +2363,7 @@
   </Item>
   <Item>
     <ID>149</ID>
-    <Icon>0</Icon>
+    <Icon>128</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>An ingot of alicium suitable for crafting.</Description>
@@ -2379,7 +2379,7 @@
   </Item>
   <Item>
     <ID>150</ID>
-    <Icon>0</Icon>
+    <Icon>129</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>An ingot of titanium suitable for crafting.</Description>
@@ -2395,7 +2395,7 @@
   </Item>
   <Item>
     <ID>151</ID>
-    <Icon>0</Icon>
+    <Icon>130</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>An ingot of elementium suitable for crafting.</Description>
@@ -2411,7 +2411,7 @@
   </Item>
   <Item>
     <ID>152</ID>
-    <Icon>0</Icon>
+    <Icon>131</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>An ingot of space suitable for crafting. Pairs very well with temporal scrap.</Description>
@@ -2427,7 +2427,7 @@
   </Item>
   <Item>
     <ID>153</ID>
-    <Icon>0</Icon>
+    <Icon>132</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>It's stuff that helps make heat!</Description>
@@ -2443,7 +2443,7 @@
   </Item>
   <Item>
     <ID>154</ID>
-    <Icon>0</Icon>
+    <Icon>133</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>Something's got to start the magic off right.</Description>
@@ -2459,7 +2459,7 @@
   </Item>
   <Item>
     <ID>155</ID>
-    <Icon>0</Icon>
+    <Icon>134</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>You can't keep your materials unless you have pouches to keep them in.</Description>
@@ -2475,7 +2475,7 @@
   </Item>
   <Item>
     <ID>156</ID>
-    <Icon>0</Icon>
+    <Icon>117</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>A strap made of linen. Useful for putting together armor.</Description>
@@ -2491,10 +2491,10 @@
   </Item>
   <Item>
     <ID>157</ID>
-    <Icon>0</Icon>
+    <Icon>118</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
-    <Description>Linen padding for armor</Description>
+    <Description>Linen padding for armor.</Description>
     <Name>Linen Padding</Name>
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>true</Stackable>
@@ -2507,7 +2507,7 @@
   </Item>
   <Item>
     <ID>158</ID>
-    <Icon>0</Icon>
+    <Icon>116</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>Squares of linen. Useful for putting together armor. (Or making napkins.)</Description>
@@ -2523,7 +2523,7 @@
   </Item>
   <Item>
     <ID>159</ID>
-    <Icon>0</Icon>
+    <Icon>122</Icon>
     <ItemLevel>20</ItemLevel>
     <RequiredLevel>20</RequiredLevel>
     <Description>Strap made of canvas. Useful in holding armor together.</Description>
@@ -2539,7 +2539,7 @@
   </Item>
   <Item>
     <ID>160</ID>
-    <Icon>0</Icon>
+    <Icon>121</Icon>
     <ItemLevel>20</ItemLevel>
     <RequiredLevel>20</RequiredLevel>
     <Description>Canvas padding. Not very comfortable.</Description>
@@ -2555,7 +2555,7 @@
   </Item>
   <Item>
     <ID>162</ID>
-    <Icon>0</Icon>
+    <Icon>120</Icon>
     <ItemLevel>20</ItemLevel>
     <RequiredLevel>20</RequiredLevel>
     <Description>Square of canvas. Useful for armor -- or tents.</Description>
@@ -2571,7 +2571,7 @@
   </Item>
   <Item>
     <ID>163</ID>
-    <Icon>0</Icon>
+    <Icon>135</Icon>
     <ItemLevel>40</ItemLevel>
     <RequiredLevel>40</RequiredLevel>
     <Description>Woven strap. Good for holding things together.</Description>
@@ -2587,7 +2587,7 @@
   </Item>
   <Item>
     <ID>164</ID>
-    <Icon>0</Icon>
+    <Icon>136</Icon>
     <ItemLevel>40</ItemLevel>
     <RequiredLevel>40</RequiredLevel>
     <Description>Woven Padding. Good for woven armor.</Description>
@@ -2603,11 +2603,11 @@
   </Item>
   <Item>
     <ID>165</ID>
-    <Icon>0</Icon>
+    <Icon>138</Icon>
     <ItemLevel>50</ItemLevel>
     <RequiredLevel>50</RequiredLevel>
     <Description>Temporal Strip. Good for temporal armor. Tempus fugit.</Description>
-    <Name>Temporal Strip</Name>
+    <Name>Temporal Strap</Name>
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>true</Stackable>
     <MaxStackSize>10</MaxStackSize>
@@ -2619,10 +2619,10 @@
   </Item>
   <Item>
     <ID>166</ID>
-    <Icon>0</Icon>
+    <Icon>139</Icon>
     <ItemLevel>50</ItemLevel>
     <RequiredLevel>50</RequiredLevel>
-    <Description>Temporal Padding. Sometimes you do need to pad time.</Description>
+    <Description>Temporal Padding. Sometimes you need to pad time.</Description>
     <Name>Temporal Padding</Name>
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>true</Stackable>
@@ -2635,7 +2635,7 @@
   </Item>
   <Item>
     <ID>167</ID>
-    <Icon>0</Icon>
+    <Icon>140</Icon>
     <ItemLevel>50</ItemLevel>
     <RequiredLevel>50</RequiredLevel>
     <Description>Temporal Square. Useful in making temporal armor.</Description>
@@ -2651,7 +2651,7 @@
   </Item>
   <Item>
     <ID>168</ID>
-    <Icon>0</Icon>
+    <Icon>141</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>A pretty strip of copper.</Description>
@@ -2667,7 +2667,7 @@
   </Item>
   <Item>
     <ID>169</ID>
-    <Icon>0</Icon>
+    <Icon>142</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>A whole sheet of copper suitable for banging into other shapes.</Description>
@@ -2683,7 +2683,7 @@
   </Item>
   <Item>
     <ID>170</ID>
-    <Icon>0</Icon>
+    <Icon>143</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>Pretty copper casing.</Description>
@@ -2699,10 +2699,10 @@
   </Item>
   <Item>
     <ID>171</ID>
-    <Icon>0</Icon>
+    <Icon>144</Icon>
     <ItemLevel>10</ItemLevel>
     <RequiredLevel>10</RequiredLevel>
-    <Description>A solid strip of bronze</Description>
+    <Description>A solid strip of bronze.</Description>
     <Name>Bronze Strip</Name>
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>true</Stackable>
@@ -2715,10 +2715,10 @@
   </Item>
   <Item>
     <ID>172</ID>
-    <Icon>0</Icon>
+    <Icon>145</Icon>
     <ItemLevel>10</ItemLevel>
     <RequiredLevel>10</RequiredLevel>
-    <Description>Hardened sheet of bronze</Description>
+    <Description>Hardened sheet of bronze.</Description>
     <Name>Bronze Sheet</Name>
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>true</Stackable>
@@ -2731,7 +2731,7 @@
   </Item>
   <Item>
     <ID>173</ID>
-    <Icon>0</Icon>
+    <Icon>146</Icon>
     <ItemLevel>10</ItemLevel>
     <RequiredLevel>10</RequiredLevel>
     <Description>Hardened bronze casing.</Description>
@@ -2747,11 +2747,11 @@
   </Item>
   <Item>
     <ID>174</ID>
-    <Icon>0</Icon>
+    <Icon>147</Icon>
     <ItemLevel>20</ItemLevel>
     <RequiredLevel>20</RequiredLevel>
     <Description>A strip of iron.</Description>
-    <Name>Iton Strip</Name>
+    <Name>Iron Strip</Name>
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>true</Stackable>
     <MaxStackSize>10</MaxStackSize>
@@ -2763,7 +2763,7 @@
   </Item>
   <Item>
     <ID>175</ID>
-    <Icon>0</Icon>
+    <Icon>148</Icon>
     <ItemLevel>20</ItemLevel>
     <RequiredLevel>20</RequiredLevel>
     <Description>A whole sheet of iron.</Description>
@@ -2779,7 +2779,7 @@
   </Item>
   <Item>
     <ID>176</ID>
-    <Icon>0</Icon>
+    <Icon>149</Icon>
     <ItemLevel>20</ItemLevel>
     <RequiredLevel>20</RequiredLevel>
     <Description>An iron casing suitable for building armor.</Description>
@@ -2795,7 +2795,7 @@
   </Item>
   <Item>
     <ID>177</ID>
-    <Icon>0</Icon>
+    <Icon>150</Icon>
     <ItemLevel>30</ItemLevel>
     <RequiredLevel>30</RequiredLevel>
     <Description>A strip of tempered steel.</Description>
@@ -2811,7 +2811,7 @@
   </Item>
   <Item>
     <ID>178</ID>
-    <Icon>0</Icon>
+    <Icon>152</Icon>
     <ItemLevel>30</ItemLevel>
     <RequiredLevel>30</RequiredLevel>
     <Description>A sheet of tempered steel.</Description>
@@ -2827,7 +2827,7 @@
   </Item>
   <Item>
     <ID>179</ID>
-    <Icon>0</Icon>
+    <Icon>151</Icon>
     <ItemLevel>30</ItemLevel>
     <RequiredLevel>30</RequiredLevel>
     <Description>A tempered steel casing suitable for armor.</Description>
@@ -2843,7 +2843,7 @@
   </Item>
   <Item>
     <ID>180</ID>
-    <Icon>0</Icon>
+    <Icon>153</Icon>
     <ItemLevel>40</ItemLevel>
     <RequiredLevel>40</RequiredLevel>
     <Description>A strip of rare alicium.</Description>
@@ -2859,10 +2859,10 @@
   </Item>
   <Item>
     <ID>181</ID>
-    <Icon>0</Icon>
+    <Icon>154</Icon>
     <ItemLevel>40</ItemLevel>
     <RequiredLevel>40</RequiredLevel>
-    <Description>A whole sheet of precious alicium.</Description>
+    <Description>A whole sheet of rare alicium.</Description>
     <Name>Alicium Sheet</Name>
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>true</Stackable>
@@ -2875,7 +2875,7 @@
   </Item>
   <Item>
     <ID>182</ID>
-    <Icon>0</Icon>
+    <Icon>155</Icon>
     <ItemLevel>40</ItemLevel>
     <RequiredLevel>40</RequiredLevel>
     <Description>A casing of rare alicium suitable for armor.</Description>
@@ -2891,7 +2891,7 @@
   </Item>
   <Item>
     <ID>183</ID>
-    <Icon>0</Icon>
+    <Icon>156</Icon>
     <ItemLevel>40</ItemLevel>
     <RequiredLevel>40</RequiredLevel>
     <Description>A strip of rainbow-colored titanium.</Description>
@@ -2907,10 +2907,10 @@
   </Item>
   <Item>
     <ID>184</ID>
-    <Icon>0</Icon>
+    <Icon>157</Icon>
     <ItemLevel>40</ItemLevel>
     <RequiredLevel>40</RequiredLevel>
-    <Description>A sheet of rainbow-colored titanium,</Description>
+    <Description>A sheet of rainbow-colored titanium.</Description>
     <Name>Titanium Sheet</Name>
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>true</Stackable>
@@ -2923,10 +2923,10 @@
   </Item>
   <Item>
     <ID>185</ID>
-    <Icon>0</Icon>
+    <Icon>158</Icon>
     <ItemLevel>40</ItemLevel>
     <RequiredLevel>40</RequiredLevel>
-    <Description>A casing of precious titanium,</Description>
+    <Description>A casing of precious titanium.</Description>
     <Name>Titanium Casing</Name>
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>true</Stackable>
@@ -2939,7 +2939,7 @@
   </Item>
   <Item>
     <ID>186</ID>
-    <Icon>0</Icon>
+    <Icon>159</Icon>
     <ItemLevel>40</ItemLevel>
     <RequiredLevel>40</RequiredLevel>
     <Description>A strip of elementium.</Description>
@@ -2955,7 +2955,7 @@
   </Item>
   <Item>
     <ID>187</ID>
-    <Icon>0</Icon>
+    <Icon>160</Icon>
     <ItemLevel>40</ItemLevel>
     <RequiredLevel>40</RequiredLevel>
     <Description>A sheet of elementium.</Description>
@@ -2971,7 +2971,7 @@
   </Item>
   <Item>
     <ID>188</ID>
-    <Icon>0</Icon>
+    <Icon>161</Icon>
     <ItemLevel>40</ItemLevel>
     <RequiredLevel>40</RequiredLevel>
     <Description>A casing of elementium suitable for building armor.</Description>
@@ -2990,7 +2990,7 @@
     <Icon>0</Icon>
     <ItemLevel>50</ItemLevel>
     <RequiredLevel>50</RequiredLevel>
-    <Description>A Very Special Metal Cast.</Description>
+    <Description>A very special metal cast.</Description>
     <Name>Spacial Cast</Name>
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>true</Stackable>
@@ -3003,7 +3003,7 @@
   </Item>
   <Item>
     <ID>190</ID>
-    <Icon>0</Icon>
+    <Icon>162</Icon>
     <ItemLevel>3</ItemLevel>
     <RequiredLevel>3</RequiredLevel>
     <Description>Copper Back Plate</Description>
@@ -3013,13 +3013,13 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>1</Price>
     <Salable>true</Salable>
-    <WearableSlots>None</WearableSlots>
+    <WearableSlots>SaddleBags</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
   </Item>
   <Item>
     <ID>191</ID>
-    <Icon>0</Icon>
+    <Icon>163</Icon>
     <ItemLevel>6</ItemLevel>
     <RequiredLevel>6</RequiredLevel>
     <Description>Copper Chest Plate</Description>
@@ -3029,13 +3029,13 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>1</Price>
     <Salable>true</Salable>
-    <WearableSlots>None</WearableSlots>
+    <WearableSlots>Shirt</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
   </Item>
   <Item>
     <ID>192</ID>
-    <Icon>0</Icon>
+    <Icon>164</Icon>
     <ItemLevel>9</ItemLevel>
     <RequiredLevel>9</RequiredLevel>
     <Description>Copper Helmet</Description>
@@ -3045,13 +3045,13 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>1</Price>
     <Salable>true</Salable>
-    <WearableSlots>None</WearableSlots>
+    <WearableSlots>Hat</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
   </Item>
   <Item>
     <ID>193</ID>
-    <Icon>0</Icon>
+    <Icon>165</Icon>
     <ItemLevel>12</ItemLevel>
     <RequiredLevel>12</RequiredLevel>
     <Description>Bronze Back Plate</Description>
@@ -3061,13 +3061,13 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>1</Price>
     <Salable>true</Salable>
-    <WearableSlots>None</WearableSlots>
+    <WearableSlots>SaddleBags</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
   </Item>
   <Item>
     <ID>194</ID>
-    <Icon>0</Icon>
+    <Icon>166</Icon>
     <ItemLevel>14</ItemLevel>
     <RequiredLevel>14</RequiredLevel>
     <Description>Bronze Chest Plate</Description>
@@ -3077,13 +3077,13 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>1</Price>
     <Salable>true</Salable>
-    <WearableSlots>None</WearableSlots>
+    <WearableSlots>Shirt</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
   </Item>
   <Item>
     <ID>195</ID>
-    <Icon>0</Icon>
+    <Icon>167</Icon>
     <ItemLevel>16</ItemLevel>
     <RequiredLevel>16</RequiredLevel>
     <Description>Bronze Front Legs</Description>
@@ -3093,13 +3093,13 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>1</Price>
     <Salable>true</Salable>
-    <WearableSlots>None</WearableSlots>
+    <WearableSlots>FrontShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
   </Item>
   <Item>
     <ID>196</ID>
-    <Icon>0</Icon>
+    <Icon>168</Icon>
     <ItemLevel>18</ItemLevel>
     <RequiredLevel>18</RequiredLevel>
     <Description>Bronze Helmet</Description>
@@ -3109,13 +3109,13 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>1</Price>
     <Salable>true</Salable>
-    <WearableSlots>None</WearableSlots>
+    <WearableSlots>Mask</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
   </Item>
   <Item>
     <ID>197</ID>
-    <Icon>0</Icon>
+    <Icon>169</Icon>
     <ItemLevel>21</ItemLevel>
     <RequiredLevel>21</RequiredLevel>
     <Description>Iron Back Legs</Description>
@@ -3125,13 +3125,13 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>1</Price>
     <Salable>true</Salable>
-    <WearableSlots>None</WearableSlots>
+    <WearableSlots>BackShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
   </Item>
   <Item>
     <ID>198</ID>
-    <Icon>0</Icon>
+    <Icon>170</Icon>
     <ItemLevel>23</ItemLevel>
     <RequiredLevel>23</RequiredLevel>
     <Description>Iron Back Plate</Description>
@@ -3141,13 +3141,13 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>1</Price>
     <Salable>true</Salable>
-    <WearableSlots>None</WearableSlots>
+    <WearableSlots>SaddleBags</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
   </Item>
   <Item>
     <ID>199</ID>
-    <Icon>0</Icon>
+    <Icon>171</Icon>
     <ItemLevel>25</ItemLevel>
     <RequiredLevel>25</RequiredLevel>
     <Description>Iron Chest Plate</Description>
@@ -3157,13 +3157,13 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>1</Price>
     <Salable>true</Salable>
-    <WearableSlots>None</WearableSlots>
+    <WearableSlots>Shirt</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
   </Item>
   <Item>
     <ID>200</ID>
-    <Icon>0</Icon>
+    <Icon>172</Icon>
     <ItemLevel>27</ItemLevel>
     <RequiredLevel>27</RequiredLevel>
     <Description>Iron Front Legs</Description>
@@ -3173,13 +3173,13 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>1</Price>
     <Salable>true</Salable>
-    <WearableSlots>None</WearableSlots>
+    <WearableSlots>FrontShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
   </Item>
   <Item>
     <ID>201</ID>
-    <Icon>0</Icon>
+    <Icon>173</Icon>
     <ItemLevel>29</ItemLevel>
     <RequiredLevel>29</RequiredLevel>
     <Description>Iron Helmet</Description>
@@ -3189,13 +3189,13 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>1</Price>
     <Salable>true</Salable>
-    <WearableSlots>None</WearableSlots>
+    <WearableSlots>Mask</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
   </Item>
   <Item>
     <ID>202</ID>
-    <Icon>0</Icon>
+    <Icon>174</Icon>
     <ItemLevel>31</ItemLevel>
     <RequiredLevel>31</RequiredLevel>
     <Description>Steel Back Legs</Description>
@@ -3205,13 +3205,13 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>1</Price>
     <Salable>true</Salable>
-    <WearableSlots>None</WearableSlots>
+    <WearableSlots>BackShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
   </Item>
   <Item>
     <ID>203</ID>
-    <Icon>0</Icon>
+    <Icon>175</Icon>
     <ItemLevel>33</ItemLevel>
     <RequiredLevel>33</RequiredLevel>
     <Description>Steel Back Plate</Description>
@@ -3221,13 +3221,13 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>1</Price>
     <Salable>true</Salable>
-    <WearableSlots>None</WearableSlots>
+    <WearableSlots>SaddleBags</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
   </Item>
   <Item>
     <ID>204</ID>
-    <Icon>0</Icon>
+    <Icon>176</Icon>
     <ItemLevel>35</ItemLevel>
     <RequiredLevel>35</RequiredLevel>
     <Description>Steel Chest Plate</Description>
@@ -3237,13 +3237,13 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>1</Price>
     <Salable>true</Salable>
-    <WearableSlots>None</WearableSlots>
+    <WearableSlots>Shirt</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
   </Item>
   <Item>
     <ID>205</ID>
-    <Icon>0</Icon>
+    <Icon>177</Icon>
     <ItemLevel>37</ItemLevel>
     <RequiredLevel>37</RequiredLevel>
     <Description>Steel Front Legs</Description>
@@ -3253,13 +3253,13 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>1</Price>
     <Salable>true</Salable>
-    <WearableSlots>None</WearableSlots>
+    <WearableSlots>FrontShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
   </Item>
   <Item>
     <ID>206</ID>
-    <Icon>0</Icon>
+    <Icon>178</Icon>
     <ItemLevel>39</ItemLevel>
     <RequiredLevel>39</RequiredLevel>
     <Description>Steel Helmet</Description>
@@ -3269,13 +3269,13 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>1</Price>
     <Salable>true</Salable>
-    <WearableSlots>None</WearableSlots>
+    <WearableSlots>Mask</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
   </Item>
   <Item>
     <ID>207</ID>
-    <Icon>0</Icon>
+    <Icon>179</Icon>
     <ItemLevel>41</ItemLevel>
     <RequiredLevel>41</RequiredLevel>
     <Description>Alicium Back Legs</Description>
@@ -3285,13 +3285,13 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>1</Price>
     <Salable>true</Salable>
-    <WearableSlots>None</WearableSlots>
+    <WearableSlots>BackShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
   </Item>
   <Item>
     <ID>208</ID>
-    <Icon>0</Icon>
+    <Icon>180</Icon>
     <ItemLevel>43</ItemLevel>
     <RequiredLevel>43</RequiredLevel>
     <Description>Alicium Back Plate</Description>
@@ -3301,13 +3301,13 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>1</Price>
     <Salable>true</Salable>
-    <WearableSlots>None</WearableSlots>
+    <WearableSlots>SaddleBags</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
   </Item>
   <Item>
     <ID>209</ID>
-    <Icon>0</Icon>
+    <Icon>181</Icon>
     <ItemLevel>45</ItemLevel>
     <RequiredLevel>45</RequiredLevel>
     <Description>Alicium Chest Plate</Description>
@@ -3317,13 +3317,13 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>1</Price>
     <Salable>true</Salable>
-    <WearableSlots>None</WearableSlots>
+    <WearableSlots>Shirt</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
   </Item>
   <Item>
     <ID>210</ID>
-    <Icon>0</Icon>
+    <Icon>182</Icon>
     <ItemLevel>47</ItemLevel>
     <RequiredLevel>47</RequiredLevel>
     <Description>Alicium Front Legs</Description>
@@ -3333,13 +3333,13 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>1</Price>
     <Salable>true</Salable>
-    <WearableSlots>None</WearableSlots>
+    <WearableSlots>FrontShoes</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
   </Item>
   <Item>
     <ID>211</ID>
-    <Icon>0</Icon>
+    <Icon>183</Icon>
     <ItemLevel>49</ItemLevel>
     <RequiredLevel>49</RequiredLevel>
     <Description>Alicium Helmet</Description>
@@ -3349,7 +3349,7 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>1</Price>
     <Salable>true</Salable>
-    <WearableSlots>None</WearableSlots>
+    <WearableSlots>Mask</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
   </Item>
@@ -3691,7 +3691,7 @@
   </Item>
   <Item>
     <ID>233</ID>
-    <Icon>0</Icon>
+    <Icon>184</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>Linen Pouch</Description>
@@ -3707,7 +3707,7 @@
   </Item>
   <Item>
     <ID>234</ID>
-    <Icon>0</Icon>
+    <Icon>185</Icon>
     <ItemLevel>20</ItemLevel>
     <RequiredLevel>20</RequiredLevel>
     <Description>Canvas Pouch</Description>
@@ -3723,7 +3723,7 @@
   </Item>
   <Item>
     <ID>235</ID>
-    <Icon>0</Icon>
+    <Icon>186</Icon>
     <ItemLevel>40</ItemLevel>
     <RequiredLevel>40</RequiredLevel>
     <Description>Woven Pouch</Description>
@@ -3739,11 +3739,11 @@
   </Item>
   <Item>
     <ID>236</ID>
-    <Icon>0</Icon>
+    <Icon>187</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
-    <Description>Amor Harmony 1</Description>
-    <Name>Amor Harmony 1</Name>
+    <Description>Armor Harmony 1</Description>
+    <Name>Armor Harmony 1</Name>
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>true</Stackable>
     <MaxStackSize>10</MaxStackSize>
@@ -3755,11 +3755,11 @@
   </Item>
   <Item>
     <ID>237</ID>
-    <Icon>0</Icon>
+    <Icon>187</Icon>
     <ItemLevel>10</ItemLevel>
     <RequiredLevel>10</RequiredLevel>
-    <Description>Amor Harmony 2</Description>
-    <Name>Amor Harmony 2</Name>
+    <Description>Armor Harmony 2</Description>
+    <Name>Armor Harmony 2</Name>
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>true</Stackable>
     <MaxStackSize>10</MaxStackSize>
@@ -3771,11 +3771,11 @@
   </Item>
   <Item>
     <ID>238</ID>
-    <Icon>0</Icon>
+    <Icon>187</Icon>
     <ItemLevel>20</ItemLevel>
     <RequiredLevel>20</RequiredLevel>
-    <Description>Amor Harmony 3</Description>
-    <Name>Amor Harmony 3</Name>
+    <Description>Armor Harmony 3</Description>
+    <Name>Armor Harmony 3</Name>
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>true</Stackable>
     <MaxStackSize>10</MaxStackSize>
@@ -3787,11 +3787,11 @@
   </Item>
   <Item>
     <ID>239</ID>
-    <Icon>0</Icon>
+    <Icon>187</Icon>
     <ItemLevel>30</ItemLevel>
     <RequiredLevel>30</RequiredLevel>
-    <Description>Amor Harmony 4</Description>
-    <Name>Amor Harmony 4</Name>
+    <Description>Armor Harmony 4</Description>
+    <Name>Armor Harmony 4</Name>
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>true</Stackable>
     <MaxStackSize>10</MaxStackSize>
@@ -3803,11 +3803,11 @@
   </Item>
   <Item>
     <ID>240</ID>
-    <Icon>0</Icon>
+    <Icon>187</Icon>
     <ItemLevel>40</ItemLevel>
     <RequiredLevel>40</RequiredLevel>
-    <Description>Amor Harmony 5</Description>
-    <Name>Amor Harmony 5</Name>
+    <Description>Armor Harmony 5</Description>
+    <Name>Armor Harmony 5</Name>
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>true</Stackable>
     <MaxStackSize>10</MaxStackSize>
@@ -3819,11 +3819,11 @@
   </Item>
   <Item>
     <ID>241</ID>
-    <Icon>0</Icon>
+    <Icon>187</Icon>
     <ItemLevel>50</ItemLevel>
     <RequiredLevel>50</RequiredLevel>
-    <Description>Amor Harmony 6</Description>
-    <Name>Amor Harmony 6</Name>
+    <Description>Armor Harmony 6</Description>
+    <Name>Armor Harmony 6</Name>
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>true</Stackable>
     <MaxStackSize>10</MaxStackSize>
@@ -3835,7 +3835,7 @@
   </Item>
   <Item>
     <ID>242</ID>
-    <Icon>0</Icon>
+    <Icon>188</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>Magic Resist Harmony 1</Description>
@@ -3851,7 +3851,7 @@
   </Item>
   <Item>
     <ID>243</ID>
-    <Icon>0</Icon>
+    <Icon>188</Icon>
     <ItemLevel>10</ItemLevel>
     <RequiredLevel>10</RequiredLevel>
     <Description>Magic Resist Harmony 2</Description>
@@ -3867,7 +3867,7 @@
   </Item>
   <Item>
     <ID>244</ID>
-    <Icon>0</Icon>
+    <Icon>188</Icon>
     <ItemLevel>20</ItemLevel>
     <RequiredLevel>20</RequiredLevel>
     <Description>Magic Resist Harmony 3</Description>
@@ -3883,7 +3883,7 @@
   </Item>
   <Item>
     <ID>245</ID>
-    <Icon>0</Icon>
+    <Icon>188</Icon>
     <ItemLevel>30</ItemLevel>
     <RequiredLevel>30</RequiredLevel>
     <Description>Magic Resist Harmony 4</Description>
@@ -3899,7 +3899,7 @@
   </Item>
   <Item>
     <ID>246</ID>
-    <Icon>0</Icon>
+    <Icon>188</Icon>
     <ItemLevel>40</ItemLevel>
     <RequiredLevel>40</RequiredLevel>
     <Description>Magic Resist Harmony 5</Description>
@@ -3915,7 +3915,7 @@
   </Item>
   <Item>
     <ID>247</ID>
-    <Icon>0</Icon>
+    <Icon>188</Icon>
     <ItemLevel>50</ItemLevel>
     <RequiredLevel>50</RequiredLevel>
     <Description>Magic Resist Harmony 6</Description>
@@ -3931,7 +3931,7 @@
   </Item>
   <Item>
     <ID>248</ID>
-    <Icon>0</Icon>
+    <Icon>191</Icon>
     <ItemLevel>2</ItemLevel>
     <RequiredLevel>2</RequiredLevel>
     <Description>Health Harmony 1</Description>
@@ -3947,7 +3947,7 @@
   </Item>
   <Item>
     <ID>249</ID>
-    <Icon>0</Icon>
+    <Icon>191</Icon>
     <ItemLevel>12</ItemLevel>
     <RequiredLevel>12</RequiredLevel>
     <Description>Health Harmony 2</Description>
@@ -3963,7 +3963,7 @@
   </Item>
   <Item>
     <ID>250</ID>
-    <Icon>0</Icon>
+    <Icon>191</Icon>
     <ItemLevel>22</ItemLevel>
     <RequiredLevel>22</RequiredLevel>
     <Description>Health Harmony 3</Description>
@@ -3979,7 +3979,7 @@
   </Item>
   <Item>
     <ID>251</ID>
-    <Icon>0</Icon>
+    <Icon>191</Icon>
     <ItemLevel>32</ItemLevel>
     <RequiredLevel>32</RequiredLevel>
     <Description>Health Harmony 4</Description>
@@ -3995,7 +3995,7 @@
   </Item>
   <Item>
     <ID>252</ID>
-    <Icon>0</Icon>
+    <Icon>191</Icon>
     <ItemLevel>42</ItemLevel>
     <RequiredLevel>42</RequiredLevel>
     <Description>Health Harmony 5</Description>
@@ -4011,7 +4011,7 @@
   </Item>
   <Item>
     <ID>253</ID>
-    <Icon>0</Icon>
+    <Icon>191</Icon>
     <ItemLevel>50</ItemLevel>
     <RequiredLevel>50</RequiredLevel>
     <Description>Health Harmony 6</Description>
@@ -4027,7 +4027,7 @@
   </Item>
   <Item>
     <ID>254</ID>
-    <Icon>0</Icon>
+    <Icon>192</Icon>
     <ItemLevel>2</ItemLevel>
     <RequiredLevel>2</RequiredLevel>
     <Description>Health Regen Harmony 1</Description>
@@ -4043,7 +4043,7 @@
   </Item>
   <Item>
     <ID>255</ID>
-    <Icon>0</Icon>
+    <Icon>192</Icon>
     <ItemLevel>12</ItemLevel>
     <RequiredLevel>12</RequiredLevel>
     <Description>Health Regen Harmony 2</Description>
@@ -4059,7 +4059,7 @@
   </Item>
   <Item>
     <ID>256</ID>
-    <Icon>0</Icon>
+    <Icon>192</Icon>
     <ItemLevel>22</ItemLevel>
     <RequiredLevel>22</RequiredLevel>
     <Description>Health Regen Harmony 3</Description>
@@ -4075,7 +4075,7 @@
   </Item>
   <Item>
     <ID>257</ID>
-    <Icon>0</Icon>
+    <Icon>192</Icon>
     <ItemLevel>32</ItemLevel>
     <RequiredLevel>32</RequiredLevel>
     <Description>Health Regen Harmony 4</Description>
@@ -4091,7 +4091,7 @@
   </Item>
   <Item>
     <ID>258</ID>
-    <Icon>0</Icon>
+    <Icon>192</Icon>
     <ItemLevel>42</ItemLevel>
     <RequiredLevel>42</RequiredLevel>
     <Description>Health Regen Harmony 5</Description>
@@ -4107,7 +4107,7 @@
   </Item>
   <Item>
     <ID>259</ID>
-    <Icon>0</Icon>
+    <Icon>192</Icon>
     <ItemLevel>50</ItemLevel>
     <RequiredLevel>50</RequiredLevel>
     <Description>Health Regen Harmony 6</Description>
@@ -4123,7 +4123,7 @@
   </Item>
   <Item>
     <ID>260</ID>
-    <Icon>0</Icon>
+    <Icon>189</Icon>
     <ItemLevel>4</ItemLevel>
     <RequiredLevel>4</RequiredLevel>
     <Description>Energy Harmony 1</Description>
@@ -4139,7 +4139,7 @@
   </Item>
   <Item>
     <ID>261</ID>
-    <Icon>0</Icon>
+    <Icon>189</Icon>
     <ItemLevel>14</ItemLevel>
     <RequiredLevel>14</RequiredLevel>
     <Description>Energy Harmony 2</Description>
@@ -4155,7 +4155,7 @@
   </Item>
   <Item>
     <ID>262</ID>
-    <Icon>0</Icon>
+    <Icon>189</Icon>
     <ItemLevel>24</ItemLevel>
     <RequiredLevel>24</RequiredLevel>
     <Description>Energy Harmony 3</Description>
@@ -4171,7 +4171,7 @@
   </Item>
   <Item>
     <ID>263</ID>
-    <Icon>0</Icon>
+    <Icon>189</Icon>
     <ItemLevel>34</ItemLevel>
     <RequiredLevel>34</RequiredLevel>
     <Description>Energy Harmony 4</Description>
@@ -4187,7 +4187,7 @@
   </Item>
   <Item>
     <ID>264</ID>
-    <Icon>0</Icon>
+    <Icon>189</Icon>
     <ItemLevel>44</ItemLevel>
     <RequiredLevel>44</RequiredLevel>
     <Description>Energy Harmony 5</Description>
@@ -4203,7 +4203,7 @@
   </Item>
   <Item>
     <ID>265</ID>
-    <Icon>0</Icon>
+    <Icon>189</Icon>
     <ItemLevel>50</ItemLevel>
     <RequiredLevel>50</RequiredLevel>
     <Description>Energy Harmony 6</Description>
@@ -4219,7 +4219,7 @@
   </Item>
   <Item>
     <ID>266</ID>
-    <Icon>0</Icon>
+    <Icon>190</Icon>
     <ItemLevel>4</ItemLevel>
     <RequiredLevel>4</RequiredLevel>
     <Description>Energy Regen Harmony 1</Description>
@@ -4235,7 +4235,7 @@
   </Item>
   <Item>
     <ID>267</ID>
-    <Icon>0</Icon>
+    <Icon>190</Icon>
     <ItemLevel>14</ItemLevel>
     <RequiredLevel>14</RequiredLevel>
     <Description>Energy Regen Harmony 2</Description>
@@ -4251,7 +4251,7 @@
   </Item>
   <Item>
     <ID>268</ID>
-    <Icon>0</Icon>
+    <Icon>190</Icon>
     <ItemLevel>24</ItemLevel>
     <RequiredLevel>24</RequiredLevel>
     <Description>Energy Regen Harmony 3</Description>
@@ -4267,7 +4267,7 @@
   </Item>
   <Item>
     <ID>269</ID>
-    <Icon>0</Icon>
+    <Icon>190</Icon>
     <ItemLevel>34</ItemLevel>
     <RequiredLevel>34</RequiredLevel>
     <Description>Energy Regen Harmony 4</Description>
@@ -4283,7 +4283,7 @@
   </Item>
   <Item>
     <ID>270</ID>
-    <Icon>0</Icon>
+    <Icon>190</Icon>
     <ItemLevel>44</ItemLevel>
     <RequiredLevel>44</RequiredLevel>
     <Description>Energy Regen Harmony 5</Description>
@@ -4299,7 +4299,7 @@
   </Item>
   <Item>
     <ID>271</ID>
-    <Icon>0</Icon>
+    <Icon>190</Icon>
     <ItemLevel>50</ItemLevel>
     <RequiredLevel>50</RequiredLevel>
     <Description>Energy Regen Harmony 6</Description>
@@ -4315,7 +4315,7 @@
   </Item>
   <Item>
     <ID>272</ID>
-    <Icon>0</Icon>
+    <Icon>193</Icon>
     <ItemLevel>6</ItemLevel>
     <RequiredLevel>6</RequiredLevel>
     <Description>Movement Speed Harmony 1</Description>
@@ -4331,7 +4331,7 @@
   </Item>
   <Item>
     <ID>273</ID>
-    <Icon>0</Icon>
+    <Icon>193</Icon>
     <ItemLevel>16</ItemLevel>
     <RequiredLevel>16</RequiredLevel>
     <Description>Movement Speed Harmony 2</Description>
@@ -4347,7 +4347,7 @@
   </Item>
   <Item>
     <ID>274</ID>
-    <Icon>0</Icon>
+    <Icon>193</Icon>
     <ItemLevel>26</ItemLevel>
     <RequiredLevel>26</RequiredLevel>
     <Description>Movement Speed Harmony 3</Description>
@@ -4363,7 +4363,7 @@
   </Item>
   <Item>
     <ID>275</ID>
-    <Icon>0</Icon>
+    <Icon>193</Icon>
     <ItemLevel>36</ItemLevel>
     <RequiredLevel>36</RequiredLevel>
     <Description>Movement Speed Harmony 4</Description>
@@ -4379,7 +4379,7 @@
   </Item>
   <Item>
     <ID>276</ID>
-    <Icon>0</Icon>
+    <Icon>193</Icon>
     <ItemLevel>46</ItemLevel>
     <RequiredLevel>46</RequiredLevel>
     <Description>Movement Speed Harmony 5</Description>
@@ -4395,7 +4395,7 @@
   </Item>
   <Item>
     <ID>277</ID>
-    <Icon>0</Icon>
+    <Icon>193</Icon>
     <ItemLevel>50</ItemLevel>
     <RequiredLevel>50</RequiredLevel>
     <Description>Movement Speed Harmony 6</Description>
@@ -4411,7 +4411,7 @@
   </Item>
   <Item>
     <ID>278</ID>
-    <Icon>0</Icon>
+    <Icon>194</Icon>
     <ItemLevel>8</ItemLevel>
     <RequiredLevel>8</RequiredLevel>
     <Description>Ability Damage Harmony 1</Description>
@@ -4427,7 +4427,7 @@
   </Item>
   <Item>
     <ID>279</ID>
-    <Icon>0</Icon>
+    <Icon>194</Icon>
     <ItemLevel>18</ItemLevel>
     <RequiredLevel>18</RequiredLevel>
     <Description>Ability Damage Harmony 2</Description>
@@ -4443,7 +4443,7 @@
   </Item>
   <Item>
     <ID>280</ID>
-    <Icon>0</Icon>
+    <Icon>194</Icon>
     <ItemLevel>28</ItemLevel>
     <RequiredLevel>28</RequiredLevel>
     <Description>Ability Damage Harmony 3</Description>
@@ -4459,7 +4459,7 @@
   </Item>
   <Item>
     <ID>281</ID>
-    <Icon>0</Icon>
+    <Icon>194</Icon>
     <ItemLevel>38</ItemLevel>
     <RequiredLevel>38</RequiredLevel>
     <Description>Ability Damage Harmony 4</Description>
@@ -4475,7 +4475,7 @@
   </Item>
   <Item>
     <ID>282</ID>
-    <Icon>0</Icon>
+    <Icon>194</Icon>
     <ItemLevel>48</ItemLevel>
     <RequiredLevel>48</RequiredLevel>
     <Description>Ability Damage Harmony 5</Description>
@@ -4491,7 +4491,7 @@
   </Item>
   <Item>
     <ID>283</ID>
-    <Icon>0</Icon>
+    <Icon>194</Icon>
     <ItemLevel>50</ItemLevel>
     <RequiredLevel>50</RequiredLevel>
     <Description>Ability Damage Harmony 6</Description>
@@ -4507,7 +4507,7 @@
   </Item>
   <Item>
     <ID>284</ID>
-    <Icon>0</Icon>
+    <Icon>195</Icon>
     <ItemLevel>8</ItemLevel>
     <RequiredLevel>8</RequiredLevel>
     <Description>Abiliry Healing Harmony 1</Description>
@@ -4523,7 +4523,7 @@
   </Item>
   <Item>
     <ID>285</ID>
-    <Icon>0</Icon>
+    <Icon>195</Icon>
     <ItemLevel>18</ItemLevel>
     <RequiredLevel>18</RequiredLevel>
     <Description>Ability Healing Harmony 2</Description>
@@ -4539,7 +4539,7 @@
   </Item>
   <Item>
     <ID>286</ID>
-    <Icon>0</Icon>
+    <Icon>195</Icon>
     <ItemLevel>28</ItemLevel>
     <RequiredLevel>28</RequiredLevel>
     <Description>Ability Healing Harmony 3</Description>
@@ -4555,7 +4555,7 @@
   </Item>
   <Item>
     <ID>287</ID>
-    <Icon>0</Icon>
+    <Icon>195</Icon>
     <ItemLevel>38</ItemLevel>
     <RequiredLevel>38</RequiredLevel>
     <Description>Ability Healing Harmony 4</Description>
@@ -4571,7 +4571,7 @@
   </Item>
   <Item>
     <ID>288</ID>
-    <Icon>0</Icon>
+    <Icon>195</Icon>
     <ItemLevel>48</ItemLevel>
     <RequiredLevel>48</RequiredLevel>
     <Description>Ability Healing Harmony 5</Description>
@@ -4587,7 +4587,7 @@
   </Item>
   <Item>
     <ID>289</ID>
-    <Icon>0</Icon>
+    <Icon>195</Icon>
     <ItemLevel>50</ItemLevel>
     <RequiredLevel>50</RequiredLevel>
     <Description>Ability Healing Harmony 6</Description>
@@ -4603,7 +4603,7 @@
   </Item>
   <Item>
     <ID>290</ID>
-    <Icon>0</Icon>
+    <Icon>196</Icon>
     <ItemLevel>38</ItemLevel>
     <RequiredLevel>38</RequiredLevel>
     <Description>Payback Harmony 4</Description>
@@ -4619,7 +4619,7 @@
   </Item>
   <Item>
     <ID>291</ID>
-    <Icon>0</Icon>
+    <Icon>196</Icon>
     <ItemLevel>48</ItemLevel>
     <RequiredLevel>48</RequiredLevel>
     <Description>Payback Harmony 5</Description>
@@ -4635,7 +4635,7 @@
   </Item>
   <Item>
     <ID>292</ID>
-    <Icon>0</Icon>
+    <Icon>185</Icon>
     <ItemLevel>50</ItemLevel>
     <RequiredLevel>50</RequiredLevel>
     <Description>Payback Harmony 6</Description>
@@ -4651,7 +4651,7 @@
   </Item>
   <Item>
     <ID>293</ID>
-    <Icon>0</Icon>
+    <Icon>197</Icon>
     <ItemLevel>38</ItemLevel>
     <RequiredLevel>38</RequiredLevel>
     <Description>Starlight Harmony 4</Description>
@@ -4667,7 +4667,7 @@
   </Item>
   <Item>
     <ID>294</ID>
-    <Icon>0</Icon>
+    <Icon>197</Icon>
     <ItemLevel>48</ItemLevel>
     <RequiredLevel>48</RequiredLevel>
     <Description>Starlight Harmony 5</Description>
@@ -4683,7 +4683,7 @@
   </Item>
   <Item>
     <ID>295</ID>
-    <Icon>0</Icon>
+    <Icon>197</Icon>
     <ItemLevel>50</ItemLevel>
     <RequiredLevel>50</RequiredLevel>
     <Description>Starlight Harmony 6</Description>
@@ -4739,9 +4739,170 @@
     <ResourcePath>Clothes/Dresses/SempaiDress</ResourcePath>
     <Stackable>false</Stackable>
     <MaxStackSize>10</MaxStackSize>
-    <Price>20</Price>
+    <Price>2000</Price>
     <Salable>true</Salable>
     <WearableSlots>FrontKnees Shirt</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>299</ID>
+    <Icon>137</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A square of woven fabric -- useful for armor, or clothing, or maybe tents.</Description>
+    <Name>Woven Square</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>300</ID>
+    <Icon>72</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Less insulting than "The Clueless Pony's Guide to Foals" and less controversial than "If You're Reading This, You Shouldn't be a Parent".</Description>
+    <Name>You Got This: A Guide to Foals</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>50</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>301</ID>
+    <Icon>21</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A beautiful example of an Equestrian gem, but far larger than any other that you've ever seen. This has to be Klondike's Gem!</Description>
+    <Name>Klondike's Gem</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>250</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>302</ID>
+    <Icon>72</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A foal's tale by Quick Quill</Description>
+    <Name>Spring Showers: A Foal's Book</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>303</ID>
+    <Icon>72</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A thrilling tale of the swashbuckling pirate Thewbeard and his adventurous crew!
+Written by Pulpy Prose.</Description>
+    <Name>THEWBEARD the Barbarian Pirate Book 6</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>304</ID>
+    <Icon>72</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A large, heavy tome detailing the major life cycles of growing grass.</Description>
+    <Name>The Life Cycles of Growing Grass</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>305</ID>
+    <Icon>27</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A sealed letter from Princess Gumdrop to Horseshoes.</Description>
+    <Name>Letter for Horseshoes</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>306</ID>
+    <Icon>27</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Sealed letter from Princess Gumdrop to Gemstone.</Description>
+    <Name>Letter for Gemstone</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>307</ID>
+    <Icon>72</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Harmony Heroes Issue #15</Description>
+    <Name>Harmony Heroes Issue #15</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>308</ID>
+    <Icon>44</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A mysterious package of stuff that Halite made for Red Cross</Description>
+    <Name>Red Cross' Package</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <StatString />
   </Item>

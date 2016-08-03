@@ -65,8 +65,9 @@ class AccountsMgr
 		{
 			if (isset($_POST["passhash"]) && !empty($_POST["passhash"]) && strcmp($_POST["passhash"], $this->game_account_data["phash"]) == 0) 
 			{
-				$this->game_account_session = base64_encode(hash("tiger192,3", "Celestia".time()."Luna".$this->game_login."~zbKG5tGWqv"));
-				if($this->db_conn->query("UPDATE $this->db_loe_accounts SET session='$this->game_account_session' WHERE id=$this->game_account_id"))
+				$time = date('Y-m-d H:i:s', time());
+				$this->game_account_session = base64_encode(hash("tiger192,3", "Celestia".$time."Luna".$this->game_login."~zbKG5tGWqv"));
+				if($this->db_conn->query("UPDATE $this->db_loe_accounts SET session='$this->game_account_session', time='$time' WHERE id=$this->game_account_id"))
 				{		
 					return true;
 				}
@@ -80,10 +81,11 @@ class AccountsMgr
 		{
 			if (isset($_POST["passhash"]) && !empty($_POST["passhash"])) 
 			{
+				$time = date('Y-m-d H:i:s', time());
 				$this->game_account_access = 1;
 				$this->game_passhash = $this->db_conn->real_escape_string($_POST["passhash"]);
-				$this->game_account_session = base64_encode(hash("tiger192,3", "Celestia".time()."Luna".$this->game_login."~zbKG5tGWqv"));
-				if($this->db_conn->query("INSERT INTO $this->db_loe_accounts (login, phash, access, session) VALUES ('$this->game_login', '$this->game_passhash', 1, '$this->game_account_session')"))
+				$this->game_account_session = base64_encode(hash("tiger192,3", "Celestia".$time."Luna".$this->game_login."~zbKG5tGWqv"));
+				if($this->db_conn->query("INSERT INTO $this->db_loe_accounts (login, phash, access, session, time) VALUES ('$this->game_login', '$this->game_passhash', $this->game_account_access, '$this->game_account_session', '$time')"))
 				{	
 					$this->game_account_id = $this->db_conn->insert_id;
 					return true;

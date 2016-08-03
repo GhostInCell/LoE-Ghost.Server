@@ -98,8 +98,10 @@ namespace Ghost.Server.Core.Objects
         }
         private void View_FinishedInstantiation(Player obj)
         {
+            _view.Rpc(7, 4, obj, _player.Data.SerWears);
             if (obj.Id == _player.Player.Id)
             {
+                _view.SetBits(_player.Data.Bits);
                 _view.Rpc(2, 200, _player.Player, _player.Char);
                 _player.Player.Rpc(4, _player.Data.SerTalents);
                 _view.Rpc(5, 195, _player.Player, _player.Data.SerSkills);

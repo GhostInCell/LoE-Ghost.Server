@@ -7,13 +7,52 @@ using System.Collections;
 using System.IO;
 using System.Linq;
 using System.Numerics;
+using System.Reflection;
+using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 
 namespace Ghost.Server.Utilities
 {
     #region Enums
+    public enum StatIndex
+    {
+        Null = -1,
+        Mul,
+        Mod,
+        Min,
+        Cur,
+        Max,
+        Base,
+        Item,
+        Length
+    }
+    public enum StatsOffset
+    {
+        Null = -1,
+        Stats,
+        Multiplers = 200,
+        Player = 225,
+        Length = 256
+    }
+
+    public enum CreatureMultipler
+    {
+        Null = -1,
+        Damage = StatsOffset.Multiplers,
+        Length
+    }
+
+    public enum PlayerMultiplers
+    {
+        Null = -1,
+        XP = StatsOffset.Player,
+        Bits,
+        Length
+    }
+
     public enum Gender : byte
     {
         Filly,
@@ -181,7 +220,7 @@ namespace Ghost.Server.Utilities
         Admin = 3
     }
     [Flags]
-    public enum ItemSlot : int
+    public enum WearablePosition : uint
     {
         None = 0,
         Tail = 1,
@@ -200,30 +239,23 @@ namespace Ghost.Server.Utilities
         Shirt = 128,
         Mask = 1024,
         SaddleBags = 1073741824,
-        Hat = -2147483648
+        Hat = 2147483648
     }
     [Flags]
-    public enum Talent : int
+    public enum TalentMarkId
     {
         None = -1,
-        Cooking = 1,
-        Mining = 2,
         Medical = 4,
         Partying = 8,
         Music = 16,
-        Writing = 32,
-        Farming = 64,
         Animal = 128,
         Flying = 256,
-        Weather = 512,
         Magic = 1024,
-        Science = 2048,
-        Economic = 4096,
         Artisan = 8192,
-        Fashion = 16384,
         Combat = 32768,
-        CombatRelated = 34188,
-        All = 65535
+        Foal = 65536,
+        CombatRelated = 99724,
+        All = 42396
     }
     [Flags]
     public enum ItemFlags : byte
@@ -258,6 +290,125 @@ namespace Ghost.Server.Utilities
         Intersecting
     }
     #endregion
+    public static class New<T>
+    {
+        public static readonly Func<T> Create;
+
+        static New()
+        {
+            var type = typeof(T);
+            var func = typeof(Func<T>);
+            var ctor = type.GetConstructor(Type.EmptyTypes);
+            if (ctor == null) return;
+            var dyn = new DynamicMethod($"New<{type.Name}>", type, Type.EmptyTypes, typeof(New<T>));
+            var il = dyn.GetILGenerator();
+            il.Emit(OpCodes.Newobj, ctor);
+            il.Emit(OpCodes.Ret);
+            Create = (Func<T>)dyn.CreateDelegate(func);
+        }
+
+    }
+    public static class ArrayEx
+    {
+        private const int GrowFactor = 4;
+
+        private class ArrayContainer<T>
+        {
+            public static readonly T[] Empty = new T[0];
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T[] Empty<T>()
+        {
+            return ArrayContainer<T>.Empty;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void Trim<T>(ref T[] array, ref int size)
+        {
+            if (size == 0)
+            {
+                array = ArrayContainer<T>.Empty;
+                return;
+            }
+            var nSize = (size + (GrowFactor - 1)) & -GrowFactor;
+            if (array.Length > nSize)
+            {
+                size = nSize;
+                Array.Resize(ref array, nSize);
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<T>(T[] array, int size, T item)
+        {
+            return Array.BinarySearch(array, 0, size, item) >= 0;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Remove<T>(T[] array, ref int size, T item)
+        {
+            var index = Array.BinarySearch(array, 0, size, item);
+            if (index < 0) return false;
+            size--;
+            Array.Copy(array, index + 1, array, index, size - index);
+            array[size] = default(T);
+            return true;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void Add<T>(ref T[] array, ref int size, T item)
+        {
+            if (size == array.Length)
+                Array.Resize(ref array, array.Length + GrowFactor);
+            array[size] = item;
+            size++;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void RemoveAt<T>(T[] array, ref int size, int index)
+        {
+            size--;
+            Array.Copy(array, index + 1, array, index, size - index);
+            array[size] = default(T);
+        }
+    }
+    public static class StateEx
+    {
+        private const int AttemptCount = 4;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Set(ref int state, int flags)
+        {
+            var count = AttemptCount;
+            do
+            {
+                var oState = Volatile.Read(ref state);
+                if ((state & flags) == flags) return false;
+                if (oState == Interlocked.CompareExchange(ref state, oState | flags, oState)) return true;
+            } while (--count > 0);
+            return false;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Clean(ref int state, int flags)
+        {
+            var count = AttemptCount;
+            do
+            {
+                var oState = Volatile.Read(ref state);
+                if ((state & flags) == 0) return false;
+                if (oState == Interlocked.CompareExchange(ref state, oState & ~flags, oState)) return true;
+            } while (--count > 0);
+            return false;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Check(int state, int isSet, int isNotSet)
+        {
+            return (state & isSet) != 0 && (state & isNotSet) == 0;
+        }
+    }
     public static class MathHelper
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -303,6 +454,17 @@ namespace Ghost.Server.Utilities
             if (@char >= '4' && @char <= '=')
                 return (char)(@char + '0' - '4');
             return ' ';
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int EncodeChar(this char @char)
+        {
+            if (@char >= 'a' && @char <= 'z')
+                return @char - 'a';
+            if (@char >= 'A' && @char <= 'Z')
+                return @char - 'A' + '\u001a';
+            if (@char >= '0' && @char <= '9')
+                return @char - '0' + '4';
+            return '>';
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe static PonyData ToPonyData(this string ponycode)
@@ -470,10 +632,16 @@ namespace Ghost.Server.Utilities
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int GetBits(this BitArray bits, ref int index, int count)
         {
-            int num = 0;
+            int value = 0;
             for (int i = 0; i < count; i++, index++)
-                num += (bits.Get(index) ? 1 : 0) << i;
-            return num;
+                value |= (bits.Get(index) ? 1 : 0) << i;
+            return value;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void AddBits(this BitArray bit, ref int index, int value, int count)
+        {
+            for (int i = 0; i < count; i++, index++)
+                bit.Set(index, (value & 1 << i) > 0);
         }
     }
     public static class Vector3Extensions
@@ -492,24 +660,6 @@ namespace Ghost.Server.Utilities
     public static class ValueTypeExtension
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ItemSlot ToItemSlot(this byte slot)
-        {
-            if (slot == 0)
-                return ItemSlot.None;
-            else if (slot >= 32)
-                return ItemSlot.Hat;
-            else
-                return (ItemSlot)Math.Pow(2.0, (double)(slot - 1));
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static byte ToWearSlot(this ItemSlot slot)
-        {
-            if (slot == ItemSlot.None)
-                return 0;
-            else
-                return (byte)(Math.Log((uint)slot, 2.0) + 1.0);
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetRaceName(this byte race)
         {
             switch (race)
@@ -519,6 +669,39 @@ namespace Ghost.Server.Utilities
                 case 3: return "Pegasus";
                 default: return string.Empty;
             }
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static string ToPonyCode(this PonyData data)
+        {
+            var bits = new BitArray(data.Name.Length * 6 + 276);
+            var index = 0;
+            bits.AddBits(ref index, data.Race, 2);
+            bits.AddBits(ref index, data.HairColor0, 24);
+            bits.AddBits(ref index, data.HairColor1, 24);
+            bits.AddBits(ref index, data.BodyColor, 24);
+            bits.AddBits(ref index, data.EyeColor, 24);
+            bits.AddBits(ref index, data.HoofColor, 24);
+            bits.AddBits(ref index, data.Mane, 8);
+            bits.AddBits(ref index, data.Tail, 8);
+            bits.AddBits(ref index, data.Eye, 8);
+            bits.AddBits(ref index, data.Hoof, 5);
+            bits.AddBits(ref index, data.CutieMark0, 10);
+            bits.AddBits(ref index, data.CutieMark1, 10);
+            bits.AddBits(ref index, data.CutieMark2, 10);
+            bits.AddBits(ref index, data.Gender, 2);
+            bits.AddBits(ref index, BitConverter.ToInt32(BitConverter.GetBytes(data.BodySize), 0), 32);
+            bits.AddBits(ref index, BitConverter.ToInt32(BitConverter.GetBytes(data.HornSize), 0), 32);
+            bits.AddBits(ref index, Math.Min(31, data.Name.Length - 1), 5);
+            string name = data.Name;
+            for (int i = 0; i < name.Length; i++)
+            {
+                char @char = name[i];
+                bits.AddBits(ref index, @char.EncodeChar(), 6);
+            }
+            bits.AddBits(ref index, data.HairColor2, 24);
+            var buffer = new byte[(bits.Length + 7) >> 3];
+            bits.CopyTo(buffer, 0);
+            return Convert.ToBase64String(buffer);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetGenderName(this byte gender)
@@ -536,6 +719,24 @@ namespace Ghost.Server.Utilities
         public static unsafe float BitsToFloat(this int @value)
         {
             return *(float*)&@value;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static byte ToWearableIndex(this WearablePosition slot)
+        {
+            if (slot == WearablePosition.None)
+                return 0;
+            else
+                return (byte)(Math.Log((uint)slot, 2.0) + 1.0);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static WearablePosition ToWearablePosition(this byte slot)
+        {
+            if (slot == 0)
+                return WearablePosition.None;
+            else if (slot >= 32)
+                return WearablePosition.Hat;
+            else
+                return (WearablePosition)Math.Pow(2, slot - 1);
         }
     }
     public static class NetMessageExtension
@@ -562,12 +763,19 @@ namespace Ghost.Server.Utilities
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 ReadRotation(this NetMessage msg, ref bool full)
         {
-            if (full = msg.RemainingBits > 24)
-                return new Vector3(msg.ReadRangedSingle(-6.28318548f, 6.28318548f, 8),
-                    msg.ReadRangedSingle(-6.28318548f, 6.28318548f, 8),
-                    msg.ReadRangedSingle(-6.28318548f, 6.28318548f, 8));
+            var vector = default(Vector3);
+            full = msg.RemainingBits > 24;
+            if (full)
+            {
+                vector.X = msg.ReadRangedSingle(-6.28318548f, 6.28318548f, 8);
+                vector.Y = msg.ReadRangedSingle(-6.28318548f, 6.28318548f, 8);
+                vector.Z = msg.ReadRangedSingle(-6.28318548f, 6.28318548f, 8);
+            }
             else
-                return new Vector3(0f, msg.ReadRangedSingle(-6.28318548f, 6.28318548f, 8), 0f);
+            {
+                vector.Y = msg.ReadRangedSingle(-6.28318548f, 6.28318548f, 8);
+            }
+            return vector;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void WriteRotation(this NetMessage msg, Vector3 vec, bool full = false)
@@ -585,36 +793,36 @@ namespace Ghost.Server.Utilities
     public static class QuaternionExtensions
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector3 QuatToEul2(this Quaternion q1)
+        public static Vector3 QuatToEul2(this Quaternion quaternion)
         {
-            Vector3 result = new Vector3();
-            double num = q1.W * q1.W;
-            double num2 = q1.X * q1.X;
-            double num3 = q1.Y * q1.Y;
-            double num4 = q1.Z * q1.Z;
-            double num5 = num2 + num3 + num4 + num;
-            double num6 = q1.X * q1.Y + q1.Z * q1.W;
-            bool flag = num6 > 0.499 * num5;
+            Vector3 result = default(Vector3);
+            var num = quaternion.W * quaternion.W;
+            var num2 = quaternion.X * quaternion.X;
+            var num3 = quaternion.Y * quaternion.Y;
+            var num4 = quaternion.Z * quaternion.Z;
+            var num5 = num2 + num3 + num4 + num;
+            var num6 = quaternion.X * quaternion.Y + quaternion.Z * quaternion.W;
+            bool flag = num6 > 0.499f * num5;
             if (flag)
             {
-                result.Y = (float)(2.0 * Math.Atan2(q1.X, q1.W));
+                result.Y = 2.0f * (float)Math.Atan2(quaternion.X, quaternion.W);
                 result.X = 1.57079637f;
                 result.Z = 0f;
             }
             else
             {
-                bool flag2 = num6 < -0.499 * num5;
+                bool flag2 = num6 < -0.499f * num5;
                 if (flag2)
                 {
-                    result.Y = (float)(-2.0 * Math.Atan2(q1.X, q1.W));
+                    result.Y = -2.0f * (float)Math.Atan2(quaternion.X, quaternion.W);
                     result.X = -1.57079637f;
                     result.Z = 0f;
                 }
                 else
                 {
-                    result.Y = (float)Math.Atan2(2f * q1.Y * q1.W - 2f * q1.X * q1.Z, num2 - num3 - num4 + num);
+                    result.Y = (float)Math.Atan2(2f * quaternion.Y * quaternion.W - 2f * quaternion.X * quaternion.Z, num2 - num3 - num4 + num);
                     result.X = (float)Math.Asin(2.0 * num6 / num5);
-                    result.Z = (float)Math.Atan2(2f * q1.X * q1.W - 2f * q1.Y * q1.Z, -num2 + num3 - num4 + num);
+                    result.Z = (float)Math.Atan2(2f * quaternion.X * quaternion.W - 2f * quaternion.Y * quaternion.Z, -num2 + num3 - num4 + num);
                 }
             }
             return result;
@@ -640,22 +848,22 @@ namespace Ghost.Server.Utilities
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Lock(this PNetR.NetworkView view, bool state)
         {
-            view.Rpc(2, 204, RpcMode.OwnerOrdered, state);
+            view.Rpc(2, 204, RpcMode.OwnerOrdered, (object)state);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetBits(this PNetR.NetworkView view, int bits)
         {
-            view.Rpc(7, 16, RpcMode.OwnerOrdered, bits);
+            view.Rpc(7, 16, RpcMode.OwnerOrdered, (object)bits);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void UnwearItem(this PNetR.NetworkView view, byte slot)
+        public static void UnwearItem(this PNetR.NetworkView view, byte slot, WearablePosition usedSlots)
         {
-            view.Rpc(7, 9, RpcMode.AllOrdered, slot);
+            view.Rpc(7, 9, RpcMode.AllOrdered, slot, (int)usedSlots);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void RequestTrade(this PNetR.NetworkView view, ushort id)
         {
-            view.Rpc(9, 1, RpcMode.OwnerOrdered, id);
+            view.Rpc(9, 1, RpcMode.OwnerOrdered, (object)id);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Teleport(this PNetR.NetworkView view, Vector3 position)
@@ -663,9 +871,9 @@ namespace Ghost.Server.Utilities
             view.Rpc(2, 201, RpcMode.AllOrdered, position.X, position.Y, position.Z);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void WearItem(this PNetR.NetworkView view, int id, byte slot)
+        public static void WearItem(this PNetR.NetworkView view, Item item, byte slot, WearablePosition usedSlots)
         {
-            view.Rpc(7, 8, RpcMode.AllOrdered, id, slot);
+            view.Rpc(7, 8, RpcMode.AllOrdered, item, slot, (int)usedSlots);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetInventory(this PNetR.NetworkView view, CharData data)
@@ -683,9 +891,15 @@ namespace Ghost.Server.Utilities
             view.Rpc(5, 61, RpcMode.AllOrdered, target);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void DeleteItem(this PNetR.NetworkView view, byte slot, int amount)
+        public static void DeleteSlot(this PNetR.NetworkView view, InventorySlot slot, int index)
         {
-            view.Rpc(7, 7, RpcMode.OwnerOrdered, slot, amount);
+            slot.Amount = 0;
+            view.Rpc(7, 6, RpcMode.OwnerOrdered, slot, index);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void UpdateSlot(this PNetR.NetworkView view, InventorySlot slot, int index)
+        {
+            view.Rpc(7, 6, RpcMode.OwnerOrdered, slot, index);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void AddItem(this PNetR.NetworkView view, int id, int amount, byte slot)

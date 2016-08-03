@@ -36,9 +36,10 @@ namespace Ghost.Server.Utilities
 
         public const byte Killed = 1;
         public const byte Fainted = 3;
+        public const byte Destroyed = 0;
         public const int LootResource = 3;
+        public const int MaxWornItems = 32;
         public const int MaxServerName = 10;
-        public const byte MaxWornItems = 32;
         public const string Master = "Master";
         public const float LootDespawnTime = 32f;
         public const float PlayerRespawnTime = 8f;

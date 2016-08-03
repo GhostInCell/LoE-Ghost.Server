@@ -322,7 +322,7 @@ namespace PNetR
         /// Subscribe all the marked rpcs on the supplied component
         /// </summary>
         /// <param name="component"></param>
-        public void SubscribeMarkedRpcsOnComponent(Object component)
+        public void SubscribeMarkedRpcsOnComponent(object component)
         {
             RpcSubscriber.SubscribeComponent<NetMessageInfo, RpcAttribute>(this, component, Room.Serializer, Debug.Logger);
         }

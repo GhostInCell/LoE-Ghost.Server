@@ -99,7 +99,7 @@ namespace Ghost.Server.Core.Movment
         {
             _lastAnimation = arg1.ReadInt32();
             _flying = (_player.Char.Pony.Race == 3 && _lastAnimation == 1);
-            _creature.View.Rpc(2, 202, RpcMode.OthersOrdered, _lastAnimation);
+            _creature.View.Rpc(2, 202, RpcMode.OthersOrdered, (object)_lastAnimation);
         }
         #endregion
         #region Events Handlers
@@ -131,27 +131,27 @@ namespace Ghost.Server.Core.Movment
                 _creature.View.Lock(_resetLock = _locked = false);
             else if (_locked) return;
             _entry.OnDeserialize(arg1);
-            float distance = Vector3.Distance(_position, _entry.Position);
-            _speed = (float)(distance / (_entry.Time - _time));
-            if (distance > 0.01)
+            float distance = Vector3.DistanceSquared(_position, _entry.Position);
+            _speed = distance / (float)(_entry.Time - _time);
+            if (distance > Constants.EpsilonX2)
             {
-                if (_speed > 25f && _player.User.Access < AccessLevel.TeamMember)
+                if (_speed > 625f && _player.User.Access < AccessLevel.TeamMember)
                     _player.Player.Disconnect("MOV EAX, #DEADC0DE");
                 else
                 {
                     switch (_player.Char.Pony.Race)
                     {
                         case 1:
-                            _running = _speed > 9.5f;
+                            _running = _speed > 90.25f;
                             break;
                         case 2:
-                            _running = _speed > 8.5f;
+                            _running = _speed > 72.25f;
                             break;
                         case 3:
                             if (_flying)
-                                _running = _speed > 16.5f;
+                                _running = _speed > 272.25f;
                             else
-                                _running = _speed > 8.8f;
+                                _running = _speed > 71.44f;
                             break;
                     }
                 }

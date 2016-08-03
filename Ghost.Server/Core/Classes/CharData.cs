@@ -16,46 +16,48 @@ namespace Ghost.Server.Core.Classes
         [ProtoMember(2)]
         public int Bits;
         [ProtoMember(3)]
-        public byte InvSlots;
-        [ProtoMember(4)]
         public Vector3 Position;
-        [ProtoMember(5)]
+        [ProtoMember(4)]
         public Vector3 Rotation;
+        [ProtoMember(5)]
+        public int InventorySlots;
         [ProtoMember(6)]
-        public Dictionary<byte, int> Wears;
+        public Dictionary<int, Item> Wears;
         [ProtoMember(7)]
         public Dictionary<int, int> Skills;
         [ProtoMember(8)]
-        public Dictionary<uint, int> Variables;
+        public Dictionary<int, ushort> Quests;
         [ProtoMember(9)]
-        public Dictionary<ushort, ushort> Quests;
+        public Dictionary<int, short> Dialogs;
         [ProtoMember(10)]
-        public Dictionary<ushort, short> Dialogs;
+        public Dictionary<uint, int> Variables;
         [ProtoMember(11)]
-        public Dictionary<ushort, ushort> Instances;
+        public Dictionary<int, ushort> Instances;
         [ProtoMember(12)]
-        public Dictionary<byte, Tuple<int, int>> Items;
+        public Dictionary<int, InventorySlot> Items;
         [ProtoMember(13)]
-        public Dictionary<int, Tuple<uint, short>> Talents;
+        public Dictionary<uint, Tuple<uint, short, short>> Talents;
         public readonly INetSerializable SerWears;
         public readonly INetSerializable SerSkills;
         public readonly INetSerializable SerTalents;
         public readonly INetSerializable SerInventory;
+
         public CharData()
         {
-            Wears = new Dictionary<byte, int>();
+            Wears = new Dictionary<int, Item>();
             Skills = new Dictionary<int, int>();
             Variables = new Dictionary<uint, int>();
-            Quests = new Dictionary<ushort, ushort>();
-            Dialogs = new Dictionary<ushort, short>();
-            Instances = new Dictionary<ushort, ushort>();
-            Items = new Dictionary<byte, Tuple<int, int>>();
-            Talents = new Dictionary<int, Tuple<uint, short>>();
+            Quests = new Dictionary<int, ushort>();
+            Dialogs = new Dictionary<int, short>();
+            Instances = new Dictionary<int, ushort>();
+            Items = new Dictionary<int, InventorySlot>();
+            Talents = new Dictionary<uint, Tuple<uint, short, short>>();
             SerWears = new SER_Wears(Wears);
             SerSkills = new SER_Skills(this);
             SerTalents = new SER_Talents(this);
             SerInventory = new SER_Inventory(this);
         }
+
         public byte[] GetBytes()
         {
             using (var mem = new MemoryStream())
@@ -70,9 +72,9 @@ namespace Ghost.Server.Core.Classes
             Variables.TryGetValue(id, out ret);
             return ret;
         }
-        public short GetTalentLevel(int id)
+        public short GetTalentLevel(uint id)
         {
-            Tuple<uint, short> ret;
+            Tuple<uint, short, short> ret;
             Talents.TryGetValue(id, out ret);
             return ret.Item2;
         }

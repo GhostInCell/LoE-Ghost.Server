@@ -74,7 +74,7 @@ namespace PNetR
         /// Subscribe all the marked rpcs on the supplied object
         /// </summary>
         /// <param name="obj"></param>
-        public void SubscribeRpcsOnObject(Object obj)
+        public void SubscribeRpcsOnObject(object obj)
         {
             RpcSubscriber.SubscribeObject<NetMessageInfo, RpcAttribute>(this, obj, Serializer, Debug.Logger);
         }

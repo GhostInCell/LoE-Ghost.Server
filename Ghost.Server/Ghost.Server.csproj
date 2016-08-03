@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -62,6 +62,7 @@
     <Reference Include="protobuf-net, Version=2.1.0.0, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
       <HintPath>..\packages\protobuf-net.2.1.0\lib\net45\protobuf-net.dll</HintPath>
       <Private>True</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -70,6 +71,7 @@
     <Reference Include="System.Numerics.Vectors, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Numerics.Vectors.4.1.1\lib\portable-net45+win8+wp8+wpa81\System.Numerics.Vectors.dll</HintPath>
       <Private>True</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -80,8 +82,11 @@
     <Compile Include="Core\Classes\DialogEntry.cs" />
     <Compile Include="Core\Classes\DialogScript.cs" />
     <Compile Include="Core\Classes\FriendStatus.cs" />
+    <Compile Include="Core\Classes\InventorySlot.cs" />
     <Compile Include="Core\Classes\MovementEntry.cs" />
+    <Compile Include="Core\Classes\ObjectPool.cs" />
     <Compile Include="Core\Classes\PonyData.cs" />
+    <Compile Include="Core\Classes\StatsCaching.cs" />
     <Compile Include="Core\Classes\StatValue.cs" />
     <Compile Include="Core\Classes\SyncEntry.cs" />
     <Compile Include="Core\Classes\TargetEntry.cs" />
@@ -139,10 +144,33 @@
     <Compile Include="Mgrs\Player\SkillsMgr.cs" />
     <Compile Include="Mgrs\Player\TradeMgr.cs" />
     <Compile Include="Mgrs\ServersMgr.cs" />
+    <Compile Include="Objects\CreatureObject.cs" />
+    <Compile Include="Objects\Managers\BaseManager.Base.cs" />
+    <Compile Include="Objects\Managers\BaseManager.Generic.cs" />
+    <Compile Include="Objects\BaseObject.Fields.cs" />
+    <Compile Include="Objects\Managers\InventoryManager.cs" />
+    <Compile Include="Objects\Managers\MotionManager.cs" />
+    <Compile Include="Objects\Managers\NetworkManager.Generic.cs" />
+    <Compile Include="Objects\Managers\SpellsManager.cs" />
+    <Compile Include="Objects\Managers\SyncManager.cs" />
+    <Compile Include="Objects\MovableObject.cs" />
+    <Compile Include="Objects\NetworkObject.cs" />
+    <Compile Include="Objects\ObjectGuid.cs" />
+    <Compile Include="Objects\ObjectManager.cs" />
+    <Compile Include="Objects\Managers\StatsManager.cs" />
+    <Compile Include="Objects\PlayerObject.cs" />
+    <Compile Include="Objects\WorldObject.cs" />
     <Compile Include="Scripts\ItemsScript.cs" />
     <Compile Include="Scripts\Servers\CharServerScript.cs" />
     <Compile Include="Scripts\Servers\MapServerScript.cs" />
     <Compile Include="ServerInstance.cs" />
+    <Compile Include="Objects\BaseObject.Base.cs" />
+    <Compile Include="Objects\BaseObject.Events.cs" />
+    <Compile Include="Objects\BaseObject.Managers.cs" />
+    <Compile Include="Terrain\Primitives\BoundingBox.cs" />
+    <Compile Include="Terrain\Primitives\BoundingSphere.cs" />
+    <Compile Include="Terrain\Primitives\Ray.cs" />
+    <Compile Include="Terrain\QuadTree.cs" />
     <Compile Include="Utilities\Abstracts\ScriptedAI.cs" />
     <Compile Include="Utilities\Abstracts\CreatureObject.cs" />
     <Compile Include="Utilities\Abstracts\MovementGenerator.cs" />
@@ -155,9 +183,12 @@
     <Compile Include="Utilities\Configs.cs" />
     <Compile Include="Utilities\Constants.cs" />
     <Compile Include="Utilities\Extensions.cs" />
+    <Compile Include="Utilities\Interfaces\INetworkManager.cs" />
     <Compile Include="Utilities\Interfaces\IPlayer.cs" />
+    <Compile Include="Utilities\Interfaces\IQuadTreeItem.cs" />
     <Compile Include="Utilities\Interfaces\IRoom.cs" />
     <Compile Include="Utilities\Interfaces\IServer.cs" />
+    <Compile Include="Utilities\Interfaces\ITimer.cs" />
     <Compile Include="Utilities\Interfaces\IUpdatable.cs" />
     <Compile Include="Utilities\Interfaces\IDialog.cs" />
     <Compile Include="Utilities\Serializers.cs" />
@@ -168,9 +199,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\libs\Lidgren.Network\Lidgren.Network.csproj">
@@ -180,14 +209,17 @@
     <ProjectReference Include="..\libs\PNet2Room\PNet2Room.csproj">
       <Project>{0539b54a-555c-46a4-bb85-540678faa8b1}</Project>
       <Name>PNet2Room</Name>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </ProjectReference>
     <ProjectReference Include="..\libs\PNet2Server\PNet2Server.csproj">
       <Project>{1ccddb57-d001-46be-a685-5da4c5ac9df4}</Project>
       <Name>PNet2Server</Name>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </ProjectReference>
     <ProjectReference Include="..\libs\PNet2\PNet2.csproj">
       <Project>{ebac22f9-499d-4c46-bace-6877585796ac}</Project>
       <Name>PNet2</Name>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -22,7 +22,7 @@ namespace Ghost.Server.Core.Objects
         private SER_Shop shop_ser;
         private SER_Wears wears_ser;
         private DialogScript _dialog;
-        private Dictionary<byte, int> _wears;
+        private Dictionary<int, Item> _wears;
         public DB_NPC NPC
         {
             get
@@ -72,15 +72,16 @@ namespace Ghost.Server.Core.Objects
             if ((_npc.Flags & NPCFlags.Wears) > 0)
             {
                 DB_Item entry; byte slot;
-                _wears = new Dictionary<byte, int>();
+                _wears = new Dictionary<int, Item>();
                 wears_ser = new SER_Wears(_wears);
                 foreach (var item in _npc.Wears)
                     if (item > 0 && DataMgr.Select(item, out entry))
                     {
-                        slot = entry.Slot.ToWearSlot();
+                        slot = entry.Slot.ToWearableIndex();
                         if (_wears.ContainsKey(slot))
                             ServerLogger.LogWarn($"NPC id {_data.ObjectID} duplicate wear slot {entry.Slot}");
-                        else _wears[slot] = item;
+                        else
+                            _wears[slot] = new Item(item);
                     }
             }
             OnSpawn += WO_NPC_OnSpawn;
@@ -105,15 +106,15 @@ namespace Ghost.Server.Core.Objects
             if ((_npc.Flags & NPCFlags.Wears) > 0)
             {
                 DB_Item entry; byte slot;
-                _wears = new Dictionary<byte, int>();
+                _wears = new Dictionary<int, Item>();
                 wears_ser = new SER_Wears(_wears);
                 foreach (var item in _npc.Wears)
                     if (item > 0 && DataMgr.Select(item, out entry))
                     {
-                        slot = entry.Slot.ToWearSlot();
+                        slot = entry.Slot.ToWearableIndex();
                         if (_wears.ContainsKey(slot))
                             ServerLogger.LogWarn($"NPC id {data.ObjectID} duplicate wear slot {entry.Slot}");
-                        else _wears[slot] = item;
+                        else _wears[slot] = new Item(item);
                     }
             }
             OnSpawn += WO_NPC_OnSpawn;
@@ -256,6 +257,8 @@ namespace Ghost.Server.Core.Objects
         }
         private void View_FinishedInstantiation(Player obj)
         {
+            if ((_npc.Flags & NPCFlags.Wears) > 0)
+                _view.Rpc(7, 4, obj, wears_ser);
             if ((_npc.Flags & NPCFlags.Trader) > 0)
                 _view.Rpc(2, 120, obj);
             _view.Rpc(2, 200, obj, _npc.Pony, _npc.Level, _npc.ID);

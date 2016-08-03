@@ -58,7 +58,7 @@ namespace Ghost.Server.Mgrs.Player
                 stat.Value.CleanItems();
             foreach (var item in _mPlayer.Char.Data.Wears)
             {
-                var entry = DataMgr.SelectItem(item.Value);
+                var entry = DataMgr.SelectItem(item.Value.Id);
                 if ((entry.Flags & ItemFlags.Stats) > 0)
                     foreach (var stat in entry.Stats)
                         if (_stats.ContainsKey(stat.Item1))
@@ -93,30 +93,30 @@ namespace Ghost.Server.Mgrs.Player
         }
         public void AddExpAll(uint exp, uint bonusExp = 0)
         {
-            int[] talents = _mPlayer.Data.Talents.Keys.ToArray();
+            uint[] talents = _mPlayer.Data.Talents.Keys.ToArray();
             for (int i = 0; i < talents.Length; i++)
-                AddExp((Talent)talents[i], exp, bonusExp);
+                AddExp((TalentMarkId)talents[i], exp, bonusExp);
             talents = null;
         }
-        public void AddExp(Talent talant, uint exp, uint bonusExp = 0)
+        public void AddExp(TalentMarkId talant, uint exp, uint bonusExp = 0)
         {
-            var talantState = _mPlayer.Data.Talents[(int)talant];
-            if (talantState.Item2 >= CharsMgr.MaxLevel) return;
-            var cExp = talantState.Item1 + exp + bonusExp;
-            var level = CalculateNewLevel(talantState.Item2, ref cExp);
-            _mPlayer.Data.Talents[(int)talant] = new Tuple<uint, short>(cExp, level);
-            if (talantState.Item2 != level)
+            var talantState = _mPlayer.Data.Talents[(uint)talant];
+            if (talantState.Item2 >= CharsMgr.MaxLevel)
+                return;
+            if (CalculateTalentLevel(ref talantState, exp + bonusExp))
             {
                 UpdateBase();
                 _mPlayer.Player.Rpc(4, _mPlayer.Data.SerTalents);
-                _mPlayer.Player.Rpc(3, (int)talant, cExp, (int)level);
-                _view.Rpc(4, 53, RpcMode.AllUnordered, _mPlayer.Char.Level);
+                _mPlayer.Player.Rpc(3, (uint)talant, talantState.Item1, (uint)talantState.Item2);
+                _view.Rpc(4, 53, RpcMode.AllUnordered, (object)_mPlayer.Char.Level);
             }
-            else _mPlayer.Player.Rpc(2, (int)talant, exp, bonusExp);
+            else
+                _mPlayer.Player.Rpc(2, (uint)talant, exp, bonusExp);
+            _mPlayer.Data.Talents[(uint)talant] = talantState;
         }
         private short GetLevel()
         {
-            short ret = (short)_mPlayer.Data.Talents.Values.Sum(x => x.Item2);
+            short ret = _mPlayer.Data.Talents.Values.Max(x => x.Item2);
             return ret > CharsMgr.MaxLevel ? CharsMgr.MaxLevel : ret;
         }
         private void CreateBase()
@@ -166,19 +166,29 @@ namespace Ghost.Server.Mgrs.Player
             }
             SendStats();
         }
-        private short CalculateNewLevel(short level, ref uint cExp)
+        private bool CalculateTalentLevel(ref Tuple<uint, short, short> talent, uint exp)
         {
-            if (level >= CharsMgr.MaxLevel)
-                return CharsMgr.MaxLevel;
-            else if (level <= 0) level = 1;
+            if (talent.Item2 >= CharsMgr.MaxLevel)
+                return false;
+            var cExp = talent.Item1 + exp;
+            var level = (short)(talent.Item2 <= 0 ? 1 : talent.Item2);
             while (level < CharsMgr.MaxLevel)
             {
-                var nExp = (uint)(level * 500 + (level - 1) * 500);
+                var nExp = CharsMgr.GetExpForLevel(level);
                 if (cExp < nExp) break;
                 cExp -= nExp;
                 level++;
             }
-            return level;
+            if (level != talent.Item2)
+            {
+                talent = new Tuple<uint, short, short>(cExp, level, (short)(talent.Item3 + ((level - talent.Item2) * CharsMgr.TalentPointsPerLevel)));
+                return true;
+            }
+            else
+            {
+                talent = new Tuple<uint, short, short>(cExp, level, talent.Item3);
+                return false;
+            }
         }
         #region Events Handlers
         private void PlayerStatsMgr_OnDestroy()
