@@ -75,6 +75,9 @@ namespace Ghost.Server.Core.Movment
             {
                 _update = _interval;
                 var msg = _creature.View.CreateStream(_entry.AllocSize);
+                _entry.Time = _time;
+                _entry.Position = _position;
+                _entry.Rotation = _rotation;
                 _entry.OnSerialize(msg);
                 _creature.View.SendStream(msg);
             }
@@ -86,6 +89,11 @@ namespace Ghost.Server.Core.Movment
         }
         public override void LookAt(WorldObject obj)
         {
+        }
+        public override void Teleport(Vector3 position)
+        {
+            _position = position;
+            _time = PNet.Utilities.Now * 1.0005;
         }
         #region RPC Handlers
         [Rpc(201)]
@@ -131,42 +139,45 @@ namespace Ghost.Server.Core.Movment
                 _creature.View.Lock(_resetLock = _locked = false);
             else if (_locked) return;
             _entry.OnDeserialize(arg1);
-            float distance = Vector3.DistanceSquared(_position, _entry.Position);
-            _speed = distance / (float)(_entry.Time - _time);
-            if (distance > Constants.EpsilonX2)
+            if (_time < _entry.Time)
             {
-                if (_speed > 40f && _player.User.Access < AccessLevel.TeamMember)
+                float distance = Vector3.DistanceSquared(_position, _entry.Position);
+                _speed = distance / (float)(_entry.Time - _time);
+                if (distance > Constants.EpsilonX2)
                 {
-                    _locked = true;
-                    _player.Disconnect("MOV EAX, #DEADC0DE");
-                }
-                else
-                {
-                    switch (_player.Char.Pony.Race)
+                    //if (_speed > 45f && _player.User.Access < AccessLevel.TeamMember)
+                    //{
+                        //_locked = true;
+                        //_player.Disconnect("MOV EAX, #DEADC0DE");
+                    //}
+                    //else
                     {
-                        case 1:
-                            _running = _speed > 6f;
-                            break;
-                        case 2:
-                            _running = _speed > 5.15f;
-                            break;
-                        case 3:
-                            if (_flying)
-                                _running = _speed > 18f;
-                            else
-                                _running = _speed > 5.25f;
-                            break;
+                        switch (_player.Char.Pony.Race)
+                        {
+                            case 1:
+                                _running = _speed > 6f;
+                                break;
+                            case 2:
+                                _running = _speed > 5.15f;
+                                break;
+                            case 3:
+                                if (_flying)
+                                    _running = _speed > 18f;
+                                else
+                                    _running = _speed > 5.25f;
+                                break;
+                        }
                     }
+                    if (_player.Shop != null && Vector3.DistanceSquared(_position, _player.Shop.Position) > Constants.MaxInteractionDistanceSquared)
+                        _player.Shop.CloseShop(_player);
+                    if (_player.Trade.IsTrading && Vector3.DistanceSquared(_position, _player.Trade.Target.Object.Position) > Constants.MaxInteractionDistanceSquared)
+                        _player.Trade.CloseBoth();
                 }
-                if (_player.Shop != null && Vector3.DistanceSquared(_position, _player.Shop.Position) > Constants.MaxInteractionDistanceSquared)
-                    _player.Shop.CloseShop(_player);
-                if (_player.Trade.IsTrading && Vector3.DistanceSquared(_position, _player.Trade.Target.Object.Position) > Constants.MaxInteractionDistanceSquared)
-                    _player.Trade.CloseBoth();
+                else _running = false;
+                _time = _entry.Time;
+                _position = _entry.Position;
+                _rotation = _entry.Rotation;
             }
-            else _running = false;
-            _time = _entry.Time;
-            _position = _entry.Position;
-            _rotation = _entry.Rotation;
         }
         #endregion
     }

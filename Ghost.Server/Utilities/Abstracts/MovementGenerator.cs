@@ -63,6 +63,10 @@ namespace Ghost.Server.Utilities.Abstracts
         public abstract void Unlock();
         public abstract void Lock(bool reset = true);
         public abstract void LookAt(WorldObject obj);
+        public virtual void Teleport(Vector3 position)
+        {
+            _position = position;
+        }
         #region Events Handlers
         private void MovementGenerator_OnDestroy()
         {

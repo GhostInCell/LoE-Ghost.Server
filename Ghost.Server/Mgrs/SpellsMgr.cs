@@ -98,6 +98,9 @@ namespace Ghost.Server.Mgrs
                         case SpellEffectType.Modifier:
                             targetCO.Stats.AddModifier((Stats)item.Data01, effect, item.Data03, item.Data02 == 1);
                             break;
+                        case SpellEffectType.Teleport:
+                            creature.Movement.Teleport(targetCO.Position);
+                            break;
                         case SpellEffectType.AreaInit:
                             if (!area)
                             {
@@ -115,6 +118,9 @@ namespace Ghost.Server.Mgrs
                     float effect = item.BaseConst + (item.LevelModifer * creature.Stats.Level) + (item.AttackModifer * creature.Stats.Attack);
                     switch (item.Type)
                     {
+                        case SpellEffectType.Teleport:
+                            creature.Movement.Teleport(target.Position);
+                            break;
                         case SpellEffectType.AreaInit:
                             if (!area)
                             {
