@@ -6,6 +6,7 @@ using Ghost.Server.Mgrs.Map;
 using Ghost.Server.Mgrs.Mob;
 using Ghost.Server.Utilities;
 using Ghost.Server.Utilities.Abstracts;
+using PNetR;
 using System.Numerics;
 
 namespace Ghost.Server.Core.Objects
@@ -80,6 +81,7 @@ namespace Ghost.Server.Core.Objects
             _movement.Position = _data.Position;
             _movement.Rotation = _data.Rotation.ToRadians();
             _view = _server.Room.Instantiate(_resource, _data.Position, _data.Rotation);
+            _view.FinishedInstantiation += View_FinishedInstantiation;
         }
         private void WO_MOB_OnDespawn()
         {
@@ -112,6 +114,10 @@ namespace Ghost.Server.Core.Objects
                 Despawn();
             else
                 Destroy();
+        }
+        private void View_FinishedInstantiation(Player obj)
+        {
+            _view.Rpc(4, 54, obj, _stats.Team);
         }
         #endregion
     }

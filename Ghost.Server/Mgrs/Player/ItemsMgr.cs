@@ -76,7 +76,7 @@ namespace Ghost.Server.Mgrs.Player
         private PNetR.Player _player;
         private HashSet<int> m_itemsHash;
         private WearablePosition m_wearSlotsUsed;
-        private Dictionary<int, Item> m_wears;
+        private Dictionary<int, InventoryItem> m_wears;
         private Dictionary<int, InventorySlot> m_items;
 
         public ItemsMgr(WO_Player parent)
@@ -270,6 +270,7 @@ namespace Ghost.Server.Mgrs.Player
             else
             {
                 slot.Amount -= amount;
+                m_view.UpdateSlot(slot, index);
                 return 0;
             }
         }
@@ -302,7 +303,7 @@ namespace Ghost.Server.Mgrs.Player
             return amount - slot.Amount;
         }
 
-        private int SetSlot(int index, DB_Item item, Item data, int amount)
+        private int SetSlot(int index, DB_Item item, InventoryItem data, int amount)
         {
             var slot = new InventorySlot() { Item = data };
             if ((item.Flags & ItemFlags.Stackable) == 0)
@@ -363,7 +364,9 @@ namespace Ghost.Server.Mgrs.Player
         private void DeleteItem(byte islot, int amount)
         {
             var itemSlot = GetSlot(islot);
-            if (!itemSlot.IsEmpty)
+            if (itemSlot?.IsEmpty ?? true)
+                _player.SystemMsg($"Inventory slot {islot} is empty");
+            else
             {
                 int ramount = RemoveItems(itemSlot.Item.Id, amount);
                 if (ramount == 0)
@@ -372,15 +375,13 @@ namespace Ghost.Server.Mgrs.Player
 
                     _player.SystemMsg($"Error while removing items {itemSlot.Item.Id} from {islot} removed {amount - ramount}/{amount}");
             }
-            else
-                _player.SystemMsg($"Inventory slot {islot} is empty");
         }
 
         [OwnerOnly]
         [Rpc(8, false)]
         private void WearItem(WornSlot wslot, byte islot)
         {
-            DB_Item item; Item witem;
+            DB_Item item; InventoryItem witem;
             var itemSlot = GetSlot(islot);
             if (itemSlot?.IsEmpty ?? true)
                 _player.SystemMsg($"Inventory slot {islot} is empty");
@@ -419,7 +420,7 @@ namespace Ghost.Server.Mgrs.Player
         [Rpc(9, false)]
         private void UnwearItem(WornSlot wslot, byte islot)
         {
-            DB_Item item; Item witem;
+            DB_Item item; InventoryItem witem;
             var index = wslot.Index;
             if (m_wears.TryGetValue(index, out witem))
             {
@@ -466,7 +467,9 @@ namespace Ghost.Server.Mgrs.Player
         {
             DB_Item item;
             var itemSlot = GetSlot(islot);
-            if (!itemSlot.IsEmpty && DataMgr.Select(itemSlot.Item.Id, out item))
+            if (itemSlot?.IsEmpty ?? true)
+                _player.SystemMsg($"Inventory slot {islot} is empty");
+            else if (DataMgr.Select(itemSlot.Item.Id, out item))
             {
                 if ((item.Flags & ItemFlags.Usable) > 0)
                     ItemsScript.Use(item.ID, _mPlayer);
@@ -474,7 +477,7 @@ namespace Ghost.Server.Mgrs.Player
                     _player.SystemMsg($"You can't use item {item.Name ?? item.ID.ToString()}");
             }
             else
-                _player.SystemMsg($"Inventory slot {islot} is empty or item not found");
+                _player.SystemMsg($"Item {itemSlot.Item.Id} not found");
         }
 
         [OwnerOnly]

@@ -22,7 +22,7 @@ namespace Ghost.Server.Core.Objects
         private SER_Shop shop_ser;
         private SER_Wears wears_ser;
         private DialogScript _dialog;
-        private Dictionary<int, Item> _wears;
+        private Dictionary<int, InventoryItem> _wears;
         public DB_NPC NPC
         {
             get
@@ -72,7 +72,7 @@ namespace Ghost.Server.Core.Objects
             if ((_npc.Flags & NPCFlags.Wears) > 0)
             {
                 DB_Item entry; byte slot;
-                _wears = new Dictionary<int, Item>();
+                _wears = new Dictionary<int, InventoryItem>();
                 wears_ser = new SER_Wears(_wears);
                 foreach (var item in _npc.Wears)
                     if (item > 0 && DataMgr.Select(item, out entry))
@@ -81,7 +81,7 @@ namespace Ghost.Server.Core.Objects
                         if (_wears.ContainsKey(slot))
                             ServerLogger.LogWarn($"NPC id {_data.ObjectID} duplicate wear slot {entry.Slot}");
                         else
-                            _wears[slot] = new Item(item);
+                            _wears[slot] = new InventoryItem(item);
                     }
             }
             OnSpawn += WO_NPC_OnSpawn;
@@ -106,7 +106,7 @@ namespace Ghost.Server.Core.Objects
             if ((_npc.Flags & NPCFlags.Wears) > 0)
             {
                 DB_Item entry; byte slot;
-                _wears = new Dictionary<int, Item>();
+                _wears = new Dictionary<int, InventoryItem>();
                 wears_ser = new SER_Wears(_wears);
                 foreach (var item in _npc.Wears)
                     if (item > 0 && DataMgr.Select(item, out entry))
@@ -114,7 +114,7 @@ namespace Ghost.Server.Core.Objects
                         slot = entry.Slot.ToWearableIndex();
                         if (_wears.ContainsKey(slot))
                             ServerLogger.LogWarn($"NPC id {data.ObjectID} duplicate wear slot {entry.Slot}");
-                        else _wears[slot] = new Item(item);
+                        else _wears[slot] = new InventoryItem(item);
                     }
             }
             OnSpawn += WO_NPC_OnSpawn;

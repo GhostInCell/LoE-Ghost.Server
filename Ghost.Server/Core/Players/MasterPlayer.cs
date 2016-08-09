@@ -26,9 +26,9 @@ namespace Ghost.Server.Core.Players
         private Character _char;
         private IPlayer _rPlayer;
         private ChatMsg _message;
+        private string _lastWhisper;
         private FriendStatus _status;
         private MasterServer _server;
-        private MasterPlayer _lastWhisper;
         public bool OnMap
         {
             get
@@ -158,7 +158,7 @@ namespace Ghost.Server.Core.Players
                 {
                     case ChatType.Global:
                         _player.Server.AllPlayersRpc(15, _message);
-                        ServerLogger.LogChat(_user.Name, _message.Type, _message.Text);
+                        ServerLogger.LogChat(_user.Name, _message.Name, _message.Type, _message.Text);
                         break;
                     case ChatType.Herd:
                     //break;
@@ -168,9 +168,11 @@ namespace Ghost.Server.Core.Players
                     case ChatType.Whisper:
                         if (_lastWhisper != null)
                         {
-                            if (_lastWhisper.Player != null)
-                                _player.Whisper(_lastWhisper.Player, _message);
-                            else _lastWhisper = null;
+                            MasterPlayer player;
+                            if (_server.TryGetByPonyName(_lastWhisper, out player))
+                                _player.Whisper(player.Player, _message);
+                            else
+                                _lastWhisper = null;
                         }
                         break;
                     default:
@@ -182,15 +184,23 @@ namespace Ghost.Server.Core.Players
         [Rpc(16, false)]
         private void RPC_016(NetMessage arg1, PlayerMessageInfo arg2)
         {
-            string targetName = arg1.ReadString(); string message = arg1.ReadString();
-            ChatIcon icon = (ChatIcon)arg1.ReadByte(); if (targetName == _user.Name) return;
-            if (icon != ChatIcon.None && _user.Access < AccessLevel.Moderator) icon = ChatIcon.None;
-            if (_server.TryGetByName(targetName, out _lastWhisper))
+            string targetName = arg1.ReadString();
+            string message = arg1.ReadString();
+            ChatIcon icon = (ChatIcon)arg1.ReadByte();
+            if (targetName == _user.Name || targetName == _message.Name)
+                return;
+            if (icon != ChatIcon.None && _user.Access < AccessLevel.Moderator)
+                icon = ChatIcon.None;
+            MasterPlayer player;
+            if (_server.TryGetByPonyName(targetName, out player))
             {
-                _player.PlayerRpc(15, ChatType.Whisper, _user.Name, message, _time, _user.Char, icon, (int)_player.Id);
-                _lastWhisper.Player.PlayerRpc(15, ChatType.Whisper, _user.Name, message, _time, _user.Char, icon, (int)_player.Id);
+                var time = DateTime.Now;
+                _lastWhisper = player.Char?.Pony.Name;
+                //_player.PlayerRpc(15, ChatType.Whisper, _message.Name ?? _user.Name, message, time, _user.Char, icon, (int)_player.Id);
+                player.Player.PlayerRpc(15, ChatType.Whisper, _message.Name ?? _user.Name, message, time, _user.Char, icon, (int)_player.Id);
             }
-            else _lastWhisper = null;
+            else
+                _lastWhisper = null;
         }
         //[Rpc(20, false)]
         //private void RPC_020(NetMessage arg1, PlayerMessageInfo arg2)
@@ -322,8 +332,11 @@ namespace Ghost.Server.Core.Players
         {
             if (_user.Char != 0 && (_user.Char != (_char?.ID ?? -1)))
             {
+                _message.Name = null;
                 if (!CharsMgr.SelectCharacter(_user.Char, out _char))
                     ServerLogger.LogServer(_server, $"{obj.Id} couldn't load character {_user.Char}");
+                else
+                    _message.Name = _char.Pony.Name;
             }
         }
         private void Player_FinishedSwitchingRooms(Room obj)

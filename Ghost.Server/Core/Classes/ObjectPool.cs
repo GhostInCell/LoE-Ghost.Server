@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ghost.Server.Core.Classes
 {
@@ -21,6 +17,7 @@ namespace Ghost.Server.Core.Classes
             m_cleaner = cleaner;
             m_capacity = capacity;
             m_generator = generator;
+            m_pool = new ConcurrentQueue<T>();
             while (capacity > 0)
             {
                 m_pool.Enqueue(generator());

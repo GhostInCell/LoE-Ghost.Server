@@ -28,7 +28,7 @@ namespace Ghost.Server.Core.Classes
         public void OnSerialize(NetMessage message)
         {
             message.Write((byte)Type);
-            message.Write(User.Name);
+            message.Write(Name ?? User.Name);
             message.Write(Text);
             message.Write(Time);
             message.Write(User.Char);

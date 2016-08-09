@@ -22,19 +22,19 @@ namespace Ghost.Server.Core.Classes
         [ProtoMember(5)]
         public int InventorySlots;
         [ProtoMember(6)]
-        public Dictionary<int, Item> Wears;
-        [ProtoMember(7)]
         public Dictionary<int, int> Skills;
-        [ProtoMember(8)]
+        [ProtoMember(7)]
         public Dictionary<int, ushort> Quests;
-        [ProtoMember(9)]
+        [ProtoMember(8)]
         public Dictionary<int, short> Dialogs;
-        [ProtoMember(10)]
+        [ProtoMember(9)]
         public Dictionary<uint, int> Variables;
-        [ProtoMember(11)]
+        [ProtoMember(10)]
         public Dictionary<int, ushort> Instances;
-        [ProtoMember(12)]
+        [ProtoMember(11)]
         public Dictionary<int, InventorySlot> Items;
+        [ProtoMember(12)]
+        public Dictionary<int, InventoryItem> Wears;
         [ProtoMember(13)]
         public Dictionary<uint, Tuple<uint, short, short>> Talents;
         public readonly INetSerializable SerWears;
@@ -44,12 +44,12 @@ namespace Ghost.Server.Core.Classes
 
         public CharData()
         {
-            Wears = new Dictionary<int, Item>();
             Skills = new Dictionary<int, int>();
             Variables = new Dictionary<uint, int>();
             Quests = new Dictionary<int, ushort>();
             Dialogs = new Dictionary<int, short>();
             Instances = new Dictionary<int, ushort>();
+            Wears = new Dictionary<int, InventoryItem>();
             Items = new Dictionary<int, InventorySlot>();
             Talents = new Dictionary<uint, Tuple<uint, short, short>>();
             SerWears = new SER_Wears(Wears);

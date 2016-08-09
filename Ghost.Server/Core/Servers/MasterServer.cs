@@ -142,6 +142,11 @@ namespace Ghost.Server.Core.Servers
             lock (_lock) player = _players.Values.FirstOrDefault(x => x.User.Name == name);
             return player != null;
         }
+        public bool TryGetByPonyName(string name, out MasterPlayer player)
+        {
+            lock (_lock) player = _players.Values.FirstOrDefault(x => x.Char?.Pony.Name == name);
+            return player != null;
+        }
         private void ReloadCFG()
         {
             _cfg = new NetworkConfiguration(maximumRooms: Configs.Get<int>(Configs.Server_MaxMaps),

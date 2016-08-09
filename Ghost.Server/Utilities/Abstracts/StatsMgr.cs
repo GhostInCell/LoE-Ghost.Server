@@ -20,6 +20,10 @@ namespace Ghost.Server.Utilities.Abstracts
         private SER_Stats stats_ser;
         private List<TimedModifer> _modifers;
         private Dictionary<uint, List<Tuple<Stats, float, bool>>> _auras;
+        public int Team
+        {
+            get; set;
+        }
         public float Armor
         {
             get { return _stats[Stats.Armor].Max; }

@@ -82,6 +82,7 @@
     <Compile Include="Core\Classes\DialogEntry.cs" />
     <Compile Include="Core\Classes\DialogScript.cs" />
     <Compile Include="Core\Classes\FriendStatus.cs" />
+    <Compile Include="Core\Classes\InventoryItem.cs" />
     <Compile Include="Core\Classes\InventorySlot.cs" />
     <Compile Include="Core\Classes\MovementEntry.cs" />
     <Compile Include="Core\Classes\ObjectPool.cs" />
@@ -199,7 +200,9 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\libs\Lidgren.Network\Lidgren.Network.csproj">

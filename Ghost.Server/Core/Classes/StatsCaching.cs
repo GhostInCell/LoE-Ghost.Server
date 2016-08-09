@@ -2,7 +2,6 @@
 
 namespace Ghost.Server.Core.Classes
 {
-
     public class StatsCaching
     {
         private struct StatValue

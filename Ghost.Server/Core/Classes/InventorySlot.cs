@@ -1,88 +1,21 @@
-﻿using Ghost.Server.Utilities;
-using PNet;
+﻿using PNet;
 using ProtoBuf;
 
 namespace Ghost.Server.Core.Classes
 {
-    [ProtoContract]
-    public class Item : INetSerializable
-    {
-        public const int EmptyID = int.MinValue;
-
-        [ProtoMember(1)]
-        public int Id;
-        [ProtoMember(2)]
-        public uint Color;
-        [ProtoMember(3)]
-        public int[] Sockets;
-
-        public bool IsEmpty
-        {
-            get
-            {
-                return Id == EmptyID;
-            }
-        }
-
-        public int AllocSize
-        {
-            get
-            {
-                return IsEmpty ? 4 : 9 + Sockets.Length * 4;
-            }
-        }
-
-        public Item()
-        {
-            Id = EmptyID;
-            Color = uint.MaxValue;
-            Sockets = ArrayEx.Empty<int>();
-        }
-
-        public Item(int id)
-            : this()
-        {
-            Id = id;
-        }
-
-        public void OnSerialize(NetMessage message)
-        {
-            message.Write(Id);
-            if (!IsEmpty)
-            {
-                message.Write(Color);
-                message.Write((byte)Sockets.Length);
-                foreach (var socket in Sockets)
-                    message.Write(socket);
-            }
-        }
-
-        public void OnDeserialize(NetMessage message)
-        {
-            Id = message.ReadInt32();
-            if (!IsEmpty)
-            {
-                Color = message.ReadUInt32();
-                Sockets = new int[message.ReadByte()];
-                for (int index = 0; index < Sockets.Length; index++)
-                    Sockets[index] = message.ReadInt32();
-            }
-        }
-    }
-
     [ProtoContract]
     public class InventorySlot : INetSerializable
     {
         [ProtoMember(1)]
         public int Amount;
         [ProtoMember(2)]
-        public Item Item;
+        public InventoryItem Item;
 
         public bool IsEmpty
         {
             get
             {
-                return Item.IsEmpty;
+                return Item.IsEmpty || Amount <= 0;
             }
         }
 
@@ -90,18 +23,24 @@ namespace Ghost.Server.Core.Classes
         {
             get
             {
-                return 6 + Item.AllocSize;
+                return 2 + Item.AllocSize;
             }
         }
 
         public InventorySlot()
         {
-            Item = new Item();
+            Item = new InventoryItem();
         }
 
         public InventorySlot(int itemId, int amount)
         {
-            Item = new Item(itemId);
+            Amount = amount;
+            Item = new InventoryItem(itemId);
+        }
+
+        public InventorySlot(InventoryItem item, int amount)
+        {
+            Item = item;
             Amount = amount;
         }
 

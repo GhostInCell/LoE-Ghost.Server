@@ -40,13 +40,13 @@ namespace Ghost.Server.Utilities
             Console.WriteLine(exp.Message);
             Console.WriteLine(exp.StackTrace);
         }
-        public static void LogChat(string user, ChatType type, string msg)
+        public static void LogChat(string user, string pony, ChatType type, string msg)
         {
-            Console.WriteLine($"[{DateTime.Now:HH:mm:ss}][{user}][{type}]: {msg}");
+            Console.WriteLine($"[{DateTime.Now:HH:mm:ss}][{type}][{user}:{pony}]: {msg}");
         }
         public static void LogLocalChat(IPlayer player, string msg)
         {
-            Console.WriteLine($"[{DateTime.Now:HH:mm:ss}][{player.User.Name}][{player.Server.ID}]: {msg}");
+            Console.WriteLine($"[{DateTime.Now:HH:mm:ss}][{player.Server.ID}][{player.User.Name}]: {msg}");
         }
     }
 }

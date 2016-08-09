@@ -2,8 +2,6 @@
 using PNet;
 using PNetR;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
 
 namespace Ghost.Server.Objects.Managers
@@ -18,7 +16,7 @@ namespace Ghost.Server.Objects.Managers
 
     public class MotionManager : NetworkManager<MovableObject>
     {
-        private class SyncEntry : INetSerializable
+        private struct SyncEntry : INetSerializable
         {
             public double Time;
             public Vector3 Position;
@@ -60,6 +58,7 @@ namespace Ghost.Server.Objects.Managers
 
         private double m_time;
         private SyncEntry m_sync;
+        private SyncEntry m_last;
 
         public bool Locked
         {
@@ -104,18 +103,18 @@ namespace Ghost.Server.Objects.Managers
         public MotionManager()
             : base()
         {
-            m_sync = new SyncEntry();
             m_state |= StreamingFlag | ReciveingFlag;
         }
 
         public void SendStream()
         {
-            m_time = PNet.Utilities.Now /** 1.025*/;
+            m_time = PNet.Utilities.Now * 1.025;
             var stream = m_view.CreateStream(m_sync.AllocSize);
-            m_sync.Time = m_time;
-            m_sync.Position = m_owner.Position;
-            m_sync.Rotation = m_owner.Rotation;
-            m_sync.OnSerialize(stream);
+            var sync = default(SyncEntry);
+            sync.Time = m_time;
+            sync.Position = m_owner.Position;
+            sync.Rotation = m_owner.Rotation;
+            sync.OnSerialize(stream);
             m_view.SendStream(stream);
         }
 
@@ -124,12 +123,15 @@ namespace Ghost.Server.Objects.Managers
         {
             if ((m_state & ReciveingFlag) != 0)
             {
-                m_sync.OnDeserialize(message);
-                if (m_time < m_sync.Time)
+                SyncEntry sync = default(SyncEntry), last = m_last;
+                sync.OnDeserialize(message);
+                if (m_time > sync.Time)
                 {
-                    m_time = m_sync.Time;
-                    m_owner.UpdateLocation(m_sync.Position, m_sync.Rotation);
+                    sync.Position = m_owner.Position + (sync.Position - last.Position);
+                    sync.Rotation = m_owner.Rotation + (sync.Rotation - last.Rotation);
                 }
+                m_last = sync;
+                m_owner.UpdateLocation(sync.Position, sync.Rotation);
             }
         }
         #endregion        

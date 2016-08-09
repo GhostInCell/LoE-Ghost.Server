@@ -98,6 +98,7 @@ namespace Ghost.Server.Core.Objects
         }
         private void View_FinishedInstantiation(Player obj)
         {
+            _view.Rpc(4, 54, obj, _stats.Team);
             _view.Rpc(7, 4, obj, _player.Data.SerWears);
             if (obj.Id == _player.Player.Id)
             {

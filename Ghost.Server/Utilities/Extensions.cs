@@ -871,7 +871,7 @@ namespace Ghost.Server.Utilities
             view.Rpc(2, 201, RpcMode.AllOrdered, position.X, position.Y, position.Z);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void WearItem(this PNetR.NetworkView view, Item item, byte slot, WearablePosition usedSlots)
+        public static void WearItem(this PNetR.NetworkView view, InventoryItem item, byte slot, WearablePosition usedSlots)
         {
             view.Rpc(7, 8, RpcMode.AllOrdered, item, slot, (int)usedSlots);
         }

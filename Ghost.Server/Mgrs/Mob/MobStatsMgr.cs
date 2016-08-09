@@ -40,6 +40,7 @@ namespace Ghost.Server.Mgrs.Mob
         public MobStatsMgr(WO_MOB parent)
             : base(parent)
         {
+            Team = -1;
             _mob = parent;
             _meleeSkill = _mob.Creature.SpellID;
             _attackRate = _mob.Creature.Attack_Rate;

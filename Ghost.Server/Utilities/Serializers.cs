@@ -103,7 +103,7 @@ namespace Ghost.Server.Utilities
     }
     public class SER_Wears : INetSerializable
     {
-        private readonly Dictionary<int, Item> m_data;
+        private readonly Dictionary<int, InventoryItem> m_data;
         public int AllocSize
         {
             get
@@ -111,13 +111,13 @@ namespace Ghost.Server.Utilities
                 return 8 + m_data.Count * 32;
             }
         }
-        public SER_Wears(Dictionary<int, Item> data)
+        public SER_Wears(Dictionary<int, InventoryItem> data)
         {
             m_data = data;
         }
         public void OnSerialize(NetMessage message)
         {
-            Item item; WearablePosition wSlots = WearablePosition.None; DB_Item dbItem;
+            InventoryItem item; WearablePosition wSlots = WearablePosition.None; DB_Item dbItem;
             message.Write(Constants.MaxWornItems);
             for (int index = 0, count = m_data.Count; index < Constants.MaxWornItems; index++)
             {
@@ -131,7 +131,7 @@ namespace Ghost.Server.Utilities
                         continue;
                     }
                 }
-                message.Write(Item.EmptyID);
+                message.Write(InventoryItem.EmptyID);
             }
             message.Write((int)wSlots);
         }
@@ -290,7 +290,7 @@ namespace Ghost.Server.Utilities
                         continue;
                     }
                 }
-                message.Write(Item.EmptyID);
+                message.Write(InventoryItem.EmptyID);
             }
         }
         public void OnDeserialize(NetMessage message)

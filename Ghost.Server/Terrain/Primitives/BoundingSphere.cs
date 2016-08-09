@@ -20,9 +20,7 @@ namespace Ghost.Server.Terrain.Primitives
 
         public bool Contains(Vector3 point)
         {
-            if (Vector3.DistanceSquared(point, Center) >= Radius * Radius)
-                return false;
-            return true;
+            return Vector3.DistanceSquared(point, Center) <= Radius * Radius;
         }
 
         public bool Intersects(BoundingSphere other)
