@@ -1,31 +1,62 @@
 ﻿using PNet;
+using ProtoBuf;
+using System.IO;
+using System.IO.Compression;
 
 namespace Ghost.Server.Core.Classes
 {
+    [ProtoContract]
     public class PonyData : INetSerializable
     {
+        [ProtoMember(1)]
         public short Eye;
         public byte Race;
+        [ProtoMember(2)]
         public short Mane;
+        [ProtoMember(3)]
         public short Tail;
+        [ProtoMember(4)]
         public short Hoof;
         public byte Gender;
         public string Name;
+        [ProtoMember(5)]
         public int EyeColor;
+        [ProtoMember(6)]
         public int HoofColor;
+        [ProtoMember(7)]
         public int BodyColor;
+        [ProtoMember(8)]
         public int HairColor0;
+        [ProtoMember(9)]
         public int HairColor1;
+        [ProtoMember(10)]
         public int HairColor2;
+        [ProtoMember(11)]
         public float BodySize;
+        [ProtoMember(12)]
         public float HornSize;
+        [ProtoMember(13)]
         public int CutieMark0;
+        [ProtoMember(14)]
         public int CutieMark1;
+        [ProtoMember(15)]
         public int CutieMark2;
+
         public int AllocSize
         {
             get { return (Name?.Length ?? 0) * 2 + 48; }
         }
+
+        public byte[] GetBytes()
+        {
+            using (var mem = new MemoryStream())
+            {
+                using (var zip = new DeflateStream(mem, CompressionLevel.Optimal, true))
+                    ProtoBuf.Serializer.Serialize(zip, this);
+                return mem.ToArray();
+            }
+        }
+
         public void OnSerialize(NetMessage message)
         {
             message.Write(Name);
@@ -47,6 +78,7 @@ namespace Ghost.Server.Core.Classes
             message.Write(BodySize);
             message.WriteRangedSingle(HornSize, 0f, 2f, 16);
         }
+
         public void OnDeserialize(NetMessage message)
         {
             Name = message.ReadString();

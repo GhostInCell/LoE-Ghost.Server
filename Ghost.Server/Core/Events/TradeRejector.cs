@@ -17,8 +17,8 @@ namespace Ghost.Server.Core.Events
         { }
         public override void OnFire()
         {
-            _data01.Trade.ResetState();
-            _data02.View?.FailedTrade();
+            _data01?.Trade?.ResetState();
+            _data02?.View?.FailedTrade();
         }
     }
 }

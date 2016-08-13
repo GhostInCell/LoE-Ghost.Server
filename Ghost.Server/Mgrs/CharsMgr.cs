@@ -50,15 +50,15 @@ namespace Ghost.Server.Mgrs
             data.Skills[10] = 0;
             data.Skills[44] = 0;
 
-            data.Talents[(int)TalentMarkId.Medical] = new Tuple<uint, short, short>(0, 0, 0);
-            data.Talents[(int)TalentMarkId.Partying] = new Tuple<uint, short, short>(0, 0, 0);
-            data.Talents[(int)TalentMarkId.Music] = new Tuple<uint, short, short>(0, 0, 0);
-            data.Talents[(int)TalentMarkId.Animal] = new Tuple<uint, short, short>(0, 0, 0);
-            data.Talents[(int)TalentMarkId.Flying] = new Tuple<uint, short, short>(0, 0, 0);
-            data.Talents[(int)TalentMarkId.Magic] = new Tuple<uint, short, short>(0, 0, 0);
-            data.Talents[(int)TalentMarkId.Artisan] = new Tuple<uint, short, short>(0, 0, 0);
-            data.Talents[(int)TalentMarkId.Combat] = new Tuple<uint, short, short>(0, 0, 0);
-            data.Talents[(int)TalentMarkId.Foal] = new Tuple<uint, short, short>(0, 0, 0);
+            data.Talents[TalentMarkId.Medical] = default(TalentData);
+            data.Talents[TalentMarkId.Partying] = default(TalentData);
+            data.Talents[TalentMarkId.Music] = default(TalentData);
+            data.Talents[TalentMarkId.Animal] = default(TalentData);
+            data.Talents[TalentMarkId.Flying] = default(TalentData);
+            data.Talents[TalentMarkId.Magic] = default(TalentData);
+            data.Talents[TalentMarkId.Artisan] = default(TalentData);
+            data.Talents[TalentMarkId.Combat] = default(TalentData);
+            data.Talents[TalentMarkId.Foal] = default(TalentData);
 
             switch (entry.Pony.Race)
             {

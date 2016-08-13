@@ -93,30 +93,34 @@ namespace Ghost.Server.Mgrs.Player
         }
         public void AddExpAll(uint exp, uint bonusExp = 0)
         {
-            uint[] talents = _mPlayer.Data.Talents.Keys.ToArray();
+            var talents = _mPlayer.Data.Talents.Keys.ToArray();
             for (int i = 0; i < talents.Length; i++)
-                AddExp((TalentMarkId)talents[i], exp, bonusExp);
+            {
+                if ((talents[i] & TalentMarkId.All) != 0)
+                    AddExp(talents[i], exp, bonusExp);
+            }
+
             talents = null;
         }
         public void AddExp(TalentMarkId talant, uint exp, uint bonusExp = 0)
         {
-            var talantState = _mPlayer.Data.Talents[(uint)talant];
-            if (talantState.Item2 >= CharsMgr.MaxLevel)
+            var talantState = _mPlayer.Data.Talents[talant];
+            if (talantState.Level >= CharsMgr.MaxLevel)
                 return;
             if (CalculateTalentLevel(ref talantState, exp + bonusExp))
             {
                 UpdateBase();
                 _mPlayer.Player.Rpc(4, _mPlayer.Data.SerTalents);
-                _mPlayer.Player.Rpc(3, (uint)talant, talantState.Item1, (uint)talantState.Item2);
+                _mPlayer.Player.Rpc(3, (uint)talant, talantState.Exp, (uint)talantState.Level);
                 _view.Rpc(4, 53, RpcMode.AllUnordered, (object)_mPlayer.Char.Level);
             }
             else
                 _mPlayer.Player.Rpc(2, (uint)talant, exp, bonusExp);
-            _mPlayer.Data.Talents[(uint)talant] = talantState;
+            _mPlayer.Data.Talents[talant] = talantState;
         }
         private short GetLevel()
         {
-            short ret = _mPlayer.Data.Talents.Values.Max(x => x.Item2);
+            short ret = _mPlayer.Data.Talents.Values.Max(x => x.Level);
             return ret > CharsMgr.MaxLevel ? CharsMgr.MaxLevel : ret;
         }
         private void CreateBase()
@@ -166,12 +170,12 @@ namespace Ghost.Server.Mgrs.Player
             }
             SendStats();
         }
-        private bool CalculateTalentLevel(ref Tuple<uint, short, short> talent, uint exp)
+        private bool CalculateTalentLevel(ref TalentData talent, uint exp)
         {
-            if (talent.Item2 >= CharsMgr.MaxLevel)
+            if (talent.Level >= CharsMgr.MaxLevel)
                 return false;
-            var cExp = talent.Item1 + exp;
-            var level = (short)(talent.Item2 <= 0 ? 1 : talent.Item2);
+            var cExp = talent.Exp + exp;
+            var level = (short)(talent.Level <= 0 ? 1 : talent.Level);
             while (level < CharsMgr.MaxLevel)
             {
                 var nExp = CharsMgr.GetExpForLevel(level);
@@ -179,16 +183,14 @@ namespace Ghost.Server.Mgrs.Player
                 cExp -= nExp;
                 level++;
             }
-            if (level != talent.Item2)
+            talent.Exp = cExp;
+            if (level != talent.Level)
             {
-                talent = new Tuple<uint, short, short>(cExp, level, (short)(talent.Item3 + ((level - talent.Item2) * CharsMgr.TalentPointsPerLevel)));
+                talent.Level = level;
+                talent.Points += (short)((level - talent.Level) * CharsMgr.TalentPointsPerLevel);
                 return true;
             }
-            else
-            {
-                talent = new Tuple<uint, short, short>(cExp, level, talent.Item3);
-                return false;
-            }
+            return false;
         }
         #region Events Handlers
         private void PlayerStatsMgr_OnDestroy()

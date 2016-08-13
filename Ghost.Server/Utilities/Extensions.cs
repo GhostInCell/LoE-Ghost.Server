@@ -5,9 +5,9 @@ using PNet;
 using System;
 using System.Collections;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Numerics;
-using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
@@ -938,6 +938,22 @@ namespace Ghost.Server.Utilities
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PonyData GetPony(this MySqlDataReader reader, int i)
         {
+            var ret = new PonyData();
+            ret.Race = reader.GetByte(i);
+            ret.Gender = reader.GetByte(++i);
+            ret.Name = reader.GetString(++i);
+            if (reader.IsDBNull(++i)) return ret;
+            using (var mem = new MemoryStream())
+            {
+                var data = (byte[])reader.GetValue(i);
+                mem.Write(data, 0, data.Length); mem.Position = 0;
+                using (var zip = new DeflateStream(mem, CompressionMode.Decompress))
+                    return ProtoBuf.Serializer.Merge(zip, ret);
+            }
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static PonyData GetPonyOld(this MySqlDataReader reader, int i)
+        {
             return new PonyData()
             {
                 Name = reader.GetString(i),
@@ -968,7 +984,8 @@ namespace Ghost.Server.Utilities
             {
                 var data = (byte[])reader.GetValue(i);
                 mem.Write(data, 0, data.Length); mem.Position = 0;
-                return ProtoBuf.Serializer.Deserialize<T>(mem);
+                using (var zip = new DeflateStream(mem, CompressionMode.Decompress))
+                    return ProtoBuf.Serializer.Deserialize<T>(zip);
             }
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

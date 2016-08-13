@@ -140,43 +140,6 @@ namespace Ghost.Server.Utilities
             throw new NotSupportedException();
         }
     }
-    public class SER_Trade : INetSerializable
-    {
-        private readonly Dictionary<int, int> _data;
-        public int AllocSize
-        {
-            get
-            {
-                return 4 + _data.Count * 8;
-            }
-        }
-        public SER_Trade(Dictionary<int, int> data)
-        {
-            _data = data;
-        }
-        public void OnSerialize(NetMessage message)
-        {
-            int length = _data.Count;
-            message.Write(length);
-            foreach (var item in _data)
-            {
-                message.Write(item.Key);
-                message.Write(item.Value);
-            }
-        }
-        public void OnDeserialize(NetMessage message)
-        {
-            int item, nCount, oCount;
-            for (int length = message.ReadInt32(); length > 0; length--)
-            {
-                item = message.ReadInt32();
-                nCount = message.ReadInt32();
-                if (_data.TryGetValue(item, out oCount))
-                    _data[item] = nCount + oCount;
-                else _data[item] = nCount;
-            }
-        }
-    }
     public class SER_Skills : INetSerializable
     {
         private readonly CharData _data;
@@ -225,10 +188,10 @@ namespace Ghost.Server.Utilities
             message.Write(_data.Talents.Count);
             foreach (var item in _data.Talents)
             {
-                message.Write(item.Key);
+                message.Write((uint)item.Key);
                 message.Write(0u);
-                message.Write((uint)item.Value.Item2);
-                message.Write((uint)item.Value.Item3);
+                message.Write((uint)item.Value.Level);
+                message.Write((uint)item.Value.Points);
                 message.Write(0u);
                 message.Write(0u);
                 message.Write(0u);

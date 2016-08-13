@@ -1,10 +1,12 @@
-﻿using Ghost.Server.Core.Events;
+﻿using Ghost.Server.Core.Classes;
+using Ghost.Server.Core.Events;
 using Ghost.Server.Core.Objects;
 using Ghost.Server.Core.Players;
 using Ghost.Server.Utilities;
 using Ghost.Server.Utilities.Abstracts;
 using PNet;
 using PNetR;
+using System;
 using System.Collections.Generic;
 
 namespace Ghost.Server.Mgrs.Player
@@ -12,36 +14,147 @@ namespace Ghost.Server.Mgrs.Player
     [NetComponent(9)]
     public class TradeMgr : ObjectComponent
     {
+        private class TradingStack : INetSerializable
+        {
+            public int Amount;
+            public InventoryItem Item;
+
+            public bool IsEmpty
+            {
+                get
+                {
+                    return Item.IsEmpty || Amount <= 0;
+                }
+            }
+
+            public int AllocSize
+            {
+                get
+                {
+                    return 33;
+                }
+            }
+
+            public TradingStack()
+            {
+                Item = new InventoryItem();
+            }
+
+            public void OnSerialize(NetMessage message)
+            {
+                Item.OnSerialize(message);
+                message.Write(Amount);
+            }
+
+            public void OnDeserialize(NetMessage message)
+            {
+                Item.OnDeserialize(message);
+                Amount = message.ReadInt32();
+            }
+
+        }
+
+        private class TradingState : INetSerializable
+        {
+            public MapPlayer ONE;
+            public MapPlayer TWO;
+            public bool ONE_Ready;
+            public bool TWO_Ready;
+            public bool InProgress;
+            public Dictionary<int, TradingStack> ONE_Offer;
+            public Dictionary<int, TradingStack> TWO_Offer;
+
+            private MapPlayer m_target;
+
+            public int AllocSize
+            {
+                get
+                {
+                    return 12 + ONE_Offer.Count * 32 + TWO_Offer.Count * 32;
+                }
+            }
+
+            public void Send(MapPlayer player)
+            {
+                m_target = player;
+                player.View.Rpc(9, 12, RpcMode.OwnerOrdered, this);
+            }
+
+            public void SetReadyState(MapPlayer player, bool state)
+            {
+                if (player == ONE)
+                    ONE_Ready = state;
+                else
+                    TWO_Ready = state;
+            }
+
+            public void OnSerialize(NetMessage message)
+            {
+                if (m_target == ONE)
+                {
+                    message.Write(ONE_Offer.Count);
+                    foreach (var item in ONE_Offer.Values)
+                        item.OnSerialize(message);
+                    message.Write(TWO_Offer.Count);
+                    foreach (var item in TWO_Offer.Values)
+                        item.OnSerialize(message);
+                    message.Write(InProgress);
+                    message.Write(ONE_Ready);
+                    message.Write(TWO_Ready);
+                }
+                else
+                {
+                    message.Write(TWO_Offer.Count);
+                    foreach (var item in TWO_Offer.Values)
+                        item.OnSerialize(message);
+                    message.Write(ONE_Offer.Count);
+                    foreach (var item in ONE_Offer.Values)
+                        item.OnSerialize(message);
+                    message.Write(InProgress);
+                    message.Write(TWO_Ready);
+                    message.Write(ONE_Ready);
+                }
+                message.WritePadBits();
+            }
+
+            public void OnDeserialize(NetMessage message)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         private static readonly object _lock = new object();
-        private bool _ready;
         private bool _trading;
         private bool _requested;
         private NetworkView _view;
         private WO_Player _wPlayer;
-        private MapPlayer _mPlayer;
+        private MapPlayer _player;
         private MapPlayer _target;
-        private SER_Trade _offerItems;
+        private TradingState m_state;
         private TradeRejector _regected;
-        private Dictionary<int, int> _offer;
+        private Dictionary<int, TradingStack> m_offer;
+
         public bool IsTrading
         {
             get { return _trading; }
         }
+
         public MapPlayer Target
         {
             get { return _target; }
         }
+
         public TradeMgr(WO_Player parent)
             : base(parent)
         {
             _wPlayer = parent;
-            _mPlayer = _wPlayer.Player;
-            _offer = new Dictionary<int, int>();
-            _offerItems = new SER_Trade(_offer);
+            _player = parent.Player;
+            m_offer = new Dictionary<int, TradingStack>();
             parent.OnSpawn += TradeMgr_OnSpawn;
             parent.OnDestroy += TradeMgr_OnDestroy;
             parent.OnDespawn += TradeMgr_OnDespawn;
         }
+
         public void Close()
         {
             if (_trading)
@@ -50,81 +163,91 @@ namespace Ghost.Server.Mgrs.Player
                 ResetState();
             }
         }
+
         public void CloseBoth()
         {
             _target?.Trade.Close();
             Close();
         }
+
         public void ResetState()
         {
             _regected?.Destroy();
+            m_state = null;
             _target = null;
-            _ready = false;
             _trading = false;
             _regected = null;
             _requested = false;
-            lock (_lock) _offer.Clear();
+            lock (_lock) m_offer.Clear();
         }
         public void UpdateState()
         {
             if (_trading && _target.Trade._trading)
             {
-                if (_ready && _target.Trade._ready)
+                if (m_state.ONE_Ready && m_state.TWO_Ready)
                 {
-                    _ready = false; _target.Trade._ready = false;
                     lock (_lock)
                     {
-                        ProcessTrade(_target.Trade._offer);
-                        _target.Trade.ProcessTrade(_offer);
+                        ProcessTrade(_target.Trade.m_offer);
+                        _target.Trade.ProcessTrade(m_offer);
                     }
                     CloseBoth();
                 }
                 else
                 {
-                    _view.SendTradeState(_offerItems, _target.Trade._offerItems, _ready, _target.Trade._ready);
-                    _target.View.SendTradeState(_target.Trade._offerItems, _offerItems, _target.Trade._ready, _ready);
+                    m_state.Send(_player);
+                    m_state.Send(_target);
                 }
             }
         }
+
         private void OfferUpdated()
         {
             lock (_lock)
             {
-                foreach (var item in _offer)
+                foreach (var item in m_offer)
                 {
-                    if (!_mPlayer.Items.HasItems(item.Key, item.Value))
+                    if (!_player.Items.HasItems(item.Key, item.Value.Amount))
                     {
                         CloseBoth();
                         return;
                     }
                 }
             }
-            _target.Trade._ready = _ready = false;
+            m_state.ONE_Ready = m_state.TWO_Ready = false;
             UpdateState();
         }
-        private void ProcessTrade(Dictionary<int, int> _toffer)
+
+        private void ProcessTrade(Dictionary<int, TradingStack> _toffer)
         {
             lock (_lock)
             {
-                foreach (var item in _offer)
-                    _mPlayer.Items.RemoveItems(item.Key, item.Value);
+                foreach (var item in m_offer)
+                    _player.Items.AddItems(item.Key, item.Value.Amount);
                 foreach (var item in _toffer)
-                    _mPlayer.Items.AddItems(item.Key, item.Value);
+                    _player.Items.RemoveItems(item.Key, item.Value.Amount);
             }
         }
         #region RPC Handlers
-        [Rpc(1)]//Trade Request
-        private void RPC_001(NetMessage arg1, NetMessageInfo arg2)
+        [Rpc(1, false)]
+        private void Request(NetMessageInfo info)
         {
-            MapPlayer sender = _mPlayer.Server[arg2.Sender.Id];
+            MapPlayer sender = _player.Server[info.Sender.Id];
             if (_trading)
             {
                 sender.View?.FailedTrade();
                 return;
             }
-            else if (sender.Trade._requested && sender.Trade._target == _mPlayer)
+            else if (sender.Trade._requested && sender.Trade._target == _player)
             {
                 _target = sender;
+                m_state = new TradingState();
+                m_state.InProgress = true;
+                m_state.ONE = _player;
+                m_state.TWO = sender;
+                m_state.ONE_Offer = m_offer;
+                m_state.TWO_Offer = sender.Trade.m_offer;
+                sender.Trade.m_state = m_state;
                 sender.Trade._regected.Destroy();
                 sender.Trade._trading = _trading = true;
                 UpdateState();
@@ -134,40 +257,63 @@ namespace Ghost.Server.Mgrs.Player
             {
                 _target = sender;
                 _requested = true;
-                _view.RequestTrade(arg2.Sender.Id);
-                _regected = new TradeRejector(_mPlayer, _target);
+                _view.RequestTrade(info.Sender.Id);
+                _regected = new TradeRejector(_player, _target);
             }
         }
-        [Rpc(4)]//Trade Cancle
-        private void RPC_004(NetMessage arg1, NetMessageInfo arg2)
+
+        [OwnerOnly]
+        [Rpc(4, false)]
+        private void Cancle()
         {
             if (_trading) CloseBoth();
         }
-        [Rpc(6)]//Offer
-        private void RPC_006(NetMessage arg1, NetMessageInfo arg2)
+
+        [Rpc(6, false)]
+        private void Offer(TradingStack slot)
         {
-            if (_trading && arg2.Sender.Id == _target.Player.Id)
+            if (_trading)
             {
-                lock (_lock)
-                    _target.Trade._offerItems.OnDeserialize(arg1);
+                if (slot.IsEmpty)
+                    _player.SystemMsg($"Inventory slot is empty!");
+                else
+                {
+                    if (_target.Items.HasItems(slot.Item.Id, slot.Amount))
+                    {
+                        lock (_lock)
+                        {
+                            TradingStack current;
+                            if (m_offer.TryGetValue(slot.Item.Id, out current))
+                                current.Amount += slot.Amount;
+                            else
+                                m_offer[slot.Item.Id] = slot;
+                        }
+                    }
+                    else
+                        _player.SystemMsg($"You hasn't {slot.Amount} of {slot.Item.Id}");
+                }
                 _target.Trade.OfferUpdated();
             }
         }
-        [Rpc(8)]//Trade Ready
-        private void RPC_008(NetMessage arg1, NetMessageInfo arg2)
+
+        [OwnerOnly]
+        [Rpc(8, false)]
+        private void Ready()
         {
             if (_trading)
             {
-                _target.Trade._ready = true;
+                m_state.SetReadyState(_player, true);
                 UpdateState();
             }
         }
-        [Rpc(9)]//Trade UnReady
-        private void RPC_009(NetMessage arg1, NetMessageInfo arg2)
+
+        [OwnerOnly]
+        [Rpc(9, false)]
+        private void UnReady()
         {
             if (_trading)
             {
-                _target.Trade._ready = false;
+                m_state.SetReadyState(_player, false);
                 UpdateState();
             }
         }
@@ -184,12 +330,11 @@ namespace Ghost.Server.Mgrs.Player
             if (_trading && _target.Trade._trading)
                 _target.Trade.Close();
             _view = null;
-            _offer = null;
+            m_offer = null;
             _target = null;
             _wPlayer = null;
-            _mPlayer = null;
+            _player = null;
             _regected = null;
-            _offerItems = null;
         }
         private void TradeMgr_OnDespawn()
         {

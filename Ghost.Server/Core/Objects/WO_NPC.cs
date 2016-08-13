@@ -152,14 +152,12 @@ namespace Ghost.Server.Core.Objects
         private void RPC_06_10(NetMessage arg1, NetMessageInfo arg2)
         {
             DB_Item item;
-            int itemID = arg1.ReadInt32();
-            int amount = arg1.ReadInt32();
+            int price, itemID = arg1.ReadInt32(), amount = arg1.ReadInt32(); 
             MapPlayer player = _server[arg2.Sender.Id];
-            if (player.Shop == this && _npc.Items.Contains(itemID) && DataMgr.Select(itemID, out item)
-                && player.Char.Data.Bits >= (item.Price * amount))
+            if (player.Shop == this && _npc.Items.Contains(itemID) && DataMgr.Select(itemID, out item) && player.Char.Data.Bits >= (price = (item.Price * amount)))
             {
                 amount -= player.Items.AddItems(itemID, amount);
-                player.Char.Data.Bits -= (item.Price * amount);
+                player.Char.Data.Bits -= price;
                 player.View.SetBits(player.Char.Data.Bits);
             }
         }

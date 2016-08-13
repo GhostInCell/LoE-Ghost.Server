@@ -117,28 +117,12 @@ namespace Ghost.Server.Core
             {
                 using (MySqlCommand _cmd = _connection.CreateCommand())
                 {
-                    _cmd.CommandText = $"UPDATE {tb_02} SET name=@name, race=@race, gender=@gender, eye=@eye, tail=@tail, hoof=@hoof, mane=@mane, " +
-                        "bodysize=@bodysize, hornsize=@hornsize, eyecolor=@eyecolor, hoofcolor=@hoofcolor, bodycolor=@bodycolor, haircolor0=@haircolor0, " +
-                         "haircolor1=@haircolor1, haircolor2=@haircolor2, cutiemark0=@cutiemark0, cutiemark1=@cutiemark1, cutiemark2=@cutiemark2 WHERE id=@id;";
+                    _cmd.CommandText = $"UPDATE {tb_02} SET name=@name, race=@race, gender=@gender, vdata=@vdata WHERE id=@id;";
                     _cmd.Parameters.AddWithValue("id", entry.ID);
-                    _cmd.Parameters.AddWithValue("eye", entry.Pony.Eye);
-                    _cmd.Parameters.AddWithValue("mane", entry.Pony.Mane);
-                    _cmd.Parameters.AddWithValue("tail", entry.Pony.Tail);
-                    _cmd.Parameters.AddWithValue("hoof", entry.Pony.Hoof);
                     _cmd.Parameters.AddWithValue("name", entry.Pony.Name);
                     _cmd.Parameters.AddWithValue("race", entry.Pony.Race);
                     _cmd.Parameters.AddWithValue("gender", entry.Pony.Gender);
-                    _cmd.Parameters.AddWithValue("bodysize", entry.Pony.BodySize);
-                    _cmd.Parameters.AddWithValue("hornsize", entry.Pony.HornSize);
-                    _cmd.Parameters.AddWithValue("cutiemark0", entry.Pony.CutieMark0);
-                    _cmd.Parameters.AddWithValue("cutiemark1", entry.Pony.CutieMark1);
-                    _cmd.Parameters.AddWithValue("cutiemark2", entry.Pony.CutieMark2);
-                    _cmd.Parameters.AddWithValue("eyecolor", entry.Pony.EyeColor);
-                    _cmd.Parameters.AddWithValue("hoofcolor", entry.Pony.HoofColor);
-                    _cmd.Parameters.AddWithValue("bodycolor", entry.Pony.BodyColor);
-                    _cmd.Parameters.AddWithValue("haircolor0", entry.Pony.HairColor0);
-                    _cmd.Parameters.AddWithValue("haircolor1", entry.Pony.HairColor1);
-                    _cmd.Parameters.AddWithValue("haircolor2", entry.Pony.HairColor2);
+                    _cmd.Parameters.AddWithValue("vdata", entry.Pony.GetBytes());
                     return _cmd.ExecuteNonQuery() == 1;
                 }
             }
@@ -151,8 +135,8 @@ namespace Ghost.Server.Core
             {
                 using (MySqlCommand _cmd = _connection.CreateCommand())
                 {
-                    _cmd.CommandText = $"UPDATE {tb_02} SET level={entry.Level}, map={entry.Map}, data=@data WHERE id={entry.ID};";
-                    _cmd.Parameters.AddWithValue("data", entry.Data.GetBytes());
+                    _cmd.CommandText = $"UPDATE {tb_02} SET level={entry.Level}, map={entry.Map}, gdata=@gdata WHERE id={entry.ID};";
+                    _cmd.Parameters.AddWithValue("gdata", entry.Data.GetBytes());
                     return _cmd.ExecuteNonQuery() == 1;
                 }
             }
@@ -238,7 +222,7 @@ namespace Ghost.Server.Core
                     {
                         if (_result.HasRows && _result.Read())
                         {
-                            entry = new Character(id, _result.GetInt32(1), _result.GetInt16(2), _result.GetInt32(3), _result.GetProtoBuf<CharData>(4), _result.GetPony(5));
+                            entry = new Character(id, _result.GetInt32(1), _result.GetInt16(2), _result.GetInt32(3), _result.GetPony(4), _result.GetProtoBuf<CharData>(8));
                             return true;
                         }
                     }
@@ -256,7 +240,7 @@ namespace Ghost.Server.Core
             {
                 using (MySqlCommand _cmd = _connection.CreateCommand())
                 {
-                    _cmd.CommandText = $"SELECT data FROM {tb_02} WHERE id = {id};";
+                    _cmd.CommandText = $"SELECT gdata FROM {tb_02} WHERE id = {id};";
                     Monitor.Enter(_connection);
                     using (MySqlDataReader _result = _cmd.ExecuteReader())
                     {
@@ -300,30 +284,14 @@ namespace Ghost.Server.Core
                 using (MySqlCommand _cmd = _connection.CreateCommand())
                 {
                     entry = new Character(pony);
-                    _cmd.CommandText = $"INSERT INTO {tb_02} (user, level, data, name, race, gender, eye, tail, hoof, mane, bodysize, hornsize, eyecolor, hoofcolor, bodycolor, " +
-                        "haircolor0, haircolor1, haircolor2, cutiemark0, cutiemark1, cutiemark2) VALUES (@user, @level, @data, @name, @race, @gender, @eye, @tail, @hoof, @mane, @bodysize, " +
-                        "@hornsize, @eyecolor, @hoofcolor, @bodycolor, @haircolor0, @haircolor1, @haircolor2, @cutiemark0, @cutiemark1, @cutiemark2);";
+                    _cmd.CommandText = $"INSERT INTO {tb_02} (user, level, race, gender, name, vdata, gdata) VALUES (@user, @level, @race, @gender, @name, @vdata, @gdata);";
                     _cmd.Parameters.AddWithValue("user", user);
                     _cmd.Parameters.AddWithValue("level", entry.Level);
-                    _cmd.Parameters.AddWithValue("data", entry.Data.GetBytes());
-                    _cmd.Parameters.AddWithValue("eye", pony.Eye);
-                    _cmd.Parameters.AddWithValue("mane", pony.Mane);
-                    _cmd.Parameters.AddWithValue("tail", pony.Tail);
-                    _cmd.Parameters.AddWithValue("hoof", pony.Hoof);
-                    _cmd.Parameters.AddWithValue("name", pony.Name);
                     _cmd.Parameters.AddWithValue("race", pony.Race);
                     _cmd.Parameters.AddWithValue("gender", pony.Gender);
-                    _cmd.Parameters.AddWithValue("bodysize", pony.BodySize);
-                    _cmd.Parameters.AddWithValue("hornsize", pony.HornSize);
-                    _cmd.Parameters.AddWithValue("cutiemark0", pony.CutieMark0);
-                    _cmd.Parameters.AddWithValue("cutiemark1", pony.CutieMark1);
-                    _cmd.Parameters.AddWithValue("cutiemark2", pony.CutieMark2);
-                    _cmd.Parameters.AddWithValue("eyecolor", pony.EyeColor);
-                    _cmd.Parameters.AddWithValue("hoofcolor", pony.HoofColor);
-                    _cmd.Parameters.AddWithValue("bodycolor", pony.BodyColor);
-                    _cmd.Parameters.AddWithValue("haircolor0", pony.HairColor0);
-                    _cmd.Parameters.AddWithValue("haircolor1", pony.HairColor1);
-                    _cmd.Parameters.AddWithValue("haircolor2", pony.HairColor2);
+                    _cmd.Parameters.AddWithValue("name", pony.Name);
+                    _cmd.Parameters.AddWithValue("vdata", pony.GetBytes());
+                    _cmd.Parameters.AddWithValue("gdata", entry.Data.GetBytes());
                     if (_cmd.ExecuteNonQuery() == 1)
                     {
                         entry.ID = (int)_cmd.LastInsertedId;
@@ -449,7 +417,7 @@ namespace Ghost.Server.Core
                                     data[id].Items.Add(_result.GetInt32(24));
                                 else
                                 {
-                                    entry = new DB_NPC(id, _result.GetByte(1), _result.GetInt16(2), _result.GetUInt16(3), _result.GetByte(4), _result.GetUInt16(5), _result.GetPony(6));
+                                    entry = new DB_NPC(id, _result.GetByte(1), _result.GetInt16(2), _result.GetUInt16(3), _result.GetByte(4), _result.GetUInt16(5), _result.GetPonyOld(6));
                                     if ((entry.Flags & NPCFlags.Trader) > 0)
                                         entry.Items.Add(_result.GetInt32(24));
                                     if ((entry.Flags & NPCFlags.Wears) > 0)
@@ -716,7 +684,7 @@ namespace Ghost.Server.Core
                     {
                         if (_result.HasRows)
                             while (_result.Read())
-                                data.Add(new Character(_result.GetInt32(0), _result.GetInt32(1), _result.GetInt16(2), _result.GetInt32(3), _result.GetProtoBuf<CharData>(4), _result.GetPony(5)));
+                                data.Add(new Character(_result.GetInt32(0), _result.GetInt32(1), _result.GetInt16(2), _result.GetInt32(3), _result.GetPony(4), _result.GetProtoBuf<CharData>(8)));
                     }
                 }
                 return true;

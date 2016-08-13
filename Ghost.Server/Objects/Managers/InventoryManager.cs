@@ -71,19 +71,19 @@ namespace Ghost.Server.Objects.Managers
         }
         #region RPC Handlers
         [Rpc(4, false)]//WornItems
-        private void RPC_004(NetMessage arg1, NetMessageInfo arg2)
+        private void RPC_004(NetMessage message, NetMessageInfo info)
         {
 
         }
 
         [Rpc(6, false)]//AddItem
-        private void RPC_006(NetMessage arg1, NetMessageInfo arg2)
+        private void RPC_006(NetMessage message, NetMessageInfo info)
         {
 
         }
 
         [Rpc(7, false)]//DeleteItem
-        private void RPC_007(NetMessage arg1, NetMessageInfo arg2)
+        private void RPC_007(NetMessage message, NetMessageInfo info)
         {
 
         }

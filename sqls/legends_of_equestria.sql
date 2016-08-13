@@ -20,33 +20,19 @@ USE `legends_of_equestria`;
 DROP TABLE IF EXISTS `loe_character`;
 CREATE TABLE IF NOT EXISTS `loe_character` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user` int(11) NOT NULL,
-  `level` smallint(6) NOT NULL,
-  `map` int(11) NOT NULL,
-  `data` longblob,
+  `user` int(11) NOT NULL DEFAULT '0',
+  `level` smallint(6) NOT NULL DEFAULT '0',
+  `map` int(11) NOT NULL DEFAULT '0',
+  `race` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `gender` tinyint(3) NOT NULL DEFAULT '0',
   `name` varchar(64) NOT NULL,
-  `race` tinyint(3) unsigned NOT NULL,
-  `gender` tinyint(3) unsigned NOT NULL,
-  `eye` smallint(6) NOT NULL,
-  `tail` smallint(6) NOT NULL,
-  `hoof` smallint(6) NOT NULL,
-  `mane` smallint(6) NOT NULL,
-  `bodysize` float NOT NULL,
-  `hornsize` float NOT NULL,
-  `eyecolor` int(11) NOT NULL,
-  `hoofcolor` int(11) NOT NULL,
-  `bodycolor` int(11) NOT NULL,
-  `haircolor0` int(11) NOT NULL,
-  `haircolor1` int(11) NOT NULL,
-  `haircolor2` int(11) NOT NULL,
-  `cutiemark0` int(11) NOT NULL,
-  `cutiemark1` int(11) NOT NULL,
-  `cutiemark2` int(11) NOT NULL,
+  `vdata` tinyblob,
+  `gdata` blob,
   PRIMARY KEY (`id`),
   UNIQUE KEY `CHAR NAME` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_character: ~1 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_character: ~0 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_character` DISABLE KEYS */;
 /*!40000 ALTER TABLE `loe_character` ENABLE KEYS */;
 
@@ -860,7 +846,7 @@ INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`
 INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
 	(297, 'Lavender Bloom\'s Letter', 3, 1, 10, 1, 0);
 INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `stack`, `price`, `slot`) VALUES
-	(298, 'Sempai Dress', 2, 1, 10, 20, 8320);
+	(298, 'Sempai Dress', 2, 1, 10, 2000, 8320);
 /*!40000 ALTER TABLE `loe_item` ENABLE KEYS */;
 
 
@@ -1264,7 +1250,7 @@ CREATE TABLE IF NOT EXISTS `loe_map_object` (
   PRIMARY KEY (`map`,`guid`,`object`,`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_map_object: ~86 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_map_object: ~91 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_map_object` DISABLE KEYS */;
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(1, 0, -1, 0, 0, -72.8009, 0.305817, 152.089, 0, 18.8273, 0, -1, -1, -1, -1);
@@ -1287,19 +1273,29 @@ INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`,
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(2, 0, 5, 0, 0, 348.541, 125.819, 354.404, 0, 105.883, 0, -1, -1, -1, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
+	(2, 0, 6, 0, 0, 346.71, 125.819, 346.051, 0, 0.665279, 0, 0, -1, -1, -1);
+INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
+	(2, 0, 69, 1, 1, 342.669, 125.819, 352.786, 0, -0.0246401, 0, 5, 1, 4, -1);
+INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(2, 0, 71, 1, 1, 338.203, 125.92, 354.019, 0, 81.3118, 0, 5, 1, 6, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(2, 1, -1, 1, 0, 527.15, 128.88, 256.512, 0, -90.9747, 0, -1, 19, 0, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(2, 1, 4, 2, 1, 321.916, 125.82, 360.091, 0, 9.88238, 0, 15, 45, 50, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
+	(2, 1, 69, 1, 1, 344.117, 125.819, 354.018, 0, -2.29151, 0, 5, 1, 4, -1);
+INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(2, 2, -1, 1, 0, 159.901, 149.085, 88.4331, 0, -36.5257, 0, -1, 6, 3, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(2, 2, 4, 2, 1, 321.006, 125.816, 355.194, 0, -1.40448, 0, 15, 48, 49, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
+	(2, 2, 69, 1, 1, 343.625, 125.819, 358.308, 0, -0.271039, 0, 5, 1, 4, -1);
+INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(2, 3, -1, 1, 0, 527.15, 128.88, 256.512, 0, -90.9747, 0, -1, 1, 3, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(2, 3, 4, 2, 1, 321.343, 125.816, 364.795, 0, 0.714559, 0, 15, 43, 47, -1);
+INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
+	(2, 3, 69, 1, 1, 347.037, 125.819, 356.002, 0, -0.615999, 0, 5, 1, 4, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
 	(2, 4, 4, 2, 1, 326.159, 125.816, 358.747, 0, 2.24223, 0, 15, 50, 50, -1);
 INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `time`, `data01`, `data02`, `data03`) VALUES
@@ -1728,9 +1724,9 @@ CREATE TABLE IF NOT EXISTS `loe_npc` (
   `cutiemark1` int(11) NOT NULL,
   `cutiemark2` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_npc: ~4 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_npc: ~5 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_npc` DISABLE KEYS */;
 INSERT INTO `loe_npc` (`id`, `flags`, `level`, `dialog`, `index`, `movement`, `name`, `race`, `gender`, `eye`, `tail`, `hoof`, `mane`, `bodysize`, `hornsize`, `eyecolor`, `hoofcolor`, `bodycolor`, `haircolor0`, `haircolor1`, `haircolor2`, `cutiemark0`, `cutiemark1`, `cutiemark2`) VALUES
 	(1, 7, 5, 1, 0, 0, 'Frederic Dash', 2, 2, 1, 10, 0, 16, 0.9, 0.98497, 8322980, 0, 16767615, 16744172, 16752626, 16744172, 54, 0, 0);
@@ -1739,9 +1735,11 @@ INSERT INTO `loe_npc` (`id`, `flags`, `level`, `dialog`, `index`, `movement`, `n
 INSERT INTO `loe_npc` (`id`, `flags`, `level`, `dialog`, `index`, `movement`, `name`, `race`, `gender`, `eye`, `tail`, `hoof`, `mane`, `bodysize`, `hornsize`, `eyecolor`, `hoofcolor`, `bodycolor`, `haircolor0`, `haircolor1`, `haircolor2`, `cutiemark0`, `cutiemark1`, `cutiemark2`) VALUES
 	(3, 4, 6, 2, 1, 0, 'Tropical Tail', 3, 3, 1, 3, 0, 11, 1.045, 1.19997, 16764265, 0, 7533055, 5880319, 16775150, 16772854, 88, 0, 0);
 INSERT INTO `loe_npc` (`id`, `flags`, `level`, `dialog`, `index`, `movement`, `name`, `race`, `gender`, `eye`, `tail`, `hoof`, `mane`, `bodysize`, `hornsize`, `eyecolor`, `hoofcolor`, `bodycolor`, `haircolor0`, `haircolor1`, `haircolor2`, `cutiemark0`, `cutiemark1`, `cutiemark2`) VALUES
-	(4, 9, 25, 3, 0, 1, 'Jet Tarty', 1, 3, 0, 12, 0, 16, 1.05, 0.855, 8365055, 0, 13500287, 16762239, 16766111, 16748159, 238, 0, 0);
+	(4, 9, 25, 0, 0, 1, 'Jet Tarty', 1, 3, 0, 12, 0, 16, 1.05, 0.855, 8365055, 0, 13500287, 16762239, 16766111, 16748159, 238, 0, 0);
 INSERT INTO `loe_npc` (`id`, `flags`, `level`, `dialog`, `index`, `movement`, `name`, `race`, `gender`, `eye`, `tail`, `hoof`, `mane`, `bodysize`, `hornsize`, `eyecolor`, `hoofcolor`, `bodycolor`, `haircolor0`, `haircolor1`, `haircolor2`, `cutiemark0`, `cutiemark1`, `cutiemark2`) VALUES
 	(5, 12, 6, 3, 0, 2, 'Lucky Chance', 3, 3, 1, 13, 0, 11, 0.945, 0.945, 7339949, 0, 3531263, 4905759, 9633627, 16318326, 97, 0, 0);
+INSERT INTO `loe_npc` (`id`, `flags`, `level`, `dialog`, `index`, `movement`, `name`, `race`, `gender`, `eye`, `tail`, `hoof`, `mane`, `bodysize`, `hornsize`, `eyecolor`, `hoofcolor`, `bodycolor`, `haircolor0`, `haircolor1`, `haircolor2`, `cutiemark0`, `cutiemark1`, `cutiemark2`) VALUES
+	(6, 1, 1, 0, 0, 0, 'Greedy Trader', 3, 3, 1, 12, 0, 14, 1.02, 1.105, 851959, 0, 8912875, 3466751, 776959, 3862015, 200, 0, 0);
 /*!40000 ALTER TABLE `loe_npc` ENABLE KEYS */;
 
 
@@ -1753,7 +1751,7 @@ CREATE TABLE IF NOT EXISTS `loe_npc_trade` (
   PRIMARY KEY (`id`,`item`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_npc_trade: ~9 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_npc_trade: ~66 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_npc_trade` DISABLE KEYS */;
 INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
 	(1, 102);
@@ -1766,6 +1764,36 @@ INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
 INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
 	(1, 106);
 INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(1, 107);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(1, 108);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(1, 109);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(1, 110);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(1, 111);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(1, 112);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(1, 113);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(1, 114);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(1, 115);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(1, 116);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(1, 119);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(1, 120);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(1, 121);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(1, 122);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(1, 123);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
 	(4, 54);
 INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
 	(4, 55);
@@ -1775,6 +1803,88 @@ INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
 	(4, 57);
 INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
 	(4, 67);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 16);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 17);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 18);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 19);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 20);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 21);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 22);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 23);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 33);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 36);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 37);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 40);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 51);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 58);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 59);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 60);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 61);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 62);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 63);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 65);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 66);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 73);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 78);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 81);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 82);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 87);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 88);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 93);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 126);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 127);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 128);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 129);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 130);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 131);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 132);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 133);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 134);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 135);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 136);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 137);
+INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
+	(6, 298);
 /*!40000 ALTER TABLE `loe_npc_trade` ENABLE KEYS */;
 
 
@@ -1911,10 +2021,10 @@ CREATE TABLE IF NOT EXISTS `loe_spell` (
   PRIMARY KEY (`id`,`index`,`effect`)
 ) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_spell: ~21 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_spell: ~18 rows (приблизительно)
 /*!40000 ALTER TABLE `loe_spell` DISABLE KEYS */;
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
-	(2, 0, 255, 7, 80, 32, 1.5, 0, 0, 0);
+	(2, 0, 255, 1, 40, 32, 0.8, 0, 0, 0);
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
 	(5, 0, 1, 2, 60, 2.5, 3, 40, 25, 2);
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
@@ -1924,7 +2034,7 @@ INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`,
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
 	(9, 2, 127, 2, 13, 1, 0, -0.8, 0, 0);
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
-	(10, 0, 0, 15, 40, 2.5, 1, 0, 0, 0);
+	(10, 0, 0, 15, 15, 3, 1.5, 0, 0, 0);
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
 	(10, 1, 1, 2, 0, 0, 0, 25, 11.5, 1.15);
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
@@ -1950,7 +2060,7 @@ INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`,
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
 	(31, 1, 20, 12, 8, 0, 10, 5, 3.5, 0);
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
-	(44, 0, 0, 15, 40, 2.5, 1, 0, 0, 0);
+	(44, 0, 0, 15, 15, 3, 1.5, 0, 0, 0);
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
 	(44, 1, 1, 2, 0, 0, 0, 25, 11.5, 1.15);
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES

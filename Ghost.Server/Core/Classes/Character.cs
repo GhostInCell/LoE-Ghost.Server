@@ -19,13 +19,13 @@ namespace Ghost.Server.Core.Classes
             Pony = pony;
             CharsMgr.CreateCharacterData(this);
         }
-        public Character(int id, int user, short level, int map, CharData data, PonyData pony)
+        public Character(int id, int user, short level, int map, PonyData pony, CharData data)
         {
             ID = id;
             Map = map;
             User = user;
-            Data = data;
             Pony = pony;
+            Data = data;
             Level = level;
         }
         public int AllocSize

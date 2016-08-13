@@ -130,10 +130,11 @@ namespace Ghost.Server.Mgrs.Player
             if (!m_itemsHash.Contains(id)) return;
             m_itemsHash.Remove(id);
             InventorySlot slot;
-            for (int index = 0, count = m_items.Count; index < m_data.InventorySlots && count > 0; index++, count--)
+            for (int index = 0, count = m_items.Count; index < m_data.InventorySlots && count > 0; index++)
             {
                 if (m_items.TryGetValue(index, out slot))
                 {
+                    count--;
                     if (slot.Item.Id == id)
                     {
                         m_items.Remove(index);
@@ -177,10 +178,11 @@ namespace Ghost.Server.Mgrs.Player
             else
             {
                 InventorySlot slot;
-                for (int index = 0, count = m_items.Count; index < m_data.InventorySlots && count > 0 && amount > 0; index++, count--)
+                for (int index = 0, count = m_items.Count; index < m_data.InventorySlots && count > 0 && amount > 0; index++)
                 {
                     if (m_items.TryGetValue(index, out slot))
                     {
+                        count--;
                         if (slot.Item.Id == id)
                             amount = RemoveSlot(index, amount);
                     }
@@ -218,10 +220,11 @@ namespace Ghost.Server.Mgrs.Player
             if (m_itemsHash.Contains(item.ID) && (item.Flags & ItemFlags.Stackable) > 0)
             {
                 InventorySlot slot;
-                for (int index = 0, count = m_items.Count; index < m_data.InventorySlots && count > 0 && amount > 0; index++, count--)
+                for (int index = 0, count = m_items.Count; index < m_data.InventorySlots && count > 0 && amount > 0; index++)
                 {
                     if (m_items.TryGetValue(index, out slot))
                     {
+                        count--;
                         if (slot.Item.Id == item.ID && slot.Amount < item.Stack)
                             amount = AddSlot(index, item, amount);
                     }

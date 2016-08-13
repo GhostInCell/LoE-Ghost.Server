@@ -4,7 +4,7 @@ using System.Numerics;
 
 namespace Ghost.Server.Objects
 {
-    public abstract class CreatureObject : NetworkObject
+    public abstract class CreatureObject : MovableObject
     {
         protected const int DeadFlag = 0x00000001;
 

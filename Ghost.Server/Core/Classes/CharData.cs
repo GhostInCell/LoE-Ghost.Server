@@ -4,10 +4,21 @@ using ProtoBuf;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Numerics;
 
 namespace Ghost.Server.Core.Classes
 {
+    [ProtoContract]
+    public struct TalentData
+    {
+        [ProtoMember(1)]
+        public uint Exp;
+        [ProtoMember(2)]
+        public short Level;
+        [ProtoMember(3)]
+        public short Points;
+    }
     [ProtoContract]
     public class CharData
     {
@@ -36,7 +47,7 @@ namespace Ghost.Server.Core.Classes
         [ProtoMember(12)]
         public Dictionary<int, InventoryItem> Wears;
         [ProtoMember(13)]
-        public Dictionary<uint, Tuple<uint, short, short>> Talents;
+        public Dictionary<TalentMarkId, TalentData> Talents;
         public readonly INetSerializable SerWears;
         public readonly INetSerializable SerSkills;
         public readonly INetSerializable SerTalents;
@@ -51,7 +62,7 @@ namespace Ghost.Server.Core.Classes
             Instances = new Dictionary<int, ushort>();
             Wears = new Dictionary<int, InventoryItem>();
             Items = new Dictionary<int, InventorySlot>();
-            Talents = new Dictionary<uint, Tuple<uint, short, short>>();
+            Talents = new Dictionary<TalentMarkId, TalentData>();
             SerWears = new SER_Wears(Wears);
             SerSkills = new SER_Skills(this);
             SerTalents = new SER_Talents(this);
@@ -62,7 +73,8 @@ namespace Ghost.Server.Core.Classes
         {
             using (var mem = new MemoryStream())
             {
-                ProtoBuf.Serializer.Serialize(mem, this);
+                using (var zip = new DeflateStream(mem, CompressionLevel.Optimal, true))
+                    ProtoBuf.Serializer.Serialize(zip, this);
                 return mem.ToArray();
             }
         }
@@ -72,11 +84,11 @@ namespace Ghost.Server.Core.Classes
             Variables.TryGetValue(id, out ret);
             return ret;
         }
-        public short GetTalentLevel(uint id)
+        public short GetTalentLevel(TalentMarkId id)
         {
-            Tuple<uint, short, short> ret;
+            TalentData ret;
             Talents.TryGetValue(id, out ret);
-            return ret.Item2;
+            return ret.Level;
         }
         public short GetDialogState(ushort id)
         {

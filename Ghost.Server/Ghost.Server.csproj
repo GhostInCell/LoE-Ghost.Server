@@ -154,6 +154,7 @@
     <Compile Include="Objects\Managers\NetworkManager.Generic.cs" />
     <Compile Include="Objects\Managers\SpellsManager.cs" />
     <Compile Include="Objects\Managers\SyncManager.cs" />
+    <Compile Include="Objects\Managers\TradingManager.cs" />
     <Compile Include="Objects\MovableObject.cs" />
     <Compile Include="Objects\NetworkObject.cs" />
     <Compile Include="Objects\ObjectGuid.cs" />
