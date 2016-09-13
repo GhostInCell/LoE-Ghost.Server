@@ -2,6 +2,7 @@
 using Ghost.Server.Core.Events;
 using Ghost.Server.Core.Objects;
 using Ghost.Server.Core.Servers;
+using Ghost.Server.Core.Structs;
 using Ghost.Server.Mgrs;
 using Ghost.Server.Mgrs.Player;
 using Ghost.Server.Utilities;
@@ -27,6 +28,7 @@ namespace Ghost.Server.Core.Players
         private MapServer _server;
         private WO_Player _object;
         private AutoSaveChar _save;
+        private List<DialogChoice> m_choices;
         private Dictionary<int, WO_NPC> _clones;
         public WO_Pet Pet
         {
@@ -136,11 +138,20 @@ namespace Ghost.Server.Core.Players
                 return _skills;
             }
         }
+
+        public List<DialogChoice> Choices
+        {
+            get
+            {
+                return m_choices;
+            }
+        }
         public MapPlayer(Player player, MapServer server)
         {
             _server = server;
             _player = player;
             _user = player.TnUser<UserData>();
+            m_choices = new List<DialogChoice>();
             _clones = new Dictionary<int, WO_NPC>();
             _player.NetUserDataChanged += Player_NetUserDataChanged;
         }
@@ -176,10 +187,12 @@ namespace Ghost.Server.Core.Players
             _dialog.Dialog.OnDialogEnd(this);
             _player.Rpc(13);
             _dialog = null;
+            m_choices.Clear();
         }
         public void DialogBegin()
         {
             _player.Rpc(11);
+            m_choices.Clear();
             _dialog.Dialog.OnDialogStart(this);
         }
         public void SetPet(int id = -1)
@@ -202,30 +215,45 @@ namespace Ghost.Server.Core.Players
                 if (id > 0) _pet = new WO_Pet(id, _object);
             }
         }
+
+        public void CreateSaveTimer()
+        {
+            _save = new AutoSaveChar(this);
+        }
+
+        public void DialogSendOptions()
+        {
+            _player.Rpc(12, m_choices);
+        }
+
+        public bool PrepareForMapSwitch()
+        {
+            _save.Destroy();
+            _char.Data.Position = _object.Position;
+            _char.Data.Rotation = _object.Rotation;        
+            return CharsMgr.SaveCharacter(_char);
+        }
+
         public void Disconnect(string message)
         {
             _server.Room.Server.Rpc(255, _player.Id, message);
         }
-        public void DialogSetOptions(string[] options)
-        {
-            _player.Rpc(12, (object)options);
-        }
         public void DialogSetMessage(WO_NPC talker, int message)
         {
             var entry = DataMgr.SelectMessage(message);
-            _player.Rpc(17, entry.Item2.GetMessage(this), talker.NPC.Pony.Name, talker.SGuid, entry.Item1);             
+            _player.Rpc(17, new DialogNetData(entry.Item2.GetMessage(this), talker.NPC.Pony.Name, talker.SGuid, entry.Item1));          
         }
         public void DialogSetMessage(string message, ushort emotion)
         {
-            _player.Rpc(17, message, Dialog.NPC.Pony.Name, Dialog.SGuid, emotion);
+            _player.Rpc(17, new DialogNetData(message, Dialog.NPC.Pony.Name, Dialog.SGuid, emotion));
         }
         public void DialogSetMessage(string name, string message, ushort emotion)
         {
-            _player.Rpc(17, message, name, Dialog.SGuid, emotion);
+            _player.Rpc(17, new DialogNetData(message, name, Dialog.SGuid, emotion));
         }
         public void DialogSetMessage(WO_NPC talker, string message, ushort emotion)
         {
-            _player.Rpc(17, message, talker.NPC.Pony.Name, talker.SGuid, emotion);
+            _player.Rpc(17, new DialogNetData(message, talker.NPC.Pony.Name, talker.SGuid, emotion));
         }
         #region Events Handlers
         private void Player_NetUserDataChanged(Player obj)

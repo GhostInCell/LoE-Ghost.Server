@@ -1,16 +1,25 @@
 ﻿using Ghost.Server.Core.Classes;
+using Ghost.Server.Spells;
+using Ghost.Server.Utilities;
 using PNet;
 using PNetR;
 using System;
+using System.Collections.Generic;
 
 namespace Ghost.Server.Objects.Managers
 {
+    public class SpellCastArgs : BaseArgs
+    {
+        public const uint FailEvent = 0x88000001;
+
+        public SpellCastResult Result;
+    }
+
     [NetComponent(5)]
     public class SpellsManager : NetworkManager<CreatureObject>
     {
         private class CountdownList
         {
-            private static readonly int[] s_empty = new int[0];
             private const int GrowingFactor = 4;
 
             private int m_size;
@@ -20,8 +29,8 @@ namespace Ghost.Server.Objects.Managers
             public CountdownList()
             {
                 m_size = 0;
-                m_keys = s_empty;
-                m_values = s_empty;
+                m_keys = ArrayEx.Empty<int>();
+                m_values = ArrayEx.Empty<int>();
             }
 
             public void Clear()
@@ -80,8 +89,16 @@ namespace Ghost.Server.Objects.Managers
             {
                 if (newLength < 0)
                     throw new ArgumentOutOfRangeException();
-                Array.Resize(ref m_keys, newLength);
-                Array.Resize(ref m_values, newLength);
+                else if (newLength == 0)
+                {
+                    m_keys = ArrayEx.Empty<int>();
+                    m_values = ArrayEx.Empty<int>();
+                }
+                else
+                {
+                    Array.Resize(ref m_keys, newLength);
+                    Array.Resize(ref m_values, newLength);
+                }
             }
 
             public void AddOrUpdate(int key, int time)
@@ -114,22 +131,31 @@ namespace Ghost.Server.Objects.Managers
         }
 
         private int m_gcd;
+        private SpellCast m_cast;
         private TargetEntry m_target;
+        private SpellCastArgs m_cast_args;
         private CountdownList m_cooldowns;
-        //private Dictionary<int, int> m_spells;
+        private Dictionary<int, int> m_spells;
+
+        public SpellCast Cast
+        {
+            get { return m_cast; }
+        }
 
         public SpellsManager()
             : base()
         {
             m_gcd = 0;
+            m_cast = new SpellCast();
             m_target = new TargetEntry();
             m_cooldowns = new CountdownList();
+            m_cast_args = new SpellCastArgs();
         }
 
         public bool CanCast(int id, int upgrade)
         {
-            //int mUpgrade;
-            return m_gcd <= 0 && /*m_spells.TryGetValue(id, out mUpgrade) && mUpgrade == upgrade &&*/ !m_cooldowns.Contains(id);
+            int mUpgrade;
+            return m_gcd <= 0 && m_spells.TryGetValue(id, out mUpgrade) && mUpgrade == upgrade && !m_cooldowns.Contains(id) && m_cast.CanCast(id, upgrade);
         }
 
         #region RPC Handlers
@@ -137,16 +163,29 @@ namespace Ghost.Server.Objects.Managers
         private void RPC_061(NetMessage message, NetMessageInfo info)
         {
             m_target.OnDeserialize(message);
-            if (!CanCast(m_target.SpellID, m_target.Upgrade))
-                return;
+            var castResult = SpellCastResult.Fail;
+            if (CanCast(m_target.SpellID, m_target.Upgrade))
+                castResult = m_cast.Initialize(m_target.SpellID, m_target.Upgrade, m_target);
+            if (castResult != SpellCastResult.OK)
+            {
+                m_cast_args.Result = castResult;
+                m_owner.Notify(SpellCastArgs.FailEvent, m_cast_args);
+            }
         }
         [Rpc(62, false)]//CancelSkill
         private void RPC_062(NetMessage message, NetMessageInfo info)
         {
-
+            
         }
         #endregion
         #region Overridden Methods
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+            if (!m_owner.TryGetField(CreatureFields.Spells, out m_spells))
+                throw new InvalidOperationException();
+        }
+
         protected override void OnViewCreated()
         {
             base.OnViewCreated();
@@ -157,7 +196,9 @@ namespace Ghost.Server.Objects.Managers
         {
             base.OnUpdate(time);
             var delta = time.Milliseconds;
-            if (m_gcd > 0) m_gcd -= delta;
+            if (m_gcd > 0)
+                m_gcd -= delta;
+            m_cast.Update(delta);
             m_cooldowns.Update(delta);
         }
         #endregion

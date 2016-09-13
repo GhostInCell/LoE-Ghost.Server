@@ -4,6 +4,8 @@ namespace Ghost.Server.Core.Classes
 {
     public class StatValue
     {
+        public static readonly StatValue Zero = new StatValue(0f);
+
         private float stat_muls;
         private float stat_mods;
         private float stat_item;

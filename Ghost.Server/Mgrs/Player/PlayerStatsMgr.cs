@@ -6,6 +6,7 @@ using Ghost.Server.Utilities.Abstracts;
 using PNet;
 using System;
 using System.Linq;
+using static PNet.NetConverter;
 
 namespace Ghost.Server.Mgrs.Player
 {
@@ -74,6 +75,7 @@ namespace Ghost.Server.Mgrs.Player
             _update = interval;
             var hp = _stats[Stats.Health];
             var ep = _stats[Stats.Energy];
+            var net = default(StatNetData);
             if (_creature.Movement.IsRunning && _mPlayer.User.Access < AccessLevel.TeamMember)
             {
                 ep.DecreaseCurrent(runMod * (interval / 1000f));
@@ -82,12 +84,12 @@ namespace Ghost.Server.Mgrs.Player
             if (hp.Max != hp.Current)
             {
                 hp.IncreaseCurrent(_stats[Stats.HealthRegen].Max * (interval / 1000f));
-                _view.Rpc(4, 50, RpcMode.AllUnordered, (byte)Stats.Health, hp.Current);
+                _view.Rpc(4, 50, RpcMode.AllUnordered, net.Fill(Stats.Health, hp.Current));
             }
             if (ep.Max != ep.Current)
             {
                 ep.IncreaseCurrent(_stats[Stats.EnergyRegen].Max * (interval / 1000f));
-                _view.Rpc(4, 50, RpcMode.AllUnordered, (byte)Stats.Energy, ep.Current);
+                _view.Rpc(4, 50, RpcMode.AllUnordered, net.Fill(Stats.Energy, ep.Current));
             }
             _status = $"HP {hp.Current}/{hp.Max}; EP {ep.Current}/{ep.Max}";
         }
@@ -111,11 +113,11 @@ namespace Ghost.Server.Mgrs.Player
             {
                 UpdateBase();
                 _mPlayer.Player.Rpc(4, _mPlayer.Data.SerTalents);
-                _mPlayer.Player.Rpc(3, (uint)talant, talantState.Exp, (uint)talantState.Level);
-                _view.Rpc(4, 53, RpcMode.AllUnordered, (object)_mPlayer.Char.Level);
+                _mPlayer.Player.Rpc(3, new TalentNetData((uint)talant, talantState.Exp, (uint)talantState.Level));
+                _view.Rpc<Int16Serializer>(4, 53, RpcMode.AllUnordered, _mPlayer.Char.Level);
             }
             else
-                _mPlayer.Player.Rpc(2, (uint)talant, exp, bonusExp);
+                _mPlayer.Player.Rpc(2, new TalentNetData((uint)talant, exp, bonusExp));
             _mPlayer.Data.Talents[talant] = talantState;
         }
         private short GetLevel()

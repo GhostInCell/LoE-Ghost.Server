@@ -1,8 +1,6 @@
-﻿using System;
+﻿using PNet;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using PNet;
 
 namespace PNetR
 {
@@ -51,12 +49,26 @@ namespace PNetR
             SendMessage(msg, mode);
         }
 
+        public void Rpc(byte compId, byte rpcId, Player player)
+        {
+            var msg = StartMessage(compId, rpcId, ReliabilityMode.Ordered, 0);
+            SendMessage(msg, player, ReliabilityMode.Ordered);
+        }
+
         public void Rpc<T>(byte compId, byte rpcId, RpcMode mode, T arg)
             where T : INetSerializable
         {
             var msg = StartMessage(compId, rpcId, mode, arg.AllocSize);
             arg.OnSerialize(msg);
             SendMessage(msg, mode);
+        }
+
+        public void Rpc<T>(byte compId, byte rpcId, Player player, T arg)
+            where T : INetSerializable
+        {
+            var msg = StartMessage(compId, rpcId, ReliabilityMode.Ordered, arg.AllocSize);
+            arg.OnSerialize(msg);
+            SendMessage(msg, player, ReliabilityMode.Ordered);
         }
 
         public void Rpc(byte compId, byte rpcId, RpcMode mode, params object[] args)

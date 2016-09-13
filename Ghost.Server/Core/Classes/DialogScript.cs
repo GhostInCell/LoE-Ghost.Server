@@ -6,6 +6,7 @@ using Ghost.Server.Core.Structs;
 using Ghost.Server.Mgrs;
 using Ghost.Server.Utilities;
 using Ghost.Server.Utilities.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -56,6 +57,7 @@ namespace Ghost.Server.Core.Classes
         }
         public void OnDialogEnd(MapPlayer player)
         {
+            player.Choices.Clear();
             for (int i = 0; i < _npcs.Length; i++)
             {
                 if (_npcs[i] == null) continue;
@@ -100,10 +102,10 @@ namespace Ghost.Server.Core.Classes
             Execute(ref dState, true, player);
             player.Data.Dialogs[_id] = dState;
         }
-        public void OnDialogChoice(MapPlayer player, int choice)
+        public void OnDialogChoice(MapPlayer player, int index)
         {
             short dState = player.Data.GetDialogState(_id);
-            if (SelectChoice(ref dState, false, player, choice))
+            if (SelectChoice(ref dState, false, player, index))
                 Execute(ref dState, false, player);
             player.Data.Dialogs[_id] = dState;
         }
@@ -141,38 +143,38 @@ namespace Ghost.Server.Core.Classes
         }
         private void SetChoices(short dState, bool isStart, MapPlayer player, DialogEntry entry)
         {
-            List<string> _choices = new List<string>();
+            List<DialogChoice> choices = player.Choices;
+            choices.Clear();
             do
             {
-                if (entry.Condition == DialogCondition.Always || 
+                if (entry.Condition == DialogCondition.Always ||
                     CheckCondition(dState, isStart, player, entry))
-                    _choices.Add(DataMgr.SelectMessage(entry.Message).Item2.GetMessage(player));
+                    choices.Add(new DialogChoice(dState, entry.Message, player));
                 dState++;
             }
             while (_entries.TryGetValue(dState, out entry) && entry.Type == DialogType.Choice);
-            player.DialogSetOptions(_choices.ToArray());
-            _choices.Clear(); _choices = null;
+            player.DialogSendOptions();
         }
-        private bool SelectChoice(ref short dState, bool isStart, MapPlayer player, int choice)
+        private bool SelectChoice(ref short dState, bool isStart, MapPlayer player, int index)
         {
-            DialogEntry entry; int iChoice = choice;
-            while (_entries.TryGetValue(dState, out entry))
+            List<DialogChoice> choices = player.Choices; DialogEntry entry;
+            if (index < 0 || index >= choices.Count)
+                return false;
+            var choice = choices[index]; choices.Clear();
+            if (_entries.TryGetValue(choice.State, out entry))
             {
-                if (entry.Type != DialogType.Choice) return true;
-                if (iChoice != -1 && (entry.Condition == DialogCondition.Always || CheckCondition(dState, isStart, player, entry)))
+                dState = choice.State;
+                if (entry.Condition == DialogCondition.Always || CheckCondition(dState, isStart, player, entry))
                 {
-                    if (iChoice == 0)
-                    {
-                        iChoice = -1;
-                        player.LastDialogChoice = dState;
-                        if (entry.Command != DialogCommand.None)
-                            ExecuteCommand(ref dState, isStart, player, entry);
-                        if (entry.IsEnd) return false;
-                        if (entry.IsGoTo) return true;
-                    }
-                    else iChoice--;
+                    player.LastDialogChoice = dState;
+                    if (entry.Command != DialogCommand.None)
+                        ExecuteCommand(ref dState, isStart, player, entry);
+                    if (entry.IsEnd) return false;
+                    if (entry.IsGoTo) return true;
                 }
-                dState++;
+                while (_entries.TryGetValue(dState, out entry) && entry.Type == DialogType.Choice)
+                    dState++;
+                return true;
             }
             player.DialogEnd();
             return false;
@@ -212,17 +214,17 @@ namespace Ghost.Server.Core.Classes
                 case DialogCondition.State_GreaterOrEqual:
                     return dState >= entry.ConditionData01;
                 case DialogCondition.Level_Equal:
-                    return player.Stats.Level == entry.ConditionData01;
+                    return player.Stats.Level == (entry.ConditionData01 == -1 ? CharsMgr.MaxLevel : entry.ConditionData01);
                 case DialogCondition.Level_NotEqual:
-                    return player.Stats.Level != entry.ConditionData01;
+                    return player.Stats.Level != (entry.ConditionData01 == -1 ? CharsMgr.MaxLevel : entry.ConditionData01);
                 case DialogCondition.Level_Lower:
-                    return player.Stats.Level < entry.ConditionData01;
+                    return player.Stats.Level < (entry.ConditionData01 == -1 ? CharsMgr.MaxLevel : entry.ConditionData01);
                 case DialogCondition.Level_Greater:
-                    return player.Stats.Level > entry.ConditionData01;
+                    return player.Stats.Level > (entry.ConditionData01 == -1 ? CharsMgr.MaxLevel : entry.ConditionData01);
                 case DialogCondition.Level_LowerOrEqual:
-                    return player.Stats.Level <= entry.ConditionData01;
+                    return player.Stats.Level <= (entry.ConditionData01 == -1 ? CharsMgr.MaxLevel : entry.ConditionData01);
                 case DialogCondition.Level_GreaterOrEqual:
-                    return player.Stats.Level >= entry.ConditionData01;
+                    return player.Stats.Level >= (entry.ConditionData01 == -1 ? CharsMgr.MaxLevel : entry.ConditionData01);
                 case DialogCondition.Movement_Equal:
                     if (_npcs[entry.Npc].Movement is ScriptedMovement)
                         return (_npcs[entry.Npc].Movement as ScriptedMovement).State == entry.ConditionData01;
@@ -260,13 +262,18 @@ namespace Ghost.Server.Core.Classes
             switch (entry.Command)
             {
                 case DialogCommand.DialogEnd:
-                    if (entry.CommandData01 > 0)
+                    if (entry.CommandData01 >= 0)
                         dState = (short)entry.CommandData01;
                     player.DialogEnd();
                     return;
                 case DialogCommand.GoTo:
                     if (entry.CommandData01 >= 0)
-                        dState = (short)entry.CommandData01;
+                    {
+                        if (entry.CommandData02 > entry.CommandData01)
+                            dState = (short)Constants.RND.Next(entry.CommandData01, entry.CommandData02 + 1);
+                        else
+                            dState = (short)entry.CommandData01;
+                    }
                     return;
                 case DialogCommand.AddXP:
                     if (entry.CommandData02 == -1)

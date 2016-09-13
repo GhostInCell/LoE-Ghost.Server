@@ -8,6 +8,7 @@ using Ghost.Server.Utilities;
 using Ghost.Server.Utilities.Abstracts;
 using PNetR;
 using System.Numerics;
+using static PNet.NetConverter;
 
 namespace Ghost.Server.Core.Objects
 {
@@ -117,7 +118,7 @@ namespace Ghost.Server.Core.Objects
         }
         private void View_FinishedInstantiation(Player obj)
         {
-            _view.Rpc(4, 54, obj, _stats.Team);
+            _view.Rpc<Int32Serializer>(4, 54, obj, _stats.Team);
         }
         #endregion
     }

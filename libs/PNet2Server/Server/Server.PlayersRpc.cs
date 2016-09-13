@@ -5,6 +5,15 @@ namespace PNetS
 {
     public partial class Server
     {
+        public void AllPlayersRpc<T>(byte rpcId, T arg)
+            where T : INetSerializable
+        {
+            if (arg == null)
+                throw new NullReferenceException("Cannot serialize null value");
+            var msg = StartMessage(rpcId, ReliabilityMode.Ordered, arg.AllocSize);
+            arg.OnSerialize(msg);
+            ImplSendToAllPlayers(msg, ReliabilityMode.Ordered);
+        }
         /// <summary>
         /// send the rpc to all players
         /// </summary>
@@ -73,6 +82,15 @@ namespace PNetS
             var msg = GetMessage(size + 2);
             msg.Write(RpcUtils.GetHeader(mode, BroadcastMode.Server, MsgType.Static));
             msg.Write(rpcId);
+            return msg;
+        }
+
+        internal NetMessage StartMessage(byte rpcId, byte subId, ReliabilityMode mode, int size)
+        {
+            var msg = GetMessage(size + 3);
+            msg.Write(RpcUtils.GetHeader(mode, BroadcastMode.Server, MsgType.Static));
+            msg.Write(rpcId);
+            msg.Write(subId);
             return msg;
         }
     }

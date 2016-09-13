@@ -225,6 +225,41 @@ namespace Ghost.Server
                         ushort id;
                         switch (args[0])
                         {
+                            case "items":
+                                if (args.Length >= 2)
+                                {
+                                    switch (args[1])
+                                    {
+                                        case "clear":
+                                            if (args.Length >= 3 && ushort.TryParse(args[2], out id))
+                                            {
+                                                var pClass = _master[id];
+                                                if (pClass != null && pClass.OnMap)
+                                                    pClass.Object.Player.Items.RemoveAllItems();
+                                                else Console.WriteLine($"Error: can't find player {id}");
+                                            }
+                                            else
+                                                Console.WriteLine("Using: player items clear playerID");
+                                            break;
+                                        case "print":
+                                            if (args.Length >= 3 && ushort.TryParse(args[2], out id))
+                                            {
+                                                var pClass = _master[id];
+                                                if (pClass != null && pClass.OnMap)
+                                                    foreach (var item in pClass.Char.Data.Items)
+                                                        Console.WriteLine($"{item.Key:X4}[{item.Value.Item.Id:X8}:{item.Value.Amount:X8}]");
+                                                else Console.WriteLine($"Error: can't find player {id}");
+                                            }
+                                            else
+                                                Console.WriteLine("Using: player items print playerID");
+                                            break;
+                                        default:
+                                            Console.WriteLine("Using: player items clear|print args");
+                                            break;
+                                    }
+                                }
+                                else Console.WriteLine("Using: player items clear|print args");
+                                break;
                             case "dialogs":
                                 if (args.Length >= 2)
                                 {
@@ -241,12 +276,24 @@ namespace Ghost.Server
                                             else
                                                 Console.WriteLine("Using: player dialogs clear playerID");
                                             break;
+                                        case "print":
+                                            if (args.Length >= 3 && ushort.TryParse(args[2], out id))
+                                            {
+                                                var pClass = _master[id];
+                                                if (pClass != null && pClass.OnMap)
+                                                    foreach (var item in pClass.Char.Data.Dialogs)
+                                                        Console.WriteLine($"{item.Key:X8}:{item.Value:X4}");
+                                                else Console.WriteLine($"Error: can't find player {id}");
+                                            }
+                                            else
+                                                Console.WriteLine("Using: player dialogs print playerID");
+                                            break;
                                         default:
-                                            Console.WriteLine("Using: player dialogs clear args");
+                                            Console.WriteLine("Using: player dialogs clear|print args");
                                             break;
                                     }
                                 }
-                                else Console.WriteLine("Using: player dialogs clear args");
+                                else Console.WriteLine("Using: player dialogs clear|print args");
                                 break;
                             case "kill":
                                 if (args.Length >= 1 && ushort.TryParse(args[1], out id))
@@ -259,13 +306,13 @@ namespace Ghost.Server
                                 else Console.WriteLine("Using: player kill playerID");
                                 break;
                             default:
-                                Console.WriteLine("Using: player kill|dialogs args");
+                                Console.WriteLine("Using: player kill|dialogs|items args");
                                 break;
                         }
                     }
                     else Console.WriteLine("Error: can't find master server in this instance");
                 }
-                else Console.WriteLine("Using: player kill|dialogs args");
+                else Console.WriteLine("Using: player kill|dialogs|items args");
             };
             #endregion
             #region Status

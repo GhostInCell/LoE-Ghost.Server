@@ -6,6 +6,7 @@ using PNetR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static PNet.NetConverter;
 
 namespace Ghost.Server.Utilities.Abstracts
 {
@@ -208,17 +209,11 @@ namespace Ghost.Server.Utilities.Abstracts
         private void RPC_051(NetMessage arg1, NetMessageInfo arg2)
         {
             Stats stat = (Stats)arg1.ReadByte(); StatValue rStat;
-            if (_stats.TryGetValue(stat, out rStat))
-                _view.SendStatFullUpdate(stat, rStat);
-            else
-            {
-                _view.Rpc(4, 51, arg2.Sender, (byte)stat, 0f);
-                _view.Rpc(4, 50, arg2.Sender, (byte)stat, 0f);
-            }
+            _view.SendStatFullUpdate(stat, _stats.TryGetValue(stat, out rStat) ? rStat : StatValue.Zero);
         }
         private void RPC_053(NetMessage arg1, NetMessageInfo arg2)
         {
-            _view.Rpc(4, 53, arg2.Sender, _level);
+            _view.Rpc<Int16Serializer>(4, 53, arg2.Sender, _level);
         }
         private void RPC_056(NetMessage arg1, NetMessageInfo arg2)
         {

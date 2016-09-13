@@ -5,6 +5,14 @@ namespace PNetS
 {
     public partial class Player
     {
+        public void PlayerRpc<T>(byte rpcId, T arg)
+            where T : INetSerializable
+        {
+            var msg = Server.StartMessage(rpcId, ReliabilityMode.Ordered, arg.AllocSize);
+            arg.OnSerialize(msg);
+            SendMessage(msg, ReliabilityMode.Ordered);
+        }
+
         /// <summary>
         /// Send the args as an rpc.
         /// serialization resolution is as follows:
@@ -16,6 +24,14 @@ namespace PNetS
         public void PlayerRpc(byte rpcId, params object[] args)
         {
             var msg = Server.SerializeRpc(rpcId, args);
+            SendMessage(msg, ReliabilityMode.Ordered);
+        }
+
+        public void PlayerSubRpc<T>(byte rpcId, byte subId, T arg)
+            where T : INetSerializable
+        {
+            var msg = Server.StartMessage(rpcId, subId, ReliabilityMode.Ordered, arg.AllocSize);
+            arg.OnSerialize(msg);
             SendMessage(msg, ReliabilityMode.Ordered);
         }
 

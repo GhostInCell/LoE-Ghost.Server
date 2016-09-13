@@ -12,8 +12,8 @@ namespace Ghost.Server.Core.Objects
 {
     public class WO_Switch : ServerObject
     {
-        private readonly DB_Map _map;
-        private NetworkedSceneObjectView _view;
+        private readonly DB_Map m_map;
+        private NetworkedSceneObjectView m_view;
         public override byte TypeID
         {
             get
@@ -24,12 +24,12 @@ namespace Ghost.Server.Core.Objects
         public WO_Switch(DB_WorldObject data, ObjectsMgr manager)
             : base(data, manager)
         {
-            if (!DataMgr.Select(data.Data01, out _map))
+            if (!DataMgr.Select(data.Data01, out m_map))
                 ServerLogger.LogError($"Map Switch {data.Guid} map {data.Data01} doesn't exist");
             else
             {
-                _view = _server.Room.SceneViewManager.CreateNetworkedSceneObjectView(_data.Guid);
-                _view.SubscribeToRpc(1, RPC_001);
+                m_view = _server.Room.SceneViewManager.CreateNetworkedSceneObjectView(_data.Guid);
+                m_view.SubscribeToRpc(1, RPC_001);
                 OnDestroy += WO_Switch_OnDestroy;
             }
             Spawn();
@@ -37,20 +37,36 @@ namespace Ghost.Server.Core.Objects
         #region Events Handlers
         private void WO_Switch_OnDestroy()
         {
-            _view.UnsubscribeFromRpc(1);
-            _view = null;
+            m_view.UnsubscribeFromRpc(1);
+            m_view = null;
         }
         #endregion
         private void RPC_001(NetMessage arg1, NetMessageInfo arg2)
         {
             MapPlayer player = _server[arg2.Sender.Id];
+            if (player == null)
+            {
+                ServerLogger.LogWarn($"Switch from map {_data.Data01} on portal {_data.Guid} failed: player {arg2.Sender.Id} not found!");
+                return;
+            }
             if (Vector3.DistanceSquared(_data.Position, player.Object.Position) <= Constants.MaxInteractionDistanceSquared)
             {
-                player.User.Spawn = (ushort)_data.Data02;
-                arg2.Sender.SynchNetData();
-                arg2.Sender.ChangeRoom(_map.Name);
-                player = null;
+                if (player.PrepareForMapSwitch())
+                {
+                    player.User.Spawn = (ushort)_data.Data02;
+                    arg2.Sender.SynchNetData();
+                    arg2.Sender.ChangeRoom(m_map.Name);
+                    player = null;
+                }
+                else
+                {
+                    player.CreateSaveTimer();
+                    ServerLogger.LogWarn($"Switch from map {_data.Data01} on portal {_data.Guid} failed: couldn't save player {arg2.Sender.Id} character!");
+                    player.SystemMsg("Map switch failed: couldn't save character to database!");
+                }
             }
+            else
+                player.SystemMsg("You far away from the portal.");
         }
     }
 }

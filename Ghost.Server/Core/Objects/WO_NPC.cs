@@ -10,6 +10,7 @@ using PNet;
 using PNetR;
 using System.Collections.Generic;
 using System.Numerics;
+using static PNet.NetConverter;
 
 namespace Ghost.Server.Core.Objects
 {
@@ -17,6 +18,7 @@ namespace Ghost.Server.Core.Objects
     {
         private readonly DB_NPC _npc;
         private readonly DB_WorldObject _data;
+        private Character m_char;
         private MapPlayer _owner;
         private WO_NPC _original;
         private SER_Shop shop_ser;
@@ -91,6 +93,7 @@ namespace Ghost.Server.Core.Objects
                 AddComponent(new ScriptedMovement(original._movement as ScriptedMovement, this));
             else
                 AddComponent(new NullMovement(this));
+            m_char = new Character(_npc.ID, -1, _npc.Level, -1, _npc.Pony, null);
             Spawn();
         }
         public WO_NPC(DB_WorldObject data, ObjectsMgr manager)
@@ -124,6 +127,7 @@ namespace Ghost.Server.Core.Objects
                 AddComponent(new ScriptedMovement(_npc.Movement, this));
             else
                 AddComponent(new NullMovement(this));
+            m_char = new Character(_npc.ID, -1, _npc.Level, -1, _npc.Pony, null);
             Spawn();
         }
         public void Clone(MapPlayer player)
@@ -143,11 +147,11 @@ namespace Ghost.Server.Core.Objects
             if ((_npc.Flags & NPCFlags.Wears) > 0)
                 _view.Rpc(7, 4, arg2.Sender, wears_ser);
             else
-                _view.Rpc(7, 4, arg2.Sender, Constants.MaxWornItems, (byte)0);
+                _view.Rpc(7, 4, arg2.Sender, Int64Serializer.Zero);
         }
         private void RPC_04_53(NetMessage arg1, NetMessageInfo arg2)
         {
-            _view.Rpc(4, 53, arg2.Sender, _npc.Level);
+            _view.Rpc<Int16Serializer>(4, 53, arg2.Sender, _npc.Level);
         }
         private void RPC_06_10(NetMessage arg1, NetMessageInfo arg2)
         {
@@ -170,7 +174,7 @@ namespace Ghost.Server.Core.Objects
             MapPlayer player = _server[arg2.Sender.Id];
             if (player.Shop == this && DataMgr.Select(itemID, out item) && (item.Flags & ItemFlags.Salable) > 0 && player.Items.HasInSlot(islot, itemID, amount))
             {
-                player.Items.ClearSlot(islot);
+                player.Items.RemoveFromSlot(islot, amount);
                 player.Char.Data.Bits += (item.Price * amount);
                 player.View.SetBits(player.Char.Data.Bits);
             }
@@ -241,12 +245,13 @@ namespace Ghost.Server.Core.Objects
                 _owner.Clones.Remove(_npc.ID);
             if (_original != null && !_original.IsDead)
                 _original._view.RebuildVisibility();
+            m_char = null;
             _wears = null;
             _owner = null;
             _dialog = null;
-            shop_ser = null;
-            wears_ser = null;
             _original = null;
+            shop_ser = default(SER_Shop);
+            wears_ser = default(SER_Wears);
         }
         private bool View_CheckVisibility(Player arg)
         {
@@ -259,7 +264,7 @@ namespace Ghost.Server.Core.Objects
                 _view.Rpc(7, 4, obj, wears_ser);
             if ((_npc.Flags & NPCFlags.Trader) > 0)
                 _view.Rpc(2, 120, obj);
-            _view.Rpc(2, 200, obj, _npc.Pony, _npc.Level, _npc.ID);
+            _view.Rpc(2, 200, obj, m_char);
         }
         #endregion
     }

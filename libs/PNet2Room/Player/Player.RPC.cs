@@ -1,8 +1,6 @@
-﻿using System;
+﻿using PNet;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using PNet;
 
 namespace PNetR
 {
@@ -14,14 +12,11 @@ namespace PNetR
             SendMessage(msg, ReliabilityMode.Ordered);
         }
 
-        public void Rpc(byte rpcId, 
-            INetSerializable arg0)
+        public void Rpc<T>(byte rpcId, T arg)
+            where T : INetSerializable
         {
-            int size = 0;
-            size += arg0.AllocSize;
-
-            var msg = StartMessage(Room, rpcId, ReliabilityMode.Ordered, size);
-            arg0.OnSerialize(msg);
+            var msg = StartMessage(Room, rpcId, ReliabilityMode.Ordered, arg.AllocSize);
+            arg.OnSerialize(msg);
             SendMessage(msg, ReliabilityMode.Ordered);
         }
 
@@ -99,12 +94,21 @@ namespace PNetR
             SendMessage(msg, ReliabilityMode.Ordered);
         }
 
-        public void Rpc(byte rpcId, params INetSerializable[] args)
+        public void Rpc<T>(byte rpcId, List<T> args)
+            where T : INetSerializable
         {
-            int size = 0;
-            args.AllocSize(ref size);
+            var size = 4;
+            foreach (var arg in args)
+            {
+                if (arg == null)
+                    throw new NullReferenceException("Cannot serialize null value");
+                size += arg.AllocSize;
+            }
+
             var msg = StartMessage(Room, rpcId, ReliabilityMode.Ordered, size);
-            INetSerializableExtensions.WriteParams(ref msg, args);
+            msg.Write(args.Count);
+            foreach (var arg in args)
+                arg.OnSerialize(msg);
             SendMessage(msg, ReliabilityMode.Ordered);
         }
 
@@ -127,11 +131,39 @@ namespace PNetR
             SendMessage(msg, ReliabilityMode.Ordered);
         }
 
+        public void Rpc(byte rpcId, params INetSerializable[] args)
+        {
+            int size = 0;
+            args.AllocSize(ref size);
+            var msg = StartMessage(Room, rpcId, ReliabilityMode.Ordered, size);
+            INetSerializableExtensions.WriteParams(ref msg, args);
+            SendMessage(msg, ReliabilityMode.Ordered);
+        }
+
+        public void SubRpc<T>(byte rpcId, byte subId, T arg)
+            where T : INetSerializable
+        {
+            if (arg == null)
+                throw new NullReferenceException("Cannot serialize null value");
+            var msg = StartMessage(Room, rpcId, subId, ReliabilityMode.Ordered, arg.AllocSize);
+            arg.OnSerialize(msg);
+            SendMessage(msg, ReliabilityMode.Ordered);
+        }
+
         internal static NetMessage StartMessage(Room room, byte rpcId, ReliabilityMode mode, int size)
         {
             var msg = room.RoomGetMessage(size + 2);
             msg.Write(RpcUtils.GetHeader(mode, BroadcastMode.Owner, MsgType.Static));
             msg.Write(rpcId);
+            return msg;
+        }
+
+        internal static NetMessage StartMessage(Room room, byte rpcId, byte subId, ReliabilityMode mode, int size)
+        {
+            var msg = room.RoomGetMessage(size + 3);
+            msg.Write(RpcUtils.GetHeader(mode, BroadcastMode.Owner, MsgType.Static));
+            msg.Write(rpcId);
+            msg.Write(subId);
             return msg;
         }
     }

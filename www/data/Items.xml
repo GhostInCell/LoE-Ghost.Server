@@ -4906,4 +4906,20 @@ Written by Pulpy Prose.</Description>
     <SocketCount>0</SocketCount>
     <StatString />
   </Item>
+  <Item>
+    <ID>309</ID>
+    <Icon>8</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A delicious cupcake with tasty lemon filling.</Description>
+    <Name>Lemon Surprise Cupcake</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <StatString />
+  </Item>
 </ArrayOfItem>

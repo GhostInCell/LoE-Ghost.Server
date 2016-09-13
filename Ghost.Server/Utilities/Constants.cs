@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ghost.Server.Terrain.Primitives;
+using System;
 using System.Numerics;
 
 namespace Ghost.Server.Utilities
@@ -46,8 +47,7 @@ namespace Ghost.Server.Utilities
 
         public const float AnnounceDuration = 1.5f;
 
-        public static readonly Vector3 DefaultRoomBoundsMin = new Vector3(-2500f, -1000f, -2500f);
-        public static readonly Vector3 DefaultRoomBoundsMax = new Vector3(4250f, 2500f, 4250f);
+        public static readonly BoundingBox DefaultRoomBounds = new BoundingBox(new Vector3(-3000f, -2000f, -3000f), new Vector3(5000f, 3000f, 5000f));
 
         public const string StuckCommand = "unstuck me";
         public const string Characters = "Characters";

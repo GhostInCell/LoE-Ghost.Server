@@ -1,14 +1,23 @@
 ﻿using Ghost.Server.Utilities;
+using PNet;
 using System;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 
 namespace Ghost.Server.Terrain.Primitives
 {
-    public struct BoundingBox : IEquatable<BoundingBox>
+    public struct BoundingBox : IEquatable<BoundingBox>, INetSerializable
     {
         public Vector3 Min;
         public Vector3 Max;
+
+        public int AllocSize
+        {
+            get
+            {
+                return 24;
+            }
+        }
 
         public BoundingBox(Vector3 min, Vector3 max)
         {
@@ -102,6 +111,18 @@ namespace Ghost.Server.Terrain.Primitives
         public override bool Equals(object obj)
         {
             return obj is BoundingBox ? Equals((BoundingBox)obj) : false;
+        }
+
+        public void OnSerialize(NetMessage message)
+        {
+            message.Write(Min);
+            message.Write(Max);
+        }
+
+        public void OnDeserialize(NetMessage message)
+        {
+            Min = message.ReadVector3();
+            Max = message.ReadVector3();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -19,13 +19,13 @@ namespace Ghost.Server.Core.Players
         {
             SpamDelay = Configs.Get<int>(Configs.Game_SpamDelay);
         }
+        private string m_name;
         private Player _player;
         private UserData _user;
         private DateTime _time;
         private UserSave _save;
         private Character _char;
         private IPlayer _rPlayer;
-        private ChatMsg _message;
         private string _lastWhisper;
         private FriendStatus _status;
         private MasterServer _server;
@@ -110,7 +110,6 @@ namespace Ghost.Server.Core.Players
             _status = new FriendStatus();
             _user = player.TnUser<UserData>();
             _player.SubscribeRpcsOnObject(this);
-            _message = new ChatMsg(player.Id, _user);
             //if (!ServerDB.SelectUserSave(_user.ID, out _save) || _save == null)
             //{
             //    _save = new UserSave();
@@ -140,43 +139,47 @@ namespace Ghost.Server.Core.Players
             _player = null;
             _server = null;
             _rPlayer = null;
-            _message = null;
             _lastWhisper = null;
         }
         #region RPC Handlers
         [Rpc(15, false)]
         private void RPC_015(NetMessage arg1, PlayerMessageInfo arg2)
         {
-            _message.OnDeserialize(arg1);
-            if (_message.Icon != 0 && _user.Access < AccessLevel.Moderator) _message.Icon = 0;
-            if (_message.Text.Sum(x => char.IsUpper(x) ? 1 : 0) > _message.Text.Length / 4 + 4 || _message.Time < _time)
+            var message = default(ChatMsg);
+            message.OnDeserialize(arg1);
+            if (message.Icon != 0 && _user.Access < AccessLevel.Moderator) message.Icon = 0;
+            if (message.Text.Sum(x => char.IsUpper(x) ? 1 : 0) > message.Text.Length / 4 + 4 || message.Time < _time)
                 _player.SystemMsg(Constants.ChatWarning);
             else
             {
-                _time = _message.Time.AddMilliseconds(SpamDelay);
-                switch (_message.Type)
+                message.CharID = _user.Char;
+                message.PlayerID = _player.Id;
+                message.Name = m_name ?? _user.Name;
+                
+                _time = message.Time.AddMilliseconds(SpamDelay);
+                switch (message.Type)
                 {
                     case ChatType.Global:
-                        _player.Server.AllPlayersRpc(15, _message);
-                        ServerLogger.LogChat(_user.Name, _message.Name, _message.Type, _message.Text);
+                        _player.Server.AllPlayersRpc(15, message);
+                        ServerLogger.LogChat(_user.Name, message.Name, message.Type, message.Text);
                         break;
                     case ChatType.Herd:
                     //break;
                     case ChatType.Party:
-                        _player.SystemMsg($"Chat type {_message.Type} not yet implemented!");
+                        _player.SystemMsg($"Chat type {message.Type} not yet implemented!");
                         break;
                     case ChatType.Whisper:
                         if (_lastWhisper != null)
                         {
                             MasterPlayer player;
                             if (_server.TryGetByPonyName(_lastWhisper, out player))
-                                _player.Whisper(player.Player, _message);
+                                _player.Whisper(player.Player, message);
                             else
                                 _lastWhisper = null;
                         }
                         break;
                     default:
-                        _player.SystemMsg($"Chat type {_message.Type} not allowed!");
+                        _player.SystemMsg($"Chat type {message.Type} not allowed!");
                         break;
                 }
             }
@@ -185,19 +188,26 @@ namespace Ghost.Server.Core.Players
         private void RPC_016(NetMessage arg1, PlayerMessageInfo arg2)
         {
             string targetName = arg1.ReadString();
-            string message = arg1.ReadString();
+            string text = arg1.ReadString();
             ChatIcon icon = (ChatIcon)arg1.ReadByte();
-            if (targetName == _user.Name || targetName == _message.Name)
+            if (targetName == _user.Name || targetName == m_name)
                 return;
             if (icon != ChatIcon.None && _user.Access < AccessLevel.Moderator)
                 icon = ChatIcon.None;
             MasterPlayer player;
             if (_server.TryGetByPonyName(targetName, out player))
             {
-                var time = DateTime.Now;
+                var message = default(ChatMsg);
+                message.Icon = icon;
+                message.Text = text;
+                message.Time = DateTime.Now;
+                message.CharID = _user.Char;
+                message.PlayerID = _player.Id;
+                message.Type = ChatType.Whisper;
+                message.Name = m_name ?? _user.Name;
                 _lastWhisper = player.Char?.Pony.Name;
                 //_player.PlayerRpc(15, ChatType.Whisper, _message.Name ?? _user.Name, message, time, _user.Char, icon, (int)_player.Id);
-                player.Player.PlayerRpc(15, ChatType.Whisper, _message.Name ?? _user.Name, message, time, _user.Char, icon, (int)_player.Id);
+                player.Player.PlayerRpc(15, message);
             }
             else
                 _lastWhisper = null;
@@ -227,7 +237,7 @@ namespace Ghost.Server.Core.Players
                 case 11:
                     Room[] rooms;
                     if (_server.Server.TryGetRooms(_player.Room.RoomId, out rooms))
-                        _player.PlayerRpc(150, (byte)11, new SER_RoomInfo(rooms));
+                        _player.PlayerSubRpc(150, 11, new SER_RoomInfo(rooms));
                     break;
                 default:
                     break;
@@ -332,11 +342,11 @@ namespace Ghost.Server.Core.Players
         {
             if (_user.Char != 0 && (_user.Char != (_char?.ID ?? -1)))
             {
-                _message.Name = null;
+                m_name = null;
                 if (!CharsMgr.SelectCharacter(_user.Char, out _char))
                     ServerLogger.LogServer(_server, $"{obj.Id} couldn't load character {_user.Char}");
                 else
-                    _message.Name = _char.Pony.Name;
+                    m_name = _char.Pony.Name;
             }
         }
         private void Player_FinishedSwitchingRooms(Room obj)

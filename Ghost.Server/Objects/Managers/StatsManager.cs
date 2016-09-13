@@ -8,39 +8,6 @@ namespace Ghost.Server.Objects.Managers
     [NetComponent(4)]
     public class StatsManager : NetworkManager<CreatureObject>
     {
-        private struct StatSender : INetSerializable
-        {
-            public Stats Stat;
-            public float Value;
-
-            public int AllocSize
-            {
-                get
-                {
-                    return 5;
-                }
-            }
-
-            public void OnSerialize(NetMessage message)
-            {
-                message.Write((byte)Stat);
-                message.Write(Value);
-            }
-
-            public void OnDeserialize(NetMessage message)
-            {
-                Stat = (Stats)message.ReadByte();
-                Value = message.ReadSingle();
-            }
-
-            public StatSender Fill(Stats stat, float value)
-            {
-                Stat = stat;
-                Value = value;
-                return this;
-            }
-        }
-
         protected const int SendHealthFlag = 0x00000001;
         protected const int SendEnergyFlag = 0x00000002;
         protected const int SendTensionFlag = 0x00000004;
@@ -106,15 +73,13 @@ namespace Ghost.Server.Objects.Managers
             base.OnUpdate(time);
             var delta = (time.Milliseconds * 0.001f);
             var caching = m_caching;
-            if (!caching.CurrentEqualMax(Stats.Health))
-                caching.IncreaseCurrent(Stats.Health, caching.GetStat(Stats.HealthRegen, StatIndex.Max) * delta);
-            if (!caching.CurrentEqualMax(Stats.Energy))
-                caching.IncreaseCurrent(Stats.Energy, caching.GetStat(Stats.EnergyRegen, StatIndex.Max) * delta);
+            caching.UpdateCurrent(Stats.Health, Stats.HealthRegen, delta);
+            caching.UpdateCurrent(Stats.Energy, Stats.EnergyRegen, delta);
             var state = m_state & (SendHealthFlag | SendEnergyFlag | SendTensionFlag);
             if (state != 0)
             {
                 var view = m_view;
-                var sender = default(StatSender);
+                var sender = default(StatNetData);
                 if ((state & SendHealthFlag) != 0)
                     view.Rpc(4, 50, RpcMode.AllUnordered, sender.Fill(Stats.Health, caching.GetStat(Stats.Health, StatIndex.Cur)));
                 if ((state & SendEnergyFlag) != 0)

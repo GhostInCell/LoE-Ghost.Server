@@ -125,6 +125,7 @@
     <Compile Include="Core\Structs\DB_Spell.cs" />
     <Compile Include="Core\Structs\DB_SpellEffect.cs" />
     <Compile Include="Core\Structs\DB_User.cs" />
+    <Compile Include="Core\Structs\DialogChoice.cs" />
     <Compile Include="Mgrs\Map\DialogsMgr.cs" />
     <Compile Include="Mgrs\Mob\BasicAI.cs" />
     <Compile Include="Mgrs\Mob\MobStatsMgr.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="Mgrs\Player\TradeMgr.cs" />
     <Compile Include="Mgrs\ServersMgr.cs" />
     <Compile Include="Objects\CreatureObject.cs" />
+    <Compile Include="Objects\Instances\SwitchTrigger.cs" />
     <Compile Include="Objects\Managers\BaseManager.Base.cs" />
     <Compile Include="Objects\Managers\BaseManager.Generic.cs" />
     <Compile Include="Objects\BaseObject.Fields.cs" />
@@ -169,6 +171,8 @@
     <Compile Include="Objects\BaseObject.Base.cs" />
     <Compile Include="Objects\BaseObject.Events.cs" />
     <Compile Include="Objects\BaseObject.Managers.cs" />
+    <Compile Include="Spells\Spell.cs" />
+    <Compile Include="Spells\SpellCast.cs" />
     <Compile Include="Terrain\Primitives\BoundingBox.cs" />
     <Compile Include="Terrain\Primitives\BoundingSphere.cs" />
     <Compile Include="Terrain\Primitives\Ray.cs" />

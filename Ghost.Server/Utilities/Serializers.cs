@@ -7,29 +7,29 @@ using System.Collections.Generic;
 
 namespace Ghost.Server.Utilities
 {
-    public class SER_RoomInfo : INetSerializable
+    public struct SER_RoomInfo : INetSerializable
     {
-        private readonly PNetS.Room[] _data;
+        private PNetS.Room[] m_data;
         public int AllocSize
         {
             get
             {
-                return 4 + 20 * _data?.Length ?? 0;
+                return 4 + 20 * m_data?.Length ?? 0;
             }
         }
         public SER_RoomInfo(PNetS.Room[] data)
         {
-            _data = data;
+            m_data = data;
         }
         public void OnSerialize(NetMessage message)
         {
-            int length = _data.Length;
+            int length = m_data.Length;
             message.Write(length);
             for (int i = 0; i < length; i++)
             {
-                message.Write(_data[i].Guid);
-                message.Write((ushort)_data[i].PlayerCount);
-                message.Write((ushort)_data[i].MaxPlayers);
+                message.Write(m_data[i].Guid);
+                message.Write((ushort)m_data[i].PlayerCount);
+                message.Write((ushort)m_data[i].MaxPlayers);
             }
 
         }
@@ -38,57 +38,65 @@ namespace Ghost.Server.Utilities
             throw new NotSupportedException();
         }
     }
-    public class SER_Shop : INetSerializable
+    public struct SER_Shop : INetSerializable
     {
-        private readonly string _name;
-        private readonly List<int> _data;
+        private string m_name;
+        private List<int> m_data;
+
         public int AllocSize
         {
             get
             {
-                return 5 + _data.Count * 8 + (_name?.Length ?? 0) * 2;
+                return 5 + m_data.Count * 8 + m_name.Length * 2;
             }
         }
+
         public SER_Shop(List<int> data, string name)
         {
-            _data = data;
-            _name = name;
+            m_data = data;
+            m_name = name;
         }
+
         public void OnSerialize(NetMessage message)
         {
-            int length = _data.Count;
+            int length = m_data.Count;
             message.Write(length);
             for (int i = 0; i < length; i++)
             {
-                message.Write(_data[i]);
+                message.Write(m_data[i]);
                 message.Write(1);
             }
-            message.Write(_name);
+            message.Write(m_name);
         }
+
         public void OnDeserialize(NetMessage message)
         {
             throw new NotSupportedException();
         }
     }
-    public class SER_Stats : INetSerializable
+
+    public struct SER_Stats : INetSerializable
     {
-        private readonly Dictionary<Stats, StatValue> _data;
+        private Dictionary<Stats, StatValue> m_data;
+
         public SER_Stats(Dictionary<Stats, StatValue> data)
         {
             if (data == null) throw new ArgumentNullException();
-            _data = data;
+            m_data = data;
         }
+
         public int AllocSize
         {
             get
             {
-                return 4 + _data.Count * 16;
+                return 4 + m_data.Count * 16;
             }
         }
+
         public void OnSerialize(NetMessage message)
         {
-            message.Write(_data.Count);
-            foreach (var item in _data)
+            message.Write(m_data.Count);
+            foreach (var item in m_data)
             {
                 message.Write((uint)item.Key);
                 message.Write((uint)item.Value.Current);
@@ -96,14 +104,17 @@ namespace Ghost.Server.Utilities
                 message.Write((uint)item.Value.Min);
             }
         }
+
         public void OnDeserialize(NetMessage message)
         {
             throw new NotSupportedException();
         }
     }
-    public class SER_Wears : INetSerializable
+
+    public struct SER_Wears : INetSerializable
     {
-        private readonly Dictionary<int, InventoryItem> m_data;
+        private Dictionary<int, InventoryItem> m_data;
+
         public int AllocSize
         {
             get
@@ -111,10 +122,12 @@ namespace Ghost.Server.Utilities
                 return 8 + m_data.Count * 32;
             }
         }
+
         public SER_Wears(Dictionary<int, InventoryItem> data)
         {
             m_data = data;
         }
+
         public void OnSerialize(NetMessage message)
         {
             InventoryItem item; WearablePosition wSlots = WearablePosition.None; DB_Item dbItem;
@@ -135,14 +148,17 @@ namespace Ghost.Server.Utilities
             }
             message.Write((int)wSlots);
         }
+
         public void OnDeserialize(NetMessage message)
         {
             throw new NotSupportedException();
         }
     }
-    public class SER_Skills : INetSerializable
+
+    public struct SER_Skills : INetSerializable
     {
         private readonly CharData _data;
+
         public int AllocSize
         {
             get
@@ -150,10 +166,12 @@ namespace Ghost.Server.Utilities
                 return 5 + _data.Skills.Count * 8;
             }
         }
+
         public SER_Skills(CharData data)
         {
             _data = data;
         }
+
         public void OnSerialize(NetMessage message)
         {
             message.Write((byte)0);
@@ -169,24 +187,28 @@ namespace Ghost.Server.Utilities
             throw new NotSupportedException();
         }
     }
-    public class SER_Talents : INetSerializable
+
+    public struct SER_Talents : INetSerializable
     {
-        private readonly CharData _data;
+        private CharData m_data;
+
         public int AllocSize
         {
             get
             {
-                return 4 + _data.Talents.Count * 16;
+                return 4 + m_data.Talents.Count * 16;
             }
         }
+
         public SER_Talents(CharData data)
         {
-            _data = data;
+            m_data = data;
         }
+
         public void OnSerialize(NetMessage message)
         {
-            message.Write(_data.Talents.Count);
-            foreach (var item in _data.Talents)
+            message.Write(m_data.Talents.Count);
+            foreach (var item in m_data.Talents)
             {
                 message.Write((uint)item.Key);
                 message.Write(0u);
@@ -218,14 +240,17 @@ namespace Ghost.Server.Utilities
                 //}
             }
         }
+
         public void OnDeserialize(NetMessage message)
         {
             throw new NotSupportedException();
         }
     }
-    public class SER_Inventory : INetSerializable
+
+    public struct SER_Inventory : INetSerializable
     {
         private readonly CharData m_data;
+
         public int AllocSize
         {
             get
@@ -233,10 +258,12 @@ namespace Ghost.Server.Utilities
                 return 4 + m_data.Items.Count * 32;
             }
         }
+
         public SER_Inventory(CharData data)
         {
             m_data = data;
         }
+
         public void OnSerialize(NetMessage message)
         {
             var items = m_data.Items;
@@ -256,6 +283,7 @@ namespace Ghost.Server.Utilities
                 message.Write(InventoryItem.EmptyID);
             }
         }
+
         public void OnDeserialize(NetMessage message)
         {
             throw new NotSupportedException();

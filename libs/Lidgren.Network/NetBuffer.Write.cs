@@ -252,10 +252,11 @@ namespace Lidgren.Network
 		}
 
 #if UNSAFE
-		/// <summary>
-		/// Writes a 32 bit unsigned integer
-		/// </summary>
-		public unsafe void Write(uint source)
+        /// <summary>
+        /// Writes a 32 bit unsigned integer
+        /// </summary>
+        [CLSCompliant(false)]
+        public unsafe void Write(uint source)
 		{
 			EnsureBufferSize(m_bitLength + 32);
 

@@ -1,8 +1,9 @@
 ﻿using Ghost.Server.Utilities;
+using System.Runtime.CompilerServices;
 
 namespace Ghost.Server.Core.Classes
 {
-    public class StatsCaching
+    public unsafe class StatsCaching
     {
         private struct StatValue
         {
@@ -43,10 +44,45 @@ namespace Ghost.Server.Core.Classes
             m_cache[(int)index] = value;
         }
 
-        public unsafe bool CurrentEqualMax(Stats stat)
+        public void UpdateCurrent(Stats stat01, Stats stat02, float delta)
+        {
+            fixed (float* ptr = m_cache)
+            {
+                StatValue* var01 = (StatValue*)(ptr + ((int)StatsOffset.Stats + ((int)stat01 - 1) * (int)StatIndex.Length));
+                StatValue* var02 = (StatValue*)(ptr + ((int)StatsOffset.Stats + ((int)stat02 - 1) * (int)StatIndex.Length));
+                if (var01->Cur != var02->Cur)
+                    var01->Cur = MathHelper.Clamp(var02->Max * delta, var01->Min, var01->Max);
+            }
+        }
+
+        public void Modifier(Stats stat, float value)
         {
             fixed (float* ptr = &m_cache[(int)StatsOffset.Stats + ((int)stat - 1) * (int)StatIndex.Length])
-                return ptr[(int)StatIndex.Cur] == ptr[(int)StatIndex.Max];
+            {
+                var statPtr = (StatValue*)ptr;
+                statPtr->Mod += value;
+                Recalculate(statPtr);
+            }
+        }
+
+        public void Multipler(Stats stat, float value)
+        {
+            fixed (float* ptr = &m_cache[(int)StatsOffset.Stats + ((int)stat - 1) * (int)StatIndex.Length])
+            {
+                var statPtr = (StatValue*)ptr;
+                statPtr->Mul += value;
+                Recalculate(statPtr);
+            }
+        }
+
+        public void ItemModifier(Stats stat, float value)
+        {
+            fixed (float* ptr = &m_cache[(int)StatsOffset.Stats + ((int)stat - 1) * (int)StatIndex.Length])
+            {
+                var statPtr = (StatValue*)ptr;
+                statPtr->Item += value;
+                Recalculate(statPtr);
+            }
         }
 
         public float GetStat(Stats stat, StatIndex index)
@@ -54,28 +90,12 @@ namespace Ghost.Server.Core.Classes
             return m_cache[(int)StatsOffset.Stats + ((int)stat - 1) * (int)StatIndex.Length + (int)index];
         }
 
-        public void SetStat(Stats stat, StatIndex index, float value)
-        {
-            m_cache[(int)StatsOffset.Stats + ((int)stat - 1) * (int)StatIndex.Length + (int)index] = value;
-        }
-
-        public unsafe void Recalculate(Stats stat)
+        public void Initialize(Stats stat, float value)
         {
             fixed (float* ptr = &m_cache[(int)StatsOffset.Stats + ((int)stat - 1) * (int)StatIndex.Length])
             {
                 var statPtr = (StatValue*)ptr;
-                var coff = statPtr->Cur / statPtr->Max;
-                statPtr->Max = (statPtr->Base + statPtr->Item + statPtr->Mod) * statPtr->Mul;
-                if (statPtr->Max < statPtr->Min) statPtr->Max = statPtr->Min;
-                if (statPtr->Cur > 0) statPtr->Cur = statPtr->Max * coff;
-            }
-        }
-
-        public unsafe void Initialize(Stats stat, float value)
-        {
-            fixed (float* ptr = &m_cache[(int)StatsOffset.Stats + ((int)stat - 1) * (int)StatIndex.Length])
-            {
-                var statPtr = (StatValue*)ptr;
+                statPtr->Min = 0f;
                 statPtr->Mul = 1f;
                 statPtr->Cur = value;
                 statPtr->Max = value;
@@ -83,7 +103,7 @@ namespace Ghost.Server.Core.Classes
             }
         }
 
-        public unsafe void IncreaseCurrent(Stats stat, float value)
+        public void IncreaseCurrent(Stats stat, float value)
         {
             fixed (float* ptr = &m_cache[(int)StatsOffset.Stats + ((int)stat - 1) * (int)StatIndex.Length])
             {
@@ -92,13 +112,22 @@ namespace Ghost.Server.Core.Classes
             }
         }
 
-        public unsafe void DecreaseCurrent(Stats stat, float value)
+        public void DecreaseCurrent(Stats stat, float value)
         {
             fixed (float* ptr = &m_cache[(int)StatsOffset.Stats + ((int)stat - 1) * (int)StatIndex.Length])
             {
                 var statPtr = (StatValue*)ptr;
                 statPtr->Cur = MathHelper.Clamp(statPtr->Cur - value, statPtr->Min, statPtr->Max);
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void Recalculate(StatValue* stat)
+        {
+            var coff = stat->Cur / stat->Max;
+            stat->Max = (stat->Base + stat->Item + stat->Mod) * stat->Mul;
+            if (stat->Max < stat->Min) stat->Max = stat->Min;
+            if (stat->Cur > 0) stat->Cur = stat->Max * coff;
         }
     }
 }

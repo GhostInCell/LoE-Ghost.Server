@@ -44,6 +44,13 @@ namespace Ghost.Server.Core.Classes
             Amount = amount;
         }
 
+        public InventorySlot Delete()
+        {
+            Amount = 0;
+            return this;
+        }
+
+
         public void OnSerialize(NetMessage message)
         {
             Item.OnSerialize(message);

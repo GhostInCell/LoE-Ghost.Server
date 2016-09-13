@@ -8,6 +8,7 @@ using Ghost.Server.Utilities.Abstracts;
 using PNetR;
 using System;
 using System.Numerics;
+using static PNet.NetConverter;
 
 namespace Ghost.Server.Core.Objects
 {
@@ -98,7 +99,7 @@ namespace Ghost.Server.Core.Objects
         }
         private void View_FinishedInstantiation(Player obj)
         {
-            _view.Rpc(4, 54, obj, _stats.Team);
+            _view.Rpc<Int32Serializer>(4, 54, obj, _stats.Team);
             _view.Rpc(7, 4, obj, _player.Data.SerWears);
             if (obj.Id == _player.Player.Id)
             {
@@ -111,7 +112,7 @@ namespace Ghost.Server.Core.Objects
             else
             {
                 _view.Rpc(2, 200, obj, _player.Char);
-                _view.Rpc(2, 202, obj, _movement.Animation);
+                _view.Rpc<Int32Serializer>(2, 202, obj, _movement.Animation);
             }
         }
         #endregion

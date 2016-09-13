@@ -44,8 +44,12 @@ namespace Ghost.Server.Objects
 
         public bool IsVisibleTo(WorldObject other)
         {
-            return m_manager == other.m_manager && (m_phase & other.m_phase) != 0 && 
-                Vector3.DistanceSquared(m_position, other.m_position) <= Constants.MaxVisibleDistanceSquared;
+            return m_manager == other.m_manager && (m_phase & other.m_phase) != 0 && Vector3.DistanceSquared(m_position, other.m_position) <= Constants.MaxVisibleDistanceSquared;
+        }
+
+        public bool CanInteractWith(WorldObject other)
+        {
+            return m_manager == other.m_manager && (m_phase & other.m_phase) != 0 && Vector3.DistanceSquared(m_position, other.m_position) <= Constants.MaxInteractionDistanceSquared;
         }
 
         public void UpdateLocation(Vector3 position, Vector3 rotation)

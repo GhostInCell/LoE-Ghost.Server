@@ -1,13 +1,45 @@
-﻿using Ghost.Server.Core.Players;
+﻿using Ghost.Server.Core.Classes;
+using Ghost.Server.Core.Players;
+using Ghost.Server.Mgrs;
+using Ghost.Server.Objects.Managers;
 using Ghost.Server.Utilities;
 using PNetR;
+using System;
 using System.Numerics;
 
 namespace Ghost.Server.Objects
 {
+    public class SaveManager : BaseManager<PlayerObject>
+    {
+        public static int SaveTime = Configs.Get<int>(Configs.Game_SaveChar);
+
+        public SaveManager()
+            : base()
+        {
+            Interval = TimeSpan.FromSeconds(SaveTime);
+        }
+
+        protected override void OnUpdate(TimeSpan time)
+        {
+            base.OnUpdate(time);
+            m_owner.SaveCharacter();
+        }
+    }
+
     public class PlayerObject : CreatureObject
     {
+        private UserData m_user;
+        private Character m_char;
         private MapPlayer m_player;
+        private SaveManager m_save;
+
+        public UserData User
+        {
+            get
+            {
+                return m_user;
+            }
+        }
 
         public override Vector3 SpawnPosition
         {
@@ -29,8 +61,30 @@ namespace Ghost.Server.Objects
             : base()
         {
             m_player = player;
+            m_user = player.User;
+            m_char = player.Char;
+            m_save = AddManager<SaveManager>();
+        }
+
+        public bool SaveCharacter()
+        {
+            m_char.Data.Position = m_position;
+            m_char.Data.Rotation = m_rotation;
+            return CharsMgr.SaveCharacter(m_char);
+        }
+
+        public bool PrepareForMapSwitch()
+        {
+            m_save.Enabled = false;
+            return SaveCharacter();
         }
         #region Overridden Methods
+        protected override void OnDispose()
+        {
+            base.OnDispose();
+            if (m_save.Enabled)
+                SaveCharacter();
+        }
         protected override NetworkView CreateView()
         {
             return m_player.Server.Room.Instantiate("PlayerBase", m_position, m_rotation.ToDegrees(), m_player.Player);

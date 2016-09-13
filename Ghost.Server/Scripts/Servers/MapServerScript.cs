@@ -25,7 +25,12 @@ namespace Ghost.Server.Scripts.Servers
         {
             var player = _server[arg2.Sender.Id];
             if (player.Dialog != null)
-                player.Dialog.Dialog.OnDialogNext(player);
+            {
+                if (player.Choices.Count > 0)
+                    player.Dialog.Dialog.OnDialogChoice(player, 0);
+                else
+                    player.Dialog.Dialog.OnDialogNext(player);
+            }
         }
         [Rpc(12, false)]//Dialog Choice
         private void RPC_012(NetMessage arg1, NetMessageInfo arg2)

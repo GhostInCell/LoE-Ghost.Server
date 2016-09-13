@@ -130,7 +130,7 @@ namespace Ghost.Server.Mgrs.Player
             if (!m_itemsHash.Contains(id)) return;
             m_itemsHash.Remove(id);
             InventorySlot slot;
-            for (int index = 0, count = m_items.Count; index < m_data.InventorySlots && count > 0; index++)
+            for (int index = 0, count = m_items.Count; index < (m_data.InventorySlots - 1) && count > 0; index++)
             {
                 if (m_items.TryGetValue(index, out slot))
                 {
@@ -138,7 +138,7 @@ namespace Ghost.Server.Mgrs.Player
                     if (slot.Item.Id == id)
                     {
                         m_items.Remove(index);
-                        m_view.DeleteSlot(slot, index);
+                        m_view.UpdateSlot(slot.Delete(), index);
                     }
                 }
             }
@@ -153,7 +153,7 @@ namespace Ghost.Server.Mgrs.Player
         {
             var slot = GetSlot(index);
             if (slot != null && m_items.Remove(index))
-                m_view.DeleteSlot(slot, index);
+                m_view.UpdateSlot(slot.Delete(), index);
         }
 
         public int AddItems(int id, int amount)
@@ -178,13 +178,13 @@ namespace Ghost.Server.Mgrs.Player
             else
             {
                 InventorySlot slot;
-                for (int index = 0, count = m_items.Count; index < m_data.InventorySlots && count > 0 && amount > 0; index++)
+                for (int index = 0, count = m_items.Count; index < (m_data.InventorySlots - 1) && count > 0 && amount > 0; index++)
                 {
                     if (m_items.TryGetValue(index, out slot))
                     {
                         count--;
                         if (slot.Item.Id == id)
-                            amount = RemoveSlot(index, amount);
+                            amount = RemoveFromSlot(index, amount);
                     }
                 }
                 return amount;
@@ -198,10 +198,28 @@ namespace Ghost.Server.Mgrs.Player
             return slot.Item.Id == id && slot.Amount >= amount;
         }
 
+        public int RemoveFromSlot(int index, int amount)
+        {
+            var slot = m_items[index];
+            int slotAmount = slot.Amount;
+            if (slotAmount <= amount)
+            {
+                m_items.Remove(index);
+                m_view.UpdateSlot(slot.Delete(), index);
+                return amount - slotAmount;
+            }
+            else
+            {
+                slot.Amount -= amount;
+                m_view.UpdateSlot(slot, index);
+                return 0;
+            }
+        }
+
         private int GetFreeSlot()
         {
             InventorySlot slot;
-            for (int index = 0; index < m_data.InventorySlots; index++)
+            for (int index = 0; index < (m_data.InventorySlots - 1); index++)
             {
                 if (!m_items.TryGetValue(index, out slot) || slot.IsEmpty)
                     return index;
@@ -220,7 +238,7 @@ namespace Ghost.Server.Mgrs.Player
             if (m_itemsHash.Contains(item.ID) && (item.Flags & ItemFlags.Stackable) > 0)
             {
                 InventorySlot slot;
-                for (int index = 0, count = m_items.Count; index < m_data.InventorySlots && count > 0 && amount > 0; index++)
+                for (int index = 0, count = m_items.Count; index < (m_data.InventorySlots - 1) && count > 0 && amount > 0; index++)
                 {
                     if (m_items.TryGetValue(index, out slot))
                     {
@@ -244,7 +262,7 @@ namespace Ghost.Server.Mgrs.Player
                 return -amount;
             if (!m_itemsHash.Contains(item.ID))
                 m_itemsHash.Add(item.ID);
-            while ((amount = SetSlot(index, item, amount)) > 0 && index != -1)
+            while (index != -1 && (amount = SetSlot(index, item, amount)) > 0)
                 index = GetFreeSlot();
             return amount;
         }
@@ -258,24 +276,6 @@ namespace Ghost.Server.Mgrs.Player
                 m_items[index] = slot;
             }
             return slot;
-        }
-
-        private int RemoveSlot(int index, int amount)
-        {
-            var slot = m_items[index];
-            int slotAmount = slot.Amount;
-            if (slotAmount <= amount)
-            {
-                m_items.Remove(index);
-                m_view.DeleteSlot(slot, index);
-                return amount - slotAmount;
-            }
-            else
-            {
-                slot.Amount -= amount;
-                m_view.UpdateSlot(slot, index);
-                return 0;
-            }
         }
 
         private int AddItem(int index, DB_Item item, int amount)
@@ -398,7 +398,7 @@ namespace Ghost.Server.Mgrs.Player
                         var flags = item.Flags;
                         var index = wslot.Index;
                         m_items.Remove(islot);
-                        m_view.DeleteSlot(itemSlot, islot);
+                        m_view.UpdateSlot(itemSlot.Delete(), islot);
                         if (m_wears.TryGetValue(index, out witem))
                         {
                             item = DataMgr.SelectItem(witem.Id);
@@ -517,7 +517,7 @@ namespace Ghost.Server.Mgrs.Player
                 {
                     m_items.Remove(first);
                     SetSlot(second, slotFirst);
-                    m_view.DeleteSlot(slotFirst, first);
+                    m_view.UpdateSlot(slotFirst.Delete(), first);
                 }
                 else
                 {

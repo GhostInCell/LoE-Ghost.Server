@@ -6,6 +6,7 @@ using Ghost.Server.Utilities.Abstracts;
 using PNet;
 using PNetR;
 using System.Numerics;
+using static PNet.NetConverter;
 
 namespace Ghost.Server.Core.Objects
 {
@@ -55,7 +56,7 @@ namespace Ghost.Server.Core.Objects
         #region RPC Handlers
         private void RPC_04_53(NetMessage arg1, NetMessageInfo arg2)
         {
-            _view.Rpc(4, 53, arg2.Sender, _owner.Stats.Level);
+            _view.Rpc<Int16Serializer>(4, 53, arg2.Sender, _owner.Stats.Level);
         }
         #endregion
         #region Events Handlers

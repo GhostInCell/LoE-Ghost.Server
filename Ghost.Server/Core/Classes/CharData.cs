@@ -48,10 +48,10 @@ namespace Ghost.Server.Core.Classes
         public Dictionary<int, InventoryItem> Wears;
         [ProtoMember(13)]
         public Dictionary<TalentMarkId, TalentData> Talents;
-        public readonly INetSerializable SerWears;
-        public readonly INetSerializable SerSkills;
-        public readonly INetSerializable SerTalents;
-        public readonly INetSerializable SerInventory;
+        public readonly SER_Wears SerWears;
+        public readonly SER_Skills SerSkills;
+        public readonly SER_Talents SerTalents;
+        public readonly SER_Inventory SerInventory;
 
         public CharData()
         {

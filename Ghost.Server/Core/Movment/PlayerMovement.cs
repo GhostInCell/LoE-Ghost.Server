@@ -8,6 +8,7 @@ using PNet;
 using PNetR;
 using System.Numerics;
 using System;
+using static PNet.NetConverter;
 
 namespace Ghost.Server.Core.Movment
 {
@@ -107,7 +108,7 @@ namespace Ghost.Server.Core.Movment
         {
             _lastAnimation = arg1.ReadInt32();
             _flying = (_player.Char.Pony.Race == 3 && _lastAnimation == 1);
-            _creature.View.Rpc(2, 202, RpcMode.OthersOrdered, (object)_lastAnimation);
+            _creature.View.Rpc<Int32Serializer>(2, 202, RpcMode.OthersOrdered, _lastAnimation);
         }
         #endregion
         #region Events Handlers

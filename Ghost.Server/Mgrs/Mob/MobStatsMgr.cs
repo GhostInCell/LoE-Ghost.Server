@@ -70,7 +70,8 @@ namespace Ghost.Server.Mgrs.Mob
             if (hp.Max != hp.Current)
             {
                 hp.IncreaseCurrent(_stats[Stats.HealthRegen].Max * (interval / 1000f));
-                _view.Rpc(4, 50, RpcMode.AllOrdered, (byte)Stats.Health, hp.Current);
+                var net = default(StatNetData);
+                _view.Rpc(4, 50, RpcMode.AllOrdered, net.Fill(Stats.Health, hp.Current));
             }
             if (ep.Max != ep.Current)
                 ep.IncreaseCurrent(_stats[Stats.EnergyRegen].Max * (interval / 1000f));

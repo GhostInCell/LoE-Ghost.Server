@@ -1,5 +1,8 @@
 ﻿using Ghost.Server.Core.Classes;
 using Ghost.Server.Core.Players;
+using Ghost.Server.Core.Structs;
+using Ghost.Server.Mgrs;
+using Ghost.Server.Terrain.Primitives;
 using MySql.Data.MySqlClient;
 using PNet;
 using System;
@@ -13,6 +16,7 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
+using static PNet.NetConverter;
 
 namespace Ghost.Server.Utilities
 {
@@ -29,6 +33,7 @@ namespace Ghost.Server.Utilities
         Item,
         Length
     }
+
     public enum StatsOffset
     {
         Null = -1,
@@ -50,6 +55,13 @@ namespace Ghost.Server.Utilities
         Null = -1,
         XP = StatsOffset.Player,
         Bits,
+        Length
+    }
+
+    public enum CreatureFields
+    {
+        Null = -1,
+        Spells,
         Length
     }
 
@@ -290,6 +302,112 @@ namespace Ghost.Server.Utilities
         Intersecting
     }
     #endregion
+    public struct StatNetData : INetSerializable
+    {
+        public Stats Stat;
+        public float Value;
+
+        public int AllocSize
+        {
+            get
+            {
+                return 5;
+            }
+        }
+
+        public void OnSerialize(NetMessage message)
+        {
+            message.Write((byte)Stat);
+            message.Write(Value);
+        }
+
+        public void OnDeserialize(NetMessage message)
+        {
+            Stat = (Stats)message.ReadByte();
+            Value = message.ReadSingle();
+        }
+
+        public StatNetData Fill(Stats stat, float value)
+        {
+            Stat = stat;
+            Value = value;
+            return this;
+        }
+    }
+    public struct TalentNetData : INetSerializable
+    {
+        public uint Data01;
+        public uint Data02;
+        public uint Data03;
+
+        public int AllocSize
+        {
+            get
+            {
+                return 12;
+            }
+        }
+
+        public TalentNetData(uint data01, uint data02, uint data03)
+        {
+            Data01 = data01;
+            Data02 = data02;
+            Data03 = data03;
+        }
+
+        public void OnSerialize(NetMessage message)
+        {
+            message.Write(Data01);
+            message.Write(Data02);
+            message.Write(Data03);
+        }
+
+        public void OnDeserialize(NetMessage message)
+        {
+            Data01 = message.ReadUInt32();
+            Data02 = message.ReadUInt32();
+            Data03 = message.ReadUInt32();
+        }
+    }
+    public struct DialogNetData : INetSerializable
+    {
+        public ushort Guid;
+        public string Name;
+        public ushort Emotion;
+        public string Message;
+
+
+        public int AllocSize
+        {
+            get
+            {
+                return 4 + Name.Length * 2 + Message.Length * 2;
+            }
+        }
+        public DialogNetData(string message, string name, ushort guid, ushort emotion)
+        {
+            Message = message;
+            Name = name;
+            Guid = guid;
+            Emotion = emotion;
+        }
+
+        public void OnSerialize(NetMessage message)
+        {
+            message.Write(Message);
+            message.Write(Name);
+            message.Write(Guid);
+            message.Write(Emotion);
+        }
+
+        public void OnDeserialize(NetMessage message)
+        {
+            Message = message.ReadString();
+            Name = message.ReadString();
+            Guid = message.ReadUInt16();
+            Emotion = message.ReadUInt16();
+        }
+    }
     public static class New<T>
     {
         public static readonly Func<T> Create;
@@ -516,54 +634,114 @@ namespace Ghost.Server.Utilities
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetMessage(this string msg, MapPlayer player)
         {
-            string literal; char mod;
-            int index01 = 0, index02;
-            while ((index01 = msg.IndexOf('{', index01)) > 0)
+            string message = msg, literal;
+            int index01 = message.IndexOf('{'), index02;
+            if (index01 > 0)
             {
-                index02 = msg.IndexOf('}');
-                if (msg.Length > (index02 + 2) && msg[index02 + 1] == ':')
-                    mod = msg[index02 + 2];
-                else mod = '\0';
-                literal = msg.Substring(++index01, index02 - index01);
-                switch (literal)
+                do
                 {
-                    case "n":
-                        literal = Environment.NewLine;
-                        break;
-                    case "name":
-                        literal = player.Char.Pony.Name;
-                        break;
-                    case "race":
-                        literal = player.Char.Pony.Race.GetRaceName();
-                        break;
-                    case "level":
-                        literal = player.Stats.Level.ToString();
-                        break;
-                    case "gender":
-                        literal = player.Char.Pony.Gender.GetGenderName();
-                        break;
-
-                }
-                if (mod != '\0')
-                {
-                    index02 += 2;
-                    switch (mod)
+                    if (index01 == (message.Length - 1))
                     {
-                        case 'l':
-                            literal = literal.ToLowerInvariant();
-                            break;
-                        case 'u':
-                            literal = literal.ToUpperInvariant();
-                            break;
+                        index02 = index01;
+                        literal = "Error: only one brace";
                     }
-                }
-                msg = msg.Remove(--index01) + literal + msg.Substring(++index02);
+                    else if (message[index01 + 1] == '{')
+                    {
+                        index01++;
+                        continue;
+                    }
+                    else
+                    {
+                        index02 = message.IndexOf('}');
+                        if (index02 != -1)
+                        {
+                            var argsStart = 1;
+                            var args = message.Substring(++index01, index02 - index01).Split(':');
+                            literal = args[0];
+                            switch (literal)
+                            {
+                                case "item":
+                                    argsStart++;
+                                    int id; DB_Item item;
+                                    if (args.Length >= 2 && int.TryParse(args[1], out id) && DataMgr.Select(id, out item))
+                                        literal = '[' + item.Name + ']';
+                                    else
+                                        literal = "Error: item not found";
+                                    break;
+                                case "n":
+                                    literal = Environment.NewLine;
+                                    break;
+                                case "name":
+                                    literal = player.Char.Pony.Name;
+                                    break;
+                                case "race":
+                                    literal = player.Char.Pony.Race.GetRaceName();
+                                    break;
+                                case "level":
+                                    literal = player.Stats.Level.ToString();
+                                    break;
+                                case "gender":
+                                    literal = player.Char.Pony.Gender.GetGenderName();
+                                    break;
+                            }
+                            if (args.Length != 1)
+                            {
+                                for (int index = argsStart; index < args.Length; index++)
+                                {
+                                    switch (args[index])
+                                    {
+                                        case "lower":
+                                            literal = literal.ToLowerInvariant();
+                                            break;
+                                        case "upper":
+                                            literal = literal.ToUpperInvariant();
+                                            break;
+                                    }
+                                }
+                            }
+                        }
+                        else
+                            literal = "Error: no ending brace";
+                    }
+                    message = message.Remove(--index01) + literal + message.Substring(++index02);
+                } while ((index01 = message.IndexOf('{', index01)) > 0);
             }
-            return msg;
+            return message;
         }
     }
     public static class PlayeRPCExtension
     {
+        private struct RPC201 : INetSerializable
+        {
+            public float Duration;
+            public string Message;
+
+            public int AllocSize
+            {
+                get
+                {
+                    return 4 + Message.Length * 2;
+                }
+            }
+
+            public RPC201(string message, float duration)
+            {
+                Message = message;
+                Duration = duration;
+            }
+
+            public void OnSerialize(NetMessage message)
+            {
+                message.Write(Message);
+                message.Write(Duration);
+            }
+
+            public void OnDeserialize(NetMessage message)
+            {
+                Message = message.ReadString();
+                Duration = message.ReadSingle();
+            }
+        }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SendPonies(this CharPlayer player)
         {
@@ -572,12 +750,12 @@ namespace Ghost.Server.Utilities
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Error(this MapPlayer player, string msg)
         {
-            player.Player.Rpc(127, msg);
+            player.Player.Rpc<StringSerializer>(127, msg);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Error(this PNetR.Player player, string msg)
         {
-            player.Rpc(127, msg);
+            player.Rpc<StringSerializer>(127, msg);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SystemMsg(this MapPlayer player, string msg)
@@ -585,20 +763,22 @@ namespace Ghost.Server.Utilities
             player.Player.Rpc(15, ChatType.System, string.Empty, string.Empty, msg, -1, -1, ChatIcon.System, DateTime.Now);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void SystemMsg(this PNetS.Player player, string msg)
+        public static void SystemMsg(this PNetS.Player player, string text)
         {
-            player.PlayerRpc(15, ChatType.System, string.Empty, msg, DateTime.Now, -1, ChatIcon.System, -1);
+            var message = ChatMsg.System;
+            message.Text = text;
+            message.Time = DateTime.Now;
+            player.PlayerRpc(15, message);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetBounds(this PNetR.Player player)
         {
-            player.Rpc(210, (byte)70, Constants.DefaultRoomBoundsMin.X, Constants.DefaultRoomBoundsMin.Y, Constants.DefaultRoomBoundsMin.Z,
-                Constants.DefaultRoomBoundsMax.X, Constants.DefaultRoomBoundsMax.Y, Constants.DefaultRoomBoundsMax.Z);
+            player.SubRpc(210, 70, Constants.DefaultRoomBounds);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetBounds(this PNetR.Player player, Vector3 min, Vector3 max)
         {
-            player.Rpc(210, (byte)70, min.X, min.Y, min.Z, max.X, max.Y, max.Z);
+            player.SubRpc(210, 70, new BoundingBox(min, max));
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SystemMsg(this PNetR.Player player, string msg)
@@ -608,7 +788,7 @@ namespace Ghost.Server.Utilities
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void UpdateFriend(this PNetS.Player player, FriendStatus status)
         {
-            player.PlayerRpc(20, (byte)21, status);
+            player.PlayerSubRpc(20, 21, status);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Whisper(this PNetS.Player player, PNetS.Player target, ChatMsg msg)
@@ -619,12 +799,12 @@ namespace Ghost.Server.Utilities
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Announce(this MapPlayer player, string msg, float duration = Constants.AnnounceDuration)
         {
-            player.Player.Rpc(201, msg, duration);
+            player.Player.Rpc(201, new RPC201(msg, duration));
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Announce(this PNetR.Player player, string msg, float duration = Constants.AnnounceDuration)
         {
-            player.Rpc(201, msg, duration);
+            player.Rpc(201, new RPC201(msg, duration));
         }
     }
     public static class BitArrayExtension
@@ -756,9 +936,9 @@ namespace Ghost.Server.Utilities
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void WritePosition(this NetMessage msg, Vector3 vec)
         {
-            msg.WriteRangedSingle(vec.X, Constants.DefaultRoomBoundsMin.X, Constants.DefaultRoomBoundsMax.X, 16);
-            msg.WriteRangedSingle(vec.Y, Constants.DefaultRoomBoundsMin.Y, Constants.DefaultRoomBoundsMax.Y, 16);
-            msg.WriteRangedSingle(vec.Z, Constants.DefaultRoomBoundsMin.Z, Constants.DefaultRoomBoundsMax.Z, 16);
+            msg.WriteRangedSingle(vec.X, Constants.DefaultRoomBounds.Min.X, Constants.DefaultRoomBounds.Max.X, 16);
+            msg.WriteRangedSingle(vec.Y, Constants.DefaultRoomBounds.Min.Y, Constants.DefaultRoomBounds.Max.Y, 16);
+            msg.WriteRangedSingle(vec.Z, Constants.DefaultRoomBounds.Min.Z, Constants.DefaultRoomBounds.Max.Z, 16);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 ReadRotation(this NetMessage msg, ref bool full)
@@ -848,12 +1028,12 @@ namespace Ghost.Server.Utilities
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Lock(this PNetR.NetworkView view, bool state)
         {
-            view.Rpc(2, 204, RpcMode.OwnerOrdered, (object)state);
+            view.Rpc<BooleanSerializer>(2, 204, RpcMode.OwnerOrdered, state);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetBits(this PNetR.NetworkView view, int bits)
         {
-            view.Rpc(7, 16, RpcMode.OwnerOrdered, (object)bits);
+            view.Rpc<Int32Serializer>(7, 16, RpcMode.OwnerOrdered, bits);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void UnwearItem(this PNetR.NetworkView view, byte slot, WearablePosition usedSlots)
@@ -863,12 +1043,12 @@ namespace Ghost.Server.Utilities
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void RequestTrade(this PNetR.NetworkView view, ushort id)
         {
-            view.Rpc(9, 1, RpcMode.OwnerOrdered, (object)id);
+            view.Rpc<UInt16Serializer>(9, 1, RpcMode.OwnerOrdered, id);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Teleport(this PNetR.NetworkView view, Vector3 position)
         {
-            view.Rpc(2, 201, RpcMode.AllOrdered, position.X, position.Y, position.Z);
+            view.Rpc<Vector3Serializer>(2, 201, RpcMode.AllOrdered, position);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void WearItem(this PNetR.NetworkView view, InventoryItem item, byte slot, WearablePosition usedSlots)
@@ -891,46 +1071,32 @@ namespace Ghost.Server.Utilities
             view.Rpc(5, 61, RpcMode.AllOrdered, target);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void DeleteSlot(this PNetR.NetworkView view, InventorySlot slot, int index)
-        {
-            slot.Amount = 0;
-            view.Rpc(7, 6, RpcMode.OwnerOrdered, slot, index);
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void UpdateSlot(this PNetR.NetworkView view, InventorySlot slot, int index)
         {
             view.Rpc(7, 6, RpcMode.OwnerOrdered, slot, index);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void AddItem(this PNetR.NetworkView view, int id, int amount, byte slot)
-        {
-            view.Rpc(7, 6, RpcMode.OwnerOrdered, id, amount, slot);
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SendStatUpdate(this PNetR.NetworkView view, Stats stat, StatValue value)
         {
-            view.Rpc(4, 50, RpcMode.AllOrdered, (byte)stat, value.Current);
+            var net = default(StatNetData);
+            view.Rpc(4, 50, RpcMode.AllOrdered, net.Fill(stat, value.Current));
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SendStatFullUpdate(this PNetR.NetworkView view, Stats stat, StatValue value)
         {
-            view.Rpc(4, 51, RpcMode.AllOrdered, (byte)stat, value.Max);
-            view.Rpc(4, 50, RpcMode.AllOrdered, (byte)stat, value.Current);
+            var net = default(StatNetData);
+            view.Rpc(4, 51, RpcMode.AllOrdered, net.Fill(stat, value.Max));
+            view.Rpc(4, 50, RpcMode.AllOrdered, net.Fill(stat, value.Current));
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetCombat(this PNetR.NetworkView view, PNetR.Player player, bool inCombat)
         {
-            view.Rpc(4, 55, player, inCombat);
+            view.Rpc<BooleanSerializer>(4, 55, player, inCombat);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void WornItems(this PNetR.NetworkView view, PNetR.Player player, CharData data)
         {
             view.Rpc(7, 4, player, data.SerWears);
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void SendTradeState(this PNetR.NetworkView view, INetSerializable offer01, INetSerializable offer02, bool ready01, bool ready02)
-        {
-            view.Rpc(9, 12, RpcMode.OwnerOrdered, true, offer01, offer02, ready01, ready02);
         }
     }
     public static class MySqlDataReaderExtension
