@@ -125,6 +125,44 @@ namespace PNet
 
     public static class NetConverter
     {
+        public struct ByteSerializer : INetSerializable
+        {
+            public static readonly ByteSerializer Zero = new ByteSerializer(0);
+
+            public byte Value;
+
+            public int AllocSize
+            {
+                get
+                {
+                    return sizeof(byte);
+                }
+            }
+
+            public ByteSerializer(byte value)
+            {
+                Value = value;
+            }
+
+            public void OnSerialize(NetMessage message)
+            {
+                message.Write(Value);
+            }
+
+            public void OnDeserialize(NetMessage message)
+            {
+                Value = message.ReadByte();
+            }
+
+            public static implicit operator byte(ByteSerializer value)
+            {
+                return value.Value;
+            }
+            public static implicit operator ByteSerializer(byte value)
+            {
+                return new ByteSerializer(value);
+            }
+        }
         public struct Int16Serializer : INetSerializable
         {
             public static readonly Int16Serializer Zero = new Int16Serializer(0);

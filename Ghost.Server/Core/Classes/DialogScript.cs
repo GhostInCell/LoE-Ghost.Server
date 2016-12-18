@@ -6,7 +6,6 @@ using Ghost.Server.Core.Structs;
 using Ghost.Server.Mgrs;
 using Ghost.Server.Utilities;
 using Ghost.Server.Utilities.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -253,6 +252,10 @@ namespace Ghost.Server.Core.Classes
                     if (entry.ConditionData01 == -1)
                         return player.Data.Bits >= entry.ConditionData02;
                     return player.Items.HasItems(entry.ConditionData01, entry.ConditionData02);
+                case DialogCondition.Gender_Equal:
+                    return player.Char.Pony.Gender == entry.ConditionData01;
+                case DialogCondition.Gender_NotEqual:
+                    return player.Char.Pony.Gender != entry.ConditionData01;
                 default: return false;
             }
         }

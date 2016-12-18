@@ -146,6 +146,8 @@ namespace Ghost.Server.Utilities
         Race_NotEqual = 0x32,
         Movement_Equal = 0x42,
         Movement_NotEqual = 0x52,
+        Gender_Equal = 0x62,
+        Gender_NotEqual = 0x72,
 
         State_Equal = 0x03,
         State_NotEqual = 0x13,
@@ -272,7 +274,8 @@ namespace Ghost.Server.Utilities
     [Flags]
     public enum ItemFlags : byte
     {
-        None, Stackable, Salable, Stats = 4, Usable = 8
+        None, Stackable, Salable, Stats = 4, Usable = 8,
+        Color01 = 64, Color02 = 128
     }
     [Flags]
     public enum MapFlags : byte
@@ -1104,10 +1107,12 @@ namespace Ghost.Server.Utilities
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PonyData GetPony(this MySqlDataReader reader, int i)
         {
-            var ret = new PonyData();
-            ret.Race = reader.GetByte(i);
-            ret.Gender = reader.GetByte(++i);
-            ret.Name = reader.GetString(++i);
+            var ret = new PonyData()
+            {
+                Race = reader.GetByte(i),
+                Gender = reader.GetByte(++i),
+                Name = reader.GetString(++i)
+            };
             if (reader.IsDBNull(++i)) return ret;
             using (var mem = new MemoryStream())
             {

@@ -427,7 +427,8 @@ namespace Ghost.Server.Core
                                     data[id].Items.Add(_result.GetInt32(24));
                                 else
                                 {
-                                    entry = new DB_NPC(id, _result.GetByte(1), _result.GetInt16(2), _result.GetUInt16(3), _result.GetByte(4), _result.GetUInt16(5), _result.GetPonyOld(6));
+                                    entry = new DB_NPC(id, _result.GetByte(1), _result.GetInt16(2), _result.GetUInt16(3), _result.GetByte(4), _result.GetUInt16(5),
+                                        _result.GetPonyOld(6));
                                     if ((entry.Flags & NPCFlags.Trader) > 0)
                                         entry.Items.Add(_result.GetInt32(24));
                                     if ((entry.Flags & NPCFlags.Wears) > 0)
@@ -525,12 +526,13 @@ namespace Ghost.Server.Core
                             {
                                 id = _result.GetInt32(0);
                                 if (data.ContainsKey(id))
-                                    data[id].Stats.Add(new Tuple<Stats, int>((Stats)_result.GetByte(7), _result.GetInt32(8)));
+                                    data[id].Stats.Add(new Tuple<Stats, int>((Stats)_result.GetByte(10), _result.GetInt32(11)));
                                 else
                                 {
-                                    entry = new DB_Item(id, _result.GetNullString(1), _result.GetByte(2), _result.GetByte(3), _result.GetUInt16(4), _result.GetInt32(5), _result.GetInt32(6));
+                                    entry = new DB_Item(id, _result.GetNullString(1), _result.GetByte(2), _result.GetByte(3), _result.GetByte(4), 
+                                        _result.GetUInt16(5), _result.GetByte(6), _result.GetInt32(7), _result.GetInt32(8), _result.GetUInt32(9));
                                     if ((entry.Flags & ItemFlags.Stats) > 0)
-                                        entry.Stats.Add(new Tuple<Stats, int>((Stats)_result.GetByte(7), _result.GetInt32(8)));
+                                        entry.Stats.Add(new Tuple<Stats, int>((Stats)_result.GetByte(10), _result.GetInt32(11)));
                                     data[id] = entry;
                                 }
                             }
@@ -562,8 +564,8 @@ namespace Ghost.Server.Core
                                 index = _result.GetByte(1);
                                 if (!data.TryGetValue(id, out spell))
                                     data[id] = spell = new DB_Spell(id);
-                                spell.Effects.Add(index, new DB_SpellEffect(_result.GetByte(2), _result.GetByte(3), _result.GetFloat(4), _result.GetFloat(5),
-                                    _result.GetFloat(6), _result.GetFloat(7), _result.GetFloat(8), _result.GetFloat(9)));
+                                spell.Effects.Add(index, new DB_SpellEffect(_result.GetByte(2), _result.GetByte(3), _result.GetFloat(4), 
+                                    _result.GetFloat(5), _result.GetFloat(6), _result.GetFloat(7), _result.GetFloat(8), _result.GetFloat(9)));
                             }
                     }
                 }
@@ -650,9 +652,10 @@ namespace Ghost.Server.Core
                             while (_result.Read())
                             {
                                 id = _result.GetInt32(0);
-                                data[id] = new DB_Creature(id, _result.GetInt32(1), _result.GetByte(2), _result.GetInt32(3), _result.GetFloat(4), _result.GetInt32(5),
-                                    _result.GetUInt16(6), _result.GetFloat(7), _result.GetFloat(8), _result.GetFloat(9), _result.GetFloat(10), _result.GetFloat(11), _result.GetFloat(12),
-                                    _result.GetFloat(13), _result.GetFloat(14), _result.GetFloat(15), _result.GetFloat(16), _result.GetFloat(17));
+                                data[id] = new DB_Creature(id, _result.GetInt32(1), _result.GetByte(2), _result.GetInt32(3), _result.GetFloat(4), 
+                                    _result.GetInt32(5), _result.GetUInt16(6), _result.GetFloat(7), _result.GetFloat(8), _result.GetFloat(9), 
+                                    _result.GetFloat(10), _result.GetFloat(11), _result.GetFloat(12), _result.GetFloat(13), _result.GetFloat(14), 
+                                    _result.GetFloat(15), _result.GetFloat(16), _result.GetFloat(17));
                             }
                     }
                 }
@@ -678,8 +681,9 @@ namespace Ghost.Server.Core
                         {
                             data = new List<DB_WorldObject>();
                             while (_result.Read())
-                                data.Add(new DB_WorldObject(_result.GetInt32(0), _result.GetUInt16(1), _result.GetInt32(2), _result.GetByte(3), _result.GetByte(4), _result.GetVector3(5),
-                                    _result.GetVector3(8), _result.GetFloat(11), _result.GetInt32(12), _result.GetInt32(13), _result.GetInt32(14)));
+                                data.Add(new DB_WorldObject(_result.GetInt32(0), _result.GetUInt16(1), _result.GetInt32(2), _result.GetByte(3), 
+                                    _result.GetByte(4), _result.GetVector3(5), _result.GetVector3(8), _result.GetFloat(11), _result.GetInt32(12), 
+                                    _result.GetInt32(13), _result.GetInt32(14)));
                         }
                     }
                 }
@@ -703,7 +707,8 @@ namespace Ghost.Server.Core
                     {
                         if (_result.HasRows)
                             while (_result.Read())
-                                data.Add(new Character(_result.GetInt32(0), _result.GetInt32(1), _result.GetInt16(2), _result.GetInt32(3), _result.GetPony(4), _result.GetProtoBuf<CharData>(8)));
+                                data.Add(new Character(_result.GetInt32(0), _result.GetInt32(1), _result.GetInt16(2), _result.GetInt32(3), 
+                                    _result.GetPony(4), _result.GetProtoBuf<CharData>(8)));
                     }
                 }
                 return true;

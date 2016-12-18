@@ -5142,5 +5142,157 @@
 			},
 		]
 	},
-
+	{
+		"ID": 51,
+		"Name": "GuardHeal01",
+		"Description": "You are adept at recognizing injuries and responding promptly",
+		"MaxLevel": 50,
+		"Icon": "minor_heal1",
+		"Classes": "Medical",
+		"DamageType": "Physical",
+		"SkillProcessingType": "CSScript",
+		/*"DamageByLevel": [
+			97.7, 107.3, 111.9, 116.3, 122.1,126.6,130.8,137.3,141.8,188.5,
+			195.3,202.4,219.1,228.4,237.3,245.9,254.1,262,269.6,338.8,
+			353.4,367.6,380.4,393.6,406.3,418.6,440.3,441.9,467.1,550.2,
+			570.3,589.8,608.7,627,644.7,662,678.7,695,710.8,832.6,
+			852.3,871.5,890.1,908.4,926.1,943.4,960.1,976.6,992.6,1000],*/
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"MinimumLevel": 1,
+                "TrainingPointCost": 20,
+				"EnergyCost": 35,
+				"Aggression": 1,
+				"TargetDistance": 20,
+				"TargetShapes": "Target",
+				"CasterAnimation": "SeismicBuck",
+				"ProjectileResource": "GuardHeal01",
+				"Cooldown": 0.5,
+				"GlobalCooldown": 1,
+				"CastTime": 0.5,
+				"TargetEffects": [
+					{
+							"SubId": 1,
+							"Amount": 1.0, /* This is the Base Heal Percent */
+						},
+						{
+							"SubId": 2,
+							"Amount": 0.05, /* This is the Bonus Heal Percent */
+						},
+						{
+							"Targets": "Friendly, Self",
+							"SubId": 21, /* this coorelates to a server side script */
+							"Stat": "None",
+							"Amount": 1,
+							"IsMultiplier": false,
+							"Duration": 5,
+						},
+				],
+			},
+		]
+	},
+	{
+		"ID": 52,
+		"Name": "GuardCleave",
+		"Description": "Hit the opponent nearest to you with an earth-shattering kick, sending out a shockwave which can disorient nearby opponents",
+		"MaxLevel": 50,
+		"Icon": "horseshoeshot",
+		"Classes": "Combat",
+		"DamageType": "Physical",
+		"DamageByLevel": [
+			97.7, 107.3, 111.9, 116.3, 122.1,126.6,130.8,137.3,141.8,188.5,
+			195.3,202.4,219.1,228.4,237.3,245.9,254.1,262,269.6,338.8,
+			353.4,367.6,380.4,393.6,406.3,418.6,440.3,441.9,467.1,550.2,
+			570.3,589.8,608.7,627,644.7,662,678.7,695,710.8,832.6,
+			852.3,871.5,890.1,908.4,926.1,943.4,960.1,976.6,992.6,1000],
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"EnergyCost": 35,
+				"Aggression": 1,
+				"TargetDistance": 2,
+				"TargetShapes": "Frustum",
+				"CasterAnimation": "SeismicBuck",
+				"ProjectileResource": "LightCleave",
+				"Cooldown": 2.5,
+				"GlobalCooldown": 1,
+				"CastTime": 0.5,
+				"AoERadius": 1,
+				"AoEMax": 2,
+				"ConeAngle": 60,
+				"FrustumAspectRatio": 1, 
+				"FrustumFieldOfViewY": 60,
+				"MinimumLevel": 1,
+				"TrainingPointCost": 20,
+				"SplashEffects": [
+					{
+						"SubId": 2,
+						"Stat": "Health",
+						"Amount": 85,
+						"IsMultiplier": false,
+					},
+					{
+						"SubId": 3,
+						"Stat": "Tension",
+						"Amount": 85,
+						"IsMultiplier": false,
+					}
+				]
+			},
+		]
+	},
+	{
+		"ID": 53,
+		"Name": "GuardWarStomp",
+		"Description": "Hit the opponent nearest to you with an earth-shattering kick, sending out a shockwave which can disorient nearby opponents",
+		"MaxLevel": 50,
+		"Icon": "horseshoeshot",
+		"Classes": "Combat",
+		"DamageType": "Physical",
+		"DamageByLevel": [
+			97.7, 107.3, 111.9, 116.3, 122.1,126.6,130.8,137.3,141.8,188.5,
+			195.3,202.4,219.1,228.4,237.3,245.9,254.1,262,269.6,338.8,
+			353.4,367.6,380.4,393.6,406.3,418.6,440.3,441.9,467.1,550.2,
+			570.3,589.8,608.7,627,644.7,662,678.7,695,710.8,832.6,
+			852.3,871.5,890.1,908.4,926.1,943.4,960.1,976.6,992.6,1000],
+		"Upgrades": [
+			{
+				"ID": 0,
+				"Tier": 1,
+				"EnergyCost": 35,
+				"Aggression": 1,
+				"TargetDistance": 2,
+				"TargetShapes": "Frustum",
+				"CasterAnimation": "SeismicBuck",
+				"ProjectileResource": "WarStomp",
+				"Cooldown": 2.5,
+				"GlobalCooldown": 1,
+				"CastTime": 0.5,
+				"AoERadius": 1,
+				"AoEMax": 2,
+				"ConeAngle": 60,
+				"FrustumAspectRatio": 1, 
+				"FrustumFieldOfViewY": 60,
+				"MinimumLevel": 1,
+				"TrainingPointCost": 20,
+				"TargetEffects": [
+					{
+						"SubId": 0,
+						"Stat": "Tension",
+						"Amount": 85,
+						"IsMultiplier": false,
+					},
+					{
+						"SubId": 1,
+						"Stat": "Health",
+						"Amount": 85,
+						"IsMultiplier": false,
+					},
+				],
+			},
+		]
+	},
 ]

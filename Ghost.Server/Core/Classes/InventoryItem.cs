@@ -13,7 +13,9 @@ namespace Ghost.Server.Core.Classes
         [ProtoMember(1)]
         public int Id;
         [ProtoMember(2)]
-        public uint Color;
+        public uint Color01;
+        [ProtoMember(3)]
+        public uint Color02;
         [ProtoMember(3)]
         public int[] Sockets;
 
@@ -36,7 +38,7 @@ namespace Ghost.Server.Core.Classes
         public InventoryItem()
         {
             Id = EmptyID;
-            Color = DefaultColor;
+            Color01 = DefaultColor;
             Sockets = ArrayEx.Empty<int>();
         }
 
@@ -51,7 +53,8 @@ namespace Ghost.Server.Core.Classes
             message.Write(Id);
             if (Id != EmptyID)
             {
-                message.Write(Color);
+                message.Write(Color01);
+                message.Write(Color02);
                 message.Write((byte)Sockets.Length);
                 foreach (var socket in Sockets)
                     message.Write(socket);
@@ -63,7 +66,8 @@ namespace Ghost.Server.Core.Classes
             Id = message.ReadInt32();
             if (Id != EmptyID)
             {
-                Color = message.ReadUInt32();
+                Color01 = message.ReadUInt32();
+                Color02 = message.ReadUInt32();
                 Sockets = new int[message.ReadByte()];
                 for (int index = 0; index < Sockets.Length; index++)
                     Sockets[index] = message.ReadInt32();

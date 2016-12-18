@@ -8,19 +8,23 @@ namespace Ghost.Server.Core.Structs
     {
         public int ID;
         public int Price;
+        public uint Color;
         public byte Level;
         public string Name;
+        public byte Sockets;
         public ushort Stack;
         public ItemFlags Flags;
         public WearablePosition Slot;
         public List<Tuple<Stats, int>> Stats;
-        public DB_Item(int id, string name, byte flags, byte level, ushort stack, int price, int slot)
+        public DB_Item(int id, string name, byte flags, byte level, byte rlevel, ushort stack, byte sockets, int price, int slot, uint color)
         {
             ID = id;
             Name = name;
             Level = level;
             Stack = stack;
             Price = price;
+            Color = color;
+            Sockets = sockets;
             Flags = (ItemFlags)flags;
             Slot = (WearablePosition)slot;
             if ((Flags & ItemFlags.Stats) > 0)
