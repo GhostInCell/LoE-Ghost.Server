@@ -20,6 +20,10 @@ namespace Ghost.Server.Mgrs
             MaxChars = Configs.Get<int>(Configs.Game_MaxChars);
             MaxLevel = Configs.Get<short>(Configs.Game_MaxLevel);
         }
+        public static void Clean()
+        {
+            lock (_chars) _chars.Clear();
+        }
         public static bool DeleteCharacter(int id)
         {
             lock (_chars)

@@ -92,6 +92,8 @@ namespace Ghost.Server.Core.Servers
             _room.PlayerRemoved -= Room_PlayerRemoved;
             _room.ConstructNetData -= Room_ConstructNetData;
             _room.ServerStatusChanged -= Room_ServerStatusChanged;
+            foreach (var item in _players.Values)
+                item.Destroy();
             _players.Clear();
             _cfg = null;
             _room = null;

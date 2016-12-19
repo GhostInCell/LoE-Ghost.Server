@@ -98,11 +98,14 @@ namespace Ghost.Server.Core.Servers
             _server.VerifyPlayer -= MasterServer_VerifyPlayer;
             _server.PlayerRemoved -= MasterServer_PlayerRemoved;
             _server.ConstructNetData -= MasterServer_ConstructNetData;
+            foreach (var item in _players.Values)
+                item.Destroy();
             _players.Clear();
+            _users.Clear();
             _server.Shutdown();
             _cfg = null;
             _server = null;
-            Thread.Sleep(50);
+            Thread.Sleep(100);
             ServerLogger.LogServer(this, $"Stopped");
         }
         public void Start()
@@ -122,7 +125,7 @@ namespace Ghost.Server.Core.Servers
         public void Restart()
         {
             if (_server == null) return;
-            if (_running) Stop(); ReloadCFG();
+            if (_running) Stop();
             Start();
         }
         public bool IsOnline(int id)

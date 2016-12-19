@@ -12,7 +12,7 @@ namespace Ghost.Server.Utilities.Abstracts
         protected readonly uint _guid;
         protected MapServer _server;
         protected ObjectsMgr _manager;
-        
+
         private bool _spawned;
         private bool _initialized;
         private int _componentsLength;
@@ -140,6 +140,7 @@ namespace Ghost.Server.Utilities.Abstracts
             if (_updatable.Length > 0 || eventOnUpdate != null)
                 _server.RemoveFromUpdate(this);
             OnDestroy?.Invoke();
+            CleanEvents();
             _server = null;
             _manager = null;
             _updatable = null;
@@ -163,7 +164,7 @@ namespace Ghost.Server.Utilities.Abstracts
         {
             if (!_spawned) return;
             for (int i = 0; i < _updatable.Length; i++)
-                    _updatable[i].Update(time);
+                _updatable[i].Update(time);
             eventOnUpdate?.Invoke(time);
         }
         public void AddComponent<T>(T component)
@@ -187,6 +188,49 @@ namespace Ghost.Server.Utilities.Abstracts
                 Array.Resize(ref _updatable, index);
             OnInitialize?.Invoke();
             _initialized = true;
+        }
+        private void CleanEvents()
+        {
+            {
+                var handler = OnSpawn;
+                if (handler != null)
+                {
+                    foreach (var item in handler.GetInvocationList())
+                        handler -= (Action)item;
+                }
+            }
+            {
+                var handler = OnDespawn;
+                if (handler != null)
+                {
+                    foreach (var item in handler.GetInvocationList())
+                        handler -= (Action)item;
+                }
+            }
+            {
+                var handler = OnDestroy;
+                if (handler != null)
+                {
+                    foreach (var item in handler.GetInvocationList())
+                        handler -= (Action)item;
+                }
+            }
+            {
+                var handler = OnInitialize;
+                if (handler != null)
+                {
+                    foreach (var item in handler.GetInvocationList())
+                        handler -= (Action)item;
+                }
+            }
+            {
+                var handler = eventOnUpdate;
+                if (handler != null)
+                {
+                    foreach (var item in handler.GetInvocationList())
+                        handler -= (Action<TimeSpan>)item;
+                }
+            }
         }
     }
 }
