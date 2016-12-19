@@ -7,110 +7,118 @@ namespace Ghost.Server.Mgrs
 {
     public static class DataMgr
     {
-        private static bool _loaded;
-        private readonly static List<string> _resources;
+        private static List<string> m_resources;
+        private static Dictionary<int, DB_NPC> m_npcs;
+        private static Dictionary<int, DB_Map> m_maps;
+        private static Dictionary<int, DB_Item> m_items;
+        private static Dictionary<int, DB_Loot> m_loots;
+        private static Dictionary<int, DB_Spell> m_spells;
+        private static Dictionary<int, DB_Dialog> m_dialogs;
+        private static Dictionary<int, DB_Creature> m_creatures;
+        private static Dictionary<int, DB_Movement> m_movements;
+        private static Dictionary<int, Tuple<ushort, string>> m_messages;
 
-        private readonly static Dictionary<int, DB_NPC> _npcs;
-        private readonly static Dictionary<int, DB_Map> _maps;
-        private readonly static Dictionary<int, DB_Item> _items;
-        private readonly static Dictionary<int, DB_Loot> _loots;
-        private readonly static Dictionary<int, DB_Spell> _spells;
-        private readonly static Dictionary<int, DB_Dialog> _dialogs;
-        private readonly static Dictionary<int, DB_Creature> _creatures;
-        private readonly static Dictionary<int, DB_Movement> _movements;
-        private readonly static Dictionary<int, Tuple<ushort, string>> _messages;
         public static string Info
         {
             get
             {
-                return $"{Environment.NewLine}{Environment.NewLine}Maps {_maps.Count}; Items {_items.Count}; NPCs {_npcs.Count}; Loots {_loots.Count}; Spells {_spells.Count}; Dialogs {_dialogs.Count}; Movements {_movements.Count}; Creatures {_creatures.Count}; Resources {_resources.Count}{Environment.NewLine}";
+                return $"{Environment.NewLine}{Environment.NewLine}Maps {m_maps.Count}; Items {m_items.Count}; NPCs {m_npcs.Count}; Loots {m_loots.Count}; Spells {m_spells.Count}; Dialogs {m_dialogs.Count}; Movements {m_movements.Count}; Creatures {m_creatures.Count}; Resources {m_resources.Count}{Environment.NewLine}";
             }
-        }
-        public static bool IsLoaded
-        {
-            get { return _loaded; }
         }
         static DataMgr()
         {
-            _loaded = true;
-            _loaded &= ServerDB.SelectAllMaps(out _maps);
-            _loaded &= ServerDB.SelectAllNPCs(out _npcs);
-            _loaded &= ServerDB.SelectAllItems(out _items);
-            _loaded &= ServerDB.SelectAllLoots(out _loots);
-            _loaded &= ServerDB.SelectAllSpells(out _spells);
-            _loaded &= ServerDB.SelectAllDialogs(out _dialogs);
-            _loaded &= ServerDB.SelectAllMessages(out _messages);
-            _loaded &= ServerDB.SelectAllResources(out _resources);
-            _loaded &= ServerDB.SelectAllCreatures(out _creatures);
-            _loaded &= ServerDB.SelectAllMovements(out _movements);
+            LoadAll();
+        }
+        public static void LoadAll()
+        {
+            if (!ServerDB.SelectAllMaps(out m_maps))
+                throw new Exception($"Failed to load: {nameof(m_maps)}");
+            if (!ServerDB.SelectAllNPCs(out m_npcs))
+                throw new Exception($"Failed to load: {nameof(m_npcs)}");
+            if (!ServerDB.SelectAllItems(out m_items))
+                throw new Exception($"Failed to load: {nameof(m_items)}");
+            if (!ServerDB.SelectAllLoots(out m_loots))
+                throw new Exception($"Failed to load: {nameof(m_loots)}");
+            if (!ServerDB.SelectAllSpells(out m_spells))
+                throw new Exception($"Failed to load: {nameof(m_spells)}");
+            if (!ServerDB.SelectAllDialogs(out m_dialogs))
+                throw new Exception($"Failed to load: {nameof(m_dialogs)}");
+            if (!ServerDB.SelectAllMessages(out m_messages))
+                throw new Exception($"Failed to load: {nameof(m_messages)}");
+            if (!ServerDB.SelectAllResources(out m_resources))
+                throw new Exception($"Failed to load: {nameof(m_resources)}");
+            if (!ServerDB.SelectAllCreatures(out m_creatures))
+                throw new Exception($"Failed to load: {nameof(m_creatures)}");
+            if (!ServerDB.SelectAllMovements(out m_movements))
+                throw new Exception($"Failed to load: {nameof(m_movements)}");
         }
         public static DB_Map SelectMap(int id)
         {
-            return _maps[id];
+            return m_maps[id];
         }
         public static DB_NPC SelectNPC(int id)
         {
-            return _npcs[id];
+            return m_npcs[id];
         }
         public static DB_Loot SelectLoot(int id)
         {
-            return _loots[id];
+            return m_loots[id];
         }
         public static DB_Spell SelectSpell(int id)
         {
-            return _spells[id];
+            return m_spells[id];
         }
         public static DB_Item SelectItem(int id)
         {
-            return _items[id];
+            return m_items[id];
         }
         public static string SelectResource(int id)
         {
-            return (id < 0 || _resources.Count < id) ? null : _resources[id];
+            return (id < 0 || m_resources.Count < id) ? null : m_resources[id];
         }
         public static DB_Creature SelectCreature(int id)
         {
-            return _creatures[id];
+            return m_creatures[id];
         }
         public static Tuple<ushort, string> SelectMessage(int id)
         {
-            return _messages[id];
+            return m_messages[id];
         }
         public static IEnumerable<DB_Map> SelectAllMaps()
         {
-            foreach (var map in _maps.Values) yield return map;
+            foreach (var map in m_maps.Values) yield return map;
         }
         public static bool Select(int id, out DB_NPC entry)
         {
-            return _npcs.TryGetValue(id, out entry);
+            return m_npcs.TryGetValue(id, out entry);
         }
         public static bool Select(int id, out DB_Map entry)
         {
-            return _maps.TryGetValue(id, out entry);
+            return m_maps.TryGetValue(id, out entry);
         }
         public static bool Select(int id, out DB_Loot entry)
         {
-            return _loots.TryGetValue(id, out entry);
+            return m_loots.TryGetValue(id, out entry);
         }
         public static bool Select(int id, out DB_Item entry)
         {
-            return _items.TryGetValue(id, out entry);
+            return m_items.TryGetValue(id, out entry);
         }
         public static bool Select(int id, out DB_Spell entry)
         {
-            return _spells.TryGetValue(id, out entry);
+            return m_spells.TryGetValue(id, out entry);
         }
         public static bool Select(int id, out DB_Dialog entry)
         {
-            return _dialogs.TryGetValue(id, out entry);
+            return m_dialogs.TryGetValue(id, out entry);
         }
         public static bool Select(int id, out DB_Creature entry)
         {
-            return _creatures.TryGetValue(id, out entry);
+            return m_creatures.TryGetValue(id, out entry);
         }
         public static bool Select(int id, out DB_Movement entry)
         {
-            return _movements.TryGetValue(id, out entry);
+            return m_movements.TryGetValue(id, out entry);
         }
     }
 }

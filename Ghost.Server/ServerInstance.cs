@@ -89,13 +89,7 @@ namespace Ghost.Server
                 ServerLogger.LogError($"Couldn't connect to database: {Environment.NewLine}{ServerDB.ConnectionString}");
                 return false;
             }
-            if (DataMgr.IsLoaded)
-                ServerLogger.LogInfo($"Data loaded: {DataMgr.Info}");
-            else
-            {
-                ServerLogger.LogError($"Couldn't load database");
-                return false;
-            }
+            ServerLogger.LogInfo($"Data loaded: {DataMgr.Info}");
             return true;
         }
         private void InitializeCMD()

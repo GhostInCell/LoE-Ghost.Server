@@ -14,6 +14,7 @@ namespace Ghost.Server.Core
 {
     public static class ServerDB
     {
+        private static readonly object s_lock = new object();
         private const string tb_01 = "loe_user";
         private const string tb_02 = "loe_character";
         private const string tb_03 = "loe_map";
@@ -152,7 +153,7 @@ namespace Ghost.Server.Core
                 using (MySqlCommand _cmd = _connection.CreateCommand())
                 {
                     _cmd.CommandText = $"SELECT login, phash, access, session FROM {tb_01} WHERE id={id};";
-                    Monitor.Enter(_connection, ref locked);
+                    Monitor.Enter(s_lock, ref locked);
                     using (MySqlDataReader _result = _cmd.ExecuteReader())
                     {
                         if (_result.HasRows && _result.Read())
@@ -169,7 +170,7 @@ namespace Ghost.Server.Core
                 return false;
             }
             catch { return false; }
-            finally { if (locked) Monitor.Exit(_connection); }
+            if (locked) Monitor.Exit(s_lock);
         }
         public static bool UpdateUserSave(int id, UserSave entry)
         {
@@ -195,7 +196,7 @@ namespace Ghost.Server.Core
                 using (MySqlCommand _cmd = _connection.CreateCommand())
                 {
                     _cmd.CommandText = $"SELECT data FROM {tb_01} WHERE id={id};";
-                    Monitor.Enter(_connection, ref locked);
+                    Monitor.Enter(s_lock, ref locked);
                     using (MySqlDataReader _result = _cmd.ExecuteReader())
                     {
                         if (_result.HasRows && _result.Read())
@@ -208,7 +209,7 @@ namespace Ghost.Server.Core
                 return false;
             }
             catch { return false; }
-            finally { if (locked) Monitor.Exit(_connection); }
+            if (locked) Monitor.Exit(s_lock);
         }
         public static bool SelectCharacter(int id, out Character entry)
         {
@@ -220,7 +221,7 @@ namespace Ghost.Server.Core
                 using (MySqlCommand _cmd = _connection.CreateCommand())
                 {
                     _cmd.CommandText = $"SELECT * FROM {tb_02} WHERE id = {id};";
-                    Monitor.Enter(_connection, ref locked);
+                    Monitor.Enter(s_lock, ref locked);
                     using (MySqlDataReader _result = _cmd.ExecuteReader())
                     {
                         if (_result.HasRows && _result.Read())
@@ -233,7 +234,7 @@ namespace Ghost.Server.Core
                 return false;
             }
             catch { return false; }
-            finally { if (locked) Monitor.Exit(_connection); }
+            if (locked) Monitor.Exit(s_lock);
         }
         public static bool SelectCharacterData(int id, out CharData entry)
         {
@@ -245,7 +246,7 @@ namespace Ghost.Server.Core
                 using (MySqlCommand _cmd = _connection.CreateCommand())
                 {
                     _cmd.CommandText = $"SELECT gdata FROM {tb_02} WHERE id = {id};";
-                    Monitor.Enter(_connection, ref locked);
+                    Monitor.Enter(s_lock, ref locked);
                     using (MySqlDataReader _result = _cmd.ExecuteReader())
                     {
                         if (_result.HasRows && _result.Read())
@@ -258,7 +259,7 @@ namespace Ghost.Server.Core
                 return false;
             }
             catch { return false; }
-            finally { if (locked) Monitor.Exit(_connection); }
+            if (locked) Monitor.Exit(s_lock);
         }
         public static bool CreateUser(string login, string password, byte access = 1)
         {
@@ -285,7 +286,7 @@ namespace Ghost.Server.Core
             if (!IsConnected) return false;
             try
             {
-                Monitor.Enter(_connection, ref locked);
+                Monitor.Enter(s_lock, ref locked);
                 using (MySqlCommand _cmd = _connection.CreateCommand())
                 {
                     entry = new Character(pony);
@@ -306,7 +307,7 @@ namespace Ghost.Server.Core
                 return false;
             }
             catch { return false; }
-            finally { if (locked) Monitor.Exit(_connection); }
+            if (locked) Monitor.Exit(s_lock);
         }
         public static bool CreateNPC(ushort level, byte flags, ushort dialog, byte index, ushort movement, PonyData pony, out int id)
         {
@@ -315,7 +316,7 @@ namespace Ghost.Server.Core
             if (!IsConnected) return false;
             try
             {
-                Monitor.Enter(_connection, ref locked);
+                Monitor.Enter(s_lock, ref locked);
                 using (MySqlCommand _cmd = _connection.CreateCommand())
                 {
                     _cmd.CommandText = $"INSERT INTO {tb_05} (flags, level, dialog, `index`, movement, name, race, gender, eye, tail, hoof, mane, bodysize, hornsize, eyecolor, " +
@@ -354,7 +355,7 @@ namespace Ghost.Server.Core
                 return false;
             }
             catch { return false; }
-            finally { if (locked) Monitor.Exit(_connection); }
+            if (locked) Monitor.Exit(s_lock);
         }
         public static bool CreateObjectAt(WorldObject entry, int mapID, ushort guid, int objectID, byte type, byte flags, float time, params int[] data)
         {
@@ -392,7 +393,7 @@ namespace Ghost.Server.Core
                 using (MySqlCommand _cmd = _connection.CreateCommand())
                 {
                     _cmd.CommandText = $"SELECT path FROM {tb_06};";
-                    Monitor.Enter(_connection, ref locked);
+                    Monitor.Enter(s_lock, ref locked);
                     using (MySqlDataReader _result = _cmd.ExecuteReader())
                     {
                         if (_result.HasRows)
@@ -403,7 +404,7 @@ namespace Ghost.Server.Core
                 return true;
             }
             catch { return false; }
-            finally { if (locked) Monitor.Exit(_connection); }
+            if (locked) Monitor.Exit(s_lock);
         }
         public static bool SelectAllNPCs(out Dictionary<int, DB_NPC> data)
         {
@@ -415,7 +416,7 @@ namespace Ghost.Server.Core
                 using (MySqlCommand _cmd = _connection.CreateCommand())
                 {
                     _cmd.CommandText = $"SELECT a.*, b.item, c.* FROM {tb_05} a LEFT JOIN {tb_05_02} b ON a.id = b.id LEFT JOIN {tb_05_01} c ON a.id = c.id;";
-                    Monitor.Enter(_connection, ref locked);
+                    Monitor.Enter(s_lock, ref locked);
                     using (MySqlDataReader _result = _cmd.ExecuteReader())
                     {
                         DB_NPC entry; int id;
@@ -442,7 +443,7 @@ namespace Ghost.Server.Core
                 return true;
             }
             catch { return false; }
-            finally { if (locked) Monitor.Exit(_connection); }
+            if (locked) Monitor.Exit(s_lock);
         }
         public static bool SelectAllMaps(out Dictionary<int, DB_Map> data)
         {
@@ -454,7 +455,7 @@ namespace Ghost.Server.Core
                 using (MySqlCommand _cmd = _connection.CreateCommand())
                 {
                     _cmd.CommandText = $"SELECT * FROM {tb_03};";
-                    Monitor.Enter(_connection, ref locked);
+                    Monitor.Enter(s_lock, ref locked);
                     using (MySqlDataReader _result = _cmd.ExecuteReader())
                     {
                         int id;
@@ -469,7 +470,7 @@ namespace Ghost.Server.Core
                 return true;
             }
             catch { return false; }
-            finally { if (locked) Monitor.Exit(_connection); }
+            if (locked) Monitor.Exit(s_lock);
         }
         public static bool SelectAllLoots(out Dictionary<int, DB_Loot> data)
         {
@@ -481,7 +482,7 @@ namespace Ghost.Server.Core
                 using (MySqlCommand _cmd = _connection.CreateCommand())
                 {
                     _cmd.CommandText = $"SELECT * FROM {tb_09};";
-                    Monitor.Enter(_connection, ref locked);
+                    Monitor.Enter(s_lock, ref locked);
                     using (MySqlDataReader _result = _cmd.ExecuteReader())
                     {
                         DB_Loot entry; int id;
@@ -505,7 +506,7 @@ namespace Ghost.Server.Core
                 return true;
             }
             catch { return false; }
-            finally { if (locked) Monitor.Exit(_connection); }
+            if (locked) Monitor.Exit(s_lock);
         }
         public static bool SelectAllItems(out Dictionary<int, DB_Item> data)
         {
@@ -517,7 +518,7 @@ namespace Ghost.Server.Core
                 using (MySqlCommand _cmd = _connection.CreateCommand())
                 {
                     _cmd.CommandText = $"SELECT a.*, b.stat, b.value FROM {tb_04} a LEFT JOIN {tb_04_01} b ON a.id = b.id;";
-                    Monitor.Enter(_connection, ref locked);
+                    Monitor.Enter(s_lock, ref locked);
                     using (MySqlDataReader _result = _cmd.ExecuteReader())
                     {
                         DB_Item entry; int id;
@@ -541,7 +542,7 @@ namespace Ghost.Server.Core
                 return true;
             }
             catch { return false; }
-            finally { if (locked) Monitor.Exit(_connection); }
+            if (locked) Monitor.Exit(s_lock);
         }
         public static bool SelectAllSpells(out Dictionary<int, DB_Spell> data)
         {
@@ -553,7 +554,7 @@ namespace Ghost.Server.Core
                 using (MySqlCommand _cmd = _connection.CreateCommand())
                 {
                     _cmd.CommandText = $"SELECT * FROM {tb_11};";
-                    Monitor.Enter(_connection, ref locked);
+                    Monitor.Enter(s_lock, ref locked);
                     using (MySqlDataReader _result = _cmd.ExecuteReader())
                     {
                         int id; byte index; DB_Spell spell;
@@ -572,7 +573,7 @@ namespace Ghost.Server.Core
                 return true;
             }
             catch { return false; }
-            finally { if (locked) Monitor.Exit(_connection); }
+            if (locked) Monitor.Exit(s_lock);
         }
         public static bool SelectAllDialogs(out Dictionary<int, DB_Dialog> data)
         {
@@ -584,7 +585,7 @@ namespace Ghost.Server.Core
                 using (MySqlCommand _cmd = _connection.CreateCommand())
                 {
                     _cmd.CommandText = $"SELECT * FROM {tb_08};";
-                    Monitor.Enter(_connection, ref locked);
+                    Monitor.Enter(s_lock, ref locked);
                     using (MySqlDataReader _result = _cmd.ExecuteReader())
                     {
                         ushort id; short state; DB_Dialog script;
@@ -602,7 +603,7 @@ namespace Ghost.Server.Core
                 return true;
             }
             catch { return false; }
-            finally { if (locked) Monitor.Exit(_connection); }
+            if (locked) Monitor.Exit(s_lock);
         }
         public static bool SelectAllMovements(out Dictionary<int, DB_Movement> data)
         {
@@ -614,7 +615,7 @@ namespace Ghost.Server.Core
                 using (MySqlCommand _cmd = _connection.CreateCommand())
                 {
                     _cmd.CommandText = $"SELECT * FROM {tb_12};";
-                    Monitor.Enter(_connection, ref locked);
+                    Monitor.Enter(s_lock, ref locked);
                     using (MySqlDataReader _result = _cmd.ExecuteReader())
                     {
                         ushort id; ushort state; DB_Movement script;
@@ -632,7 +633,7 @@ namespace Ghost.Server.Core
                 return true;
             }
             catch { return false; }
-            finally { if (locked) Monitor.Exit(_connection); }
+            if (locked) Monitor.Exit(s_lock);
         }
         public static bool SelectAllCreatures(out Dictionary<int, DB_Creature> data)
         {
@@ -644,7 +645,7 @@ namespace Ghost.Server.Core
                 using (MySqlCommand _cmd = _connection.CreateCommand())
                 {
                     _cmd.CommandText = $"SELECT * FROM {tb_07};";
-                    Monitor.Enter(_connection, ref locked);
+                    Monitor.Enter(s_lock, ref locked);
                     using (MySqlDataReader _result = _cmd.ExecuteReader())
                     {
                         int id;
@@ -662,7 +663,7 @@ namespace Ghost.Server.Core
                 return true;
             }
             catch { return false; }
-            finally { if (locked) Monitor.Exit(_connection); }
+            if (locked) Monitor.Exit(s_lock);
         }
         public static bool SelectAllMapObjects(int map, out List<DB_WorldObject> data)
         {
@@ -674,7 +675,7 @@ namespace Ghost.Server.Core
                 using (MySqlCommand _cmd = _connection.CreateCommand())
                 {
                     _cmd.CommandText = $"SELECT * FROM {tb_03_01} WHERE map = {map};";
-                    Monitor.Enter(_connection, ref locked);
+                    Monitor.Enter(s_lock, ref locked);
                     using (MySqlDataReader _result = _cmd.ExecuteReader())
                     {
                         if (_result.HasRows)
@@ -690,7 +691,7 @@ namespace Ghost.Server.Core
                 return true;
             }
             catch { return false; }
-            finally { if (locked) Monitor.Exit(_connection); }
+            if (locked) Monitor.Exit(s_lock);
         }
         public static bool SelectAllUserCharacters(int user, out List<Character> data)
         {
@@ -702,7 +703,7 @@ namespace Ghost.Server.Core
                 using (MySqlCommand _cmd = _connection.CreateCommand())
                 {
                     _cmd.CommandText = $"SELECT * FROM {tb_02} WHERE user = {user} LIMIT {_maxChars};";
-                    Monitor.Enter(_connection, ref locked);
+                    Monitor.Enter(s_lock, ref locked);
                     using (MySqlDataReader _result = _cmd.ExecuteReader())
                     {
                         if (_result.HasRows)
@@ -714,7 +715,7 @@ namespace Ghost.Server.Core
                 return true;
             }
             catch { return false; }
-            finally { if (locked) Monitor.Exit(_connection); }
+            if (locked) Monitor.Exit(s_lock);
         }
         public static bool SelectAllMessages(out Dictionary<int, Tuple<ushort, string>> data)
         {
@@ -726,7 +727,7 @@ namespace Ghost.Server.Core
                 using (MySqlCommand _cmd = _connection.CreateCommand())
                 {
                     _cmd.CommandText = $"SELECT * FROM {tb_10};";
-                    Monitor.Enter(_connection, ref locked);
+                    Monitor.Enter(s_lock, ref locked);
                     using (MySqlDataReader _result = _cmd.ExecuteReader())
                     {
                         if (_result.HasRows)
@@ -737,7 +738,7 @@ namespace Ghost.Server.Core
                 return true;
             }
             catch { return false; }
-            finally { if (locked) Monitor.Exit(_connection); }
+            if (locked) Monitor.Exit(s_lock);
         }
     }
 }
