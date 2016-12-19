@@ -16,7 +16,7 @@ namespace Ghost.Server.Core.Classes
         public uint Color01;
         [ProtoMember(3)]
         public uint Color02;
-        [ProtoMember(3)]
+        [ProtoMember(4)]
         public int[] Sockets;
 
         public bool IsEmpty
