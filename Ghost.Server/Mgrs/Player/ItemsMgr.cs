@@ -496,7 +496,7 @@ namespace Ghost.Server.Mgrs.Player
                 {
                     AddBits(-ColorItemPrice);
                     itemSlot.Item.Color01 = color01;
-                    itemSlot.Item.Color02 = color02;
+                    //itemSlot.Item.Color02 = color02;
                     m_view.UpdateSlot(itemSlot, islot);
                 }
             }
