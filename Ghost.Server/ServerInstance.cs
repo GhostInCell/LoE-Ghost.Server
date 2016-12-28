@@ -150,16 +150,53 @@ namespace Ghost.Server
                                 Console.WriteLine($"Created user {args[1]}");
                             break;
                         case "info":
-                            int id = -1; DB_User user;
-                            if (args.Length < 2 || (args.Length > 1 && !int.TryParse(args[1], out id)))
-                                Console.WriteLine("Using: user info id");
-                            else if (!ServerDB.SelectUser(id, out user))
-                                Console.WriteLine($"Error: can't load user {id}");
-                            else
-                                Console.WriteLine($"User {id}, {user.Name} access {user.Access}, {(user.SID == null ? "offline" : (_master?.IsOnline(id) ?? false ? "online" : "offline/undefined"))}");
-                            break;
+                            {
+                                int id = -1; DB_User user;
+                                if (args.Length < 2 || (args.Length > 1 && !int.TryParse(args[1], out id)))
+                                    Console.WriteLine("Using: user info id");
+                                else if (!ServerDB.SelectUser(id, out user))
+                                    Console.WriteLine($"Error: can't load user {id}");
+                                else
+                                    Console.WriteLine($"User {id}, {user.Name} access {user.Access}, {(user.SID == null ? "offline" : (_master?.IsOnline(id) ?? false ? "online" : "offline/undefined"))}");
+                                break;
+                            }
+                        case "list":
+                            {
+                                if (_master != null)
+                                {
+                                    Console.WriteLine("Online[Global]:");
+                                    foreach (var item in _master.GetPlayers())
+                                    {
+                                        var user = item.User;
+                                        var @char = item.Char;
+                                        if (user != null)
+                                            Console.WriteLine($"User {user.ID}, \"{user.Name}\", access {user.Access}{(@char != null ? $", char level {@char.Level}, \"{@char.Pony.Name}\", map {@char.Map}" : string.Empty)}");
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Online[Local]:");
+                                    foreach (var item in _characters.GetPlayers())
+                                    {
+                                        var user = item.User;
+                                        if (user != null)
+                                            Console.WriteLine($"User {user.ID}, {user.Name} access {user.Access}, characters screen");
+                                    }
+                                    foreach (var map in _maps)
+                                    {
+                                        foreach (var item in map.GetPlayers())
+                                        {
+                                            var user = item.User;
+                                            var @char = item.Char;
+                                            if (user != null)
+                                                Console.WriteLine($"User {user.ID}, \"{user.Name}\", access {user.Access}{(@char != null ? $", char level {@char.Level}, \"{@char.Pony.Name}\", map {@char.Map}" : string.Empty)}");
+                                        }
+                                    }
+                                }
+                                break;
+                            }
                         default:
-                            Console.WriteLine("Using: user info|create args");
+                            Console.WriteLine("Using: user info|create|list args");
                             break;
                     }
                 }
@@ -410,7 +447,6 @@ namespace Ghost.Server
                             foreach (var item in _maps) item.Stop();
                             CharsMgr.Clean();
                             DataMgr.LoadAll();
-
                             _master?.Start();
                             _characters?.Start();
                             foreach (var item in _maps) item.Start();

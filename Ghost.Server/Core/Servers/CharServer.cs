@@ -8,6 +8,7 @@ using PNet;
 using PNetR;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -111,6 +112,10 @@ namespace Ghost.Server.Core.Servers
             if (_running) Stop();
             CreateRoom();
             ServerLogger.LogServer(this, $" Restarted");
+        }
+        public IEnumerable<CharPlayer> GetPlayers()
+        {
+            return _players.Values.ToArray();
         }
         #region Server Loop
         private void ServerLoop()

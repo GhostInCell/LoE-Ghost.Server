@@ -5331,7 +5331,7 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>200</Price>
     <Salable>true</Salable>
-    <WearableSlots>FrontKnees Shirt</WearableSlots>
+    <WearableSlots>Shirt</WearableSlots>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
@@ -5363,10 +5363,10 @@
     <Description>Less insulting than "The Clueless Pony's Guide to Foals" and less controversial than "If You're Reading This, You Shouldn't be a Parent".</Description>
     <Name>You Got This: A Guide to Foals</Name>
     <ResourcePath>Undefined</ResourcePath>
-    <Stackable>false</Stackable>
+    <Stackable>true</Stackable>
     <MaxStackSize>10</MaxStackSize>
     <Price>50</Price>
-    <Salable>true</Salable>
+    <Salable>false</Salable>
     <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>

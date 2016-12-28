@@ -10,6 +10,7 @@ using PNet;
 using PNetR;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using ServerTime = System.Diagnostics.Stopwatch;
@@ -147,6 +148,10 @@ namespace Ghost.Server.Core.Servers
         public void RemoveFromUpdate(IUpdatable entry)
         {
             lock (_updatables) _updatables.Remove(entry);
+        }
+        public IEnumerable<MapPlayer> GetPlayers()
+        {
+            return _players.Values.ToArray();
         }
         #region Server Loop
         private void ServerLoop()
