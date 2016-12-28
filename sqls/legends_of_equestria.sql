@@ -505,7 +505,7 @@ INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `rlevel`, `stack`, `sock
 	(295, 'Starlight Harmony 6', 3, 50, 50, 10, 0, 1, 0, 4294967295),
 	(296, 'Silky Roads\' Letter', 1, 1, 1, 10, 0, 1, 0, 4294967295),
 	(297, 'Lavender Bloom\'s Letter', 1, 1, 1, 10, 0, 1, 0, 4294967295),
-	(298, 'Sempai Dress', 2, 1, 1, 10, 0, 200, 8320, 4294967295),
+	(298, 'Sempai Dress', 2, 1, 1, 10, 0, 200, 128, 4294967295),
 	(299, 'Woven Square', 3, 1, 1, 10, 0, 1, 0, 4294967295),
 	(300, 'You Got This: A Guide to Foals', 2, 1, 1, 10, 0, 50, 0, 4294967295),
 	(301, 'Klondike\'s Gem', 3, 1, 1, 10, 0, 250, 0, 4294967295),
@@ -1088,7 +1088,7 @@ CREATE TABLE IF NOT EXISTS `loe_npc_trade` (
   PRIMARY KEY (`id`,`item`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_npc_trade: ~66 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_npc_trade: ~71 rows (приблизительно)
 DELETE FROM `loe_npc_trade`;
 /*!40000 ALTER TABLE `loe_npc_trade` DISABLE KEYS */;
 INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
@@ -1157,7 +1157,12 @@ INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
 	(6, 135),
 	(6, 136),
 	(6, 137),
-	(6, 298);
+	(6, 298),
+	(6, 320),
+	(6, 321),
+	(6, 322),
+	(6, 323),
+	(6, 324);
 /*!40000 ALTER TABLE `loe_npc_trade` ENABLE KEYS */;
 
 
@@ -1289,7 +1294,7 @@ CREATE TABLE IF NOT EXISTS `loe_user` (
   `access` tinyint(4) unsigned NOT NULL DEFAULT '0',
   `session` char(64) DEFAULT NULL,
   `data` blob,
-  `time` timestamp NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
