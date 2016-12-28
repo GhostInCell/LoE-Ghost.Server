@@ -1,13 +1,13 @@
 <?php
 include 'config.php';
 include 'accounts_class.php';
-if (!isset($_POST["commfunction"]) && empty($_POST["commfunction"])) 
+if (!isset($_POST["commfunction"]) || empty($_POST["commfunction"])) 
 {
 	echo "failed:\n";
 } 
-elseif (!isset($_POST["version"]) && empty($_POST["version"]) && strcmp($_POST["version"], $game_version) == 0) 
+elseif (!isset($_POST["version"]) || empty($_POST["version"]) || $_POST["version"] != $game_version) 
 {
-    echo "versionresponse:".$game_version;
+    echo "versionresponse:\n".$game_version;
 } 
 else 
 {
