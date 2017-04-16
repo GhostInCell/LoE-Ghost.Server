@@ -297,7 +297,7 @@ namespace PNet
             var stack = ByteRecycle[n];
             lock (stack)
                 if (stack.Count < SizeMaxRecycle)
-                    stack.Push(message.Data);
+                    stack.Push(data);
 
             message.RecycleReset();
             lock(RecycleStack)

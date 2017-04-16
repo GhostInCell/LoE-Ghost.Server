@@ -63,7 +63,7 @@ class AccountsMgr
 	{
 		if($this->game_account_data)
 		{
-			if (isset($_POST["passhash"]) && !empty($_POST["passhash"]) && strcmp($_POST["passhash"], $this->game_account_data["phash"]) == 0) 
+			if (isset($_POST["passhash"]) && !empty($_POST["passhash"]) && $_POST["passhash"] == $this->game_account_data["phash"]) 
 			{
 				$time = date('Y-m-d H:i:s', time());
 				$this->game_account_session = base64_encode(hash("tiger192,3", "Celestia".$time."Luna".$this->game_login."~zbKG5tGWqv"));
@@ -71,6 +71,18 @@ class AccountsMgr
 				{		
 					return true;
 				}
+			}
+		}
+		return false;
+	}
+	function Valid() 
+	{
+		if($this->game_account_data)
+		{
+			if (isset($_POST["memberid"]) && !empty($_POST["memberid"]) && intval($_POST["memberid"]) == $this->game_account_id &&
+				isset($_POST["sessionkey"]) && !empty($_POST["sessionkey"]) && $_POST["sessionkey"] == $this->game_account_session) 
+			{
+				return true;
 			}
 		}
 		return false;

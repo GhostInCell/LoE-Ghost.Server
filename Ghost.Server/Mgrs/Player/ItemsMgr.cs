@@ -485,7 +485,7 @@ namespace Ghost.Server.Mgrs.Player
 
         [OwnerOnly]
         [Rpc(14, false)]
-        private void ColorItem(byte islot, byte colors, uint color01, uint color02)
+        private void ColorItem(byte islot, uint color01)
         {
             if (m_data.Bits >= ColorItemPrice)
             {
@@ -496,7 +496,6 @@ namespace Ghost.Server.Mgrs.Player
                 {
                     AddBits(-ColorItemPrice);
                     itemSlot.Item.Color01 = color01;
-                    //itemSlot.Item.Color02 = color02;
                     m_view.UpdateSlot(itemSlot, islot);
                 }
             }

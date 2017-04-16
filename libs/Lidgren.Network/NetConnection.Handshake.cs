@@ -195,12 +195,12 @@ namespace Lidgren.Network
 		{
 			if (m_localHailMessage != null)
 			{
-				byte[] hi = m_localHailMessage.Data;
+				byte[] hi = m_localHailMessage.m_data;
 				if (hi != null && hi.Length >= m_localHailMessage.LengthBytes)
 				{
 					if (om.LengthBytes + m_localHailMessage.LengthBytes > m_peerConfiguration.m_maximumTransmissionUnit - 10)
 						m_peer.ThrowOrLog("Hail message too large; can maximally be " + (m_peerConfiguration.m_maximumTransmissionUnit - 10 - om.LengthBytes));
-					om.Write(m_localHailMessage.Data, 0, m_localHailMessage.LengthBytes);
+					om.Write(m_localHailMessage.m_data, 0, m_localHailMessage.LengthBytes);
 				}
 			}
 		}

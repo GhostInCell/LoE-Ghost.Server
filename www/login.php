@@ -5,7 +5,7 @@ if (!isset($_POST["commfunction"]) || empty($_POST["commfunction"]))
 {
 	echo "failed:\n";
 } 
-elseif (!isset($_POST["version"]) || empty($_POST["version"]) || $_POST["version"] != $game_version) 
+elseif (!isset($_POST["version"]) || $_POST["version"] != $game_version) 
 {
     echo "versionresponse:\n".$game_version;
 } 
@@ -20,6 +20,13 @@ else
 			if($account->Login())
 			{
 				echo "authresponse:\ntrue\n".$account->Session()."\n".$account->AccessLevel()."\n".$account->Id()."\n".$game_servers;
+				exit;
+			}
+			break;
+			case "ucheck":
+			if($account->Valid())
+			{
+				echo "ucheckresponse:\nSuccess\n".$account->AccessLevel();
 				exit;
 			}
 			break;

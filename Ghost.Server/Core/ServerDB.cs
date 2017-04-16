@@ -109,7 +109,11 @@ namespace Ghost.Server.Core
                     return _cmd.ExecuteNonQuery() == 1;
                 }
             }
-            catch { return false; }
+            catch (Exception exp)
+            {
+                ServerLogger.LogException(exp);
+                return false;
+            }
         }
         public static bool UpdatePony(Character entry)
         {
@@ -127,7 +131,11 @@ namespace Ghost.Server.Core
                     return _cmd.ExecuteNonQuery() == 1;
                 }
             }
-            catch { return false; }
+            catch (Exception exp)
+            {
+                ServerLogger.LogException(exp);
+                return false;
+            }
         }
         public static bool UpdateCharacter(Character entry)
         {
@@ -141,7 +149,11 @@ namespace Ghost.Server.Core
                     return _cmd.ExecuteNonQuery() == 1;
                 }
             }
-            catch { return false; }
+            catch (Exception exp)
+            {
+                ServerLogger.LogException(exp);
+                return false;
+            }
         }
         public static bool SelectUser(int id, out DB_User entry)
         {
@@ -169,7 +181,11 @@ namespace Ghost.Server.Core
                 }
                 return false;
             }
-            catch { return false; }
+            catch (Exception exp)
+            {
+                ServerLogger.LogException(exp);
+                return false;
+            }
             finally { if (locked) Monitor.Exit(s_lock); }
         }
         public static bool UpdateUserSave(int id, UserSave entry)
@@ -184,7 +200,11 @@ namespace Ghost.Server.Core
                     return _cmd.ExecuteNonQuery() == 1;
                 }
             }
-            catch { return false; }
+            catch (Exception exp)
+            {
+                ServerLogger.LogException(exp);
+                return false;
+            }
         }
         public static bool SelectUserSave(int id, out UserSave entry)
         {
@@ -208,7 +228,11 @@ namespace Ghost.Server.Core
                 }
                 return false;
             }
-            catch { return false; }
+            catch (Exception exp)
+            {
+                ServerLogger.LogException(exp);
+                return false;
+            }
             finally { if (locked) Monitor.Exit(s_lock); }
         }
         public static bool SelectCharacter(int id, out Character entry)
@@ -233,7 +257,11 @@ namespace Ghost.Server.Core
                 }
                 return false;
             }
-            catch { return false; }
+            catch (Exception exp)
+            {
+                ServerLogger.LogException(exp);
+                return false;
+            }
             finally { if (locked) Monitor.Exit(s_lock); }
         }
         public static bool SelectCharacterData(int id, out CharData entry)
@@ -258,7 +286,11 @@ namespace Ghost.Server.Core
                 }
                 return false;
             }
-            catch { return false; }
+            catch (Exception exp)
+            {
+                ServerLogger.LogException(exp);
+                return false;
+            }
             finally { if (locked) Monitor.Exit(s_lock); }
         }
         public static bool CreateUser(string login, string password, byte access = 1)
@@ -277,7 +309,11 @@ namespace Ghost.Server.Core
                     return _cmd.ExecuteNonQuery() == 1;
                 }
             }
-            catch { return false; }
+            catch (Exception exp)
+            {
+                ServerLogger.LogException(exp);
+                return false;
+            }
         }
         public static bool CreateCharacter(int user, PonyData pony, out Character entry)
         {
@@ -306,7 +342,11 @@ namespace Ghost.Server.Core
                 }
                 return false;
             }
-            catch { return false; }
+            catch (Exception exp)
+            {
+                ServerLogger.LogException(exp);
+                return false;
+            }
             finally { if (locked) Monitor.Exit(s_lock); }
         }
         public static bool CreateNPC(ushort level, byte flags, ushort dialog, byte index, ushort movement, PonyData pony, out int id)
@@ -354,7 +394,11 @@ namespace Ghost.Server.Core
                 }
                 return false;
             }
-            catch { return false; }
+            catch (Exception exp)
+            {
+                ServerLogger.LogException(exp);
+                return false;
+            }
             finally { if (locked) Monitor.Exit(s_lock); }
         }
         public static bool CreateObjectAt(WorldObject entry, int mapID, ushort guid, int objectID, byte type, byte flags, float time, params int[] data)
@@ -381,7 +425,11 @@ namespace Ghost.Server.Core
                     return _cmd.ExecuteNonQuery() == 1;
                 }
             }
-            catch { return false; }
+            catch (Exception exp)
+            {
+                ServerLogger.LogException(exp);
+                return false;
+            }
         }
         public static bool SelectAllResources(out List<string> data)
         {
@@ -403,7 +451,11 @@ namespace Ghost.Server.Core
                 }
                 return true;
             }
-            catch { return false; }
+            catch (Exception exp)
+            {
+                ServerLogger.LogException(exp);
+                return false;
+            }
             finally { if (locked) Monitor.Exit(s_lock); }
         }
         public static bool SelectAllNPCs(out Dictionary<int, DB_NPC> data)
@@ -442,7 +494,11 @@ namespace Ghost.Server.Core
                 }
                 return true;
             }
-            catch { return false; }
+            catch (Exception exp)
+            {
+                ServerLogger.LogException(exp);
+                return false;
+            }
             finally { if (locked) Monitor.Exit(s_lock); }
         }
         public static bool SelectAllMaps(out Dictionary<int, DB_Map> data)
@@ -469,7 +525,11 @@ namespace Ghost.Server.Core
                 }
                 return true;
             }
-            catch { return false; }
+            catch (Exception exp)
+            {
+                ServerLogger.LogException(exp);
+                return false;
+            }
             finally { if (locked) Monitor.Exit(s_lock); }
         }
         public static bool SelectAllLoots(out Dictionary<int, DB_Loot> data)
@@ -505,7 +565,11 @@ namespace Ghost.Server.Core
                 }
                 return true;
             }
-            catch { return false; }
+            catch (Exception exp)
+            {
+                ServerLogger.LogException(exp);
+                return false;
+            }
             finally { if (locked) Monitor.Exit(s_lock); }
         }
         public static bool SelectAllItems(out Dictionary<int, DB_Item> data)
@@ -541,7 +605,11 @@ namespace Ghost.Server.Core
                 }
                 return true;
             }
-            catch { return false; }
+            catch (Exception exp)
+            {
+                ServerLogger.LogException(exp);
+                return false;
+            }
             finally { if (locked) Monitor.Exit(s_lock); }
         }
         public static bool SelectAllSpells(out Dictionary<int, DB_Spell> data)
@@ -572,7 +640,11 @@ namespace Ghost.Server.Core
                 }
                 return true;
             }
-            catch { return false; }
+            catch (Exception exp)
+            {
+                ServerLogger.LogException(exp);
+                return false;
+            }
             finally { if (locked) Monitor.Exit(s_lock); }
         }
         public static bool SelectAllDialogs(out Dictionary<int, DB_Dialog> data)
@@ -602,7 +674,11 @@ namespace Ghost.Server.Core
                 }
                 return true;
             }
-            catch { return false; }
+            catch (Exception exp)
+            {
+                ServerLogger.LogException(exp);
+                return false;
+            }
             finally { if (locked) Monitor.Exit(s_lock); }
         }
         public static bool SelectAllMovements(out Dictionary<int, DB_Movement> data)
@@ -632,7 +708,11 @@ namespace Ghost.Server.Core
                 }
                 return true;
             }
-            catch { return false; }
+            catch (Exception exp)
+            {
+                ServerLogger.LogException(exp);
+                return false;
+            }
             finally { if (locked) Monitor.Exit(s_lock); }
         }
         public static bool SelectAllCreatures(out Dictionary<int, DB_Creature> data)
@@ -662,7 +742,11 @@ namespace Ghost.Server.Core
                 }
                 return true;
             }
-            catch { return false; }
+            catch (Exception exp)
+            {
+                ServerLogger.LogException(exp);
+                return false;
+            }
             finally { if (locked) Monitor.Exit(s_lock); }
         }
         public static bool SelectAllMapObjects(int map, out List<DB_WorldObject> data)
@@ -690,7 +774,11 @@ namespace Ghost.Server.Core
                 }
                 return true;
             }
-            catch { return false; }
+            catch (Exception exp)
+            {
+                ServerLogger.LogException(exp);
+                return false;
+            }
             finally { if (locked) Monitor.Exit(s_lock); }
         }
         public static bool SelectAllUserCharacters(int user, out List<Character> data)
@@ -714,7 +802,11 @@ namespace Ghost.Server.Core
                 }
                 return true;
             }
-            catch { return false; }
+            catch (Exception exp)
+            {
+                ServerLogger.LogException(exp);
+                return false;
+            }
             finally { if (locked) Monitor.Exit(s_lock); }
         }
         public static bool SelectAllMessages(out Dictionary<int, Tuple<ushort, string>> data)
@@ -737,7 +829,11 @@ namespace Ghost.Server.Core
                 }
                 return true;
             }
-            catch { return false; }
+            catch (Exception exp)
+            {
+                ServerLogger.LogException(exp);
+                return false;
+            }
             finally { if (locked) Monitor.Exit(s_lock); }
         }
     }

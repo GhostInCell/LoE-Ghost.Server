@@ -217,14 +217,14 @@ namespace Lidgren.Network
 			// can write fast?
 			if (m_bitLength % 8 == 0)
 			{
-				fixed (byte* numRef = &Data[m_bitLength / 8])
+				fixed (byte* numRef = &m_data[m_bitLength / 8])
 				{
 					*((int*)numRef) = source;
 				}
 			}
 			else
 			{
-				NetBitWriter.WriteUInt32((UInt32)source, 32, Data, m_bitLength);
+				NetBitWriter.WriteUInt32((UInt32)source, 32, m_data, m_bitLength);
 			}
 			m_bitLength += 32;
 		}
@@ -263,14 +263,14 @@ namespace Lidgren.Network
 			// can write fast?
 			if (m_bitLength % 8 == 0)
 			{
-				fixed (byte* numRef = &Data[m_bitLength / 8])
+				fixed (byte* numRef = &m_data[m_bitLength / 8])
 				{
 					*((uint*)numRef) = source;
 				}
 			}
 			else
 			{
-				NetBitWriter.WriteUInt32(source, 32, Data, m_bitLength);
+				NetBitWriter.WriteUInt32(source, 32, m_data, m_bitLength);
 			}
 
 			m_bitLength += 32;
