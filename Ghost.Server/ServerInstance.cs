@@ -140,6 +140,72 @@ namespace Ghost.Server
                 {
                     switch (args[0])
                     {
+                        case "ban":
+                            if (_master == null)
+                            {
+                                Console.WriteLine("Only Master instance can ban users!");
+                                return;
+                            }
+                            {
+
+                                int id = -1;
+                                int time = -1;
+                                DB_User user;
+                                if (args.Length < 4 || !int.TryParse(args[1], out id) || !int.TryParse(args[2], out time))
+                                    Console.WriteLine("Using: user ban id time reason");
+                                else if (!ServerDB.SelectUser(id, out user))
+                                    Console.WriteLine($"Error: can't find user whith {id}");
+                                else if (!ServerDB.CreateBan(id, null, BanType.Ban, -1, time, args[3]))
+                                    Console.WriteLine($"Error: can't create ban entry");
+                                else
+                                {
+                                    MasterPlayer player;
+                                    if (_master.TryGetByUserId(id, out player))
+                                        player.Player.Disconnect($"Congratulation!{Environment.NewLine}You're Banned!");
+                                    Console.WriteLine($"User {user.Name} banned");
+                                }
+                                break;
+                            }
+                        case "unban":
+                            {
+                                int id = -1;
+                                DB_User user;
+                                if (args.Length < 2 || !int.TryParse(args[1], out id))
+                                    Console.WriteLine("Using: user unban id");
+                                else if (!ServerDB.SelectUser(id, out user))
+                                    Console.WriteLine($"Error: can't find user whith {id}");
+                                else if (!ServerDB.DeleteBan(id, null, BanType.Ban))
+                                    Console.WriteLine($"Error: can't delete ban entry");
+                                else Console.WriteLine($"User {user.Name} unbanned");
+                                break;
+                            }
+                        case "mute":
+                            {
+                                int id = -1;
+                                int time = -1;
+                                DB_User user;
+                                if (args.Length < 4 || !int.TryParse(args[1], out id) || !int.TryParse(args[2], out time))
+                                    Console.WriteLine("Using: user mute id time reason");
+                                else if (!ServerDB.SelectUser(id, out user))
+                                    Console.WriteLine($"Error: can't find user whith {id}");
+                                else if (!ServerDB.CreateBan(id, null, BanType.Mute, -1, time, args[3]))
+                                    Console.WriteLine($"Error: can't create mute entry");
+                                else Console.WriteLine($"User {user.Name} muted");
+                                break;
+                            }
+                        case "unmute":
+                            {
+                                int id = -1;
+                                DB_User user;
+                                if (args.Length < 2 || !int.TryParse(args[1], out id))
+                                    Console.WriteLine("Using: user unmute id");
+                                else if (!ServerDB.SelectUser(id, out user))
+                                    Console.WriteLine($"Error: can't find user whith {id}");
+                                else if (!ServerDB.DeleteBan(id, null, BanType.Mute))
+                                    Console.WriteLine($"Error: can't delete mute entry");
+                                else Console.WriteLine($"User {user.Name} unmuted");
+                                break;
+                            }
                         case "create":
                             byte access = 1;
                             if (args.Length < 3 || (args.Length > 3 && !byte.TryParse(args[3], out access)))
@@ -152,7 +218,7 @@ namespace Ghost.Server
                         case "info":
                             {
                                 int id = -1; DB_User user;
-                                if (args.Length < 2 || (args.Length > 1 && !int.TryParse(args[1], out id)))
+                                if (args.Length < 2 || !int.TryParse(args[1], out id))
                                     Console.WriteLine("Using: user info id");
                                 else if (!ServerDB.SelectUser(id, out user))
                                     Console.WriteLine($"Error: can't load user {id}");
@@ -196,11 +262,11 @@ namespace Ghost.Server
                                 break;
                             }
                         default:
-                            Console.WriteLine("Using: user info|create|list args");
+                            Console.WriteLine("Using: user ban|unban|mute|unmute|info|create|list args");
                             break;
                     }
                 }
-                else Console.WriteLine("Using: user info|create args");
+                else Console.WriteLine("Using: user ban|unban|mute|unmute|info|create|list args");
             };
             #endregion
             #region Data

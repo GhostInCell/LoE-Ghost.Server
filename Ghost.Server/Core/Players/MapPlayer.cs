@@ -18,6 +18,7 @@ namespace Ghost.Server.Core.Players
     {
         private WO_Pet _pet;
         private WO_NPC _shop;
+        private DB_Ban m_mute;
         private WO_NPC _dialog;
         private Player _player;
         private UserData _user;
@@ -28,6 +29,7 @@ namespace Ghost.Server.Core.Players
         private MapServer _server;
         private WO_Player _object;
         private AutoSaveChar _save;
+        private DateTime m_mute_chek;
         private List<DialogChoice> m_choices;
         private Dictionary<int, WO_NPC> _clones;
         public WO_Pet Pet
@@ -230,10 +232,25 @@ namespace Ghost.Server.Core.Players
         {
             _save.Destroy();
             _char.Data.Position = _object.Position;
-            _char.Data.Rotation = _object.Rotation;        
+            _char.Data.Rotation = _object.Rotation;
             return CharsMgr.SaveCharacter(_char);
         }
 
+        public bool IsMuted(out DB_Ban mute)
+        {
+            var now = DateTime.Now;
+            if (now >= m_mute_chek)
+            {
+                if (ServerDB.SelectBan(_user.ID, _player.EndPoint.Address, BanType.Mute, now, out m_mute))
+                {
+
+                }
+                m_mute_chek = now.AddSeconds(Constants.MuteCheckDelay);
+            }
+            mute = m_mute;
+            return m_mute.End > now;
+        }
+    
         public void Disconnect(string message)
         {
             _server.Room.Server.Rpc(255, _player.Id, message);

@@ -19,6 +19,7 @@ namespace Ghost.Server.Core.Players
         {
             SpamDelay = Configs.Get<int>(Configs.Game_SpamDelay);
         }
+        private DB_Ban m_mute;
         private string m_name;
         private Player _player;
         private UserData _user;
@@ -27,6 +28,7 @@ namespace Ghost.Server.Core.Players
         private Character _char;
         private IPlayer _rPlayer;
         private string _lastWhisper;
+        private DateTime m_mute_chek;
         private FriendStatus _status;
         private MasterServer _server;
         public bool OnMap
@@ -124,7 +126,7 @@ namespace Ghost.Server.Core.Players
             //MasterPlayer target;
             _player.ClearSubscriptions();
             CharsMgr.RemoveCharacter(_user.Char);
-            ServerDB.UpdateUserSave(_user.ID, _save);
+            //ServerDB.UpdateUserSave(_user.ID, _save);
             _player.NetUserDataChanged -= Player_NetUserDataChanged;
             _player.FinishedSwitchingRooms -= Player_FinishedSwitchingRooms;
             //foreach (var item in _save.Friends)
@@ -141,109 +143,6 @@ namespace Ghost.Server.Core.Players
             _rPlayer = null;
             _lastWhisper = null;
         }
-        #region RPC Handlers
-        [Rpc(15, false)]
-        private void RPC_015(NetMessage arg1, PlayerMessageInfo arg2)
-        {
-            var message = default(ChatMsg);
-            message.OnDeserialize(arg1);
-            if (message.Icon != 0 && _user.Access < AccessLevel.Moderator) message.Icon = 0;
-            if (message.Text.Sum(x => char.IsUpper(x) ? 1 : 0) > message.Text.Length / 4 + 4 || message.Time < _time)
-                _player.SystemMsg(Constants.ChatWarning);
-            else
-            {
-                message.CharID = _user.Char;
-                message.PlayerID = _player.Id;
-                message.Name = m_name ?? _user.Name;
-                
-                _time = message.Time.AddMilliseconds(SpamDelay);
-                switch (message.Type)
-                {
-                    case ChatType.Global:
-                        _player.Server.AllPlayersRpc(15, message);
-                        ServerLogger.LogChat(_user.Name, message.Name, message.Type, message.Text);
-                        break;
-                    case ChatType.Herd:
-                    //break;
-                    case ChatType.Party:
-                        _player.SystemMsg($"Chat type {message.Type} not yet implemented!");
-                        break;
-                    case ChatType.Whisper:
-                        if (_lastWhisper != null)
-                        {
-                            MasterPlayer player;
-                            if (_server.TryGetByPonyName(_lastWhisper, out player))
-                                _player.Whisper(player.Player, message);
-                            else
-                                _lastWhisper = null;
-                        }
-                        break;
-                    default:
-                        _player.SystemMsg($"Chat type {message.Type} not allowed!");
-                        break;
-                }
-            }
-        }
-        [Rpc(16, false)]
-        private void RPC_016(NetMessage arg1, PlayerMessageInfo arg2)
-        {
-            string targetName = arg1.ReadString();
-            string text = arg1.ReadString();
-            ChatIcon icon = (ChatIcon)arg1.ReadByte();
-            if (targetName == _user.Name || targetName == m_name)
-                return;
-            if (icon != ChatIcon.None && _user.Access < AccessLevel.Moderator)
-                icon = ChatIcon.None;
-            MasterPlayer player;
-            if (_server.TryGetByPonyName(targetName, out player))
-            {
-                var message = default(ChatMsg);
-                message.Icon = icon;
-                message.Text = text;
-                message.Time = DateTime.Now;
-                message.CharID = _user.Char;
-                message.PlayerID = _player.Id;
-                message.Type = ChatType.Whisper;
-                message.Name = m_name ?? _user.Name;
-                _lastWhisper = player.Char?.Pony.Name;
-                //_player.PlayerRpc(15, ChatType.Whisper, _message.Name ?? _user.Name, message, time, _user.Char, icon, (int)_player.Id);
-                player.Player.PlayerRpc(15, message);
-            }
-            else
-                _lastWhisper = null;
-        }
-        //[Rpc(20, false)]
-        //private void RPC_020(NetMessage arg1, PlayerMessageInfo arg2)
-        //{
-        //    switch (arg1.ReadByte())
-        //    {
-        //        case 21:
-        //            _status.OnDeserialize(arg1);
-        //            UpdateStatus();
-        //            break;
-        //    }
-        //}
-        [Rpc(150, false)]
-        private void RPC_150(NetMessage arg1, PlayerMessageInfo arg2)
-        {
-            switch (arg1.ReadByte())
-            {
-                case 10:
-                    Guid guid = arg1.ReadGuid(); Room room;
-                    if (_server.Server.TryGetRoom(guid, out room))
-                        _player.ChangeRoom(room);
-                    else _player.SystemMsg($"Couldn't find room {guid.ToString().Normalize(8)}");
-                    break;
-                case 11:
-                    Room[] rooms;
-                    if (_server.Server.TryGetRooms(_player.Room.RoomId, out rooms))
-                        _player.PlayerSubRpc(150, 11, new SER_RoomInfo(rooms));
-                    break;
-                default:
-                    break;
-            }
-        }
-        #endregion
         private void UpdateStatus()
         {
             MasterPlayer target = null; Tuple<byte, string, short, DateTime> state;
@@ -335,8 +234,255 @@ namespace Ghost.Server.Core.Players
                         }
                         break;
                 }
-            } 
+            }
         }
+        private bool DoCommand(CommandArgs args)
+        {
+            switch (args.Command)
+            {
+                case "ban":
+                    if (_user.Access <= AccessLevel.Moderator) break;
+                    {
+                        int time;
+                        string reason;
+                        string request;
+                        if (args.TryGet(out request) && args.TryGet(out time))
+                        {
+                            if (args.TryGet(out reason))
+                                BanPlayer(request, false, time, BanType.Ban, reason);
+                            else BanPlayer(request, false, time, BanType.Ban);  
+                        }
+                        else _player.SystemMsg($":ban \"Player or User Name\" \"time in minutes\" \"reason\" { Environment.NewLine}");
+                        return true;
+                    }
+                case "banip":
+                    if (_user.Access <= AccessLevel.Moderator) break;
+                    {
+                        int time;
+                        string reason;
+                        string request;
+                        if (args.TryGet(out request) && args.TryGet(out time))
+                        {
+                            if (args.TryGet(out reason))
+                                BanPlayer(request, true, time, BanType.Ban, reason);
+                            else BanPlayer(request, true, time, BanType.Ban);
+                        }
+                        else _player.SystemMsg($":ban \"Player or User Name\" \"time in minutes\" \"reason\" { Environment.NewLine}");
+                        return true;
+                    }
+            }
+            return false;
+        }
+        private void BanPlayer(string request, bool includeIp, int time, BanType type, string reason = "Unspecified")
+        {
+            var players = _server.FindPlayers(request.ToLowerInvariant());
+            var count = players.Count();
+            if (count > 1)
+            {
+                _player.SystemMsg($"Found more then one player: {Environment.NewLine}" +
+                    $"{string.Join(Environment.NewLine, players.Select(x => $"User '{x.User.Name}', Pony '{x.Char.Pony.Name}'"))}");
+            }
+            else if (count == 1)
+            {
+                var player = players.First();
+                if (time != 0)
+                {
+                    if (ServerDB.CreateBan(player.User.ID, includeIp ? player.Player.EndPoint.Address : null, type, _user.ID, time, reason))
+                    {
+                        _player.SystemMsg($"{type} applied to {player.User.Name}({player.Char.Pony.Name}) for {time} minutes");
+                        if (type == BanType.Ban)
+                            player.Player.Disconnect($"Congratulation!{Environment.NewLine}You're Banned!");
+                    }
+                    else _player.SystemMsg($"Error while appling {type} to {player.User.Name}({player.Char.Pony.Name})");
+                }
+                else
+                {
+                    if (ServerDB.DeleteBan(player.User.ID, null, type))
+                        _player.SystemMsg($"{type} removed from {player.User.Name}({player.Char.Pony.Name})!");
+                    else _player.SystemMsg($"Error while removing {type} from {player.User.Name}({player.Char.Pony.Name})");
+                }
+            }
+            else _player.SystemMsg($"Search result for {request} returns nothing!");
+        }
+        #region RPC Handlers
+        [Rpc(15, false)]
+        private void RPC_015(NetMessage arg1, PlayerMessageInfo arg2)
+        {
+            var message = default(ChatMsg);
+            message.OnDeserialize(arg1);
+            if (message.Text.Length > 1 && message.Text[0] == ':')
+            {
+                if (DoCommand(new CommandArgs(message.Text.Substring(1))))
+                    return;
+            }
+            if (message.Time >= m_mute_chek)
+            {
+                if (ServerDB.SelectBan(_user.ID, _player.EndPoint.Address, BanType.Mute, message.Time, out m_mute))
+                {
+
+                }
+                m_mute_chek = message.Time.AddSeconds(Constants.MuteCheckDelay);
+            }
+            if (m_mute.End > message.Time)
+            {
+                _player.MuteMsg(m_mute);
+                return;
+            }
+            if (message.Icon != 0 && _user.Access < AccessLevel.Moderator) message.Icon = 0;
+            if (message.Text.Sum(x => char.IsUpper(x) ? 1 : 0) > message.Text.Length / 4 + 4 || message.Time < _time)
+                _player.SystemMsg(Constants.ChatWarning);
+            else
+            {
+                message.CharID = _user.Char;
+                message.PlayerID = _player.Id;
+                message.Name = m_name ?? _user.Name;
+                
+                _time = message.Time.AddMilliseconds(SpamDelay);
+                switch (message.Type)
+                {
+                    case ChatType.Global:
+                        _player.Server.AllPlayersRpc(15, message);
+                        ServerLogger.LogChat(_user.Name, message.Name, message.Type, message.Text);
+                        break;
+                    case ChatType.Herd:
+                    //break;
+                    case ChatType.Party:
+                        _player.SystemMsg($"Chat type {message.Type} not yet implemented!");
+                        break;
+                    case ChatType.Whisper:
+                        if (_lastWhisper != null)
+                        {
+                            MasterPlayer player;
+                            if (_server.TryGetByPonyName(_lastWhisper, out player))
+                                _player.Whisper(player.Player, message);
+                            else
+                                _lastWhisper = null;
+                        }
+                        break;
+                    default:
+                        _player.SystemMsg($"Chat type {message.Type} not allowed!");
+                        break;
+                }
+            }
+        }
+
+        [Rpc(16, false)]
+        private void RPC_016(NetMessage arg1, PlayerMessageInfo arg2)
+        {
+            string targetName = arg1.ReadString();
+            string text = arg1.ReadString();
+            ChatIcon icon = (ChatIcon)arg1.ReadByte();
+            if (targetName == _user.Name || targetName == m_name)
+                return;
+            if (icon != ChatIcon.None && _user.Access < AccessLevel.Moderator)
+                icon = ChatIcon.None;
+            MasterPlayer player;
+            if (_server.TryGetByPonyName(targetName, out player))
+            {
+                var message = default(ChatMsg);
+                message.Icon = icon;
+                message.Text = text;
+                message.Time = DateTime.Now;
+                message.CharID = _user.Char;
+                message.PlayerID = _player.Id;
+                message.Type = ChatType.Whisper;
+                message.Name = m_name ?? _user.Name;
+                _lastWhisper = player.Char?.Pony.Name;
+                //_player.PlayerRpc(15, ChatType.Whisper, _message.Name ?? _user.Name, message, time, _user.Char, icon, (int)_player.Id);
+                player.Player.PlayerRpc(15, message);
+            }
+            else
+                _lastWhisper = null;
+        }
+        [Rpc(20, false)]
+        private void RPC_020(NetMessage arg1, PlayerMessageInfo arg2)
+        {
+            switch (arg1.ReadByte())
+            {
+                //case 21:
+                //    _status.OnDeserialize(arg1);
+                //    UpdateStatus();
+                //    break;
+                case 51:
+                    if (_user.Access >= AccessLevel.Moderator)
+                    {
+                        var name = arg1.ReadString().ToLowerInvariant();
+                        _player.PlayerSubRpc(20, 51, _server.FindPlayers(arg1.ReadString().ToLowerInvariant())
+                            .Select(x => new FriendStatus()
+                            {
+                                ID = x?.Char.ID ?? 0,
+                                PlayerID = x.Player.Id,
+                                CharacterName = x.Char.Pony.Name,
+                                CutieMarkID = (short)x.Char.Pony.CutieMark0,
+                                LastOnline = DateTime.Now,
+                                MapName = _player.Room.RoomId,
+                                MapID = _player.Room.Guid.ToString(),
+                                Race = (CharacterType)x.Char.Pony.Race,
+                                UserName = x.User?.Name,
+                                Status = OnlineStatus.Online
+                            }));
+                    }
+                    else _player.SystemMsg("Bad pony!");
+                    break;
+            }
+        }
+        [Rpc(49, false)]
+        private void RPC_049(NetMessage arg1, PlayerMessageInfo arg2)
+        {
+            if (_user.Access >= AccessLevel.Moderator)
+            {
+                var subRpc = arg1.ReadByte();
+                switch (subRpc)
+                {
+                    case 200:
+                        BanPlayer(arg1.ReadString(), false, arg1.ReadInt32(), BanType.Ban, null);
+                        break;
+                    default:
+                        ServerLogger.LogWarn($"Unhandled: Rpc 49; SubRpc: {subRpc}");
+                        break;
+                }
+            }
+            else _player.SystemMsg("Bad pony!");
+        }
+        [Rpc(150, false)]
+        private void RPC_150(NetMessage arg1, PlayerMessageInfo arg2)
+        {
+            switch (arg1.ReadByte())
+            {
+                case 10:
+                    Guid guid = arg1.ReadGuid(); Room room;
+                    if (_server.Server.TryGetRoom(guid, out room))
+                        _player.ChangeRoom(room);
+                    else _player.SystemMsg($"Couldn't find room {guid.ToString().Normalize(8)}");
+                    break;
+                case 11:
+                    Room[] rooms;
+                    if (_server.Server.TryGetRooms(_player.Room.RoomId, out rooms))
+                        _player.PlayerSubRpc(150, 11, new SER_RoomInfo(rooms));
+                    break;
+                default:
+                    break;
+            }
+        }
+        [Rpc(201, false)]
+        private void RPC_201(NetMessage arg1, PlayerMessageInfo arg2)
+        {
+            if (_user.Access >= AccessLevel.Moderator)
+            {
+                var message = arg1.ReadString();
+                var duration = arg1.ReadSingle();
+                _player.AnnounceAll(message, duration);
+            }
+            else _player.SystemMsg("Bad pony!");
+        }
+        [Rpc(204, false)]
+        private void RPC_204(NetMessage arg1, PlayerMessageInfo arg2)
+        {
+            if (_user.Access >= AccessLevel.Moderator)
+                BanPlayer(arg1.ReadString(), false, arg1.ReadInt32(), BanType.Mute, null);
+            else _player.SystemMsg("Bad pony!");
+        }
+        #endregion
         #region Events Handlers
         private void Player_NetUserDataChanged(Player obj)
         {

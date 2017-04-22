@@ -7,6 +7,7 @@ using ProtoBuf.Meta;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Net;
 using System.Numerics;
 using System.Threading;
 
@@ -31,6 +32,7 @@ namespace Ghost.Server.Core
         private const string tb_10 = "loe_message";
         private const string tb_11 = "loe_spell";
         private const string tb_12 = "loe_movement";
+        private const string tb_13 = "loe_ban";
         private static bool IsConnected;
         private static readonly int _maxChars;
         private static readonly string _connectionString;
@@ -97,6 +99,25 @@ namespace Ghost.Server.Core
             _connection.StateChange -= DataBase_StateChange;
             _connection.Close();
             _connection.Dispose();
+        }
+        public static void DeleateAllOutdatedBans()
+        {
+            if (IsConnected)
+            {
+                try
+                {
+                    using (MySqlCommand _cmd = _connection.CreateCommand())
+                    {
+                        _cmd.CommandText = $"DELETE FROM {tb_13} WHERE ban_end <= @now";
+                        _cmd.Parameters.AddWithValue("now", DateTime.Now);
+                        ServerLogger.LogInfo($"Removed {_cmd.ExecuteNonQuery()} outdated ban/bans!");
+                    }
+                }
+                catch (Exception exp)
+                {
+                    ServerLogger.LogException(exp);
+                }
+            }
         }
         public static bool DeleteCharacter(int id)
         {
@@ -292,6 +313,101 @@ namespace Ghost.Server.Core
                 return false;
             }
             finally { if (locked) Monitor.Exit(s_lock); }
+        }
+        public static bool DeleteBan(int id, IPAddress ip, BanType type)
+        {
+            if (!IsConnected) return false;
+            try
+            {
+                using (MySqlCommand _cmd = _connection.CreateCommand())
+                {
+                    if (ip != null)
+                    {
+                        var ipBytes = ip.GetAddressBytes();
+                        Array.Resize(ref ipBytes, 8);
+                        _cmd.CommandText = $"DELETE FROM {tb_13} WHERE (ban_user = {id} OR ban_ip = {BitConverter.ToInt64(ipBytes, 0)}) AND ban_type = {(byte)type}";
+                    }
+                    else _cmd.CommandText = $"DELETE FROM {tb_13} WHERE ban_user = {id} AND ban_type = {(byte)type}";
+                    return _cmd.ExecuteNonQuery() > 0;
+                }
+            }
+            catch (Exception exp)
+            {
+                ServerLogger.LogException(exp);
+                return false;
+            }
+        }
+        public static bool SelectBan(int user, IPAddress ip, BanType type, DateTime time, out DB_Ban entry)
+        {
+            entry = default(DB_Ban);
+            var locked = false;
+            if (!IsConnected) return false;
+            try
+            {
+                using (MySqlCommand _cmd = _connection.CreateCommand())
+                {
+                    if (ip != null)
+                    {
+                        var ipBytes = ip.GetAddressBytes();
+                        Array.Resize(ref ipBytes, 8);
+                        _cmd.CommandText = $"SELECT * FROM {tb_13} WHERE (ban_user = {user} OR ban_ip = {BitConverter.ToInt64(ipBytes, 0)}) AND " +
+                            $"ban_type = {(byte)type} AND ban_end > @now ORDER BY ban_end DESC LIMIT 1;";
+                    }
+                    else
+                        _cmd.CommandText = $"SELECT * FROM {tb_13} WHERE ban_user = {user} AND ban_type = {(byte)type} AND ban_end > @now ORDER BY ban_end DESC LIMIT 1;";
+                    _cmd.Parameters.AddWithValue("now", time);
+                    Monitor.Enter(s_lock, ref locked);
+                    using (MySqlDataReader _result = _cmd.ExecuteReader())
+                    {
+                        if (_result.HasRows && _result.Read())
+                        {
+                            entry = new DB_Ban(_result.GetInt32(0), _result.GetInt32(1), _result.GetString(2),
+                                _result.GetInt64(3), user, _result.GetDateTime(5), _result.GetDateTime(6), _result.GetByte(7));
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+            catch (Exception exp)
+            {
+                ServerLogger.LogException(exp);
+                entry.Reason = "For Greater Good!";
+                entry.Start = time;
+                entry.End = DateTime.MaxValue;
+                return true;
+            }
+            finally { if (locked) Monitor.Exit(s_lock); }
+        }
+        public static bool CreateBan(int id, IPAddress ip, BanType type, int banBy, int time, string reason)
+        {
+            if (!IsConnected) return false;
+            try
+            {
+                using (MySqlCommand _cmd = _connection.CreateCommand())
+                {
+                    _cmd.CommandText = $"INSERT INTO {tb_13} (ban_by, reason, ban_ip, ban_user, ban_start, ban_end, ban_type) " +
+                        $"VALUES ({banBy}, @reason, @ip, {id}, @start, @end, {(byte)type});";
+                    if (ip != null)
+                    {
+                        var ipBytes = ip.GetAddressBytes();
+                        Array.Resize(ref ipBytes, 8);
+                        _cmd.Parameters.AddWithValue("ip", BitConverter.ToInt64(ipBytes, 0));
+                    }
+                    else
+                        _cmd.Parameters.AddWithValue("ip", -1);
+                    _cmd.Parameters.AddWithValue("reason", reason ?? string.Empty);
+                    var now = DateTime.Now;
+                    _cmd.Parameters.AddWithValue("start", now);
+                    _cmd.Parameters.AddWithValue("end", time <= 0 ? DateTime.MaxValue.Date : now.AddMinutes(time));
+                    return _cmd.ExecuteNonQuery() == 1;
+                }
+            }
+            catch (Exception exp)
+            {
+                ServerLogger.LogException(exp);
+                return false;
+            }
         }
         public static bool CreateUser(string login, string password, byte access = 1)
         {

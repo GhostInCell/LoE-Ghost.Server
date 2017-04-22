@@ -1,0 +1,17 @@
+<> - argument of command
+Commnands
+	Ingame chat
+		Mute player Chat
+			/mute <Any part of user name or character name in quotes> <time in minutes (-1 = forever)>
+			/unmute <Any part of user name or character name in quotes>
+		Kick player from the game for 5 minutes
+			/kick <Any part of user name or character name in quotes> 
+		Ban and kick player from the game
+			:ban <Any part of user name or character name in quotes> <time in minutes (-1 = forever)> <reason>
+			Same as previus but also include IP ban
+				:banip <Any part of user name or character name in quotes> <time in minutes (-1 = forever)> <reason>
+	Server console
+		user mute <user id> <time in minutes (-1 = forever)> <reason>
+		user unmute <user id>
+		user ban <user id> <time in minutes (-1 = forever)> <reason>
+		user unban <user id>

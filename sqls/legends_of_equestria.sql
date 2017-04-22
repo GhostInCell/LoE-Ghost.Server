@@ -1,19 +1,41 @@
 -- --------------------------------------------------------
 -- Хост:                         127.0.0.1
 -- Версия сервера:               5.7.14 - MySQL Community Server (GPL)
--- ОС Сервера:                   Win64
--- HeidiSQL Версия:              9.3.0.4984
+-- Операционная система:         Win64
+-- HeidiSQL Версия:              9.4.0.5125
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
 
 -- Дамп структуры базы данных legends_of_equestria
 CREATE DATABASE IF NOT EXISTS `legends_of_equestria` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `legends_of_equestria`;
 
+-- Дамп структуры для таблица legends_of_equestria.loe_ban
+CREATE TABLE IF NOT EXISTS `loe_ban` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ban_by` int(11) NOT NULL,
+  `reason` varchar(256) NOT NULL,
+  `ban_ip` bigint(21) NOT NULL,
+  `ban_user` int(11) NOT NULL,
+  `ban_start` datetime NOT NULL,
+  `ban_end` datetime NOT NULL,
+  `ban_type` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ban_user` (`ban_user`),
+  KEY `ban_ip` (`ban_ip`),
+  KEY `ban_by` (`ban_by`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- Дамп данных таблицы legends_of_equestria.loe_ban: 0 rows
+DELETE FROM `loe_ban`;
+/*!40000 ALTER TABLE `loe_ban` DISABLE KEYS */;
+/*!40000 ALTER TABLE `loe_ban` ENABLE KEYS */;
 
 -- Дамп структуры для таблица legends_of_equestria.loe_character
 CREATE TABLE IF NOT EXISTS `loe_character` (
@@ -27,14 +49,14 @@ CREATE TABLE IF NOT EXISTS `loe_character` (
   `vdata` tinyblob,
   `gdata` blob,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `CHARACTER` (`name`)
+  UNIQUE KEY `CHARACTER` (`name`),
+  KEY `user` (`user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Дамп данных таблицы legends_of_equestria.loe_character: ~0 rows (приблизительно)
 DELETE FROM `loe_character`;
 /*!40000 ALTER TABLE `loe_character` DISABLE KEYS */;
 /*!40000 ALTER TABLE `loe_character` ENABLE KEYS */;
-
 
 -- Дамп структуры для таблица legends_of_equestria.loe_creature
 CREATE TABLE IF NOT EXISTS `loe_creature` (
@@ -68,7 +90,6 @@ INSERT INTO `loe_creature` (`id`, `loot`, `flags`, `spell`, `speed`, `resource`,
 	(3, -1, 0, -1, 350, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 	(4, 1, 0, 6, 325, 15, 0, 1500, 3, 4, 0, 20, 250, 0, 0.5, 0, 15, 25);
 /*!40000 ALTER TABLE `loe_creature` ENABLE KEYS */;
-
 
 -- Дамп структуры для таблица legends_of_equestria.loe_dialog
 CREATE TABLE IF NOT EXISTS `loe_dialog` (
@@ -189,7 +210,6 @@ INSERT INTO `loe_dialog` (`id`, `state`, `npc`, `type`, `message`, `condition`, 
 	(4, 23, 0, 0, 70, 0, -1, -1, 2, 1, -1),
 	(4, 100, 0, 0, 51, 0, -1, -1, 1, -1, -1);
 /*!40000 ALTER TABLE `loe_dialog` ENABLE KEYS */;
-
 
 -- Дамп структуры для таблица legends_of_equestria.loe_item
 CREATE TABLE IF NOT EXISTS `loe_item` (
@@ -534,7 +554,6 @@ INSERT INTO `loe_item` (`id`, `name`, `flags`, `level`, `rlevel`, `stack`, `sock
 	(324, 'Moonlight Flame Helmet', 6, 50, 50, 10, 0, 4450, 1024, 4294967295);
 /*!40000 ALTER TABLE `loe_item` ENABLE KEYS */;
 
-
 -- Дамп структуры для таблица legends_of_equestria.loe_item_stat
 CREATE TABLE IF NOT EXISTS `loe_item_stat` (
   `id` int(11) NOT NULL,
@@ -685,7 +704,6 @@ INSERT INTO `loe_item_stat` (`id`, `stat`, `value`) VALUES
 	(324, 8, 60);
 /*!40000 ALTER TABLE `loe_item_stat` ENABLE KEYS */;
 
-
 -- Дамп структуры для таблица legends_of_equestria.loe_loot
 CREATE TABLE IF NOT EXISTS `loe_loot` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -706,7 +724,6 @@ INSERT INTO `loe_loot` (`id`, `item`, `min`, `max`, `chance`, `condition`, `cnd_
 	(1, 102, 1, 1, 0.01, 0, -1),
 	(1, 123, 1, 1, 0.01, 0, -1);
 /*!40000 ALTER TABLE `loe_loot` ENABLE KEYS */;
-
 
 -- Дамп структуры для таблица legends_of_equestria.loe_map
 CREATE TABLE IF NOT EXISTS `loe_map` (
@@ -744,7 +761,6 @@ INSERT INTO `loe_map` (`id`, `name`, `flags`) VALUES
 	(21, 'DevPlayground', 0),
 	(22, 'DevPlayground_Castle', 0);
 /*!40000 ALTER TABLE `loe_map` ENABLE KEYS */;
-
 
 -- Дамп структуры для таблица legends_of_equestria.loe_map_object
 CREATE TABLE IF NOT EXISTS `loe_map_object` (
@@ -864,7 +880,6 @@ INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`,
 	(22, 20, -1, 1, 0, 102.73, 61.85, -205.48, 0, 12.0614, 0, -1, 21, 28, -1);
 /*!40000 ALTER TABLE `loe_map_object` ENABLE KEYS */;
 
-
 -- Дамп структуры для таблица legends_of_equestria.loe_message
 CREATE TABLE IF NOT EXISTS `loe_message` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -948,7 +963,6 @@ INSERT INTO `loe_message` (`id`, `emotion`, `message`) VALUES
 	(69, 0, 'War is Peace.{n}Freedom is Slavery.{n}Ignorance is strength. {n}Friendship is Magic.'),
 	(70, 0, 'Facts do not cease to exist because they are ignored.');
 /*!40000 ALTER TABLE `loe_message` ENABLE KEYS */;
-
 
 -- Дамп структуры для таблица legends_of_equestria.loe_movement
 CREATE TABLE IF NOT EXISTS `loe_movement` (
@@ -1037,7 +1051,6 @@ INSERT INTO `loe_movement` (`id`, `state`, `type`, `data01`, `data02`, `command`
 	(2, 15, 1, -1, -1, 0, -1, -1, 366.975, 124.702, 393.561, 0, -142.666, 0);
 /*!40000 ALTER TABLE `loe_movement` ENABLE KEYS */;
 
-
 -- Дамп структуры для таблица legends_of_equestria.loe_npc
 CREATE TABLE IF NOT EXISTS `loe_npc` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1079,7 +1092,6 @@ INSERT INTO `loe_npc` (`id`, `flags`, `level`, `dialog`, `index`, `movement`, `n
 	(6, 1, 1, 0, 0, 0, 'Greedy Trader', 3, 3, 1, 12, 0, 14, 1.02, 1.105, 851959, 0, 8912875, 3466751, 776959, 3862015, 200, 0, 0),
 	(7, 4, 7777, 4, 0, 0, 'Experience Level', 2, 2, 1, 3, 0, 4, 1.95, 1.1, 10149888, 0, 14936319, 3487909, 861439, 1519359, 205, 0, 0);
 /*!40000 ALTER TABLE `loe_npc` ENABLE KEYS */;
-
 
 -- Дамп структуры для таблица legends_of_equestria.loe_npc_trade
 CREATE TABLE IF NOT EXISTS `loe_npc_trade` (
@@ -1165,7 +1177,6 @@ INSERT INTO `loe_npc_trade` (`id`, `item`) VALUES
 	(6, 324);
 /*!40000 ALTER TABLE `loe_npc_trade` ENABLE KEYS */;
 
-
 -- Дамп структуры для таблица legends_of_equestria.loe_npc_wear
 CREATE TABLE IF NOT EXISTS `loe_npc_wear` (
   `id` int(11) NOT NULL,
@@ -1187,15 +1198,14 @@ INSERT INTO `loe_npc_wear` (`id`, `slot01`, `slot02`, `slot03`, `slot04`, `slot0
 	(1, 134, 135, 20, -1, -1, -1, -1, -1);
 /*!40000 ALTER TABLE `loe_npc_wear` ENABLE KEYS */;
 
-
 -- Дамп структуры для таблица legends_of_equestria.loe_resource
 CREATE TABLE IF NOT EXISTS `loe_resource` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `path` varchar(64) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_resource: ~41 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_resource: ~93 rows (приблизительно)
 DELETE FROM `loe_resource`;
 /*!40000 ALTER TABLE `loe_resource` DISABLE KEYS */;
 INSERT INTO `loe_resource` (`id`, `path`) VALUES
@@ -1239,9 +1249,60 @@ INSERT INTO `loe_resource` (`id`, `path`) VALUES
 	(37, 'mobs/corgi'),
 	(38, 'mobs/yababaga'),
 	(39, 'mobs/birch'),
-	(40, 'mobs/trainingdummy');
+	(40, 'mobs/trainingdummy'),
+	(41, 'mobs/appledryad_v1'),
+	(42, 'mobs/dalmatiandiamonddogv1'),
+	(43, 'mobs/onipony'),
+	(44, 'mobs/roc'),
+	(45, 'pets/dogv3'),
+	(46, 'pets/turtle'),
+	(47, 'effects/fire_meteor'),
+	(48, 'effects/adminblast'),
+	(49, 'effects/arcane_missle'),
+	(50, 'effects/applesnack'),
+	(51, 'effects/bodyslam'),
+	(52, 'effects/bubblebarrage'),
+	(53, 'effects/candy shower'),
+	(54, 'effects/cartoonexplosioneffectprefab'),
+	(55, 'effects/crystalattack'),
+	(56, 'effects/dark_area'),
+	(57, 'effects/dark_missile'),
+	(58, 'effects/dark_shot'),
+	(59, 'effects/dark_warp'),
+	(60, 'effects/earth_fissure'),
+	(61, 'effects/earth_wall'),
+	(62, 'effects/environmental/teleportinvfx'),
+	(63, 'effects/environmental/teleportoutvfx'),
+	(64, 'effects/featherstorm'),
+	(65, 'effects/fieldtactician'),
+	(66, 'effects/fire_area'),
+	(67, 'effects/fire_fireball'),
+	(68, 'effects/fire_fireballblue'),
+	(69, 'effects/fire_fissure'),
+	(70, 'effects/fire_groundexplosion'),
+	(71, 'effects/fire_macropyre'),
+	(72, 'effects/fire_rock'),
+	(73, 'effects/fire_spikefissure'),
+	(74, 'effects/friendsforever'),
+	(75, 'effects/gembomb'),
+	(76, 'effects/groundrockhit gray1'),
+	(77, 'effects/guardheal01'),
+	(78, 'effects/headcannon'),
+	(79, 'effects/hornglow'),
+	(80, 'effects/hyperbeam'),
+	(81, 'effects/ice_fissure'),
+	(82, 'effects/ice_hammer'),
+	(83, 'effects/ice_missile'),
+	(84, 'effects/ice_pathspike'),
+	(85, 'effects/ice_shard'),
+	(86, 'effects/ice_wave'),
+	(87, 'effects/warstomp'),
+	(88, 'effects/sunnyday'),
+	(89, 'effects/lightcleave'),
+	(90, 'effects/lightaura'),
+	(91, 'effects/laaser'),
+	(92, 'effects/inquisitvelighteffect');
 /*!40000 ALTER TABLE `loe_resource` ENABLE KEYS */;
-
 
 -- Дамп структуры для таблица legends_of_equestria.loe_spell
 CREATE TABLE IF NOT EXISTS `loe_spell` (
@@ -1258,12 +1319,13 @@ CREATE TABLE IF NOT EXISTS `loe_spell` (
   PRIMARY KEY (`id`,`index`,`effect`)
 ) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_spell: ~21 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_spell: ~22 rows (приблизительно)
 DELETE FROM `loe_spell`;
 /*!40000 ALTER TABLE `loe_spell` DISABLE KEYS */;
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
 	(2, 0, 255, 1, 40, 32, 0.8, 0, 0, 0),
-	(5, 0, 1, 2, 60, 2.5, 3, 40, 25, 2),
+	(5, 0, 0, 3, 60, 2.5, 3, 0, 0, 2),
+	(5, 1, 2, 3, 0, 6, 0, 40, 25, 2),
 	(9, 0, 250, 15, 40, 8, 8, 3.5, 5, 5),
 	(9, 1, 254, 2, 0, 0, 0, 5, 6.5, 0.55),
 	(9, 2, 127, 2, 13, 1, 0, -0.8, 0, 0),
@@ -1285,7 +1347,6 @@ INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`,
 	(44, 2, 2, 130, 0, 6, 0, 10, 5, 0.85);
 /*!40000 ALTER TABLE `loe_spell` ENABLE KEYS */;
 
-
 -- Дамп структуры для таблица legends_of_equestria.loe_user
 CREATE TABLE IF NOT EXISTS `loe_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1303,6 +1364,7 @@ CREATE TABLE IF NOT EXISTS `loe_user` (
 DELETE FROM `loe_user`;
 /*!40000 ALTER TABLE `loe_user` DISABLE KEYS */;
 /*!40000 ALTER TABLE `loe_user` ENABLE KEYS */;
+
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

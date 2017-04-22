@@ -14,6 +14,17 @@ namespace PNetS
             arg.OnSerialize(msg);
             ImplSendToAllPlayers(msg, ReliabilityMode.Ordered);
         }
+
+        public void AllPlayersRpc<T>(Player except, byte rpcId, T arg)
+            where T : INetSerializable
+        {
+            if (arg == null)
+                throw new NullReferenceException("Cannot serialize null value");
+            var msg = StartMessage(rpcId, ReliabilityMode.Ordered, arg.AllocSize);
+            arg.OnSerialize(msg);
+            ImplSendToAllPlayersExcept(except, msg, ReliabilityMode.Ordered);
+        }
+
         /// <summary>
         /// send the rpc to all players
         /// </summary>

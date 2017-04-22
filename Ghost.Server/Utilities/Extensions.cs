@@ -7,6 +7,7 @@ using MySql.Data.MySqlClient;
 using PNet;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -21,6 +22,12 @@ using static PNet.NetConverter;
 namespace Ghost.Server.Utilities
 {
     #region Enums
+    public enum BanType : byte
+    {
+        None,
+        Ban,
+        Mute
+    }
     public enum StatIndex
     {
         Null = -1,
@@ -761,9 +768,23 @@ namespace Ghost.Server.Utilities
             player.Rpc<StringSerializer>(127, msg);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void MuteMsg(this MapPlayer player, DB_Ban ban)
+        {
+            player.Player.Rpc(15, ChatType.System, string.Empty, string.Empty, 
+                $"You muted! Ends in {(ban.End - DateTime.Now).TotalSeconds:0.00} seconds.", -1, -1, ChatIcon.System, DateTime.Now);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SystemMsg(this MapPlayer player, string msg)
         {
             player.Player.Rpc(15, ChatType.System, string.Empty, string.Empty, msg, -1, -1, ChatIcon.System, DateTime.Now);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void MuteMsg(this PNetS.Player player, DB_Ban mute)
+        {
+            var message = ChatMsg.System;
+            message.Time = DateTime.Now;
+            message.Text = $"You muted! Ends in {(mute.End - message.Time).TotalSeconds:0.00} seconds.";
+            player.PlayerRpc(15, message);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SystemMsg(this PNetS.Player player, string text)
@@ -809,6 +830,11 @@ namespace Ghost.Server.Utilities
         {
             player.Rpc(201, new RPC201(msg, duration));
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void AnnounceAll(this PNetS.Player player, string msg, float duration = Constants.AnnounceDuration)
+        {
+            player.Server.AllPlayersRpc(player, 201, new RPC201(msg, duration));
+        }
     }
     public static class BitArrayExtension
     {
@@ -825,6 +851,14 @@ namespace Ghost.Server.Utilities
         {
             for (int i = 0; i < count; i++, index++)
                 bit.Set(index, (value & 1 << i) > 0);
+        }
+    }
+    public static class IEnumerableExtensions
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static IEnumerable<T> WhereIf<T>(this IEnumerable<T> enumerable, bool condition, Func<T, bool> predicate)
+        {
+            return condition ? enumerable.Where(predicate) : enumerable;
         }
     }
     public static class Vector3Extensions

@@ -35,6 +35,8 @@ namespace Ghost.Server.Utilities
 
         public const int ArrayCapacity = 5;
 
+        public const int MuteCheckDelay = 10;
+
         public const byte Killed = 1;
         public const byte Fainted = 3;
         public const byte Destroyed = 0;

@@ -27,6 +27,7 @@ namespace Ghost.Server.Core.Servers
             _guidStr = _guid.ToString();
             _idStr = _guidStr.Remove(8);
         }
+        private Timer m_bans_timer;
         private NetworkConfiguration _cfg;
         private Dictionary<int, MasterPlayer> _users;
         private Dictionary<ushort, MasterPlayer> _players;
@@ -74,12 +75,15 @@ namespace Ghost.Server.Core.Servers
                 return _running;
             }
         }
+
         public MasterPlayer this[ushort index]
         {
             get { MasterPlayer entry; _players.TryGetValue(index, out entry); return entry; }
         }
+
         public MasterServer()
         {
+            m_bans_timer = new Timer(DeleteBansTimer, null, Timeout.Infinite, Timeout.Infinite);
             _users = new Dictionary<int, MasterPlayer>();
             _players = new Dictionary<ushort, MasterPlayer>();
             ServersMgr.Add(this);
@@ -87,7 +91,9 @@ namespace Ghost.Server.Core.Servers
             if (!(Debug.Logger is DefaultConsoleLogger))
                 Debug.Logger = new DefaultConsoleLogger();
 #endif
+            m_bans_timer.Change(0, Timeout.Infinite);
         }
+
         public void Stop()
         {
             if (_server == null || !_running) return;
@@ -136,6 +142,13 @@ namespace Ghost.Server.Core.Servers
         {
             lock (_lock) return _players.Values.ToArray();
         }
+        public IEnumerable<MasterPlayer> FindPlayers(string request)
+        {
+            request = request.ToLowerInvariant();
+            return GetPlayers()
+                .Where(x => x.User != null && x.Char != null)
+                .WhereIf(request != "all", x => x.User.Name.ToLowerInvariant().Contains(request) || x.Char.Pony.Name.ToLowerInvariant().Contains(request));
+        }
 
         public bool TryGetById(ushort id, out MasterPlayer player)
         {
@@ -163,6 +176,13 @@ namespace Ghost.Server.Core.Servers
                 roomHosts: Configs.Get<string>(Configs.Server_Maps_Hosts),
                 maximumPlayers: Configs.Get<int>(Configs.Server_MaxPlayers));
         }
+
+        private void DeleteBansTimer(object state)
+        {
+            ServerDB.DeleateAllOutdatedBans();
+            m_bans_timer.Change(15 * 60 * 1000, Timeout.Infinite);
+        }
+
         #region RPC Handlers
         private void RPC_255(NetMessage message)
         {
@@ -226,6 +246,15 @@ namespace Ghost.Server.Core.Servers
             var SID = arg2.ReadString();
             var id = arg2.ReadInt32();
             MasterPlayer player;
+            DB_Ban ban;
+            var time = DateTime.Now;
+            if (ServerDB.SelectBan(id, arg1.EndPoint.Address, BanType.Ban, time, out ban))
+            {
+                arg1.Disconnect($"You're Banned!{Environment.NewLine}" +
+                    $"Reason: {ban.Reason}{Environment.NewLine}" +
+                    $"Ban ends in: {ban.End - time:dd\\.hh\\:mm\\:ss}");
+                return;
+            }
             if (_users.ContainsKey(id) && TryGetByUserId(id, out player))
                 player.Player.Disconnect("Only one session!");
             if (ServerDB.SelectUser(id, out user))

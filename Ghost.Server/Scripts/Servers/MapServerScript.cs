@@ -1,4 +1,6 @@
-﻿using Ghost.Server.Core.Servers;
+﻿using Ghost.Server.Core;
+using Ghost.Server.Core.Servers;
+using Ghost.Server.Core.Structs;
 using Ghost.Server.Utilities;
 using PNet;
 using PNetR;
@@ -57,6 +59,12 @@ namespace Ghost.Server.Scripts.Servers
             ChatType type = (ChatType)arg1.ReadByte();
             string message = arg1.ReadString();
             var player = _server[arg2.Sender.Id];
+            DB_Ban mute;
+            if (player.IsMuted(out mute))
+            {
+                player.MuteMsg(mute);
+                return;
+            }
             if (player.User.Access == AccessLevel.Admin)
                 icon = ChatIcon.Admin;
             if (player.User.Access == AccessLevel.Moderator)

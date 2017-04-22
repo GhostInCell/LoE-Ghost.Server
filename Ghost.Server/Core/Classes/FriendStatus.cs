@@ -54,7 +54,7 @@ namespace Ghost.Server.Core.Classes
             message.Write(CharacterName);
             message.Write(UserName);
             if (Status > OnlineStatus.Offline)
-                message.Write(PlayerID);
+                message.Write((int)PlayerID);
             message.Write((int)Race);
             message.Write(ID);
             message.Write(CutieMarkID);
@@ -68,7 +68,7 @@ namespace Ghost.Server.Core.Classes
             CharacterName = message.ReadString();
             UserName = message.ReadString();
             if (Status > OnlineStatus.Offline)
-                PlayerID = message.ReadUInt16();
+                PlayerID = (ushort)message.ReadInt32();
             Race = (CharacterType)message.ReadInt32();
             ID = message.ReadInt32();
             CutieMarkID = message.ReadInt16();

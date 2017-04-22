@@ -12,6 +12,8 @@ namespace PNetR
         /// </summary>
         public Guid Token { get; internal set; }
 
+        public IPEndPoint EndPoint { get { return Connection.RemoteEndPoint; } }
+
         internal readonly Room Room;
 
         /// <summary>

@@ -1,5 +1,7 @@
 ﻿using System;
 using PNet;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PNetS
 {
@@ -32,6 +34,16 @@ namespace PNetS
         {
             var msg = Server.StartMessage(rpcId, subId, ReliabilityMode.Ordered, arg.AllocSize);
             arg.OnSerialize(msg);
+            SendMessage(msg, ReliabilityMode.Ordered);
+        }
+
+        public void PlayerSubRpc<T>(byte rpcId, byte subId, IEnumerable<T> arg)
+            where T : INetSerializable
+        {
+            var msg = Server.StartMessage(rpcId, subId, ReliabilityMode.Ordered, arg.Sum(x => x.AllocSize) + 4);
+            msg.Write(arg.Count());
+            foreach (var item in arg)
+                item.OnSerialize(msg);
             SendMessage(msg, ReliabilityMode.Ordered);
         }
 
