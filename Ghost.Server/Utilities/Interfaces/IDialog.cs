@@ -7,7 +7,7 @@ namespace Ghost.Server.Utilities.Interfaces
     public interface IDialog
     {
         ushort ID { get; }
-        WO_NPC[] NPC { get; }
+        INPCArray NPC { get; }
         MapServer Server { get; }
         void OnDialogEnd(MapPlayer player);
         void OnDialogNext(MapPlayer player);

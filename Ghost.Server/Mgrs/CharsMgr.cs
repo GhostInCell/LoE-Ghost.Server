@@ -54,15 +54,15 @@ namespace Ghost.Server.Mgrs
             data.Skills[10] = 0;//Ground Pound
             data.Skills[44] = 0;//Bubble Barrage
 
-            data.Talents[TalentMarkId.Medical] = default(TalentData);
-            data.Talents[TalentMarkId.Partying] = default(TalentData);
-            data.Talents[TalentMarkId.Music] = default(TalentData);
-            data.Talents[TalentMarkId.Animal] = default(TalentData);
-            data.Talents[TalentMarkId.Flying] = default(TalentData);
-            data.Talents[TalentMarkId.Magic] = default(TalentData);
-            data.Talents[TalentMarkId.Artisan] = default(TalentData);
-            data.Talents[TalentMarkId.Combat] = default(TalentData);
-            data.Talents[TalentMarkId.Foal] = default(TalentData);
+            data.Talents[TalentMarkId.Medical] = new TalentData();
+            data.Talents[TalentMarkId.Partying] = new TalentData();
+            data.Talents[TalentMarkId.Music] = new TalentData();
+            data.Talents[TalentMarkId.Animal] = new TalentData();
+            data.Talents[TalentMarkId.Flying] = new TalentData();
+            data.Talents[TalentMarkId.Magic] = new TalentData();
+            data.Talents[TalentMarkId.Artisan] = new TalentData();
+            data.Talents[TalentMarkId.Combat] = new TalentData();
+            data.Talents[TalentMarkId.Foal] = new TalentData();
 
             switch (entry.Pony.Race)
             {
@@ -89,14 +89,22 @@ namespace Ghost.Server.Mgrs
         }
         public static bool SelectCharacter(int id, out Character entry)
         {
-            lock (_chars)
+            try
             {
-                if (_chars.TryGetValue(id, out entry))
+                lock (_chars)
+                {
+                    if (_chars.TryGetValue(id, out entry))
+                        return true;
+                    else if (ServerDB.SelectCharacter(id, out entry))
+                        _chars[id] = entry;
+                    else return false;
                     return true;
-                else if (ServerDB.SelectCharacter(id, out entry))
-                    _chars[id] = entry;
-                else return false;
-                return true;
+                }
+            }
+            catch (System.ArgumentException)
+            {
+                entry = null;
+                return false;
             }
         }
         public static void RemoveCharacters(IEnumerable<Character> chars)

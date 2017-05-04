@@ -12,6 +12,11 @@ namespace Ghost.Server.Mgrs.Player
 {
     public class PlayerStatsMgr : StatsMgr
     {
+        protected static readonly float s_exp_multipler;
+        static PlayerStatsMgr()
+        {
+            s_exp_multipler = Configs.Get<float>(Configs.Game_ExpMultipler);
+        }
         private const int runMod = 18;
         private const int interval = 200;
         private int _update;
@@ -109,7 +114,9 @@ namespace Ghost.Server.Mgrs.Player
             var talantState = _mPlayer.Data.Talents[talant];
             if (talantState.Level >= CharsMgr.MaxLevel)
                 return;
-            if (CalculateTalentLevel(ref talantState, exp + bonusExp))
+            exp = (uint)(exp * s_exp_multipler);
+            bonusExp = (uint)(bonusExp * s_exp_multipler);
+            if (CalculateTalentLevel(talantState, exp + bonusExp))
             {
                 UpdateBase();
                 _mPlayer.Player.Rpc(4, _mPlayer.Data.SerTalents);
@@ -118,7 +125,6 @@ namespace Ghost.Server.Mgrs.Player
             }
             else
                 _mPlayer.Player.Rpc(2, new TalentNetData((uint)talant, exp, bonusExp));
-            _mPlayer.Data.Talents[talant] = talantState;
         }
         private short GetLevel()
         {
@@ -172,7 +178,7 @@ namespace Ghost.Server.Mgrs.Player
             }
             SendStats();
         }
-        private bool CalculateTalentLevel(ref TalentData talent, uint exp)
+        private bool CalculateTalentLevel(TalentData talent, uint exp)
         {
             if (talent.Level >= CharsMgr.MaxLevel)
                 return false;
@@ -188,8 +194,8 @@ namespace Ghost.Server.Mgrs.Player
             talent.Exp = cExp;
             if (level != talent.Level)
             {
-                talent.Level = level;
                 talent.Points += (short)((level - talent.Level) * CharsMgr.TalentPointsPerLevel);
+                talent.Level = level;
                 return true;
             }
             return false;

@@ -289,6 +289,8 @@ namespace PNet
         /// <param name="message"></param>
         public static void RecycleMessage(NetMessage message)
         {
+            return;
+
             var data = message.Data;
             if (data == null) return;
             if (!IsPowerOfTwo(data.Length)) return;

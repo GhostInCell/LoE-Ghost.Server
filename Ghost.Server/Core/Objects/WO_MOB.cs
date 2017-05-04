@@ -106,10 +106,14 @@ namespace Ghost.Server.Core.Objects
             {
                 var bonus = (uint)(_stats.Level * (awards.Length - 1));
                 if (_creature.LootID > 0)
-                    new WO_Loot(_creature.LootID, this, awards[0].Player, _manager);
-                awards[0].Player.Stats.AddExp(TalentMarkId.Combat, (uint)_stats.Level * 25, bonus);
+                {
+                    DB_Loot loot;
+                    if (DataMgr.Select(_creature.LootID, out loot))
+                        new WO_Loot(loot, this, awards[0].Player, _manager);
+                }
+                awards[0].Player.Stats.AddExp(TalentMarkId.Combat, (uint)_stats.Level * Constants.LevelExpMultipler, bonus);
                 for (uint i = 1; i < awards.Length; i++)
-                    awards[i].Player.Stats.AddExp(TalentMarkId.Combat, (uint)(_stats.Level * 25f / i), bonus / i);
+                    awards[i].Player.Stats.AddExp(TalentMarkId.Combat, (uint)(_stats.Level * Constants.LevelExpMultipler / i), bonus / i);
             }
             if ((_data.Flags & 1) == 1)
                 Despawn();

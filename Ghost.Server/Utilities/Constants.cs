@@ -8,14 +8,20 @@ namespace Ghost.Server.Utilities
     {
         public static readonly Random RND = new Random();
 
+        public const int LevelExpMultipler = 100;
+
         public const byte TypeIDPet = 0x10;
-        public const byte TypeIDNPC = 0x40;
         public const byte TypeIDMOB = 0x20;
+        public const byte TypeIDNPC = 0x40;
         public const byte TypeIDLoot = 0x80;
+
         public const byte TypeIDSpawn = 0x80;
         public const byte TypeIDSwitch = 0x40;
+        public const byte TypeIDSpawnPool = 0x20;
+
         public const byte TypeIDPlayer = 0x80;
         public const byte TypeIDPickup = 0x40;
+
         public const byte TypeIDVoidZone = 0x80;
 
         public const uint ReleaseGuide = 0x1000000;

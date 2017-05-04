@@ -5,23 +5,25 @@ using Ghost.Server.Core.Structs;
 using Ghost.Server.Utilities;
 using Ghost.Server.Utilities.Abstracts;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Threading;
 
 namespace Ghost.Server.Mgrs.Map
 {
     public class ObjectsMgr
     {
-        private ushort _currentN;
+        private int _currentN;
         private MapServer _server;
         private readonly int _mapID;
-        private Queue<ushort> _released;
-        private Dictionary<uint, WorldObject> _objects;
-        private Dictionary<ushort, WorldObject> _nsObjects;
-        private Dictionary<ushort, WorldObject> _nvObjects;
-        private Dictionary<ushort, WorldObject> _plObjects;
-        private Dictionary<ushort, WorldObject> _dnObjects;
+        private ConcurrentQueue<ushort> _released;
+        private ConcurrentDictionary<uint, WorldObject> _objects;
+        private ConcurrentDictionary<ushort, WorldObject> _nsObjects;
+        private ConcurrentDictionary<ushort, WorldObject> _nvObjects;
+        private ConcurrentDictionary<ushort, WorldObject> _plObjects;
+        private ConcurrentDictionary<ushort, WorldObject> _dnObjects;
 
         public int MapID
         {
@@ -37,12 +39,12 @@ namespace Ghost.Server.Mgrs.Map
         {
             _server = server;
             _mapID = server.Map.ID;
-            _released = new Queue<ushort>();
-            _objects = new Dictionary<uint, WorldObject>();
-            _nsObjects = new Dictionary<ushort, WorldObject>();
-            _nvObjects = new Dictionary<ushort, WorldObject>();
-            _plObjects = new Dictionary<ushort, WorldObject>();
-            _dnObjects = new Dictionary<ushort, WorldObject>();
+            _released = new ConcurrentQueue<ushort>();
+            _objects = new ConcurrentDictionary<uint, WorldObject>();
+            _nsObjects = new ConcurrentDictionary<ushort, WorldObject>();
+            _nvObjects = new ConcurrentDictionary<ushort, WorldObject>();
+            _plObjects = new ConcurrentDictionary<ushort, WorldObject>();
+            _dnObjects = new ConcurrentDictionary<ushort, WorldObject>();
             LoadObjects();
         }
 
@@ -51,7 +53,7 @@ namespace Ghost.Server.Mgrs.Map
             WorldObject[] _toDestroy = _objects.Values.Where(x => !x.IsPlayer).ToArray();
             foreach (var item in _toDestroy) item.Destroy();
             _currentN = 0;
-            _released.Clear();
+            _released = new ConcurrentQueue<ushort>();
             _nsObjects.Clear();
             _nvObjects.Clear();
             _dnObjects.Clear();
@@ -64,7 +66,6 @@ namespace Ghost.Server.Mgrs.Map
             WorldObject[] _toDestroy = _objects.Values.ToArray();
             foreach (var item in _toDestroy) item.Destroy();
             _objects.Clear();
-            _released.Clear();
             _nsObjects.Clear();
             _nvObjects.Clear();
             _plObjects.Clear();
@@ -100,83 +101,69 @@ namespace Ghost.Server.Mgrs.Map
 
         public ushort GetNewGuid()
         {
-            lock (_released)
-            {
-                if (_released.Count > 0) return _released.Dequeue();
-                else if (_currentN < ushort.MaxValue)
-                    return ++_currentN;
-                throw new Exception();
-            }
+            ushort result;
+            if (!_released.TryDequeue(out result))
+                result = checked((ushort)Interlocked.Increment(ref _currentN));
+            return result;
         }
 
         public void Add(WorldObject obj)
         {
-            lock (_objects)
-            {
-                if (_objects.ContainsKey(obj.Guid))
-                    ServerLogger.LogError($"{_server.Name}({_mapID}): Duplicate guid {obj.Guid}");
-                else
-                    _objects[obj.Guid] = obj;
-            }
+            if (!_objects.TryAdd(obj.Guid, obj))
+                ServerLogger.LogError($"{_server.Name}({_mapID}): Duplicate guid {obj.Guid}");
         }
 
         public void Remove(WorldObject obj)
         {
-            lock (_objects)
-            {
-                if (!_objects.Remove(obj.Guid))
-                    ServerLogger.LogServer(_server, $"attempt to remove unregistered object guid {obj.Guid}");
-            }
+            WorldObject value;
+            if (!_objects.TryRemove(obj.Guid, out value))
+                ServerLogger.LogServer(_server, $"attempt to remove unregistered object guid {obj.Guid}");
+            else if (!ReferenceEquals(obj, value))
+                throw new InvalidOperationException();
         }
 
         public void ReleaseGuid(uint guid)
         {
-            lock (_released)
-            {
-                if (_released.Contains((ushort)guid))
-                    ServerLogger.LogError($"{_server.Name}({_mapID}): attempt to release already released guid {guid & 0xFFFF}");
-                else
-                    _released.Enqueue((ushort)(guid & 0xFFFF));
-            }
+            if (_released.Contains((ushort)guid))
+                ServerLogger.LogError($"{_server.Name}({_mapID}): attempt to release already released guid {guid & 0xFFFF}");
+            else
+                _released.Enqueue((ushort)(guid & 0xFFFF));
         }
 
         public void AddView(WorldObject obj)
         {
-            lock (_objects)
+            if (!_objects.ContainsKey(obj.Guid))
+                ServerLogger.LogServer(_server, $"attempt to add unregistered object guid {obj.Guid}");
+            else
             {
-                if (!_objects.ContainsKey(obj.Guid))
-                    ServerLogger.LogServer(_server, $"attempt to add unregistered object guid {obj.Guid}");
+                if (obj.IsPlayer)
+                    _plObjects[obj.SGuid] = obj;
+                else if (obj.IsServer)
+                    _nsObjects[obj.SGuid] = obj;
+                else if (obj.IsDynamic)
+                    _dnObjects[obj.SGuid] = obj;
                 else
-                {
-                    if (obj.IsPlayer)
-                        _plObjects[obj.SGuid] = obj;
-                    else if (obj.IsServer)
-                        _nsObjects[obj.SGuid] = obj;
-                    else if (obj.IsDynamic)
-                        _dnObjects[obj.SGuid] = obj;
-                    else
-                        _nvObjects[obj.SGuid] = obj;
-                }
+                    _nvObjects[obj.SGuid] = obj;
             }
         }
 
         public void RemoveView(WorldObject obj)
         {
-            lock (_objects)
+            if (!_objects.ContainsKey(obj.Guid))
+                ServerLogger.LogServer(_server, $"attempt to remove unregistered object guid {obj.Guid}");
+            else
             {
-                if (!_objects.ContainsKey(obj.Guid))
-                    ServerLogger.LogServer(_server, $"attempt to remove unregistered object guid {obj.Guid}");
+                WorldObject value;
+                if (obj.IsPlayer)
+                    _plObjects.TryRemove(obj.SGuid, out value);
+                else if (obj.IsServer)
+                    _nsObjects.TryRemove(obj.SGuid, out value);
+                else if (obj.IsDynamic)
+                    _dnObjects.TryRemove(obj.SGuid, out value);
                 else
-                {
-                    if (obj.IsPlayer)
-                        _plObjects.Remove(obj.SGuid);
-                    else if (obj.IsServer)
-                        _nsObjects.Remove(obj.SGuid);
-                    else if (obj.IsDynamic)
-                        _dnObjects.Remove(obj.SGuid);
-                    else
-                        _nvObjects.Remove(obj.SGuid);
-                }
+                    _nvObjects.TryRemove(obj.SGuid, out value);
+                if (!ReferenceEquals(obj, value))
+                    throw new InvalidOperationException();
             }
         }
 
@@ -227,56 +214,56 @@ namespace Ghost.Server.Mgrs.Map
         public IEnumerable<WO_MOB> GetMobsInRadius(Vector3 origin, float radius)
         {
             radius *= radius;
-            return _nvObjects.Values.Where(x => x is WO_MOB && Vector3.DistanceSquared(x.Position, origin) <= radius).Select(x => x as WO_MOB);
+            return _nvObjects.Select(x => x.Value).OfType<WO_MOB>().Where(x => Vector3.DistanceSquared(x.Position, origin) <= radius);
         }
 
         public IEnumerable<WO_MOB> GetMobsInRadius(WorldObject origin, float radius)
         {
             if (origin == null) return Enumerable.Empty<WO_MOB>();
             radius *= radius;
-            return _nvObjects.Values.Where(x => x is WO_MOB && Vector3.DistanceSquared(x.Position, origin.Position) <= radius).Select(x => x as WO_MOB);
+            return _nvObjects.Select(x => x.Value).OfType<WO_MOB>().Where(x => Vector3.DistanceSquared(x.Position, origin.Position) <= radius);
         }
 
         public IEnumerable<WO_Player> GetPlayersInRadius(Vector3 origin, float radius)
         {
             radius *= radius;
-            return _plObjects.Values.Select(x => x as WO_Player).Where(x => Vector3.DistanceSquared(x.Position, origin) <= radius && !x.IsDead);
+            return _plObjects.Select(x => x.Value).OfType<WO_Player>().Where(x => Vector3.DistanceSquared(x.Position, origin) <= radius && !x.IsDead);
         }
 
         public IEnumerable<WO_Player> GetPlayersInRadius(WorldObject origin, float radius)
         {
             if (origin == null) return Enumerable.Empty<WO_Player>();
             radius *= radius;
-            return _plObjects.Values.Select(x => x as WO_Player).Where(x => Vector3.DistanceSquared(x.Position, origin.Position) <= radius && !x.IsDead);
+            return _plObjects.Select(x => x.Value).OfType<WO_Player>().Where(x => Vector3.DistanceSquared(x.Position, origin.Position) <= radius && !x.IsDead);
         }
 
         public IEnumerable<WO_MOB> GetMobsInRadiusExcept(WorldObject origin, WorldObject except, float radius)
         {
             if (origin == null) return Enumerable.Empty<WO_MOB>();
             radius *= radius;
-            return _nvObjects.Values.Where(x => x is WO_MOB && x != except && Vector3.DistanceSquared(x.Position, origin.Position) <= radius).Select(x => x as WO_MOB);
+            return _nvObjects.Select(x => x.Value).OfType<WO_MOB>().Where(x => x != except && Vector3.DistanceSquared(x.Position, origin.Position) <= radius);
         }
 
         public void GetMobsInRadius(WorldObject origin, float radius, List<CreatureObject> result)
         {
             if (origin == null) return;
             radius *= radius;
-            result.AddRange(_nvObjects.Values.Where(x => x is WO_MOB && Vector3.DistanceSquared(x.Position, origin.Position) <= radius).Select(x => (CreatureObject)x));
+            result.AddRange(_nvObjects.Select(x => x.Value).OfType<WO_MOB>().Where(x => Vector3.DistanceSquared(x.Position, origin.Position) <= radius));
         }
 
         public void GetPlayersInRadius(WorldObject origin, float radius, List<CreatureObject> result)
         {
             if (origin == null) return;
             radius *= radius;
-            result.AddRange(_plObjects.Values.Select(x => (CreatureObject)x).Where(x => !x.IsDead && Vector3.DistanceSquared(x.Position, origin.Position) <= radius));
+            result.AddRange(_plObjects.Select(x => x.Value).OfType<WO_Player>().Where(x => !x.IsDead && Vector3.DistanceSquared(x.Position, origin.Position) <= radius));
         }
 
         public void GetCreaturesInRadius(WorldObject origin, float radius, List<CreatureObject> result)
         {
             if (origin == null) return;
             radius *= radius;
-            result.AddRange(_plObjects.Values.Select(x => (CreatureObject)x).Where(x => !x.IsDead && Vector3.DistanceSquared(x.Position, origin.Position) <= radius));
-            result.AddRange(_nvObjects.Values.Where(x => x is WO_MOB && Vector3.DistanceSquared(x.Position, origin.Position) <= radius).Select(x => (CreatureObject)x));
+            result.AddRange(_plObjects.Select(x => x.Value).OfType<WO_Player>().Where(x => !x.IsDead && Vector3.DistanceSquared(x.Position, origin.Position) <= radius));
+            result.AddRange(_nvObjects.Select(x => x.Value).OfType<WO_MOB>().Where(x => Vector3.DistanceSquared(x.Position, origin.Position) <= radius));
         }
 
         private uint CreateNSObject(DB_WorldObject obj)
@@ -291,6 +278,8 @@ namespace Ghost.Server.Mgrs.Map
                         return new WO_Spawn(obj, this).Guid;
                     case 1://Switch
                         return new WO_Switch(obj, this).Guid;
+                    case 2://Spawn Pool
+                        return new WO_SpawnPool(obj, this).Guid;
                     default:
                         ServerLogger.LogWarn($"{_server.Name}({_mapID}) unknow NS map object type {obj.Type} guid {obj.Guid}");
                         break;

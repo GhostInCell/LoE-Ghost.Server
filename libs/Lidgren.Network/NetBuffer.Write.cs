@@ -571,6 +571,19 @@ namespace Lidgren.Network
 		}
 
 		/// <summary>
+		/// Compress a float within a specified range using a certain number of bits and stick what's outside to the bounds
+		/// </summary>
+		public void WriteLimitedSingle(float value, float min, float max, int numberOfBits)
+		{
+            value = Math.Max(min, Math.Min(max, value));
+
+			float range = max - min;
+			float unit = ((value - min) / range);
+			int maxVal = (1 << numberOfBits) - 1;
+			Write((UInt32)((float)maxVal * unit), numberOfBits);
+		}
+
+		/// <summary>
 		/// Writes an integer with the least amount of bits need for the specified range
 		/// Returns number of bits written
 		/// </summary>

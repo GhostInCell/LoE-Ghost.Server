@@ -111,6 +111,7 @@
     <Compile Include="Core\Objects\WO_Pickup.cs" />
     <Compile Include="Core\Objects\WO_Player.cs" />
     <Compile Include="Core\Objects\WO_Spawn.cs" />
+    <Compile Include="Core\Objects\WO_SpawnPool.cs" />
     <Compile Include="Core\Objects\WO_Switch.cs" />
     <Compile Include="Core\Objects\WO_VoidZone.cs" />
     <Compile Include="Core\Players\CharPlayer.cs" />
@@ -190,6 +191,7 @@
     <Compile Include="Utilities\Constants.cs" />
     <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\Interfaces\INetworkManager.cs" />
+    <Compile Include="Utilities\Interfaces\INPCArray.cs" />
     <Compile Include="Utilities\Interfaces\IPlayer.cs" />
     <Compile Include="Utilities\Interfaces\IQuadTreeItem.cs" />
     <Compile Include="Utilities\Interfaces\IRoom.cs" />

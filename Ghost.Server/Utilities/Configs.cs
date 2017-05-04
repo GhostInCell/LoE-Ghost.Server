@@ -12,6 +12,7 @@ namespace Ghost.Server.Utilities
         private const int DEF_Game_SaveChar = 60;
         private const short DEF_Game_MaxLevel = 50;
         private const int DEF_Game_SpamDelay = 600;
+        private const float DEF_Game_ExpMultipler = 1f;
         private const string DEF_Game_UnicornStart = "Cantermore";
         private const string DEF_Game_PegasusStart = "Cloudopolis";
         private const string DEF_Game_EarthPonyStart = "Ponydale";
@@ -67,6 +68,7 @@ namespace Ghost.Server.Utilities
         public const string Game_MaxChars = "game_maxchars";
         public const string Game_MaxLevel = "game_maxlevel";
         public const string Game_SpamDelay = "game_spamdelay";
+        public const string Game_ExpMultipler = "game_expmultipler";
         public const string Game_UnicornStart = "game_unicornstart";
         public const string Game_PegasusStart = "game_pegasusstart";
         public const string Game_EarthPonyStart = "game_earthponystart";

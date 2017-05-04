@@ -8,9 +8,21 @@ namespace Ghost.Server.Core.Classes
     [ProtoContract]
     public class PonyData : INetSerializable
     {
+        private byte _race = 1;
+
+        public byte Race {
+            get {
+                return _race;
+            }
+            set {
+                if (value < 1 || value > 3)
+                    throw new System.ArgumentException("value");
+                _race = value;
+            }
+        }
+
         [ProtoMember(1)]
         public short Eye;
-        public byte Race;
         [ProtoMember(2)]
         public short Mane;
         [ProtoMember(3)]

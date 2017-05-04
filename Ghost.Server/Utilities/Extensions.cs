@@ -973,9 +973,9 @@ namespace Ghost.Server.Utilities
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void WritePosition(this NetMessage msg, Vector3 vec)
         {
-            msg.WriteRangedSingle(vec.X, Constants.DefaultRoomBounds.Min.X, Constants.DefaultRoomBounds.Max.X, 16);
-            msg.WriteRangedSingle(vec.Y, Constants.DefaultRoomBounds.Min.Y, Constants.DefaultRoomBounds.Max.Y, 16);
-            msg.WriteRangedSingle(vec.Z, Constants.DefaultRoomBounds.Min.Z, Constants.DefaultRoomBounds.Max.Z, 16);
+            msg.WriteLimitedSingle(vec.X, Constants.DefaultRoomBounds.Min.X, Constants.DefaultRoomBounds.Max.X, 16);
+            msg.WriteLimitedSingle(vec.Y, Constants.DefaultRoomBounds.Min.Y, Constants.DefaultRoomBounds.Max.Y, 16);
+            msg.WriteLimitedSingle(vec.Z, Constants.DefaultRoomBounds.Min.Z, Constants.DefaultRoomBounds.Max.Z, 16);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 ReadRotation(this NetMessage msg, ref bool full)
@@ -999,12 +999,12 @@ namespace Ghost.Server.Utilities
         {
             if (full)
             {
-                msg.WriteRangedSingle(vec.X, -6.28318548f, 6.28318548f, 8);
-                msg.WriteRangedSingle(vec.Y, -6.28318548f, 6.28318548f, 8);
-                msg.WriteRangedSingle(vec.Z, -6.28318548f, 6.28318548f, 8);
+                msg.WriteLimitedSingle(vec.X, -6.28318548f, 6.28318548f, 8);
+                msg.WriteLimitedSingle(vec.Y, -6.28318548f, 6.28318548f, 8);
+                msg.WriteLimitedSingle(vec.Z, -6.28318548f, 6.28318548f, 8);
             }
             else
-                msg.WriteRangedSingle(vec.Y, -6.28318548f, 6.28318548f, 8);
+                msg.WriteLimitedSingle(vec.Y, -6.28318548f, 6.28318548f, 8);
         }
     }
     public static class QuaternionExtensions

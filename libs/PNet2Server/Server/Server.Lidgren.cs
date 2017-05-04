@@ -100,15 +100,13 @@ namespace PNetS
                 if (status == NetConnectionStatus.Connected)
                 {
                     var room = sConn.Tag as Room;
-                    if (room == null)
+                    if (room != null)
                     {
-                        throw new NullReferenceException("A connection joined from " + sConn + ", but it did not have a room set in the Tag property");
+                        AddRoom(room);
+                        UpdateRoomsOfNewRoom(room);
+
+                        Debug.Log($"Room connected: {room.RoomId} - {sender} @ {room.Address}");
                     }
-
-                    AddRoom(room);
-                    UpdateRoomsOfNewRoom(room);
-
-                    Debug.Log($"Room connected: {room.RoomId} - {sender} @ {room.Address}");
                 }
                 else if (status == NetConnectionStatus.Disconnecting || status == NetConnectionStatus.Disconnected)
                 {

@@ -104,11 +104,13 @@ namespace Ghost.Server.Core.Objects
             _removedTargets.Clear();
             var range = _main.BaseConst; range *= range;
             foreach (var item in _targets)
+            {
                 if ((item.IsDead || !item.IsSpawned) || Vector3.DistanceSquared(_position, item.Position) > range)
                 {
-                    item.Stats.RemoveAuraEffects(_guid);
+                    item.Stats?.RemoveAuraEffects(_guid);
                     _removedTargets.Add(item);
                 }
+            }
             _manager.GetCreaturesInRadius(this, _main.BaseConst, _addedTargets);
             foreach (var item in _removedTargets)
                 _targets.Remove(item);
@@ -121,7 +123,7 @@ namespace Ghost.Server.Core.Objects
                 {
                     case SpellEffectType.AuraModifier:
                         if ((item.Target & SpellTarget.Creature) != 0)
-                            foreach (var creature in _addedTargets.Where(x => x is WO_MOB))
+                            foreach (var creature in _addedTargets.OfType<WO_MOB>())
                                 creature.Stats.AddAuraEffect(_guid, (Stats)item.Data01, item.BaseConst, item.Data02 == 1);
                         if ((item.Target & SpellTarget.Player) != 0)
                             foreach (var creature in _addedTargets.Where(x => x.IsPlayer))

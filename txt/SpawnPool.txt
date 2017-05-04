@@ -1,0 +1,13 @@
+Table `loe_map_object`
+`guid`		must be unique between all rows with same `map` and negative `object`
+`object`	negative id of item (`loe_item`) or creature (`loe_creature`) for spawn
+`type`		must ne 2 for this kind of objects
+`flags`		0 - spawn creatures, 1 - spawns items
+`pos_x`,`pos_y`, `pos_z`	center of spawn area
+`rot_x`, `rot_y`, `rot_z`	size of spawn area
+`time`		time in seconds before new object is spawned
+`data01`	if (`flags` == 1) represent resource from `loe_resource`
+`data02`	first  16 bits - min spawned objects (objects will spawn without `time` interval while count less than min value) 
+			second 16 bits - max spawned objects
+`data03`	first  16 bits - min level(for creature)/count(for item)
+			second 16 bits - max level(for creature)/count(for item)

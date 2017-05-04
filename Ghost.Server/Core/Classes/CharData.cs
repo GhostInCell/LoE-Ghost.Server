@@ -1,7 +1,5 @@
 ﻿using Ghost.Server.Utilities;
-using PNet;
 using ProtoBuf;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -10,7 +8,7 @@ using System.Numerics;
 namespace Ghost.Server.Core.Classes
 {
     [ProtoContract]
-    public struct TalentData
+    public class TalentData
     {
         [ProtoMember(1)]
         public uint Exp;
@@ -18,6 +16,11 @@ namespace Ghost.Server.Core.Classes
         public short Level;
         [ProtoMember(3)]
         public short Points;
+
+        public TalentData()
+        {
+            Level = 1;
+        }
     }
     [ProtoContract]
     public class CharData

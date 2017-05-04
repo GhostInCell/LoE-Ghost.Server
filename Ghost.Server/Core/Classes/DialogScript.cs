@@ -8,22 +8,59 @@ using Ghost.Server.Utilities;
 using Ghost.Server.Utilities.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace Ghost.Server.Core.Classes
 {
     public class DialogScript: IDialog
     {
+        private class NPCArray : INPCArray
+        {
+            public WO_NPC[] _npcs;
+
+            public WO_NPC this[int index]
+            {
+                get
+                {
+                    Reserve(index);
+                    return _npcs[index];
+                }
+                set
+                {
+                    Reserve(index);
+                    _npcs[index] = value;
+                }
+            }
+
+            private void Reserve(int index)
+            {
+                if (index >= _npcs.Length)
+                    Array.Resize(ref _npcs, index + 1);
+            }
+        }
+        NPCArray _npcArray = new NPCArray();
+        private WO_NPC[] _npcs
+        {
+            get
+            {
+                return _npcArray._npcs;
+            }
+            set
+            {
+                _npcArray._npcs = value;
+            }
+        }
+
         private readonly ushort _id;
-        private WO_NPC[] _npcs;
         private MapServer _server;
         private SortedDictionary<short, DialogEntry> _entries;
         public ushort ID
         {
             get { return _id; }
         }
-        public WO_NPC[] NPC
+        public INPCArray NPC
         {
-            get { return _npcs; }
+            get { return _npcArray; }
         }
         public MapServer Server
         {

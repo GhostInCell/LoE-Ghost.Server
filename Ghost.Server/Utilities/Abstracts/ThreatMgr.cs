@@ -1,29 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace Ghost.Server.Utilities.Abstracts
 {
     public abstract class ThreatMgr : ObjectComponent
     {
-        protected Dictionary<CreatureObject, float> _threat;
-        protected CreatureObject _creature;
+        protected CreatureObject m_creature;
+
+        protected ConcurrentDictionary<CreatureObject, float> m_threat;
+
         public ThreatMgr(CreatureObject parent) 
             : base(parent)
         {
-            _creature = parent;
-            _threat = new Dictionary<CreatureObject, float>();
+            m_creature = parent;
+            m_threat = new ConcurrentDictionary<CreatureObject, float>();
             parent.OnDespawn += ThreatMgr_OnDespawn;
             parent.OnDestroy += ThreatMgr_OnDestroy;
             parent.OnInitialize += ThreatMgr_OnInitialize;
         }
         public void Clear()
         {
-            foreach (var item in _threat)
-                _creature.View.SetCombat(item.Key.Owner, false);
-            _threat.Clear();
+            foreach (var item in m_threat)
+                item.Key.View.SetCombat(item.Key.Owner, false);
+            m_threat.Clear();
         }
         public void Remove(CreatureObject creature)
         {
-            _threat.Remove(creature);
+            m_threat.TryRemove(creature, out _);
             creature.View.SetCombat(creature.Owner, false);
         }
         public abstract bool SelectTarget(out CreatureObject target);
@@ -35,19 +38,19 @@ namespace Ghost.Server.Utilities.Abstracts
         private void ThreatMgr_OnDestroy()
         {
             Clear();
-            _threat = null;
+            m_threat = null;
         }
         private void ThreatMgr_OnInitialize()
         {
-            _creature.Stats.OnDamageReceived += ThreatMgr_OnDamageReceived;
+            m_creature.Stats.OnDamageReceived += ThreatMgr_OnDamageReceived;
         }
         private void ThreatMgr_OnDamageReceived(CreatureObject arg1, float arg2)
         {
-            if (_threat.ContainsKey(arg1))
-                _threat[arg1] += arg2;
+            if (m_threat.ContainsKey(arg1))
+                m_threat[arg1] += arg2;
             else
             {
-                _threat[arg1] = arg2;
+                m_threat[arg1] = arg2;
                 arg1.View.SetCombat(arg1.Owner, true);
             }
         }

@@ -12,7 +12,7 @@ namespace Ghost.Server.Mgrs.Mob
         {
             get
             {
-                return _threat.OrderByDescending(x => x.Value).Select(x => x.Key as WO_Player).ToArray();
+                return m_threat.OrderByDescending(x => x.Value).Select(x => x.Key as WO_Player).ToArray();
             }
         }
         public MobThreatMgr(WO_MOB parent)
@@ -21,23 +21,27 @@ namespace Ghost.Server.Mgrs.Mob
         public override bool SelectTarget(out CreatureObject target)
         {
             target = null;
-            if (_threat.Count > 0)
+            if (m_threat.Count > 0)
             {
-                foreach (var item in _threat.ToArray())
-                    if (!item.Key.IsSpawned || item.Key.IsDead || Vector3.DistanceSquared(item.Key.Position, _creature.Position) > Constants.MaxSpellsDistanceSquared)
+                foreach (var item in m_threat)
+                {
+                    if (!item.Key.IsSpawned || item.Key.IsDead || Vector3.DistanceSquared(item.Key.Position, m_creature.Position) > Constants.MaxSpellsDistanceSquared)
                     {
                         if (item.Key.IsSpawned)
-                            _creature.View.SetCombat(item.Key.Owner, false);
-                        _threat.Remove(item.Key);
+                            m_creature.View.SetCombat(item.Key.Owner, false);
+                        m_threat.TryRemove(item.Key, out _);
                     }
-            }
-            foreach (var item in _creature.Manager.GetPlayersInRadius(_creature, Constants.MaxInteractionDistance))
-                if (!_threat.ContainsKey(item))
-                {
-                    _creature.View.SetCombat(item.Owner, true);
-                    _threat[item] = item.Player.Char.Level;
                 }
-            return (target = _threat.OrderByDescending(x => x.Value).FirstOrDefault().Key) != null;
+            }
+            foreach (var item in m_creature.Manager.GetPlayersInRadius(m_creature, Constants.MaxInteractionDistance))
+            {
+                if (!m_threat.ContainsKey(item))
+                {
+                    m_creature.View.SetCombat(item.Owner, true);
+                    m_threat[item] = item.Player.Char.Level;
+                }
+            }
+            return (target = m_threat.OrderByDescending(x => x.Value).FirstOrDefault().Key) != null;
         }
     }
 }

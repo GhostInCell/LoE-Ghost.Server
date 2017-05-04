@@ -49,13 +49,13 @@ namespace Ghost.Server.Core.Objects
             get { return _rotation; }
             set { throw new NotSupportedException(); }
         }
-        public WO_Loot(int id, WorldObject at, MapPlayer onwer, ObjectsMgr manager)
+        public WO_Loot(DB_Loot loot, WorldObject at, MapPlayer onwer, ObjectsMgr manager)
             : base(manager.GetNewGuid() | Constants.IDRObject, manager)
         {
             _onwer = onwer;
             _position = at.Position;
             _rotation = at.Rotation;
-            _loot = DataMgr.SelectLoot(id);
+            _loot = loot;
             _resource = DataMgr.SelectResource(Constants.LootResource);
             OnSpawn += WO_Loot_OnSpawn;
             OnDespawn += WO_Loot_OnDespawn;
@@ -119,7 +119,7 @@ namespace Ghost.Server.Core.Objects
         }
         private bool View_CheckVisibility(Player arg)
         {
-            return arg.Id == _onwer.Player.Id;
+            return _onwer != null && _onwer.Player != null && arg.Id == _onwer.Player.Id;
         }
         #endregion
     }

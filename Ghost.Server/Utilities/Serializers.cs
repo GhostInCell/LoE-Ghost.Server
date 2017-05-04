@@ -211,33 +211,30 @@ namespace Ghost.Server.Utilities
             foreach (var item in m_data.Talents)
             {
                 message.Write((uint)item.Key);
-                message.Write(0u);
+                message.Write(item.Value.Exp);
                 message.Write((uint)item.Value.Level);
                 message.Write((uint)item.Value.Points);
-                message.Write(0u);
-                message.Write(0u);
-                message.Write(0u);
-                //if (item.Value.Item2 == 0)
-                //{
-                //    var exp = CharsMgr.GetExpForLevel(item.Value.Item2 + 1);
-                //    message.Write(exp);
-                //    message.Write(exp);
-                //    message.Write(0u);
-                //}
-                //else if (item.Value.Item2 == CharsMgr.MaxLevel)
-                //{
-                //    var exp = CharsMgr.GetExpForLevel(CharsMgr.MaxLevel);
-                //    message.Write(exp);
-                //    message.Write(0u);
-                //    message.Write(exp);
-                //}
-                //else
-                //{
-                //    var exp = CharsMgr.GetExpForLevel(item.Value.Item2 + 1);
-                //    message.Write(exp - item.Value.Item1);
-                //    message.Write(exp);
-                //    message.Write(CharsMgr.GetExpForLevel(item.Value.Item2));
-                //}
+                if (item.Value.Level == 0)
+                {
+                    var exp = CharsMgr.GetExpForLevel(item.Value.Level+ 1);
+                    message.Write(exp);
+                    message.Write(exp);
+                    message.Write(0u);
+                }
+                else if (item.Value.Level == CharsMgr.MaxLevel)
+                {
+                    var exp = CharsMgr.GetExpForLevel(CharsMgr.MaxLevel);
+                    message.Write(exp);
+                    message.Write(0u);
+                    message.Write(exp);
+                }
+                else
+                {
+                    var exp = CharsMgr.GetExpForLevel(item.Value.Level + 1);
+                    message.Write(item.Value.Exp);
+                    message.Write(exp);
+                    message.Write(0);
+                }
             }
         }
 
