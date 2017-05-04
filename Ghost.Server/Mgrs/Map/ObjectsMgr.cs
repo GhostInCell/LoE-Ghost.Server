@@ -50,21 +50,20 @@ namespace Ghost.Server.Mgrs.Map
 
         public void Reload()
         {
-            WorldObject[] _toDestroy = _objects.Values.Where(x => !x.IsPlayer).ToArray();
-            foreach (var item in _toDestroy) item.Destroy();
+            foreach (var item in _objects.Where(x => !x.Value.IsPlayer))
+                item.Value.Destroy();
             _currentN = 0;
             _released = new ConcurrentQueue<ushort>();
             _nsObjects.Clear();
             _nvObjects.Clear();
             _dnObjects.Clear();
-            _toDestroy = null;
             LoadObjects();
         }
 
         public void Destroy()
         {
-            WorldObject[] _toDestroy = _objects.Values.ToArray();
-            foreach (var item in _toDestroy) item.Destroy();
+            foreach (var item in _objects)
+                item.Value.Destroy();
             _objects.Clear();
             _nsObjects.Clear();
             _nvObjects.Clear();
@@ -77,7 +76,6 @@ namespace Ghost.Server.Mgrs.Map
             _nvObjects = null;
             _plObjects = null;
             _dnObjects = null;
-            _toDestroy = null;
         }
 
         public void LoadObjects()

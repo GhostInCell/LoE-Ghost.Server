@@ -62,13 +62,13 @@ namespace Ghost.Server.Core.Objects
 
         private void WO_SpawnPool_OnDestroy()
         {
-            lock (m_objects)
+            foreach (var item in m_objects)
             {
-                foreach (var item in m_objects)
-                    item.Destroy();
-                m_objects.Clear();
-                m_objects = null;
+                item.OnDestroy -= WoObj_OnDestroy;
+                item.Destroy();
             }
+            m_objects.Clear();
+            m_objects = null;
         }
 
         private void DoSpawn()
@@ -96,18 +96,8 @@ namespace Ghost.Server.Core.Objects
                 wObj = new WO_MOB(obj, Manager);
 
             }
-            lock (m_objects)
-            {
-                if (IsSpawned)
-                {
-                    wObj.OnDestroy += WoObj_OnDestroy;
-                    m_objects.Add(wObj);
-                }
-                else
-                {
-                    wObj.Destroy();
-                }
-            }
+            wObj.OnDestroy += WoObj_OnDestroy;
+            m_objects.Add(wObj);
         }
 
         private void WoObj_OnDestroy()
