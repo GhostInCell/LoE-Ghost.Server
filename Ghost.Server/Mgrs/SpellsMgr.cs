@@ -12,14 +12,11 @@ namespace Ghost.Server.Mgrs
     {
         public static bool CanCast(CreatureObject creature, TargetEntry target)
         {
-            DB_Spell spell; DB_SpellEffect main; CreatureObject targetCO;
-            if (DataMgr.Select(target.SpellID, out spell) &&
-                spell.Effects.TryGetValue(0, out main) &&
-                creature.Stats.Energy >= main.Data01)
+            if (DataMgr.Select(target.SpellID, out DB_Spell spell) && spell.Effects.TryGetValue(0, out var main) && creature.Stats.Energy >= main.Data01)
             {
                 if (target.HasGuid)
                 {
-                    if (creature.Server.Objects.TryGetCreature((ushort)target.Guid, out targetCO) && !targetCO.IsDead)
+                    if (creature.Server.Objects.TryGetCreature((ushort)target.Guid, out var targetCO) && !targetCO.IsDead)
                     {
                         if (Vector3.DistanceSquared(targetCO.Position, creature.Position) <= main.Data02 * main.Data02)
                         {
@@ -54,17 +51,14 @@ namespace Ghost.Server.Mgrs
         }
         public static void PerformSkill(CreatureObject creature, TargetEntry target)
         {
-            DB_Spell spell = DataMgr.SelectSpell(target.SpellID); bool area = false, magick;
-            DB_SpellEffect main = spell.Effects[0]; CreatureObject targetCO;
-            creature.View.PerformSkill(target);
-            if (creature.IsPlayer)
-            {
-                ((WO_Player)creature).Player.Skills.AddCooldown(spell.ID, main.Data03);
-            }
+            var spell = DataMgr.SelectSpell(target.SpellID); bool area = false, magick;
+            var main = spell.Effects[0]; creature.View.PerformSkill(target);
+            if (creature is WO_Player player)
+                player.Player.Skills.AddCooldown(spell.Id, main.Data03);
             creature.Stats.DecreaseCurrent(Stats.Energy, main.Data01);
             if (target.HasGuid)
             {
-                creature.Server.Objects.TryGetCreature((ushort)target.Guid, out targetCO);
+                creature.Server.Objects.TryGetCreature((ushort)target.Guid, out var targetCO);
                 foreach (var item in spell.Effects.Values)
                 {
                     float effect = item.BaseConst + (item.LevelModifer * creature.Stats.Level) + (item.AttackModifer * creature.Stats.Attack);

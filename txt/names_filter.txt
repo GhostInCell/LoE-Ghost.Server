@@ -1,0 +1,19 @@
+#How to activate:  
+
+#in loe_server.cfg set value: game_namesfilter@System.String=path to filter file
+#or just copy this file to server directory
+
+#File format:
+
+#Comment line starts whith '#'. Ignore rest of line.
+#Words line starts whith '!'. Disallow all words in this line. (case insensitive)
+
+!Try to create pony with some of this words in nick
+
+#Regexp line starts whith '@'. Disallow all names matching regular expression. (case insensitive)
+
+@^(.*\s.*){2,}$
+
+#Any other is exact match (case insensitive)
+
+Disallowed Name

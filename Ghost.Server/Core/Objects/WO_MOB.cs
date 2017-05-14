@@ -107,8 +107,7 @@ namespace Ghost.Server.Core.Objects
                 var bonus = (uint)(_stats.Level * (awards.Length - 1));
                 if (_creature.LootID > 0)
                 {
-                    DB_Loot loot;
-                    if (DataMgr.Select(_creature.LootID, out loot))
+                    if (DataMgr.Select(_creature.LootID, out DB_Loot loot))
                         new WO_Loot(loot, this, awards[0].Player, _manager);
                 }
                 awards[0].Player.Stats.AddExp(TalentMarkId.Combat, (uint)_stats.Level * Constants.LevelExpMultipler, bonus);

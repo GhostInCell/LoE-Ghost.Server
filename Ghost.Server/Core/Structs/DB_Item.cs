@@ -1,22 +1,22 @@
 ﻿using Ghost.Server.Utilities;
-using System;
 using System.Collections.Generic;
 
 namespace Ghost.Server.Core.Structs
 {
     public struct DB_Item
     {
-        public int ID;
-        public int Price;
-        public uint Color;
-        public byte Level;
-        public string Name;
-        public byte Sockets;
-        public ushort Stack;
-        public ItemFlags Flags;
-        public WearablePosition Slot;
-        public List<Tuple<Stats, int>> Stats;
-        public DB_Item(int id, string name, byte flags, byte level, byte rlevel, ushort stack, byte sockets, int price, int slot, uint color)
+        public readonly int ID;
+        public readonly int Price;
+        public readonly uint Color;
+        public readonly byte Level;
+        public readonly string Name;
+        public readonly byte Sockets;
+        public readonly ushort Stack;
+        public readonly ItemFlags Flags;
+        public readonly WearablePosition Slot;
+        public readonly List<(Stats, int)> Stats;
+
+        public DB_Item(int id, string name, byte flags, byte level, byte rlevel, ushort stack, byte sockets, int price, uint slot, uint color)
         {
             ID = id;
             Name = name;
@@ -27,9 +27,7 @@ namespace Ghost.Server.Core.Structs
             Sockets = sockets;
             Flags = (ItemFlags)flags;
             Slot = (WearablePosition)slot;
-            if ((Flags & ItemFlags.Stats) > 0)
-                Stats = new List<Tuple<Stats, int>>();
-            else Stats = null;
+            Stats = new List<(Stats, int)>();
         }
     }
 }

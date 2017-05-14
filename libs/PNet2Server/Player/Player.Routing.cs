@@ -9,14 +9,9 @@ namespace PNetS
         {
             if (Status != ConnectionStatus.Connected)
                 return;
-            byte header;
-            if (!msg.ReadByte(out header))
+            if (!msg.ReadByte(out var header))
                 return;
-            MsgType msgType;
-            BroadcastMode broadcast;
-            ReliabilityMode reliability;
-            SubMsgType sub;
-            RpcUtils.ReadHeader(header, out reliability, out broadcast, out msgType, out sub);
+            RpcUtils.ReadHeader(header, out var reliability, out var broadcast, out var msgType, out var sub);
 
             switch (msgType)
             {

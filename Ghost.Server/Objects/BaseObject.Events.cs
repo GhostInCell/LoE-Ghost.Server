@@ -28,8 +28,7 @@ namespace Ghost.Server.Objects
         public void Notify<T>(uint eventId, T args)
             where T : BaseArgs
         {
-            object handler;
-            if (m_handlers.TryGetValue(eventId, out handler))
+            if (m_handlers.TryGetValue(eventId, out var handler))
             {
                 if (handler is BaseHandler<T>)
                     ((BaseHandler<T>)handler)(this, args);
@@ -39,8 +38,7 @@ namespace Ghost.Server.Objects
         public void Subscribe<T>(uint eventId, BaseHandler<T> handler)
             where T : BaseArgs
         {
-            object oHandler;
-            if (m_handlers.TryGetValue(eventId, out oHandler))
+            if (m_handlers.TryGetValue(eventId, out var oHandler))
                 m_handlers[eventId] = Delegate.Combine((Delegate)oHandler, handler);
             else
                 m_handlers.Add(eventId, handler);
@@ -49,8 +47,7 @@ namespace Ghost.Server.Objects
         public void Unsubscribe<T>(uint eventId, BaseHandler<T> handler)
             where T : BaseArgs
         {
-            object oHandler;
-            if (m_handlers.TryGetValue(eventId, out oHandler))
+            if (m_handlers.TryGetValue(eventId, out var oHandler))
             {
                 oHandler = Delegate.Remove((Delegate)oHandler, handler);
                 if (oHandler == null)

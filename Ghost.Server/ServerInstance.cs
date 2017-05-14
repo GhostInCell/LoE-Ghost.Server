@@ -4,14 +4,22 @@ using Ghost.Server.Core.Servers;
 using Ghost.Server.Core.Structs;
 using Ghost.Server.Mgrs;
 using Ghost.Server.Utilities;
+using ProtoBuf.Meta;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
+using System.Threading.Tasks;
 
 namespace Ghost.Server
 {
     public class ServerInstance
-    {
+    {       
+        static ServerInstance()
+        {
+            RuntimeTypeModel.Default.Add(typeof(Vector3), false).Add("X", "Y", "Z");
+        }
+
         private MasterServer _master;
         private List<MapServer> _maps;
         private CharServer _characters;
@@ -30,11 +38,10 @@ namespace Ghost.Server
             _characters?.Stop();
             _master?.Stop();
         }
-        public bool Startup()
+
+        public async Task<bool> Startup()
         {
-            DB_Map map; string[] list;
-            MapServer mapServer; int id;
-            if (Load())
+            if (await LoadAsync())
             {
                 if (Configs.Get<bool>(Configs.Server_Master))
                     (_master = new MasterServer()).Start();
@@ -44,18 +51,20 @@ namespace Ghost.Server
                 {
                     foreach (var item in DataMgr.SelectAllMaps())
                     {
+                        var mapServer = new MapServer(item);
                         _maps.Add(mapServer = new MapServer(item));
                         mapServer.Start();
                     }
                 }
-                else 
+                else
                 {
-                    list = Configs.Get<string>(Configs.Server_MapList).Split(';');
+                    var list = Configs.Get<string>(Configs.Server_MapList).Split(';');
                     foreach (var item in list)
                     {
-                        if (int.TryParse(item, out id) && DataMgr.Select(id, out map))
+                        if (int.TryParse(item, out var id) && DataMgr.Select(id, out DB_Map map))
                         {
-                            _maps.Add(mapServer = new MapServer(map));
+                            var mapServer = new MapServer(map);
+                            _maps.Add(mapServer);
                             mapServer.Start();
                         }
                     }
@@ -69,33 +78,35 @@ namespace Ghost.Server
         public void DoCommand(string command)
         {
             string[] cmdArgs = null;
-            Action<string[]> cmdAction;
             int index = command.IndexOf(' ');
             if (index > 0)
             {
                 cmdArgs = command.Substring(index + 1).Split(' ').Select(x => x.Trim()).ToArray();
                 command = command.Remove(index);
             }
-            if (_cmdList.TryGetValue(command, out cmdAction))
+            if (_cmdList.TryGetValue(command, out var cmdAction))
                 cmdAction(cmdArgs);
             cmdArgs = null;
         }
-        private bool Load()
+
+        private async Task<bool> LoadAsync()
         {
-            if (ServerDB.Connected && ServerDB.Ping())
+            if (await ServerDB.PingAsync())
                 ServerLogger.LogInfo($"Connected to database");
             else
             {
                 ServerLogger.LogError($"Couldn't connect to database: {Environment.NewLine}{ServerDB.ConnectionString}");
                 return false;
             }
+            await DataMgr.LoadAllAsync();
             ServerLogger.LogInfo($"Data loaded: {DataMgr.Info}");
             return true;
         }
+
         private void InitializeCMD()
         {
             #region Map
-            _cmdList["map"] = (string[] args) =>
+            _cmdList["map"] = async (string[] args) =>
             {
                 if (args?.Length >= 1 && args[0] != "?")
                 {
@@ -110,10 +121,10 @@ namespace Ghost.Server
                                         int id;
                                         if (int.TryParse(args[2], out id))
                                         {
-                                            var maps = _maps.Where(x => x.Map.ID == id).ToArray();
+                                            var maps = _maps.Where(x => x.Map.Id == id).ToArray();
                                             if (maps.Length > 0)
                                             {
-                                                DataMgr.LoadAll();
+                                                await DataMgr.LoadAllAsync();
                                                 foreach (var item in maps)
                                                     item.Objects.Reload();
                                             }
@@ -134,7 +145,7 @@ namespace Ghost.Server
             };
             #endregion
             #region User
-            _cmdList["user"] = (string[] args) =>
+            _cmdList["user"] = async (string[] args) =>
             {
                 if (args?.Length >= 1 && args[0] != "?")
                 {
@@ -150,80 +161,95 @@ namespace Ghost.Server
 
                                 int id = -1;
                                 int time = -1;
-                                DB_User user;
                                 if (args.Length < 4 || !int.TryParse(args[1], out id) || !int.TryParse(args[2], out time))
                                     Console.WriteLine("Using: user ban id time reason");
-                                else if (!ServerDB.SelectUser(id, out user))
-                                    Console.WriteLine($"Error: can't find user whith {id}");
-                                else if (!ServerDB.CreateBan(id, null, BanType.Ban, -1, time, args[3]))
-                                    Console.WriteLine($"Error: can't create ban entry");
                                 else
                                 {
-                                    MasterPlayer player;
-                                    if (_master.TryGetByUserId(id, out player))
-                                        player.Player.Disconnect($"Congratulation!{Environment.NewLine}You're Banned!");
-                                    Console.WriteLine($"User {user.Name} banned");
+                                    var user = await ServerDB.SelectUserAsync(id);
+                                    if (user.IsEmpty)
+                                        Console.WriteLine($"Error: can't find user whith {id}");
+                                    else if (!await ServerDB.CreateBanAsync(id, null, BanType.Ban, -1, time, args[3]))
+                                        Console.WriteLine($"Error: can't create ban entry");
+                                    else
+                                    {
+                                        if (_master.TryGetByUserId(id, out var player))
+                                            player.Player.Disconnect($"Congratulation!{Environment.NewLine}You're Banned!");
+                                        Console.WriteLine($"User {user.Name} banned");
+                                    }
                                 }
                                 break;
                             }
                         case "unban":
                             {
                                 int id = -1;
-                                DB_User user;
                                 if (args.Length < 2 || !int.TryParse(args[1], out id))
                                     Console.WriteLine("Using: user unban id");
-                                else if (!ServerDB.SelectUser(id, out user))
-                                    Console.WriteLine($"Error: can't find user whith {id}");
-                                else if (!ServerDB.DeleteBan(id, null, BanType.Ban))
-                                    Console.WriteLine($"Error: can't delete ban entry");
-                                else Console.WriteLine($"User {user.Name} unbanned");
+                                else
+                                {
+                                    var user = await ServerDB.SelectUserAsync(id);
+                                    if (user.IsEmpty)
+                                        Console.WriteLine($"Error: can't find user whith {id}");
+                                    else if (!await ServerDB.DeleteBanAsync(id, null, BanType.Ban))
+                                        Console.WriteLine($"Error: can't delete ban entry");
+                                    else Console.WriteLine($"User {user.Name} unbanned");
+                                }
                                 break;
                             }
                         case "mute":
                             {
                                 int id = -1;
                                 int time = -1;
-                                DB_User user;
                                 if (args.Length < 4 || !int.TryParse(args[1], out id) || !int.TryParse(args[2], out time))
                                     Console.WriteLine("Using: user mute id time reason");
-                                else if (!ServerDB.SelectUser(id, out user))
-                                    Console.WriteLine($"Error: can't find user whith {id}");
-                                else if (!ServerDB.CreateBan(id, null, BanType.Mute, -1, time, args[3]))
-                                    Console.WriteLine($"Error: can't create mute entry");
-                                else Console.WriteLine($"User {user.Name} muted");
+                                else
+                                {
+                                    var user = await ServerDB.SelectUserAsync(id);
+                                    if (user.IsEmpty)
+                                        Console.WriteLine($"Error: can't find user whith {id}");
+                                    else if (!await ServerDB.CreateBanAsync(id, null, BanType.Mute, -1, time, args[3]))
+                                        Console.WriteLine($"Error: can't create mute entry");
+                                    else Console.WriteLine($"User {user.Name} muted");
+                                }
                                 break;
                             }
                         case "unmute":
                             {
                                 int id = -1;
-                                DB_User user;
                                 if (args.Length < 2 || !int.TryParse(args[1], out id))
                                     Console.WriteLine("Using: user unmute id");
-                                else if (!ServerDB.SelectUser(id, out user))
-                                    Console.WriteLine($"Error: can't find user whith {id}");
-                                else if (!ServerDB.DeleteBan(id, null, BanType.Mute))
-                                    Console.WriteLine($"Error: can't delete mute entry");
-                                else Console.WriteLine($"User {user.Name} unmuted");
+                                else
+                                {
+                                    var user = await ServerDB.SelectUserAsync(id);
+                                    if (user.IsEmpty)
+                                        Console.WriteLine($"Error: can't find user whith {id}");
+                                    else if (!await ServerDB.DeleteBanAsync(id, null, BanType.Mute))
+                                        Console.WriteLine($"Error: can't delete mute entry");
+                                    else Console.WriteLine($"User {user.Name} unmuted");
+                                }
                                 break;
                             }
                         case "create":
                             byte access = 1;
                             if (args.Length < 3 || (args.Length > 3 && !byte.TryParse(args[3], out access)))
                                 Console.WriteLine("Using: user create login password <access>");
-                            else if (!ServerDB.CreateUser(args[1], args[2], access))
+                            else if (!await ServerDB.CreateUserAsync(args[1], args[2], access))
                                 Console.WriteLine($"Error: can't create user {args[1]}:{args[2]}");
                             else
                                 Console.WriteLine($"Created user {args[1]}");
                             break;
                         case "info":
                             {
-                                int id = -1; DB_User user;
+                                int id = -1;
                                 if (args.Length < 2 || !int.TryParse(args[1], out id))
                                     Console.WriteLine("Using: user info id");
-                                else if (!ServerDB.SelectUser(id, out user))
-                                    Console.WriteLine($"Error: can't load user {id}");
                                 else
-                                    Console.WriteLine($"User {id}, {user.Name} access {user.Access}, {(user.SID == null ? "offline" : (_master?.IsOnline(id) ?? false ? "online" : "offline/undefined"))}");
+                                {
+                                    var user = await ServerDB.SelectUserAsync(id);
+                                    if (user.IsEmpty)
+                                        Console.WriteLine($"Error: can't find user whith {id}");
+                                    else
+                                        Console.WriteLine($"User {id}, {user.Name} access {user.Access}, {(user.Session == null ? "offline" : (_master?.IsOnline(id) ?? false ? "online" : "offline/undefined"))}");
+                                }
                                 break;
                             }
                         case "list":
@@ -270,7 +296,7 @@ namespace Ghost.Server
             };
             #endregion
             #region Data
-            _cmdList["data"] = (string[] args) =>
+            _cmdList["data"] = async (string[] args) =>
             {
                 if (args?.Length >= 1 && args[0] != "?")
                 {
@@ -281,16 +307,16 @@ namespace Ghost.Server
                             case "create":
                                 if (args.Length >= 2)
                                 {
-                                    ushort level, dialog, movement; byte flags, index; int id;
                                     switch (args[1])
                                     {
                                         case "npc":
-                                            if (args.Length == 8 && ushort.TryParse(args[2], out level) && byte.TryParse(args[3], out flags) &&
-                                            ushort.TryParse(args[4], out dialog) && byte.TryParse(args[5], out index) && ushort.TryParse(args[6], out movement))
+                                            if (args.Length == 8 && ushort.TryParse(args[2], out var level) && byte.TryParse(args[3], out var flags) && 
+                                            ushort.TryParse(args[4], out var dialog) && byte.TryParse(args[5], out var index) && ushort.TryParse(args[6], out var movement))
                                             {
                                                 try
                                                 {
-                                                    if (ServerDB.CreateNPC(level, flags, dialog, index, movement, args[7].ToPonyData(), out id))
+                                                    var id = await ServerDB.CreateNpcAsync(level, flags, dialog, index, movement, args[7].ToPonyData());
+                                                    if (id > 0)
                                                         Console.WriteLine($"new NPC id {id} created!");
                                                     else Console.WriteLine($"Error: can't create new npc");
                                                 }
@@ -452,7 +478,7 @@ namespace Ghost.Server
             };
             #endregion
             #region Object
-            _cmdList["object"] = (string[] args) =>
+            _cmdList["object"] = async (string[] args) =>
             {
                 if (args?.Length >= 1 && args[0] != "?")
                 {
@@ -463,21 +489,19 @@ namespace Ghost.Server
                             case "create":
                                 if (args.Length >= 3 && args[1] == "at")
                                 {
-                                    ushort id, guid; byte type, flags; float time;
-                                    int objectID, data01, data02, data03;
                                     switch (args[2])
                                     {
                                         case "player":
-                                            if (args.Length >= 9 && ushort.TryParse(args[3], out id) && ushort.TryParse(args[4], out guid) && int.TryParse(args[5], out objectID) &&
-                                            byte.TryParse(args[6], out type) && byte.TryParse(args[7], out flags) && float.TryParse(args[8], out time))
+                                            if (args.Length >= 9 && ushort.TryParse(args[3], out var id) && ushort.TryParse(args[4], out var guid) && int.TryParse(args[5], out var objectID) &&
+                                            byte.TryParse(args[6], out var type) && byte.TryParse(args[7], out var flags) && float.TryParse(args[8], out var time))
                                             {
                                                 var pClass = _master[id];
                                                 if (pClass != null && pClass.OnMap)
                                                 {
-                                                    if (args.Length < 10 || !int.TryParse(args[09], out data01)) data01 = -1;
-                                                    if (args.Length < 11 || !int.TryParse(args[10], out data02)) data02 = -1;
-                                                    if (args.Length < 12 || !int.TryParse(args[11], out data03)) data03 = -1;
-                                                    if (ServerDB.CreateObjectAt(pClass.Object, pClass.User.Map, guid, objectID, type, flags, time, data01, data02, data03))
+                                                    if (args.Length < 10 || !int.TryParse(args[09], out var data01)) data01 = -1;
+                                                    if (args.Length < 11 || !int.TryParse(args[10], out var data02)) data02 = -1;
+                                                    if (args.Length < 12 || !int.TryParse(args[11], out var data03)) data03 = -1;
+                                                    if (await ServerDB.CreateObjectAtAsync(pClass.Object, pClass.User.Map, guid, objectID, type, flags, time, data01, data02, data03))
                                                         Console.WriteLine($"Object [{guid}:{objectID}] created at map {pClass.User.Map} pos {pClass.Object.Position}");
                                                     else Console.WriteLine($"Error: can't create object [{guid}:{objectID}]");
                                                 }
@@ -501,7 +525,7 @@ namespace Ghost.Server
             };
             #endregion
             #region Restart
-            _cmdList["restart"] = (string[] args) =>
+            _cmdList["restart"] = async (string[] args) =>
             {
                 if (args?.Length >= 1 && args[0] != "?")
                 {
@@ -511,8 +535,7 @@ namespace Ghost.Server
                             _master?.Stop();
                             _characters?.Stop();
                             foreach (var item in _maps) item.Stop();
-                            CharsMgr.Clean();
-                            DataMgr.LoadAll();
+                            await DataMgr.LoadAllAsync();
                             _master?.Start();
                             _characters?.Start();
                             foreach (var item in _maps) item.Start();

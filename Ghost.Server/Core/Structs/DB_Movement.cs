@@ -5,11 +5,13 @@ namespace Ghost.Server.Core.Structs
 {
     public struct DB_Movement
     {
-        public ushort ID;
-        public SortedDictionary<ushort, MovementEntry> Entries;
+        public readonly ushort Id;
+
+        public readonly SortedDictionary<ushort, MovementEntry> Entries;
+
         public DB_Movement(ushort id)
         {
-            ID = id;
+            Id = id;
             Entries = new SortedDictionary<ushort, MovementEntry>();
         }
     }

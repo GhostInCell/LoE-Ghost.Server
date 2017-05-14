@@ -387,22 +387,20 @@ namespace Lidgren.Network
 				}
 				m_executeFlushSendQueue = false;
 
-				// send unsent unconnected messages
-				Tuple<IPEndPoint, NetOutgoingMessage> unsent;
-				while (m_unsentUnconnectedMessages.TryDequeue(out unsent))
-				{
-					NetOutgoingMessage om = unsent.Item2;
+                // send unsent unconnected messages
+                while (m_unsentUnconnectedMessages.TryDequeue(out var unsent))
+                {
+                    NetOutgoingMessage om = unsent.Item2;
 
-					int len = om.Encode(m_sendBuffer, 0, 0);
+                    int len = om.Encode(m_sendBuffer, 0, 0);
 
-					Interlocked.Decrement(ref om.m_recyclingCount);
-					if (om.m_recyclingCount <= 0)
-						Recycle(om);
+                    Interlocked.Decrement(ref om.m_recyclingCount);
+                    if (om.m_recyclingCount <= 0)
+                        Recycle(om);
 
-					bool connReset;
-					SendPacket(len, unsent.Item1, 1, out connReset);
-				}
-			}
+                    SendPacket(len, unsent.Item1, 1, out var connReset);
+                }
+            }
 
 			//
 			// read from socket
@@ -478,13 +476,12 @@ namespace Lidgren.Network
 					}
 				}
 
-				NetConnection sender = null;
-				m_connectionLookup.TryGetValue(ipsender, out sender);
+                m_connectionLookup.TryGetValue(ipsender, out var sender);
 
-				//
-				// parse packet into messages
-				//
-				int numMessages = 0;
+                //
+                // parse packet into messages
+                //
+                int numMessages = 0;
 				int numFragments = 0;
 				int ptr = 0;
 				while ((bytesReceived - ptr) >= NetConstants.HeaderByteSize)
@@ -621,17 +618,16 @@ namespace Lidgren.Network
 
 		private void ReceivedUnconnectedLibraryMessage(double now, IPEndPoint senderEndPoint, NetMessageType tp, int ptr, int payloadByteLength)
 		{
-			NetConnection shake;
-			if (m_handshakes.TryGetValue(senderEndPoint, out shake))
-			{
-				shake.ReceivedHandshake(now, tp, ptr, payloadByteLength);
-				return;
-			}
+            if (m_handshakes.TryGetValue(senderEndPoint, out var shake))
+            {
+                shake.ReceivedHandshake(now, tp, ptr, payloadByteLength);
+                return;
+            }
 
-			//
-			// Library message from a completely unknown sender; lets just accept Connect
-			//
-			switch (tp)
+            //
+            // Library message from a completely unknown sender; lets just accept Connect
+            //
+            switch (tp)
 			{
 				case NetMessageType.Discovery:
 					HandleIncomingDiscoveryRequest(now, senderEndPoint, ptr, payloadByteLength);

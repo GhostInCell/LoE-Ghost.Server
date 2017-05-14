@@ -1,4 +1,5 @@
-﻿using PNet;
+﻿using Ghost.Server.Utilities;
+using PNet;
 using ProtoBuf;
 using System.IO;
 using System.IO.Compression;
@@ -8,28 +9,16 @@ namespace Ghost.Server.Core.Classes
     [ProtoContract]
     public class PonyData : INetSerializable
     {
-        private byte _race = 1;
-
-        public byte Race {
-            get {
-                return _race;
-            }
-            set {
-                if (value < 1 || value > 3)
-                    throw new System.ArgumentException("value");
-                _race = value;
-            }
-        }
-
         [ProtoMember(1)]
         public short Eye;
+        public CharacterType Race;
         [ProtoMember(2)]
         public short Mane;
         [ProtoMember(3)]
         public short Tail;
         [ProtoMember(4)]
         public short Hoof;
-        public byte Gender;
+        public Gender Gender;
         public string Name;
         [ProtoMember(5)]
         public int EyeColor;
@@ -72,8 +61,8 @@ namespace Ghost.Server.Core.Classes
         public void OnSerialize(NetMessage message)
         {
             message.Write(Name);
-            message.Write(Race);
-            message.Write(Gender);
+            message.Write((byte)Race);
+            message.Write((byte)Gender);
             message.Write(CutieMark0);
             message.Write(CutieMark1);
             message.Write(CutieMark2);
@@ -94,8 +83,8 @@ namespace Ghost.Server.Core.Classes
         public void OnDeserialize(NetMessage message)
         {
             Name = message.ReadString();
-            Race = message.ReadByte();
-            Gender = message.ReadByte();
+            Race = (CharacterType)message.ReadByte();
+            Gender = (Gender)message.ReadByte();
             CutieMark0 = message.ReadInt32();
             CutieMark1 = message.ReadInt32();
             CutieMark2 = message.ReadInt32();

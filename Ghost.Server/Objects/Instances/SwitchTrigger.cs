@@ -19,14 +19,13 @@ namespace Ghost.Server.Objects.Instances
             m_rotation = m_data.Rotation;
         }
         #region RPC Handlers
-        private void RPC_001(NetMessage message, NetMessageInfo info)
+        private async void RPC_001(NetMessage message, NetMessageInfo info)
         {
-            PlayerObject @object;
-            if (m_manager.TryGet(info.Sender, out @object))
+            if (m_manager.TryGet(info.Sender, out PlayerObject @object))
             {
                 if (@object.CanInteractWith(this))
                 {
-                    if (@object.PrepareForMapSwitch())
+                    if (await @object.PrepareForMapSwitch())
                     {
                         @object.User.Spawn = (ushort)m_data.Data02;
                         info.Sender.SynchNetData();

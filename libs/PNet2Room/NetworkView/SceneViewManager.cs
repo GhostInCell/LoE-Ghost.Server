@@ -21,8 +21,7 @@ namespace PNetR
                 Debug.LogError("Malformed networked scene object rpc");
             }
             var id = msg.ReadUInt16();
-            NetworkedSceneObjectView view;
-            if (!_views.TryGetValue(id, out view))
+            if (!_views.TryGetValue(id, out var view))
             {
                 Debug.LogWarning($"Could not find networked scene object {id} to call an rpc on");
                 return;

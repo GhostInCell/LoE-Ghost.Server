@@ -7,14 +7,9 @@ namespace PNetR
     {
         internal void ConsumeData(NetMessage msg)
         {
-            byte header;
-            if (!msg.ReadByte(out header))
+            if (!msg.ReadByte(out var header))
                 return;
-            MsgType msgType;
-            BroadcastMode broadcast;
-            ReliabilityMode reliability;
-            SubMsgType sub;
-            RpcUtils.ReadHeader(header, out reliability, out broadcast, out msgType, out sub);
+            RpcUtils.ReadHeader(header, out var reliability, out var broadcast, out var msgType, out var sub);
 
             switch (msgType)
             {
@@ -34,8 +29,7 @@ namespace PNetR
         {
             try
             {
-                byte rpc;
-                if (!msg.ReadByte(out rpc))
+                if (!msg.ReadByte(out var rpc))
                     return;
                 CallRpc(rpc, msg);
             }
@@ -88,15 +82,12 @@ namespace PNetR
                 case DandRRpcs.RoomAdd:
                     while (msg.RemainingBits > 128)
                     {
-                        string roomId;
-                        if (!msg.ReadString(out roomId))
+                        if (!msg.ReadString(out var roomId))
                             break;
-                        Guid guid;
-                        if (!msg.ReadGuid(out guid))
+                        if (!msg.ReadGuid(out var guid))
                             break;
                         _rooms[guid] = roomId;
-                        int val;
-                        _roomNames.TryGetValue(roomId, out val);
+                        _roomNames.TryGetValue(roomId, out var val);
                         //relying on the fact that default for tryget will make val 0
                         _roomNames[roomId] = ++val;
                     }
@@ -104,11 +95,9 @@ namespace PNetR
                 case DandRRpcs.RoomRemove:
                     while (msg.RemainingBits >= 128)
                     {
-                        Guid guid;
-                        if (!msg.ReadGuid(out guid))
+                        if (!msg.ReadGuid(out var guid))
                             break;
-                        string roomId;
-                        if (_rooms.TryGetValue(guid, out roomId))
+                        if (_rooms.TryGetValue(guid, out var roomId))
                         {
                             var val = _roomNames[roomId];
                             if (val == 1)

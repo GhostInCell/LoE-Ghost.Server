@@ -6,6 +6,7 @@ using Ghost.Server.Utilities;
 using PNetR;
 using System;
 using System.Numerics;
+using System.Threading.Tasks;
 
 namespace Ghost.Server.Objects
 {
@@ -66,24 +67,24 @@ namespace Ghost.Server.Objects
             m_save = AddManager<SaveManager>();
         }
 
-        public bool SaveCharacter()
+        public Task<bool> SaveCharacter()
         {
             m_char.Data.Position = m_position;
             m_char.Data.Rotation = m_rotation;
-            return CharsMgr.SaveCharacter(m_char);
+            return CharsMgr.SaveCharacterAsync(m_char);
         }
 
-        public bool PrepareForMapSwitch()
+        public Task<bool> PrepareForMapSwitch()
         {
             m_save.Enabled = false;
             return SaveCharacter();
         }
         #region Overridden Methods
-        protected override void OnDispose()
+        protected async override void OnDispose()
         {
             base.OnDispose();
             if (m_save.Enabled)
-                SaveCharacter();
+                await SaveCharacter();
         }
         protected override NetworkView CreateView()
         {

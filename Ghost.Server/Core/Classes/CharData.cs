@@ -1,4 +1,5 @@
-﻿using Ghost.Server.Utilities;
+﻿using Ghost.Server.Mgrs;
+using Ghost.Server.Utilities;
 using ProtoBuf;
 using System.Collections.Generic;
 using System.IO;
@@ -20,6 +21,12 @@ namespace Ghost.Server.Core.Classes
         public TalentData()
         {
             Level = 1;
+        }
+
+        public TalentData(short level)
+        {
+            Level = level;
+            Points = (short)(CharsMgr.TalentPointsPerLevel * (level - 1));
         }
     }
     [ProtoContract]
@@ -83,20 +90,17 @@ namespace Ghost.Server.Core.Classes
         }
         public int GetVariable(uint id)
         {
-            int ret;
-            Variables.TryGetValue(id, out ret);
+            Variables.TryGetValue(id, out var ret);
             return ret;
         }
         public short GetTalentLevel(TalentMarkId id)
         {
-            TalentData ret;
-            Talents.TryGetValue(id, out ret);
+            Talents.TryGetValue(id, out var ret);
             return ret.Level;
         }
         public short GetDialogState(ushort id)
         {
-            short ret;
-            Dialogs.TryGetValue(id, out ret);
+            Dialogs.TryGetValue(id, out var ret);
             return ret;
         }
     }

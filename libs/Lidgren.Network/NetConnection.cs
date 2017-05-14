@@ -211,12 +211,11 @@ namespace Lidgren.Network
 					// write acks
 					for (int i = 0; i < acks; i++)
 					{
-						Tuple<NetMessageType, int> tuple;
-						m_queuedOutgoingAcks.TryDequeue(out tuple);
+                        m_queuedOutgoingAcks.TryDequeue(out var tuple);
 
-						//m_peer.LogVerbose("Sending ack for " + tuple.Item1 + "#" + tuple.Item2);
+                        //m_peer.LogVerbose("Sending ack for " + tuple.Item1 + "#" + tuple.Item2);
 
-						sendBuffer[m_sendBufferWritePtr++] = (byte)tuple.Item1;
+                        sendBuffer[m_sendBufferWritePtr++] = (byte)tuple.Item1;
 						sendBuffer[m_sendBufferWritePtr++] = (byte)tuple.Item2;
 						sendBuffer[m_sendBufferWritePtr++] = (byte)(tuple.Item2 >> 8);
 					}
@@ -232,22 +231,21 @@ namespace Lidgren.Network
 					}
 				}
 
-				//
-				// Parse incoming acks (may trigger resends)
-				//
-				Tuple<NetMessageType, int> incAck;
-				while (m_queuedIncomingAcks.TryDequeue(out incAck))
-				{
-					//m_peer.LogVerbose("Received ack for " + acktp + "#" + seqNr);
-					NetSenderChannelBase chan = m_sendChannels[(int)incAck.Item1 - 1];
+                //
+                // Parse incoming acks (may trigger resends)
+                //
+                while (m_queuedIncomingAcks.TryDequeue(out var incAck))
+                {
+                    //m_peer.LogVerbose("Received ack for " + acktp + "#" + seqNr);
+                    NetSenderChannelBase chan = m_sendChannels[(int)incAck.Item1 - 1];
 
-					// If we haven't sent a message on this channel there is no reason to ack it
-					if (chan == null)
-						continue;
+                    // If we haven't sent a message on this channel there is no reason to ack it
+                    if (chan == null)
+                        continue;
 
-					chan.ReceiveAcknowledge(now, incAck.Item2);
-				}
-			}
+                    chan.ReceiveAcknowledge(now, incAck.Item2);
+                }
+            }
 
 			//
 			// send queued messages

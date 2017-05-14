@@ -55,15 +55,13 @@ namespace PNet
         /// <returns></returns>
         public int SizeOf(object o)
         {
-            var iser = o as INetSerializable;
-            if (iser != null)
+            if (o is INetSerializable iser)
             {
                 return iser.AllocSize;
             }
 
             var aType = o.GetType();
-            Serializer ser;
-            if (_serializers.TryGetValue(aType, out ser))
+            if (_serializers.TryGetValue(aType, out var ser))
                 return ser.SizeOf(o);
             if (_internalSerializers.TryGetValue(aType, out ser))
                 return ser.SizeOf(o);
@@ -75,16 +73,14 @@ namespace PNet
                     return ser.SizeOf(Convert.ChangeType(o, etype));
                 }
             }
-            var list = o as IEnumerable<INetSerializable>;
-            if (list != null)
+            if (o is IEnumerable<INetSerializable> list)
             {
                 var size = 4;
                 foreach (var item in list)
                     size += item?.AllocSize ?? 0;
                 return size;
             }
-            var arr = o as Array;
-            if (arr != null)
+            if (o is Array arr)
             {
                 var etype = aType.GetElementType();
                 if (TypeIsINet(etype))
@@ -110,16 +106,14 @@ namespace PNet
         /// <param name="msg"></param>
         public void Serialize(object o, NetMessage msg)
         {
-            var iser = o as INetSerializable;
-            if (iser != null)
+            if (o is INetSerializable iser)
             {
                 iser.OnSerialize(msg);
                 return;
             }
 
             var aType = o.GetType();
-            Serializer ser;
-            if (_serializers.TryGetValue(aType, out ser))
+            if (_serializers.TryGetValue(aType, out var ser))
             {
                 ser.Serialize(o, msg);
                 return;
@@ -140,16 +134,14 @@ namespace PNet
                     return;
                 }
             }
-            var list = o as IEnumerable<INetSerializable>;
-            if (list != null)
+            if (o is IEnumerable<INetSerializable> list)
             {
                 msg.Write(list.Count());
                 foreach (var item in list)
                     item.OnSerialize(msg);
                 return;
             }
-            var arr = o as Array;
-            if (arr != null)
+            if (o is Array arr)
             {
                 var etype = aType.GetElementType();
                 if (TypeIsINet(etype))
@@ -167,8 +159,7 @@ namespace PNet
             msg.Write(count);
             foreach (var aro in array)
             {
-                var iser = aro as INetSerializable;
-                if (iser != null)
+                if (aro is INetSerializable iser)
                 {
                     iser.OnSerialize(msg);
                 }
@@ -216,10 +207,9 @@ namespace PNet
 
         bool TypeIsINet(Type type)
         {
-            bool value;
-            if (TypesAreINet.TryGetValue(type, out value))
+            if (TypesAreINet.TryGetValue(type, out var value))
                 return value;
-            
+
             var isInet = type.GetInterfaces().Contains(typeof(INetSerializable));
             TypesAreINet[type] = isInet;
             return isInet;
@@ -242,8 +232,7 @@ namespace PNet
                 }
             }
 
-            Deserializer deserializer;
-            if (_deserializers.TryGetValue(type, out deserializer))
+            if (_deserializers.TryGetValue(type, out var deserializer))
             {
                 return deserializer.Deserialize(message);
             }
@@ -291,8 +280,7 @@ namespace PNet
 
         internal static object GetNew(Type type)
         {
-            Func<object> del;
-            if (Ctors.TryGetValue(type, out del))
+            if (Ctors.TryGetValue(type, out var del))
                 return del();
 
             if (type.HasDefaultConstructor())

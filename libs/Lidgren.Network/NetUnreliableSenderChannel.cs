@@ -71,13 +71,12 @@ namespace Lidgren.Network
 			int queued = m_queuedSends.Count;
 			while (queued > 0 && num > 0)
 			{
-				NetOutgoingMessage om;
-				if (m_queuedSends.TryDequeue(out om))
-				{
-					ExecuteSend(om);
-					queued--;
-				}
-				num--;
+                if (m_queuedSends.TryDequeue(out var om))
+                {
+                    ExecuteSend(om);
+                    queued--;
+                }
+                num--;
 			}
 		}
 

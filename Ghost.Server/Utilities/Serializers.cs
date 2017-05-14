@@ -130,13 +130,12 @@ namespace Ghost.Server.Utilities
 
         public void OnSerialize(NetMessage message)
         {
-            InventoryItem item; WearablePosition wSlots = WearablePosition.None; DB_Item dbItem;
-            message.Write(Constants.MaxWornItems);
+            WearablePosition wSlots = WearablePosition.None; message.Write(Constants.MaxWornItems);
             for (int index = 0, count = m_data.Count; index < Constants.MaxWornItems; index++)
             {
                 if (count > 0)
                 {
-                    if (m_data.TryGetValue(index, out item) && DataMgr.Select(item.Id, out dbItem))
+                    if (m_data.TryGetValue(index, out var item) && DataMgr.Select(item.Id, out DB_Item dbItem))
                     {
                         count--;
                         item.OnSerialize(message);
@@ -264,13 +263,12 @@ namespace Ghost.Server.Utilities
         public void OnSerialize(NetMessage message)
         {
             var items = m_data.Items;
-            InventorySlot slot;
             message.Write(m_data.InventorySlots);
             for (int index = 0, count = items.Count; index < m_data.InventorySlots; index++)
             {
                 if (count > 0)
                 {
-                    if (items.TryGetValue(index, out slot))
+                    if (items.TryGetValue(index, out var slot))
                     {
                         count--;
                         slot.OnSerialize(message);

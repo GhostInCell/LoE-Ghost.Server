@@ -90,15 +90,13 @@ namespace PNetR
 
         internal void CallRpc(NetMessage msg, NetMessageInfo info)
         {
-            byte rpc;
-            if (!msg.ReadByte(out rpc))
+            if (!msg.ReadByte(out var rpc))
             {
                 Debug.LogError("Malformed static rpc - no rpc id");
                 return;
             }
-            
-            RpcProcessor processor;
-            if (!_rpcProcessors.TryGetValue(rpc, out processor))
+
+            if (!_rpcProcessors.TryGetValue(rpc, out var processor))
             {
                 Debug.LogWarning($"Unhandled player RPC {rpc}");
                 info.ContinueForwarding = false;

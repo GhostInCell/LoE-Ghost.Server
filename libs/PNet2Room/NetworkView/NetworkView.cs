@@ -138,10 +138,9 @@ namespace PNetR
         /// <returns></returns>
         public T Proxy<T>()
         {
-            INetComponentProxy proxy;
-            if (_proxies.TryGetValue(typeof (T), out proxy))
+            if (_proxies.TryGetValue(typeof(T), out var proxy))
             {
-                var ret = (T) proxy;
+                var ret = (T)proxy;
                 proxy.CurrentRpcMode = RpcMode.AllOrdered;
                 proxy.CurrentSendTo = null;
                 return ret;
@@ -156,8 +155,7 @@ namespace PNetR
         /// <returns></returns>
         public T Proxy<T>(RpcMode mode)
         {
-            INetComponentProxy proxy;
-            if (_proxies.TryGetValue(typeof(T), out proxy))
+            if (_proxies.TryGetValue(typeof(T), out var proxy))
             {
                 var ret = (T)proxy;
                 proxy.CurrentRpcMode = mode;
@@ -169,10 +167,9 @@ namespace PNetR
 
         public T Proxy<T>(Player player)
         {
-            INetComponentProxy proxy;
-            if (_proxies.TryGetValue(typeof (T), out proxy))
+            if (_proxies.TryGetValue(typeof(T), out var proxy))
             {
-                var ret = (T) proxy;
+                var ret = (T)proxy;
                 proxy.CurrentSendTo = player;
                 proxy.CurrentRpcMode = RpcMode.ServerOrdered;
                 return ret;
@@ -214,9 +211,9 @@ namespace PNetR
             }
         }
 
-        public void RemoveProxy<T>()
+        public void RemoveProxy<TProxy>()
         {
-            var ptype = typeof (T);
+            var ptype = typeof(TProxy);
             var faces = ptype.GetInterfaces();
             _proxies.Remove(ptype);
             foreach (var face in faces)
@@ -360,8 +357,7 @@ namespace PNetR
                 return;
             }
 
-            RpcProcessor processor;
-            if (!_rpcProcessors.TryGetValue(id, out processor))
+            if (!_rpcProcessors.TryGetValue(id, out var processor))
             {
                 Debug.LogWarning($"Networkview on {componentId}: unhandled RPC {rpc}");
                 info.ContinueForwarding = false;

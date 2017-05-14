@@ -107,7 +107,7 @@ namespace Ghost.Server.Core.Movment
         private void RPC_02_202(NetMessage arg1, NetMessageInfo arg2)
         {
             _lastAnimation = arg1.ReadInt32();
-            _flying = (_player.Char.Pony.Race == 3 && _lastAnimation == 1);
+            _flying = (_player.Char.Pony.Race == CharacterType.Pegasus && _lastAnimation == 1);
             _creature.View.Rpc<Int32Serializer>(2, 202, RpcMode.OthersOrdered, _lastAnimation);
         }
         #endregion
@@ -155,13 +155,13 @@ namespace Ghost.Server.Core.Movment
                     {
                         switch (_player.Char.Pony.Race)
                         {
-                            case 1:
+                            case CharacterType.EarthPony:
                                 _running = _speed > 6f;
                                 break;
-                            case 2:
+                            case CharacterType.Unicorn:
                                 _running = _speed > 5.15f;
                                 break;
-                            case 3:
+                            case CharacterType.Pegasus:
                                 if (_flying)
                                     _running = _speed > 18f;
                                 else

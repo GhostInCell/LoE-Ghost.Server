@@ -1,6 +1,4 @@
-﻿using Ghost.Server.Core;
-using Ghost.Server.Core.Servers;
-using Ghost.Server.Core.Structs;
+﻿using Ghost.Server.Core.Servers;
 using Ghost.Server.Utilities;
 using PNet;
 using PNetR;
@@ -52,15 +50,15 @@ namespace Ghost.Server.Scripts.Servers
             }
         }
         [Rpc(15, false)]//Local Chat 
-        private void RPC_015(NetMessage arg1, NetMessageInfo arg2)
+        private async void RPC_015(NetMessage arg1, NetMessageInfo arg2)
         {
             var time = DateTime.Now;
             var icon = ChatIcon.None;
             ChatType type = (ChatType)arg1.ReadByte();
             string message = arg1.ReadString();
             var player = _server[arg2.Sender.Id];
-            DB_Ban mute;
-            if (player.IsMuted(out mute))
+            var mute = await player.IsMuted();
+            if (mute.End > time)
             {
                 player.MuteMsg(mute);
                 return;

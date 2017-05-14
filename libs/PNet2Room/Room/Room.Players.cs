@@ -13,29 +13,26 @@ namespace PNetR
 
         internal void PlayerWillConnect(NetMessage msg)
         {
-            Guid guid;
-            if (!msg.ReadGuid(out guid))
+            if (!msg.ReadGuid(out var guid))
             {
                 Debug.LogError("Got a message for expecting a player, but no token was sent");
                 return;
             }
             var id = msg.ReadUInt16();
-            
-            WaitingToken wait;
-            if (_waitingTokens.TryGetValue(guid, out wait))
+
+            if (_waitingTokens.TryGetValue(guid, out var wait))
             {
                 wait.Id = id;
             }
             else
             {
-                _waitingTokens[guid] = new WaitingToken {Id = id};
+                _waitingTokens[guid] = new WaitingToken { Id = id };
             }
         }
 
         private void VerifyPlayerConnecting(Player player, Guid token)
         {
-            WaitingToken wait;
-            if (_waitingTokens.TryGetValue(token, out wait))
+            if (_waitingTokens.TryGetValue(token, out var wait))
             {
                 wait.Player = player;
             }

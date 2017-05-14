@@ -103,8 +103,7 @@ namespace PNetS
 
         public Room GetRoom(Guid roomId)
         {
-            Room room;
-            _rooms.TryGetValue(roomId, out room);
+            _rooms.TryGetValue(roomId, out var room);
             return room;
         }
 
@@ -153,8 +152,7 @@ namespace PNetS
         {
             if (room == null) return;
 
-            Room removed;
-            _rooms.TryRemove(room.Guid, out removed);
+            _rooms.TryRemove(room.Guid, out var removed);
             if (removed != room)
             {
                 Debug.LogError($"Removed {removed}, but we were attempting to remove {room}");
@@ -276,8 +274,7 @@ namespace PNetS
         /// <returns></returns>
         public Player GetPlayer(ushort id)
         {
-            Player player;
-            _players.TryGetValue(id, out player);
+            _players.TryGetValue(id, out var player);
             return player;
         }
 
@@ -294,8 +291,7 @@ namespace PNetS
         private readonly ConcurrentDictionary<IPEndPoint, DateTime> _passCooldowns = new ConcurrentDictionary<IPEndPoint, DateTime>();
         private bool CheckPassCooldown(IPEndPoint sender)
         {
-            DateTime existing;
-            if (!_passCooldowns.TryGetValue(sender, out existing))
+            if (!_passCooldowns.TryGetValue(sender, out var existing))
                 return true;
             if (DateTime.Now > existing)
             {
@@ -316,7 +312,6 @@ namespace PNetS
         private bool ApproveRoomConnection(IPEndPoint sender, NetMessage msg, out string denyReason, out Room room)
         {
             room = null;
-            string roomId;
             if (msg == null)
             {
                 Debug.LogWarning($"Denied room connection to {sender} - no auth message");
@@ -324,15 +319,14 @@ namespace PNetS
                 return false;
             }
 
-            if (!msg.ReadString(out roomId))
+            if (!msg.ReadString(out var roomId))
             {
                 Debug.LogWarning($"Denied room connection to {sender} - no room id");
                 denyReason = DtoRMsgs.NoRoomId;
                 return false;
             }
 
-            int iAuthType;
-            if (!msg.ReadInt32(out iAuthType))
+            if (!msg.ReadInt32(out var iAuthType))
             {
                 Debug.LogWarning($"Denied room connection to {sender} - didn't send a room auth type. Are they an old version?");
                 denyReason = DtoRMsgs.NotAllowed + " - no authtype";
@@ -340,16 +334,14 @@ namespace PNetS
             }
             var authType = (RoomAuthType)iAuthType;
 
-            string authData;
-            if (!msg.ReadString(out authData))
+            if (!msg.ReadString(out var authData))
             {
                 Debug.LogWarning($"Denied room connection to {sender} - didn't send auth data. Are they an old version?");
                 denyReason = DtoRMsgs.NotAllowed + " - no authdata";
                 return false;
             }
 
-            string userDefinedAuthData;
-            if (!msg.ReadString(out userDefinedAuthData))
+            if (!msg.ReadString(out var userDefinedAuthData))
             {
                 Debug.LogWarning($"Denied room connection to {sender} - didn't send udef auth data. Are they an old version?");
                 denyReason = DtoRMsgs.NotAllowed + " - no udef authdata";
@@ -389,9 +381,8 @@ namespace PNetS
         Approved:
             var port = msg.ReadInt32();
             var maxPlayers = msg.ReadInt32();
-            string supAddr;
             IPAddress supIp = null;
-            if (msg.ReadString(out supAddr) && !string.IsNullOrWhiteSpace(supAddr))
+            if (msg.ReadString(out var supAddr) && !string.IsNullOrWhiteSpace(supAddr))
             {
                 if (!IPAddress.TryParse(supAddr, out supIp))
                 {

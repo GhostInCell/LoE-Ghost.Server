@@ -11,24 +11,21 @@ namespace PNetR
 
         public void Rpc<TComp>(byte rpcId, RpcMode mode)
         {
-            byte cid;
-            if (!GetCompId<TComp>(out cid)) return;
+            if (!GetCompId<TComp>(out var cid)) return;
             Rpc(cid, rpcId, mode);
         }
 
         public void Rpc<TComp>(byte rpcId, RpcMode mode, params object[] args)
             where TComp : class
         {
-            byte cid;
-            if (!GetCompId<TComp>(out cid)) return;
+            if (!GetCompId<TComp>(out var cid)) return;
             Rpc(cid, rpcId, mode, args);
         }
 
         public void Rpc<TComp>(byte rpcId, Player player, params object[] args)
             where TComp : class
         {
-            byte cid;
-            if (!GetCompId<TComp>(out cid)) return;
+            if (!GetCompId<TComp>(out var cid)) return;
 
             Rpc(cid, rpcId, player, args);
         }
@@ -144,18 +141,16 @@ namespace PNetR
         void Enqueue(AContinuation continuation, ushort playerId)
         {
             //todo: timeouts
-            Dictionary<int, Queue<AContinuation>> playerQueues;
 
-            if (!_continuations.TryGetValue(playerId, out playerQueues))
+            if (!_continuations.TryGetValue(playerId, out var playerQueues))
             {
                 playerQueues = new Dictionary<int, Queue<AContinuation>>();
                 _continuations[playerId] = playerQueues;
             }
 
-            Queue<AContinuation> queue;
             var id = (continuation.ComponentId << 8) | continuation.RpcId;
 
-            if (!playerQueues.TryGetValue(id, out queue))
+            if (!playerQueues.TryGetValue(id, out var queue))
             {
                 queue = new Queue<AContinuation>();
                 playerQueues[id] = queue;
@@ -166,14 +161,12 @@ namespace PNetR
 
         AContinuation Dequeue(ushort playerId, byte compId, byte rpcId)
         {
-            Dictionary<int, Queue<AContinuation>> playerQueues;
-            if (!_continuations.TryGetValue(playerId, out playerQueues))
+            if (!_continuations.TryGetValue(playerId, out var playerQueues))
                 return null;
 
-            Queue<AContinuation> queue;
             var id = (compId << 8) | rpcId;
 
-            if (!playerQueues.TryGetValue(id, out queue))
+            if (!playerQueues.TryGetValue(id, out var queue))
                 return null;
 
             return queue.Count > 0 ? queue.Dequeue() : null;

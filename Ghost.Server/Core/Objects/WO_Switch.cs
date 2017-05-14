@@ -43,7 +43,7 @@ namespace Ghost.Server.Core.Objects
             m_view = null;
         }
         #endregion
-        private void RPC_001(NetMessage arg1, NetMessageInfo arg2)
+        private async void RPC_001(NetMessage arg1, NetMessageInfo arg2)
         {
             MapPlayer player = _server[arg2.Sender.Id];
             if (player == null)
@@ -53,7 +53,7 @@ namespace Ghost.Server.Core.Objects
             }
             if (Vector3.DistanceSquared(m_data.Position, player.Object.Position) <= Constants.MaxInteractionDistanceSquared)
             {
-                if (player.PrepareForMapSwitch())
+                if (await player.PrepareForMapSwitch())
                 {
                     player.User.Spawn = (ushort)m_data.Data02;
                     arg2.Sender.SynchNetData();

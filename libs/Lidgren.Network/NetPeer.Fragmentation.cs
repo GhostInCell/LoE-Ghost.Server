@@ -83,22 +83,18 @@ namespace Lidgren.Network
 		{
 			VerifyNetworkThread();
 
-			//
-			// read fragmentation header and combine fragments
-			//
-			int group;
-			int totalBits;
-			int chunkByteSize;
-			int chunkNumber;
-			int ptr = NetFragmentationHelper.ReadHeader(
-				im.m_data, 0,
-				out group,
-				out totalBits,
-				out chunkByteSize,
-				out chunkNumber
-			);
+            //
+            // read fragmentation header and combine fragments
+            //
+            int ptr = NetFragmentationHelper.ReadHeader(
+im.m_data, 0,
+out var group,
+out var totalBits,
+out var chunkByteSize,
+out var chunkNumber
+);
 
-			NetException.Assert(im.LengthBytes > ptr);
+            NetException.Assert(im.LengthBytes > ptr);
 
 			NetException.Assert(group > 0);
 			NetException.Assert(totalBits > 0);
@@ -117,23 +113,21 @@ namespace Lidgren.Network
 				return;
 			}
 
-			Dictionary<int, ReceivedFragmentGroup> groups;
-			if (!m_receivedFragmentGroups.TryGetValue(im.SenderConnection, out groups))
-			{
-				groups = new Dictionary<int, ReceivedFragmentGroup>();
-				m_receivedFragmentGroups[im.SenderConnection] = groups;
-			}
+            if (!m_receivedFragmentGroups.TryGetValue(im.SenderConnection, out var groups))
+            {
+                groups = new Dictionary<int, ReceivedFragmentGroup>();
+                m_receivedFragmentGroups[im.SenderConnection] = groups;
+            }
 
-			ReceivedFragmentGroup info;
-			if (!groups.TryGetValue(group, out info))
-			{
-				info = new ReceivedFragmentGroup();
-				info.Data = new byte[totalBytes];
-				info.ReceivedChunks = new NetBitVector(totalNumChunks);
-				groups[group] = info;
-			}
+            if (!groups.TryGetValue(group, out var info))
+            {
+                info = new ReceivedFragmentGroup();
+                info.Data = new byte[totalBytes];
+                info.ReceivedChunks = new NetBitVector(totalNumChunks);
+                groups[group] = info;
+            }
 
-			info.ReceivedChunks[chunkNumber] = true;
+            info.ReceivedChunks[chunkNumber] = true;
 			//info.LastReceived = (float)NetTime.Now;
 
 			// copy to data

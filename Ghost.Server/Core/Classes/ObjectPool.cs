@@ -12,11 +12,9 @@ namespace Ghost.Server.Core.Classes
 
         public ObjectPool(int capacity, Func<T> generator, Action<T> cleaner = null)
         {
-            if (generator == null)
-                throw new ArgumentNullException(nameof(generator));
             m_cleaner = cleaner;
             m_capacity = capacity;
-            m_generator = generator;
+            m_generator = generator ?? throw new ArgumentNullException(nameof(generator));
             m_pool = new ConcurrentQueue<T>();
             while (capacity > 0)
             {
@@ -27,8 +25,7 @@ namespace Ghost.Server.Core.Classes
 
         public T Pop()
         {
-            T item;
-            if (m_pool.TryDequeue(out item))
+            if (m_pool.TryDequeue(out var item))
                 return item;
             return m_generator();
         }

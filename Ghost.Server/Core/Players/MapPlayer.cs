@@ -11,6 +11,7 @@ using PNetR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Ghost.Server.Core.Players
 {
@@ -50,7 +51,7 @@ namespace Ghost.Server.Core.Players
         {
             get
             {
-                return $"Player[{_player.Id}|{_user.ID}:{_user.Name}]: map {_server.Map.Name} id {_server.ID}{Environment.NewLine}Character[{_char?.ID}|{_char?.Level}|{_char.Pony?.Name}]: at pos <{_object?.Position.X:0.00}, {_object?.Position.Y:0.00}, {_object?.Position.Z:0.00}> rot {_object?.Rotation.Y:0.00} stats {(_object?.Stats as PlayerStatsMgr)?.Status}";
+                return $"Player[{_player.Id}|{_user.ID}:{_user.Name}]: map {_server.Map.Name} id {_server.ID}{Environment.NewLine}Character[{_char?.Id}|{_char?.Level}|{_char.Pony?.Name}]: at pos <{_object?.Position.X:0.00}, {_object?.Position.Y:0.00}, {_object?.Position.Z:0.00}> rot {_object?.Rotation.Y:0.00} stats {(_object?.Stats as PlayerStatsMgr)?.Status}";
             }
         }
         public Player Player
@@ -228,27 +229,23 @@ namespace Ghost.Server.Core.Players
             _player.Rpc(12, m_choices);
         }
 
-        public bool PrepareForMapSwitch()
+        public Task<bool> PrepareForMapSwitch()
         {
             _save.Destroy();
             _char.Data.Position = _object.Position;
             _char.Data.Rotation = _object.Rotation;
-            return CharsMgr.SaveCharacter(_char);
+            return CharsMgr.SaveCharacterAsync(_char);
         }
 
-        public bool IsMuted(out DB_Ban mute)
+        public async Task<DB_Ban> IsMuted()
         {
             var now = DateTime.Now;
             if (now >= m_mute_chek)
             {
-                if (ServerDB.SelectBan(_user.ID, _player.EndPoint.Address, BanType.Mute, now, out m_mute))
-                {
-
-                }
+                m_mute = await ServerDB.SelectBanAsync(_user.ID, _player.EndPoint.Address, BanType.Mute, now);
                 m_mute_chek = now.AddSeconds(Constants.MuteCheckDelay);
             }
-            mute = m_mute;
-            return m_mute.End > now;
+            return m_mute;
         }
     
         public void Disconnect(string message)
@@ -273,10 +270,11 @@ namespace Ghost.Server.Core.Players
             _player.Rpc(17, new DialogNetData(message, talker.NPC.Pony.Name, talker.SGuid, emotion));
         }
         #region Events Handlers
-        private void Player_NetUserDataChanged(Player obj)
+        private async void Player_NetUserDataChanged(Player obj)
         {
             if (_char != null) return;
-            if (!CharsMgr.SelectCharacter(_user.Char, out _char))
+            _char = await ServerDB.SelectCharacterAsync(_user.Char);
+            if (_char == null)
                 _player.Error($"Error while retrieving pony");
             else
             {
@@ -287,10 +285,10 @@ namespace Ghost.Server.Core.Players
                 _trade = _object.GetComponent<TradeMgr>();
                 _skills = _object.GetComponent<SkillsMgr>();
                 SetPet();
-                _user.Map = _server.Map.ID;
+                _user.Map = _server.Map.Id;
                 _char.Map = _user.Map;
                 _player.SynchNetData();
-                CharsMgr.SaveCharacter(_char);
+                await CharsMgr.SaveCharacterAsync(_char);
             }
         }
         #endregion

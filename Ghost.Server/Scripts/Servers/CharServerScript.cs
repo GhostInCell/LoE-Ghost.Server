@@ -30,30 +30,36 @@ namespace Ghost.Server.Scripts.Servers
         }
 
         [Rpc(1)]
-        private void RPC_001(NetMessage arg1, NetMessageInfo arg2)
+        private async void RPC_001(NetMessage arg1, NetMessageInfo arg2)
         {
             var player = m_server[arg2.Sender.Id]; var pony = new PonyData();
-            var index = arg1.ReadInt32(); pony.OnDeserialize(arg1); DB_Map map;
-            if (player.UpdateCharacter(index, pony))
+            var index = arg1.ReadInt32();
+            pony.OnDeserialize(arg1);
+            if (CharsMgr.CheckName(pony.Name))
             {
-                var character = index == -1 ? player.Data.Last() : player.Data[index];
-                player.User.Char = character.ID;
-                if (character.Map == 0 || !DataMgr.Select(character.Map, out map))
-                    arg2.Sender.ChangeRoom(StartMaps[pony.Race]);
+                if (await player.UpdateCharacter(index, pony))
+                {
+                    var character = index == -1 ? player.Data.Last() : player.Data[index];
+                    player.User.Char = character.Id;
+                    if (character.Map == 0 || !DataMgr.Select(character.Map, out DB_Map map))
+                        arg2.Sender.ChangeRoom(StartMaps[(byte)pony.Race]);
+                    else
+                        arg2.Sender.ChangeRoom(map.Name);
+                    arg2.Sender.SynchNetData();
+                }
                 else
-                    arg2.Sender.ChangeRoom(map.Name);
-                arg2.Sender.SynchNetData();
+                    arg2.Sender.Error("Error while saving pony, most likely character isn't unique.");
             }
             else
-                arg2.Sender.Error("Error while saving pony, most likely character isn't unique.");
+                arg2.Sender.Error($"Name \"{pony.Name}\" disapproved!");
         }
 
         [Rpc(2)]
-        private void RPC_002(NetMessage arg1, NetMessageInfo arg2)
+        private async void RPC_002(NetMessage arg1, NetMessageInfo arg2)
         {
             var player = m_server[arg2.Sender.Id];
             var index = arg1.ReadInt32();
-            if (player.DeleteCharacter(index))
+            if (await player.DeleteCharacter(index))
                 player.SendPonies();
             else
                 arg2.Sender.Error("Error while deleting pony");

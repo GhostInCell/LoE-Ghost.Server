@@ -1,6 +1,7 @@
 ﻿using Ghost.Server.Utilities;
 using PNet;
 using ProtoBuf;
+using System;
 
 namespace Ghost.Server.Core.Classes
 {
@@ -15,8 +16,6 @@ namespace Ghost.Server.Core.Classes
         [ProtoMember(2)]
         public uint Color01;
         [ProtoMember(3)]
-        //public uint Color02;
-        //[ProtoMember(4)]
         public int[] Sockets;
 
         public bool IsEmpty

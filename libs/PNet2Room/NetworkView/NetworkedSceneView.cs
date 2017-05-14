@@ -66,8 +66,7 @@ namespace PNetR
 
         internal void CallRpc(byte rpcID, NetMessage message, NetMessageInfo info)
         {
-            RpcProcessor processor;
-            if (_rpcProcessors.TryGetValue(rpcID, out processor))
+            if (_rpcProcessors.TryGetValue(rpcID, out var processor))
             {
                 info.ContinueForwarding = processor.DefaultContinueForwarding;
 

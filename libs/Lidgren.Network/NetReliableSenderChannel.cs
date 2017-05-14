@@ -115,13 +115,12 @@ namespace Lidgren.Network
 			int queued = m_queuedSends.Count;
 			while (num > 0 && queued > 0)
 			{
-				NetOutgoingMessage om;
-				if (m_queuedSends.TryDequeue(out om))
-				{
-					ExecuteSend(now, om);
-					queued--;
-				}
-				num--;
+                if (m_queuedSends.TryDequeue(out var om))
+                {
+                    ExecuteSend(now, om);
+                    queued--;
+                }
+                num--;
 				NetException.Assert(num == GetAllowedSends());
 			}
 		}

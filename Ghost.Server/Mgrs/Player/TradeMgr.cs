@@ -241,12 +241,14 @@ namespace Ghost.Server.Mgrs.Player
             else if (sender.Trade._requested && sender.Trade._target == _player)
             {
                 _target = sender;
-                m_state = new TradingState();
-                m_state.InProgress = true;
-                m_state.ONE = _player;
-                m_state.TWO = sender;
-                m_state.ONE_Offer = m_offer;
-                m_state.TWO_Offer = sender.Trade.m_offer;
+                m_state = new TradingState()
+                {
+                    InProgress = true,
+                    ONE = _player,
+                    TWO = sender,
+                    ONE_Offer = m_offer,
+                    TWO_Offer = sender.Trade.m_offer
+                };
                 sender.Trade.m_state = m_state;
                 sender.Trade._regected.Destroy();
                 sender.Trade._trading = _trading = true;
@@ -282,8 +284,7 @@ namespace Ghost.Server.Mgrs.Player
                     {
                         lock (_lock)
                         {
-                            TradingStack current;
-                            if (m_offer.TryGetValue(slot.Item.Id, out current))
+                            if (m_offer.TryGetValue(slot.Item.Id, out var current))
                                 current.Amount += slot.Amount;
                             else
                                 m_offer[slot.Item.Id] = slot;

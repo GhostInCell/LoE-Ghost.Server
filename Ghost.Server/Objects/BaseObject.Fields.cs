@@ -17,8 +17,7 @@ namespace Ghost.Server.Objects
         public bool TryGetField<TKey, TValue>(TKey key, out TValue value)
             where TKey : struct, IConvertible
         {
-            object objValue;
-            if (m_fields.TryGetValue(key.ToInt32(CultureInfo.InvariantCulture), out objValue) && objValue is TValue)
+            if (m_fields.TryGetValue(key.ToInt32(CultureInfo.InvariantCulture), out var objValue) && objValue is TValue)
             {
                 value = (TValue)objValue;
                 return true;

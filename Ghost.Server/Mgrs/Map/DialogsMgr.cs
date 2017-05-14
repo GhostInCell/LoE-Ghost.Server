@@ -25,8 +25,7 @@ namespace Ghost.Server.Mgrs.Map
         }
         public DialogScript GetDialog(ushort id)
         {
-            DialogScript ret; DB_Dialog data;
-            if (!_dialogs.TryGetValue(id, out ret) && DataMgr.Select(id, out data))
+            if (!_dialogs.TryGetValue(id, out var ret) && DataMgr.Select(id, out DB_Dialog data))
                 _dialogs[id] = ret = new DialogScript(data, _server);
             return ret;
         }
@@ -36,16 +35,15 @@ namespace Ghost.Server.Mgrs.Map
         }
         public void RemoveClone(ushort id, MapPlayer owner)
         {
-            Dictionary<ushort, DialogScript> clones;
-            if (_dClones.TryGetValue(owner.Player.Id, out clones))
+            if (_dClones.TryGetValue(owner.Player.Id, out var clones))
                 clones.Remove(id);
         }
         public DialogScript GetClone(ushort id, MapPlayer owner)
         {
-            Dictionary<ushort, DialogScript> clones; DialogScript original, ret = null;
-            if (_dialogs.TryGetValue(id, out original))
+            DialogScript ret = null;
+            if (_dialogs.TryGetValue(id, out var original))
             {
-                if (_dClones.TryGetValue(owner.Player.Id, out clones))
+                if (_dClones.TryGetValue(owner.Player.Id, out var clones))
                 {
                     if (!clones.TryGetValue(id, out ret))
                         clones[id] = ret = new DialogScript(original);

@@ -9,6 +9,7 @@ using Ghost.Server.Utilities.Interfaces;
 using PNet;
 using PNetR;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -38,7 +39,7 @@ namespace Ghost.Server.Core.Servers
         private MapServerScript _script;
         private NetworkConfiguration _cfg;
         private List<IUpdatable> _updatables;
-        private Dictionary<ushort, MapPlayer> _players;
+        private ConcurrentDictionary<ushort, MapPlayer> m_players;
         public string ID
         {
             get
@@ -69,7 +70,7 @@ namespace Ghost.Server.Core.Servers
         {
             get
             {
-                return $"{_name}[{_id}]: Status {_room.ServerStatus}; Port: {_port}; Players: {_players.Count}/{_maxPlayers}; Updatable: {_updatables.Count}";
+                return $"{_name}[{_id}]: Status {_room.ServerStatus}; Port: {_port}; Players: {m_players.Count}/{_maxPlayers}; Updatable: {_updatables.Count}";
             }
         }
         public bool IsRunning
@@ -89,7 +90,7 @@ namespace Ghost.Server.Core.Servers
         }
         public MapPlayer this[ushort index]
         {
-            get { MapPlayer entry; _players.TryGetValue(index, out entry); return entry; }
+            get { m_players.TryGetValue(index, out var entry); return entry; }
         }
         public MapServer(DB_Map map)
         {
@@ -98,7 +99,7 @@ namespace Ghost.Server.Core.Servers
             _id = "########";
             _dialogs = new DialogsMgr(this);
             _updatables = new List<IUpdatable>();
-            _players = new Dictionary<ushort, MapPlayer>();
+            m_players = new ConcurrentDictionary<ushort, MapPlayer>();
             _name = _map.Name.Normalize(Constants.MaxServerName);
 #if DEBUG
             if (!(Debug.Logger is DefaultConsoleLogger))
@@ -117,9 +118,9 @@ namespace Ghost.Server.Core.Servers
             _room.PlayerRemoved -= Room_PlayerRemoved;
             _room.ConstructNetData -= Room_ConstructNetData;
             _room.ServerStatusChanged -= Room_ServerStatusChanged;
-            foreach (var item in _players.Values)
+            foreach (var item in GetPlayers())
                 item.Destroy();
-            _players.Clear();
+            m_players.Clear();
             _objects.Destroy();
             lock (_updatables)
                 _updatables.Clear();
@@ -151,7 +152,7 @@ namespace Ghost.Server.Core.Servers
         }
         public IEnumerable<MapPlayer> GetPlayers()
         {
-            return _players.Values.ToArray();
+            return m_players.Select(x => x.Value);
         }
         #region Server Loop
         private void ServerLoop()
@@ -203,15 +204,25 @@ namespace Ghost.Server.Core.Servers
         }
         private void Room_PlayerAdded(Player obj)
         {
-            _players[obj.Id] = new MapPlayer(obj, this);
-            ServerLogger.LogServer(this, $" Player {obj.Id} added");
+            var player = new MapPlayer(obj, this);
+            if (m_players.TryAdd(obj.Id, player))
+                ServerLogger.LogServer(this, $" Player {obj.Id} added");
+            else
+            {
+                player.Disconnect("Something is terribly wrong!");
+                player.Destroy();
+                ServerLogger.LogServer(this, $" Couldn't add player with id {obj.Id}");
+            }
         }
         private void Room_PlayerRemoved(Player obj)
         {
-            _players[obj.Id].Destroy();
-            _players.Remove(obj.Id);
-            _dialogs.RemoveClones(obj.Id);
-            ServerLogger.LogServer(this, $" Player {obj.Id} removed");
+            if (m_players.TryRemove(obj.Id, out var player))
+            {
+                player.Destroy();
+                _dialogs.RemoveClones(obj.Id);
+                ServerLogger.LogServer(this, $" Player {obj.Id} removed");
+            }
+            else ServerLogger.LogServer(this, $" Couldn't remove player with id {obj.Id}");
         }
         private INetSerializable Room_ConstructNetData()
         {
@@ -232,8 +243,10 @@ namespace Ghost.Server.Core.Servers
             _room.PlayerRemoved += Room_PlayerRemoved;
             _room.ConstructNetData += Room_ConstructNetData;
             _room.ServerStatusChanged += Room_ServerStatusChanged;
-            _rLoop = new Thread(ServerLoop);
-            _rLoop.IsBackground = true;
+            _rLoop = new Thread(ServerLoop)
+            {
+                IsBackground = true
+            };
             _running = true;
             _rLoop.Start();
         }

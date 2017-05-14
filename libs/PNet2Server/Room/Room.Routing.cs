@@ -11,14 +11,9 @@ namespace PNetS
     {
         internal void ConsumeData(NetMessage msg)
         {
-            byte header;
-            if (!msg.ReadByte(out header))
+            if (!msg.ReadByte(out var header))
                 return;
-            MsgType msgType;
-            BroadcastMode broadcast;
-            ReliabilityMode reliability;
-            SubMsgType sub;
-            RpcUtils.ReadHeader(header, out reliability, out broadcast, out msgType, out sub);
+            RpcUtils.ReadHeader(header, out var reliability, out var broadcast, out var msgType, out var sub);
 
             switch (msgType)
             {
@@ -36,8 +31,7 @@ namespace PNetS
 
         private void ProcessStatic(BroadcastMode broadcast, ReliabilityMode reliability, NetMessage msg)
         {
-            byte rpc;
-            if (!msg.ReadByte(out rpc))
+            if (!msg.ReadByte(out var rpc))
                 return;
             CallRpc(rpc, msg);
 
@@ -55,8 +49,7 @@ namespace PNetS
 
         private void ProcessInternal(BroadcastMode broadcast, ReliabilityMode reliability, NetMessage msg)
         {
-            byte rpc;
-            if (!msg.ReadByte(out rpc))
+            if (!msg.ReadByte(out var rpc))
             {
                 Debug.LogError("Malformed internal rpc");
                 return;

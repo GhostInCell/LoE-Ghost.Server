@@ -87,19 +87,18 @@ namespace Lidgren.Network
 
 			ipOrHost = ipOrHost.Trim();
 
-			IPAddress ipAddress = null;
-			if (IPAddress.TryParse(ipOrHost, out ipAddress))
-			{
-				if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
-				{
-					callback(ipAddress);
-					return;
-				}
-				throw new ArgumentException("This method will not currently resolve other than ipv4 addresses");
-			}
+            if (IPAddress.TryParse(ipOrHost, out var ipAddress))
+            {
+                if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    callback(ipAddress);
+                    return;
+                }
+                throw new ArgumentException("This method will not currently resolve other than ipv4 addresses");
+            }
 
-			// ok must be a host name
-			IPHostEntry entry;
+            // ok must be a host name
+            IPHostEntry entry;
 			try
 			{
 				Dns.BeginGetHostEntry(ipOrHost, delegate(IAsyncResult result)
@@ -165,16 +164,15 @@ namespace Lidgren.Network
 
 			ipOrHost = ipOrHost.Trim();
 
-			IPAddress ipAddress = null;
-			if (IPAddress.TryParse(ipOrHost, out ipAddress))
-			{
-				if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
-					return ipAddress;
-				throw new ArgumentException("This method will not currently resolve other than ipv4 addresses");
-			}
+            if (IPAddress.TryParse(ipOrHost, out var ipAddress))
+            {
+                if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
+                    return ipAddress;
+                throw new ArgumentException("This method will not currently resolve other than ipv4 addresses");
+            }
 
-			// ok must be a host name
-			try
+            // ok must be a host name
+            try
 			{
 				var addresses = Dns.GetHostAddresses(ipOrHost);
 				if (addresses == null)
@@ -410,10 +408,9 @@ namespace Lidgren.Network
 		/// </summary>
 		public static bool IsLocal(IPAddress remote)
 		{
-			IPAddress mask;
-			IPAddress local = GetMyAddress(out mask);
+            IPAddress local = GetMyAddress(out var mask);
 
-			if (mask == null)
+            if (mask == null)
 				return false;
 
 			uint maskBits = BitConverter.ToUInt32(mask.GetAddressBytes(), 0);

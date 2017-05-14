@@ -4,12 +4,15 @@ namespace Ghost.Server.Core.Structs
 {
     public struct DB_Map
     {
-        public int ID;
-        public string Name;
-        public MapFlags Flags;
+        public readonly int Id;
+
+        public readonly string Name;
+
+        public readonly MapFlags Flags;
+
         public DB_Map(int id, string name, byte flags)
         {
-            ID = id;
+            Id = id;
             Name = name;
             Flags = (MapFlags)flags;
         }

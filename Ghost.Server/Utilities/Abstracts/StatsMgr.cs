@@ -65,7 +65,7 @@ namespace Ghost.Server.Utilities.Abstracts
         {
             get
             {
-                StatValue ret; _stats.TryGetValue(stat, out ret); return ret;
+                _stats.TryGetValue(stat, out var ret); return ret;
             }
         }
         public event Action<CreatureObject, float> OnHealReceived;
@@ -103,10 +103,9 @@ namespace Ghost.Server.Utilities.Abstracts
         }
         public void RemoveAuraEffects(uint guid)
         {
-            List<Tuple<Stats, float, bool>> aura;
             lock (_modifersLock)
             {
-                if (_auras.TryGetValue(guid, out aura))
+                if (_auras.TryGetValue(guid, out var aura))
                 {
                     foreach (var item in aura)
                         if (item.Item3)
@@ -120,8 +119,8 @@ namespace Ghost.Server.Utilities.Abstracts
         }
         public void RemoveModifier(TimedModifer modifer)
         {
-            StatValue hStat; Stats stat = modifer.Stat;
-            if (_stats.TryGetValue(stat, out hStat))
+            Stats stat = modifer.Stat;
+            if (_stats.TryGetValue(stat, out var hStat))
             {
                 lock (_modifersLock)
                 {
@@ -136,16 +135,14 @@ namespace Ghost.Server.Utilities.Abstracts
         }
         public void IncreaseCurren(Stats stat, float value)
         {
-            StatValue hStat;
-            if (!_stats.TryGetValue(stat, out hStat))
+            if (!_stats.TryGetValue(stat, out var hStat))
                 return;
             hStat.IncreaseCurrent(value);
             _view.SendStatUpdate(stat, hStat);
         }
         public void DecreaseCurrent(Stats stat, float value)
         {
-            StatValue hStat;
-            if (!_stats.TryGetValue(stat, out hStat))
+            if (!_stats.TryGetValue(stat, out var hStat))
                 return;
             hStat.DecreaseCurrent(value);
             _view.SendStatUpdate(stat, hStat);
@@ -159,8 +156,7 @@ namespace Ghost.Server.Utilities.Abstracts
         }
         public void AddModifier(Stats stat, float value, float time, bool isMul)
         {
-            StatValue mStat;
-            if (_stats.TryGetValue(stat, out mStat))
+            if (_stats.TryGetValue(stat, out var mStat))
             {
                 lock (_modifersLock)
                 {
@@ -175,12 +171,11 @@ namespace Ghost.Server.Utilities.Abstracts
         }
         public void AddAuraEffect(uint guid, Stats stat, float value, bool isMul)
         {
-            StatValue mStat; List<Tuple<Stats, float, bool>> aura;
-            if (_stats.TryGetValue(stat, out mStat))
+            if (_stats.TryGetValue(stat, out var mStat))
             {
                 lock (_modifersLock)
                 {
-                    if (!_auras.TryGetValue(guid, out aura))
+                    if (!_auras.TryGetValue(guid, out var aura))
                         _auras[guid] = aura = new List<Tuple<Stats, float, bool>>();
                     aura.Add(new Tuple<Stats, float, bool>(stat, value, isMul));
                     if (isMul)
@@ -208,8 +203,7 @@ namespace Ghost.Server.Utilities.Abstracts
         #region RPC Handlers
         private void RPC_051(NetMessage arg1, NetMessageInfo arg2)
         {
-            Stats stat = (Stats)arg1.ReadByte(); StatValue rStat;
-            _view.SendStatFullUpdate(stat, _stats.TryGetValue(stat, out rStat) ? rStat : StatValue.Zero);
+            Stats stat = (Stats)arg1.ReadByte(); _view.SendStatFullUpdate(stat, _stats.TryGetValue(stat, out var rStat) ? rStat : StatValue.Zero);
         }
         private void RPC_053(NetMessage arg1, NetMessageInfo arg2)
         {

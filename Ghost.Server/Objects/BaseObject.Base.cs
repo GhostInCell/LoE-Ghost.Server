@@ -73,7 +73,8 @@ namespace Ghost.Server.Objects
         public BaseObject()
         {
             m_managers = ArrayEx.Empty<BaseManager>();
-            m_handlers = new Dictionary<uint, object>();
+            m_fields = new Dictionary<int, object>();
+            m_handlers = new Dictionary<uint, object>();       
         }
 
         public void Spawn()

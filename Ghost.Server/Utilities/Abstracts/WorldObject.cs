@@ -3,6 +3,7 @@ using Ghost.Server.Mgrs.Map;
 using Ghost.Server.Utilities.Interfaces;
 using System;
 using System.Numerics;
+using System.Threading;
 
 namespace Ghost.Server.Utilities.Abstracts
 {
@@ -87,13 +88,23 @@ namespace Ghost.Server.Utilities.Abstracts
         {
             add
             {
-                if (_updatable?.Length == 0 && eventOnUpdate == null)
+                if (_updatable.Length == 0 && eventOnUpdate == null)
                     _server.RigisterOnUpdate(this);
-                eventOnUpdate += value;
+                Action<TimeSpan> eventHandler = eventOnUpdate, comparand;
+                do
+                {
+                    comparand = eventHandler;
+                    eventHandler = Interlocked.CompareExchange(ref eventOnUpdate, comparand + value, comparand);
+                } while (eventHandler != comparand);
             }
             remove
             {
-                eventOnUpdate -= value;
+                Action<TimeSpan> eventHandler = eventOnUpdate, comparand;
+                do
+                {
+                    comparand = eventHandler;
+                    eventHandler = Interlocked.CompareExchange(ref eventOnUpdate, comparand - value, comparand);
+                } while (eventHandler != comparand);
                 if (_updatable.Length == 0 && eventOnUpdate == null)
                     _server.RemoveFromUpdate(this);
             }
@@ -109,7 +120,8 @@ namespace Ghost.Server.Utilities.Abstracts
             _lock = new object();
             _server = manager.Server;
             _guid = guid | (uint)(TypeID << 16);
-            _components = new ObjectComponent[Constants.ArrayCapacity];
+            _updatable = ArrayEx.Empty<IUpdatable>();
+            _components = ArrayEx.Empty<ObjectComponent>();
             _manager.Add(this);
         }
         public void Spawn()
@@ -172,20 +184,18 @@ namespace Ghost.Server.Utilities.Abstracts
         {
             if (_initialized)
                 throw new NotImplementedException();
-            _components[_componentsLength++] = component;
-            if (_componentsLength == _components.Length)
-                Array.Resize(ref _components, _components.Length + Constants.ArrayCapacity);
+            ArrayEx.Add(ref _components, ref _componentsLength, component);
         }
         private void Initialize()
         {
             int index = 0;
             Array.Resize(ref _components, _componentsLength);
-            _updatable = new IUpdatable[_components.Length];
             foreach (var component in _components)
+            {
                 if (component is IUpdatable)
-                    _updatable[index++] = (IUpdatable)component;
-            if (_updatable.Length != index)
-                Array.Resize(ref _updatable, index);
+                    ArrayEx.Add(ref _updatable, ref index, (IUpdatable)component);
+            }
+            Array.Resize(ref _updatable, index);
             OnInitialize?.Invoke();
             _initialized = true;
         }

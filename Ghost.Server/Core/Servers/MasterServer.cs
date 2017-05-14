@@ -1,12 +1,12 @@
 ﻿using Ghost.Server.Core.Classes;
 using Ghost.Server.Core.Players;
-using Ghost.Server.Core.Structs;
 using Ghost.Server.Mgrs;
 using Ghost.Server.Utilities;
 using Ghost.Server.Utilities.Interfaces;
 using PNet;
 using PNetS;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -15,7 +15,6 @@ namespace Ghost.Server.Core.Servers
 {
     public class MasterServer : IServer
     {
-        private static readonly object _lock = new object();
         private bool _running;
         private PNetS.Server _server;
         private static readonly Guid _guid;
@@ -29,8 +28,8 @@ namespace Ghost.Server.Core.Servers
         }
         private Timer m_bans_timer;
         private NetworkConfiguration _cfg;
-        private Dictionary<int, MasterPlayer> _users;
-        private Dictionary<ushort, MasterPlayer> _players;
+        private ConcurrentDictionary<int, MasterPlayer> m_users;
+        private ConcurrentDictionary<ushort, MasterPlayer> m_players;
 
         public string ID
         {
@@ -58,7 +57,7 @@ namespace Ghost.Server.Core.Servers
             get
             {
                 return $"{Name}: Status: {(_running ? "Running" : "Stopped")}; Port: {_server?.Configuration.PlayerListenPort}; Dispatcher: {_server?.Configuration.RoomListenPort}; " +
-                    $"Rooms: {_server?.RoomCount}/{_server?.Configuration.MaximumRooms}; Players: {_players.Count}/{_server?.Configuration.MaximumPlayers}";
+                    $"Rooms: {_server?.RoomCount}/{_server?.Configuration.MaximumRooms}; Players: {m_players.Count}/{_server?.Configuration.MaximumPlayers}";
             }
         }
         public PNetS.Server Server
@@ -78,14 +77,14 @@ namespace Ghost.Server.Core.Servers
 
         public MasterPlayer this[ushort index]
         {
-            get { MasterPlayer entry; _players.TryGetValue(index, out entry); return entry; }
+            get { m_players.TryGetValue(index, out var entry); return entry; }
         }
 
         public MasterServer()
         {
             m_bans_timer = new Timer(DeleteBansTimer, null, Timeout.Infinite, Timeout.Infinite);
-            _users = new Dictionary<int, MasterPlayer>();
-            _players = new Dictionary<ushort, MasterPlayer>();
+            m_users = new ConcurrentDictionary<int, MasterPlayer>();
+            m_players = new ConcurrentDictionary<ushort, MasterPlayer>();
             ServersMgr.Add(this);
 #if DEBUG
             if (!(Debug.Logger is DefaultConsoleLogger))
@@ -104,10 +103,10 @@ namespace Ghost.Server.Core.Servers
             _server.VerifyPlayer -= MasterServer_VerifyPlayer;
             _server.PlayerRemoved -= MasterServer_PlayerRemoved;
             _server.ConstructNetData -= MasterServer_ConstructNetData;
-            foreach (var item in _players.Values)
+            foreach (var item in m_players.Values)
                 item.Destroy();
-            _players.Clear();
-            _users.Clear();
+            m_players.Clear();
+            m_users.Clear();
             _server.Shutdown();
             _cfg = null;
             _server = null;
@@ -136,11 +135,11 @@ namespace Ghost.Server.Core.Servers
         }
         public bool IsOnline(int id)
         {
-            lock (_lock) return _users.ContainsKey(id);
+            return m_users.ContainsKey(id);
         }
         public IEnumerable<MasterPlayer> GetPlayers()
         {
-            lock (_lock) return _players.Values.ToArray();
+            return m_players.Select(x => x.Value);
         }
         public IEnumerable<MasterPlayer> FindPlayers(string request)
         {
@@ -152,20 +151,20 @@ namespace Ghost.Server.Core.Servers
 
         public bool TryGetById(ushort id, out MasterPlayer player)
         {
-            lock (_lock) return _players.TryGetValue(id, out player);
+            return m_players.TryGetValue(id, out player);
         }
         public bool TryGetByUserId(int id, out MasterPlayer player)
         {
-            lock (_lock)return _users.TryGetValue(id, out player);
+            return m_users.TryGetValue(id, out player);
         }
         public bool TryGetByName(string name, out MasterPlayer player)
         {
-            lock (_lock) player = _players.Values.FirstOrDefault(x => x.User.Name == name);
+            player = GetPlayers().FirstOrDefault(x => x.User.Name == name);
             return player != null;
         }
         public bool TryGetByPonyName(string name, out MasterPlayer player)
         {
-            lock (_lock) player = _players.Values.FirstOrDefault(x => x.Char?.Pony.Name == name);
+            player = GetPlayers().FirstOrDefault(x => x.Char?.Pony.Name == name);
             return player != null;
         }
         private void ReloadCFG()
@@ -177,19 +176,18 @@ namespace Ghost.Server.Core.Servers
                 maximumPlayers: Configs.Get<int>(Configs.Server_MaxPlayers));
         }
 
-        private void DeleteBansTimer(object state)
+        private async void DeleteBansTimer(object state)
         {
-            ServerDB.DeleateAllOutdatedBans();
+            await ServerDB.DeleateAllOutdatedBansAsync();
             m_bans_timer.Change(15 * 60 * 1000, Timeout.Infinite);
         }
 
         #region RPC Handlers
         private void RPC_255(NetMessage message)
         {
-            MasterPlayer player;
             var id = message.ReadUInt16();
             var reason = message.ReadString();
-            if (TryGetById(id, out player))
+            if (TryGetById(id, out var player))
                 player.Player.Disconnect(reason);
         }
         #endregion
@@ -198,70 +196,71 @@ namespace Ghost.Server.Core.Servers
         {
             obj.SubscribeToRpc(255, RPC_255);
         }
+
         private void MasterServer_RoomRemoved(Room obj)
         {
-            Room[] rooms; int count;
+            int count;
             obj.ClearSubscriptions();
-            if (_server.TryGetRooms(obj.RoomId, out rooms) && (count = rooms.Sum(x => x.MaxPlayers - x.PlayerCount)) > 0)
+            if (_server.TryGetRooms(obj.RoomId, out var rooms) && (count = rooms.Sum(x => x.MaxPlayers - x.PlayerCount)) > 0)
+            {
                 foreach (var item in obj.Players)
                 {
                     if (--count >= 0)
                         item.ChangeRoom(obj.RoomId);
                     else item.Disconnect("Room shut down");
                 }
+            }
             ServerLogger.LogServer(this, $"Room {obj.RoomId.Normalize(Constants.MaxServerName)}[{obj.Guid}] removed");
         }
+
         private void MasterServer_PlayerAdded(Player obj)
         {
             var player = new MasterPlayer(obj, this);
-            lock (_lock)
+            if (!m_players.TryAdd(obj.Id, player) || !m_users.TryAdd(player.User.ID, player))
             {
-                _players[obj.Id] = player;
-                _users[player.User.ID] = player;
+                ServerLogger.LogServer(this, $"Couldn't add player with id {obj.Id} user {player.User.ID}");
+                obj.Disconnect("Something is terribly wrong!");
+                player.Destroy();
+                return;
             }
             obj.ChangeRoom(Constants.Characters);
         }
+
         private void MasterServer_PlayerRemoved(Player obj)
         {
-            MasterPlayer player;
-            lock (_lock)
-            {
-                if (_players.TryGetValue(obj.Id, out player))
-                {
-                    _players.Remove(obj.Id);
-                    _users.Remove(player.User.ID);
-                    player.Destroy();
-                }
-            }
+            if (m_players.TryRemove(obj.Id, out var player) && m_users.TryRemove(player.User.ID, out player))
+                player.Destroy();
+            else ServerLogger.LogServer(this, $"Couldn't remove player with id {obj.Id}");
         }
 
         private INetSerializable MasterServer_ConstructNetData()
         {
             return new UserData();
         }
-        private void MasterServer_VerifyPlayer(Player arg1, NetMessage arg2)
+
+        private async void MasterServer_VerifyPlayer(Player arg1, NetMessage arg2)
         {
-            UserData sr_user = arg1.TnUser<UserData>(); DB_User user;
+            UserData sr_user = arg1.TnUser<UserData>(); 
             var Name = arg2.ReadString();
-            var SID = arg2.ReadString();
+            var Sid = arg2.ReadString();
             var id = arg2.ReadInt32();
-            MasterPlayer player;
-            DB_Ban ban;
             var time = DateTime.Now;
-            if (ServerDB.SelectBan(id, arg1.EndPoint.Address, BanType.Ban, time, out ban))
+            var ban = await ServerDB.SelectBanAsync(id, arg1.EndPoint.Address, BanType.Ban, time);
+            if (!ban.IsEmpty)
             {
                 arg1.Disconnect($"You're Banned!{Environment.NewLine}" +
                     $"Reason: {ban.Reason}{Environment.NewLine}" +
                     $"Ban ends in: {ban.End - time:dd\\.hh\\:mm\\:ss}");
                 return;
             }
-            if (_users.ContainsKey(id) && TryGetByUserId(id, out player))
+            if (TryGetByUserId(id, out var player))
                 player.Player.Disconnect("Only one session!");
-            if (ServerDB.SelectUser(id, out user))
+            var user = await ServerDB.SelectUserAsync(id);
+            if (!user.IsEmpty)
             {
-                if (user.SID == SID && user.Name == Name)
+                if (user.Session == Sid && user.Name == Name)
                 {
-                    sr_user.ID = user.ID;
+                    sr_user.ID = user.Id;
                     sr_user.Name = user.Name;
                     sr_user.Access = user.Access;
                     arg1.AllowConnect();

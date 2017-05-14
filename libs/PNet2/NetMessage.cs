@@ -54,8 +54,7 @@ namespace PNet
         /// <returns></returns>
         public bool ReadGuid(out Guid guid)
         {
-            byte[] bytes;
-            if (!ReadBytes(16, out bytes))
+            if (!ReadBytes(16, out var bytes))
             {
                 guid = default(Guid);
                 return false;

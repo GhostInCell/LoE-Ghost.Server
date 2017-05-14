@@ -143,8 +143,7 @@ namespace PNetR
             }
             else
             {
-                Player oplayer;
-                _players.TryGetValue(player.Id, out oplayer);
+                _players.TryGetValue(player.Id, out var oplayer);
                 if (oplayer != player)
                 {
                     Debug.Log($"Finished removing player {player} over contention with id {player.Id}");
@@ -166,8 +165,7 @@ namespace PNetR
         private void AddPlayer(NetConnection senderConnection)
         {
             var player = GetPlayer(senderConnection);
-            Player oldPlayer;
-            _players.TryGetValue(player.Id, out oldPlayer);
+            _players.TryGetValue(player.Id, out var oldPlayer);
             if (oldPlayer != null)
             {
                 Debug.LogWarning($"Contention over id {player.Id} : {oldPlayer} is still connected, but should probably not be. Disconnecting");

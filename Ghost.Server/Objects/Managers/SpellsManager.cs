@@ -154,8 +154,7 @@ namespace Ghost.Server.Objects.Managers
 
         public bool CanCast(int id, int upgrade)
         {
-            int mUpgrade;
-            return m_gcd <= 0 && m_spells.TryGetValue(id, out mUpgrade) && mUpgrade == upgrade && !m_cooldowns.Contains(id) && m_cast.CanCast(id, upgrade);
+            return m_gcd <= 0 && m_spells.TryGetValue(id, out var mUpgrade) && mUpgrade == upgrade && !m_cooldowns.Contains(id) && m_cast.CanCast(id, upgrade);
         }
 
         #region RPC Handlers

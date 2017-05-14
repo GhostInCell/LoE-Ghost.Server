@@ -6,18 +6,22 @@ namespace Ghost.Server.Core.Structs
 {
     public struct DB_Ban
     {
-        public int ID;
-        public int BanBy;
-        public string Reason;
-        public IPAddress Ip;
-        public int User;
-        public DateTime Start;
-        public DateTime End;
-        public BanType Type;
+        public static readonly DB_Ban Empty = new DB_Ban(-1, 0, null, 0, 0, DateTime.MinValue, DateTime.MinValue, 0);
+
+        public readonly int Id;
+        public readonly int BanBy;
+        public readonly string Reason;
+        public readonly IPAddress Ip;
+        public readonly int User;
+        public readonly DateTime Start;
+        public readonly DateTime End;
+        public readonly BanType Type;
+
+        public bool IsEmpty => Id == Empty.Id;
 
         public DB_Ban(int id, int by, string reason, long ip, int user, DateTime start, DateTime end, byte type)
         {
-            ID = id;
+            Id = id;
             BanBy = by;
             Reason = reason;
             Ip = ip == -1 ? null : new IPAddress(ip);

@@ -181,26 +181,24 @@ namespace Lidgren.Network
 					continue;
 				numUnsent += sendChan.QueuedSendsCount;
 
-				var relSendChan = sendChan as NetReliableSenderChannel;
-				if (relSendChan != null)
-				{
-					for (int i = 0; i < relSendChan.m_storedMessages.Length; i++)
-						if ((relSendChan.m_usedStoredMessages & ((ulong)1 << i)) != 0)
-							numStored++;
-				}
-			}
+                if (sendChan is NetReliableSenderChannel relSendChan)
+                {
+                    for (int i = 0; i < relSendChan.m_storedMessages.Length; i++)
+                        if ((relSendChan.m_usedStoredMessages & ((ulong)1 << i)) != 0)
+                            numStored++;
+                }
+            }
 
 			int numWithheld = 0;
 			foreach (NetReceiverChannelBase recChan in m_connection.m_receiveChannels)
 			{
-				var relRecChan = recChan as NetReliableOrderedReceiver;
-				if (relRecChan != null)
-				{
-					for (int i = 0; i < relRecChan.m_withheldMessages.Length; i++)
-						if (relRecChan.m_withheldMessages[i] != null)
-							numWithheld++;
-				}
-			}
+                if (recChan is NetReliableOrderedReceiver relRecChan)
+                {
+                    for (int i = 0; i < relRecChan.m_withheldMessages.Length; i++)
+                        if (relRecChan.m_withheldMessages[i] != null)
+                            numWithheld++;
+                }
+            }
 
 			bdr.AppendLine("Unsent messages: " + numUnsent);
 			bdr.AppendLine("Stored messages: " + numStored);

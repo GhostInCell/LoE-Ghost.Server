@@ -5,21 +5,29 @@ using Ghost.Server.Utilities;
 using Ghost.Server.Utilities.Interfaces;
 using PNetR;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System;
+
 namespace Ghost.Server.Core.Players
 {
     public class CharPlayer : IPlayer
     {
         private Player _player;
+
         private UserData _user;
+
         private CharServer _server;
-        private List<Character> _data;
+
+        private List<Character> m_data;
+
         public string Status
         {
             get
             {
-                return $"Player[{_player.Id}|{_user.ID}:{_user.Name}]: at server {_server.Name}[{_server.ID}] loaded {_data?.Count ?? 0} characters";
+                return $"Player[{_player.Id}|{_user.ID}:{_user.Name}]: at server {_server.Name}[{_server.ID}] loaded {m_data?.Count ?? 0} characters";
             }
         }
+
         public Player Player
         {
             get
@@ -27,6 +35,7 @@ namespace Ghost.Server.Core.Players
                 return _player;
             }
         }
+
         public UserData User
         {
             get
@@ -34,6 +43,7 @@ namespace Ghost.Server.Core.Players
                 return _user;
             }
         }
+
         IServer IPlayer.Server
         {
             get
@@ -41,6 +51,7 @@ namespace Ghost.Server.Core.Players
                 return _server;
             }
         }
+
         public CharServer Server
         {
             get
@@ -48,10 +59,12 @@ namespace Ghost.Server.Core.Players
                 return _server;
             }
         }
+
         public List<Character> Data
         {
-            get { return _data; }
+            get { return m_data; }
         }
+
         public CharPlayer(Player player, CharServer server)
         {
             _server = server;
@@ -59,52 +72,65 @@ namespace Ghost.Server.Core.Players
             _user = player.TnUser<UserData>();
             _player.NetUserDataChanged += Player_NetUserDataChanged;
         }
+
         public void Destroy()
         {
             _player.NetUserDataChanged -= Player_NetUserDataChanged;
-            _data.RemoveAll(x => x.ID == _user.Char);
-            CharsMgr.RemoveCharacters(_data);
-            _data.Clear();
-            _data = null;
+            m_data.Clear();
+            m_data = null;
             _user = null;
             _player = null;
             _server = null;
         }
-        public bool DeleteCharacter(int index)
+
+        public void Disconnect(string message)
         {
-            if (index >= _data.Count || index < 0) return false;
-            if (!CharsMgr.DeleteCharacter(_data[index].ID))
+            _server.Room.Server.Rpc(255, _player.Id, message);
+        }
+
+        public async Task<bool> DeleteCharacter(int index)
+        {
+            if (index >= m_data.Count || index < 0) return false;
+            if (!await ServerDB.DeleteCharacterAsync(m_data[index].Id))
                 return false;
-            _data.RemoveAt(index);
+            m_data.RemoveAt(index);
             return true;
         }
-        public bool UpdateCharacter(int index, PonyData pony)
+
+        public async Task<bool> UpdateCharacter(int index, PonyData pony)
         {
-            if (_data == null || index >= _data.Count) return false;
-            Character character;
+            if (m_data == null || index >= m_data.Count) return false;
+            CharsMgr.ValidatePonyData(pony);
             if (index == -1)
             {
-                if (_data.Count >= CharsMgr.MaxChars) return false;
-                if (!CharsMgr.CreateCharacter(_user.ID, pony, out character))
+                if (m_data.Count >= CharsMgr.MaxChars) return false;
+                var character = await ServerDB.CreateCharacterAsync(_user.ID, pony);
+                if (character == null)
                     return false;
-                _data.Add(character);
+                m_data.Add(character);
             }
             else
             {
 
-                character = _data[index];
+                var character = m_data[index];
                 character.Pony = pony;
-                if (!ServerDB.UpdatePony(character))
+                if (!await ServerDB.UpdatePonyAsync(character))
                     return false;
             }
             return true;
         }
+
         #region Events Handlers
-        private void Player_NetUserDataChanged(Player obj)
+        private async void Player_NetUserDataChanged(Player obj)
         {
-            if (_data != null) return;
-            if (CharsMgr.SelectAllUserCharacters(_user.ID, out _data))
+            if (m_data != null) return;
+            m_data = await ServerDB.SelectAllUserCharactersAsync(_user.ID);
+            if (m_data != null)
+            {
+                foreach (var item in m_data)
+                    CharsMgr.ValidatePonyData(item.Pony);
                 this.SendPonies();
+            }
             else
                 _player.Error($"Error while retrieving ponies from data base");
         }

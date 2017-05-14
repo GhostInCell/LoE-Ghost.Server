@@ -24,8 +24,7 @@ namespace PNet
 
         public static DynamicMethodDelegate GetDynamicDelegate(MethodInfo info)
         {
-            DynamicMethodDelegate value;
-            if (!RpcCallers.TryGetValue(info.MethodHandle, out value)) return null;
+            if (!RpcCallers.TryGetValue(info.MethodHandle, out var value)) return null;
             return value;
         }
 
@@ -48,18 +47,15 @@ namespace PNet
 
             ForEachRpc<TAttr>(objType, (method, parms, parmTypes, tokens) =>
             {
-                var msgDel = 
-                    Delegate.CreateDelegate(typeof (Action<NetMessage>), obj, method, false) as Action<NetMessage>;
-                if (msgDel != null)
+                if (Delegate.CreateDelegate(typeof(Action<NetMessage>), obj, method, false) is Action<NetMessage> msgDel)
                     SubscribeTokens(provider, tokens, msgDel);
-                else if (method.ReturnType == typeof (void))
+                else if (method.ReturnType == typeof(void))
                 {
                     //the function isn't a deserializer function, so attempt to make our own from INetSerializable/default serializers
                     if (!CheckParameterSerialization<BadInfoType>(serializer, method, parms, logger))
                         return;
 
-                    DynamicMethodDelegate pre;
-                    RpcCallers.TryGetValue(method.MethodHandle, out pre);
+                    RpcCallers.TryGetValue(method.MethodHandle, out var pre);
 
                     //prevent the open delegate from needing a reference to this networkview?
                     var deser = new RpcDeserializer<BadInfoType>(method, obj, serializer, parmTypes, @delegate: pre);
@@ -94,9 +90,7 @@ namespace PNet
 
             ForEachRpc<TAttr>(objType, (method, parms, parmTypes, tokens) =>
             {
-                var msgDel =
-                    Delegate.CreateDelegate(typeof(Action<NetMessage, TInfo>), obj, method, false) as Action<NetMessage, TInfo>;
-                if (msgDel != null)
+                if (Delegate.CreateDelegate(typeof(Action<NetMessage, TInfo>), obj, method, false) is Action<NetMessage, TInfo> msgDel)
                     SubscribeTokens(provider, tokens, msgDel);
                 else if (method.ReturnType == typeof(void))
                 {
@@ -104,8 +98,7 @@ namespace PNet
                     if (!CheckParameterSerialization<TInfo>(serializer, method, parms, logger))
                         return;
 
-                    DynamicMethodDelegate pre;
-                    RpcCallers.TryGetValue(method.MethodHandle, out pre);
+                    RpcCallers.TryGetValue(method.MethodHandle, out var pre);
 
                     //prevent the open delegate from needing a reference to this networkview?
                     var deser = new RpcDeserializer<TInfo>(method, obj, serializer, parmTypes, @delegate: pre);
@@ -138,23 +131,17 @@ namespace PNet
             var objType = obj.GetType();
 
             //logger.Info("Subscribing " + obj);
-            byte compId;
-            if (!objType.GetNetId(out compId))
+            if (!objType.GetNetId(out var compId))
                 throw new Exception("Cannot subscribe type " + objType + " as it lacks the NetComponentAttribute");
 
             ForEachRpc<TAttr>(objType, (method, parms, parmTypes, tokens) =>
             {
-                var msgDel =
-                    Delegate.CreateDelegate(typeof(Action<NetMessage, TInfo>), obj, method, false) as Action<NetMessage, TInfo>;
-                if (msgDel != null)
+                if (Delegate.CreateDelegate(typeof(Action<NetMessage, TInfo>), obj, method, false) is Action<NetMessage, TInfo> msgDel)
                 {
                     SubscribeTokens(provider, compId, tokens, msgDel);
                     return;
                 }
-                var fncDel =
-                    Delegate.CreateDelegate(typeof(Func<NetMessage, TInfo, object>), obj, method, false)
-                        as Func<NetMessage, TInfo, object>;
-                if (fncDel != null)
+                if (Delegate.CreateDelegate(typeof(Func<NetMessage, TInfo, object>), obj, method, false) is Func<NetMessage, TInfo, object> fncDel)
                 {
                     SubscribeTokens(provider, compId, tokens, fncDel);
                     return;
@@ -169,8 +156,7 @@ namespace PNet
                     var filterProviders = GetAttributes<IComponentRpcFilterProvider<TInfo>>(objType, method, parmTypes);
                     var filters = filterProviders.Select(fprov => fprov.Value.GetFilter(provider)).ToArray();
 
-                    DynamicMethodDelegate pre;
-                    RpcCallers.TryGetValue(method.MethodHandle, out pre);
+                    RpcCallers.TryGetValue(method.MethodHandle, out var pre);
                     //prevent the open delegate from needing a reference to this networkview?
                     var deser = new RpcDeserializer<TInfo>(method, obj, serializer, parmTypes, filters, pre);
                     msgDel = deser.Message;
@@ -187,8 +173,7 @@ namespace PNet
                         return;
                     }
 
-                    DynamicMethodDelegate pre;
-                    RpcCallers.TryGetValue(method.MethodHandle, out pre);
+                    RpcCallers.TryGetValue(method.MethodHandle, out var pre);
                     var deser = new RpcDeserializer<TInfo>(method, obj, serializer, parmTypes, @delegate: pre);
                     fncDel = deser.ReturnMessage;
                     SubscribeTokens(provider, compId, tokens, fncDel);
@@ -214,23 +199,17 @@ namespace PNet
             var objType = obj.GetType();
 
             //logger.Info("Subscribing " + obj);
-            byte compId;
-            if (!objType.GetNetId(out compId))
+            if (!objType.GetNetId(out var compId))
                 throw new Exception("Cannot subscribe type " + objType + " as it lacks the NetComponentAttribute");
 
             ForEachRpc<TAttr>(objType, (method, parms, parmTypes, tokens) =>
             {
-                var msgDel =
-                    Delegate.CreateDelegate(typeof(Action<NetMessage>), obj, method, false) as Action<NetMessage>;
-                if (msgDel != null)
+                if (Delegate.CreateDelegate(typeof(Action<NetMessage>), obj, method, false) is Action<NetMessage> msgDel)
                 {
                     SubscribeTokens(provider, compId, tokens, msgDel);
                     return;
                 }
-                var fncDel =
-                Delegate.CreateDelegate(typeof(Func<NetMessage, object>), obj, method, false)
-                    as Func<NetMessage, object>;
-                if (fncDel != null)
+                if (Delegate.CreateDelegate(typeof(Func<NetMessage, object>), obj, method, false) is Func<NetMessage, object> fncDel)
                 {
                     SubscribeTokens(provider, compId, tokens, fncDel);
                     return;
@@ -242,8 +221,7 @@ namespace PNet
                     if (!CheckParameterSerialization<BadInfoType>(serializer, method, parms, logger))
                         return;
 
-                    DynamicMethodDelegate pre;
-                    RpcCallers.TryGetValue(method.MethodHandle, out pre);
+                    RpcCallers.TryGetValue(method.MethodHandle, out var pre);
                     //prevent the open delegate from needing a reference to this networkview?
                     var deser = new RpcDeserializer<BadInfoType>(method, obj, serializer, parmTypes, @delegate: pre);
                     msgDel = deser.Message;
@@ -260,8 +238,7 @@ namespace PNet
                         return;
                     }
 
-                    DynamicMethodDelegate pre;
-                    RpcCallers.TryGetValue(method.MethodHandle, out pre);
+                    RpcCallers.TryGetValue(method.MethodHandle, out var pre);
 
                     var deser = new RpcDeserializer<object>(method, obj, serializer, parmTypes, @delegate: pre);
                     fncDel = deser.ReturnMessage;
@@ -283,9 +260,7 @@ namespace PNet
         {
             foreach (var method in GetMethods(objType))
             {
-                Type[] parmTypes;
-                ParameterInfo[] parms;
-                GetParameters(method, out parms, out parmTypes);
+                GetParameters(method, out var parms, out var parmTypes);
                 var tokens = GetAttributes<TAttr>(objType, method, parmTypes);
                 if (tokens.Count <= 0) continue;
                 action(method, parms, parmTypes, tokens);
@@ -437,9 +412,8 @@ namespace PNet
                 var interMethod = inter.GetMethod(method.Name, parmTypes);
                 if (interMethod == null) continue;
 
-                byte icid;
                 byte? icidn = null;
-                if (inter.GetNetId(out icid))
+                if (inter.GetNetId(out var icid))
                     icidn = icid;
 
                 var tokes =
@@ -480,7 +454,7 @@ namespace PNet
             {
                 if (token.Value == null)
                     continue;
-                provider.SubscribeToRpc(token.Key.HasValue ? token.Key.Value : compId, token.Value.RpcId, del, defaultContinueForwarding: token.Value.DefaultContinueForwarding);
+                provider.SubscribeToRpc(token.Key ?? compId, token.Value.RpcId, del, defaultContinueForwarding: token.Value.DefaultContinueForwarding);
             }
         }
 
@@ -491,7 +465,7 @@ namespace PNet
             {
                 if (token.Value == null)
                     continue;
-                provider.SubscribeToRpc(token.Key.HasValue ? token.Key.Value : compId, token.Value.RpcId, del);
+                provider.SubscribeToRpc(token.Key ?? compId, token.Value.RpcId, del);
             }
         }
 
@@ -502,7 +476,7 @@ namespace PNet
             {
                 if (token.Value == null)
                     continue;
-                provider.SubscribeToFunc(token.Key.HasValue ? token.Key.Value : compId, token.Value.RpcId, fncDel);
+                provider.SubscribeToFunc(token.Key ?? compId, token.Value.RpcId, fncDel);
             }
         }
 
@@ -513,7 +487,7 @@ namespace PNet
             {
                 if (token.Value == null)
                     continue;
-                provider.SubscribeToFunc(token.Key.HasValue ? token.Key.Value : compId, token.Value.RpcId, fncDel);
+                provider.SubscribeToFunc(token.Key ?? compId, token.Value.RpcId, fncDel);
             }
         }
         #endregion
@@ -586,7 +560,7 @@ namespace PNet
     {
         void AddProxy(T proxy);
         void RemoveProxy(T proxy);
-        void RemoveProxy<T>();
+        void RemoveProxy<TProxy>();
         void ClearProxies();
         TRet Proxy<TRet>();
     }

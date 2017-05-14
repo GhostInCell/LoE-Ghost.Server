@@ -99,8 +99,7 @@ namespace PNetS
 
                 if (status == NetConnectionStatus.Connected)
                 {
-                    var room = sConn.Tag as Room;
-                    if (room != null)
+                    if (sConn.Tag is Room room)
                     {
                         AddRoom(room);
                         UpdateRoomsOfNewRoom(room);
@@ -136,9 +135,7 @@ namespace PNetS
 
         private void LidgrenApproveRoomConnection(NetConnection sConn, IPEndPoint sender, NetMessage msg)
         {
-            Room room;
-            string denyReason;
-            if (!ApproveRoomConnection(sender, msg, out denyReason, out room))
+            if (!ApproveRoomConnection(sender, msg, out var denyReason, out var room))
             {
                 sConn.Deny(denyReason);
                 return;

@@ -45,8 +45,7 @@ namespace PNetR
 
         public NetworkView Get(ushort id)
         {
-            NetworkView view;
-            _networkViews.TryGetValue(id, out view);
+            _networkViews.TryGetValue(id, out var view);
             return view;
         }
 
@@ -57,8 +56,7 @@ namespace PNetR
         /// <returns></returns>
         public bool Contains(NetworkView view)
         {
-            NetworkView oview;
-            if (_networkViews.TryGetValue(view.Id, out oview))
+            if (_networkViews.TryGetValue(view.Id, out var oview))
                 return oview == view;
             return false;
         }
@@ -83,8 +81,7 @@ namespace PNetR
             var comp = msg.ReadByte();
             var rpc = msg.ReadByte();
 
-            NetworkView view;
-            var supposedToHave = _networkViews.TryGetValue(id, out view);
+            var supposedToHave = _networkViews.TryGetValue(id, out var view);
             if (supposedToHave && view != null)
                 view.IncomingRpc(comp, rpc, msg, info, sub);
             else
@@ -118,8 +115,7 @@ namespace PNetR
                 return;
             }
             var id = msg.ReadUInt16();
-            NetworkView view;
-            if (_networkViews.TryGetValue(id, out view))
+            if (_networkViews.TryGetValue(id, out var view))
                 view.IncomingStream(msg, sender);
             else
             {
@@ -136,8 +132,7 @@ namespace PNetR
             }
 
             var id = msg.ReadUInt16();
-            NetworkView view;
-            if (_networkViews.TryGetValue(id, out view))
+            if (_networkViews.TryGetValue(id, out var view))
             {
                 view.OnFinishedInstantiate(player);
             }

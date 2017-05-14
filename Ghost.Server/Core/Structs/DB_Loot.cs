@@ -5,12 +5,14 @@ namespace Ghost.Server.Core.Structs
 {
     public struct DB_Loot
     {
-        public int ID;
-        public List<Tuple<int, int, int, float, int, int>> Loot;
+        public readonly int Id;
+
+        public readonly List<(int, int, int, float, int, int)> Loot;
+
         public DB_Loot(int id)
         {
-            ID = id;
-            Loot = new List<Tuple<int, int, int, float, int, int>>();
+            Id = id;
+            Loot = new List<(int, int, int, float, int, int)>();
         }
     }
 }

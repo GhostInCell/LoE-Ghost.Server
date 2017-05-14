@@ -85,8 +85,7 @@ namespace PNetR
 
         public Player GetPlayer(int id)
         {
-            Player player;
-            _players.TryGetValue(id, out player);
+            _players.TryGetValue(id, out var player);
             return player;
         }
 

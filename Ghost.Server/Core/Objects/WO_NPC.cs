@@ -73,11 +73,11 @@ namespace Ghost.Server.Core.Objects
                 shop_ser = new SER_Shop(_npc.Items, $"{_npc.Pony.Name}'s shop");
             if ((_npc.Flags & NPCFlags.Wears) > 0)
             {
-                DB_Item entry; byte slot;
+                byte slot;
                 _wears = new Dictionary<int, InventoryItem>();
                 wears_ser = new SER_Wears(_wears);
                 foreach (var item in _npc.Wears)
-                    if (item > 0 && DataMgr.Select(item, out entry))
+                    if (item > 0 && DataMgr.Select(item, out DB_Item entry))
                     {
                         slot = entry.Slot.ToWearableIndex();
                         if (_wears.ContainsKey(slot))
@@ -108,11 +108,11 @@ namespace Ghost.Server.Core.Objects
                 shop_ser = new SER_Shop(_npc.Items, $"{_npc.Pony.Name}'s shop");
             if ((_npc.Flags & NPCFlags.Wears) > 0)
             {
-                DB_Item entry; byte slot;
+                byte slot;
                 _wears = new Dictionary<int, InventoryItem>();
                 wears_ser = new SER_Wears(_wears);
                 foreach (var item in _npc.Wears)
-                    if (item > 0 && DataMgr.Select(item, out entry))
+                    if (item > 0 && DataMgr.Select(item, out DB_Item entry))
                     {
                         slot = entry.Slot.ToWearableIndex();
                         if (_wears.ContainsKey(slot))
@@ -155,10 +155,9 @@ namespace Ghost.Server.Core.Objects
         }
         private void RPC_06_10(NetMessage arg1, NetMessageInfo arg2)
         {
-            DB_Item item;
-            int price, itemID = arg1.ReadInt32(), amount = arg1.ReadInt32(); 
+            int price, itemID = arg1.ReadInt32(), amount = arg1.ReadInt32();
             MapPlayer player = _server[arg2.Sender.Id];
-            if (player.Shop == this && _npc.Items.Contains(itemID) && DataMgr.Select(itemID, out item) && player.Char.Data.Bits >= (price = (item.Price * amount)))
+            if (player.Shop == this && _npc.Items.Contains(itemID) && DataMgr.Select(itemID, out DB_Item item) && player.Char.Data.Bits >= (price = (item.Price * amount)))
             {
                 amount -= player.Items.AddItems(itemID, amount);
                 player.Char.Data.Bits -= price;
@@ -167,12 +166,11 @@ namespace Ghost.Server.Core.Objects
         }
         private void RPC_06_11(NetMessage arg1, NetMessageInfo arg2)
         {
-            DB_Item item;
             int itemID = arg1.ReadInt32();
             int amount = arg1.ReadInt32();
             byte islot = arg1.ReadByte();
             MapPlayer player = _server[arg2.Sender.Id];
-            if (player.Shop == this && DataMgr.Select(itemID, out item) && (item.Flags & ItemFlags.Salable) > 0 && player.Items.HasInSlot(islot, itemID, amount))
+            if (player.Shop == this && DataMgr.Select(itemID, out DB_Item item) && (item.Flags & ItemFlags.Salable) > 0 && player.Items.HasInSlot(islot, itemID, amount))
             {
                 player.Items.RemoveFromSlot(islot, amount);
                 player.Char.Data.Bits += (item.Price * amount);

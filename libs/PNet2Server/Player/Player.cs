@@ -172,8 +172,7 @@ namespace PNetS
 
             Room room;
 
-            Room[] rooms;
-            if (!Server.TryGetRooms(roomId, out rooms))
+            if (!Server.TryGetRooms(roomId, out var rooms))
             {
                 Debug.LogWarning($"Could not determine room {roomId} for player {this} - no rooms exist");
                 return false;
@@ -248,12 +247,11 @@ namespace PNetS
             _switchingToRoom = room.Guid;
 
             //todo: tell old room that the player is going to leave.
-            Room oldRoom;
             NetMessage rmsg;
             _oldRoom = _currentRoom;
             _currentRoom = Guid.Empty;
 
-            if (Server.TryGetRoom(_oldRoom, out oldRoom))
+            if (Server.TryGetRoom(_oldRoom, out var oldRoom))
             {
                 rmsg = Server.GetMessage(4);
                 rmsg.Write(RpcUtils.GetHeader(ReliabilityMode.Ordered, BroadcastMode.Server, MsgType.Internal));
@@ -280,8 +278,7 @@ namespace PNetS
                 return;
             }
 
-            Room room;
-            if (!Server.TryGetRoom(_switchingToRoom, out room))
+            if (!Server.TryGetRoom(_switchingToRoom, out var room))
             {
                 Debug.LogError($"Could not get room {_switchingToRoom} when client notified us they were finishing switching their rooms. This is incomplete, and we should probably switch the player to a different room");
                 return;

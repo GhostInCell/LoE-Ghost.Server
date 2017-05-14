@@ -16,11 +16,11 @@ namespace Ghost.Server.Core.Events
         public AutoSaveChar(MapPlayer target)
             : base(target, time, true)
         { }
-        public override void OnFire()
+        public async override void OnFire()
         {
             _data.Data.Position = _data.Object.Position;
             _data.Data.Rotation = _data.Object.Rotation;
-            CharsMgr.SaveCharacter(_data.Char);
+            await CharsMgr.SaveCharacterAsync(_data.Char);
         }
     }
 }

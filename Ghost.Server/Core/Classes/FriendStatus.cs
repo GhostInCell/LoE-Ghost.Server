@@ -27,7 +27,7 @@ namespace Ghost.Server.Core.Classes
         }
         public FriendStatus Fill(DB_User user, OnlineStatus status)
         {
-            ID = user.ID;
+            ID = user.Id;
             PlayerID = 0;
             Status = status;
             UserName = user.Name;

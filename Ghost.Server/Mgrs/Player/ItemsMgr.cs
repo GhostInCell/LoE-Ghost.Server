@@ -99,8 +99,7 @@ namespace Ghost.Server.Mgrs.Player
             foreach (var item in m_wears)
             {
                 var value = item.Value;
-                DB_Item dbitem;
-                if (DataMgr.Select(value.Id, out dbitem))
+                if (DataMgr.Select(value.Id, out DB_Item dbitem))
                     m_wearSlotsUsed |= dbitem.Slot;
             }
             parent.OnSpawn += ItemsMgr_OnSpawn;
@@ -129,10 +128,9 @@ namespace Ghost.Server.Mgrs.Player
         {
             if (!m_itemsHash.Contains(id)) return;
             m_itemsHash.Remove(id);
-            InventorySlot slot;
             for (int index = 0, count = m_items.Count; index < (m_data.InventorySlots - 1) && count > 0; index++)
             {
-                if (m_items.TryGetValue(index, out slot))
+                if (m_items.TryGetValue(index, out var slot))
                 {
                     count--;
                     if (slot.Item.Id == id)
@@ -158,8 +156,7 @@ namespace Ghost.Server.Mgrs.Player
 
         public int AddItems(int id, int amount)
         {
-            DB_Item item;
-            if (DataMgr.Select(id, out item))
+            if (DataMgr.Select(id, out DB_Item item))
                 return AddItem(item, amount);
             return amount;
         }
@@ -177,10 +174,9 @@ namespace Ghost.Server.Mgrs.Player
                 RemoveItems(id);
             else
             {
-                InventorySlot slot;
                 for (int index = 0, count = m_items.Count; index < (m_data.InventorySlots - 1) && count > 0 && amount > 0; index++)
                 {
-                    if (m_items.TryGetValue(index, out slot))
+                    if (m_items.TryGetValue(index, out var slot))
                     {
                         count--;
                         if (slot.Item.Id == id)
@@ -218,10 +214,9 @@ namespace Ghost.Server.Mgrs.Player
 
         private int GetFreeSlot()
         {
-            InventorySlot slot;
             for (int index = 0; index < (m_data.InventorySlots - 1); index++)
             {
-                if (!m_items.TryGetValue(index, out slot) || slot.IsEmpty)
+                if (!m_items.TryGetValue(index, out var slot) || slot.IsEmpty)
                     return index;
             }
             return -1;
@@ -229,18 +224,16 @@ namespace Ghost.Server.Mgrs.Player
 
         private InventorySlot GetSlot(int index)
         {
-            InventorySlot slot;
-            return m_items.TryGetValue(index, out slot) ? slot : null;
+            return m_items.TryGetValue(index, out var slot) ? slot : null;
         }
 
         private int AddItem(DB_Item item, int amount)
         {
             if (m_itemsHash.Contains(item.ID) && (item.Flags & ItemFlags.Stackable) > 0)
             {
-                InventorySlot slot;
                 for (int index = 0, count = m_items.Count; index < (m_data.InventorySlots - 1) && count > 0 && amount > 0; index++)
                 {
-                    if (m_items.TryGetValue(index, out slot))
+                    if (m_items.TryGetValue(index, out var slot))
                     {
                         count--;
                         if (slot.Item.Id == item.ID && slot.Amount < item.Stack)
@@ -269,8 +262,7 @@ namespace Ghost.Server.Mgrs.Player
 
         private InventorySlot GetInventorySlot(int index)
         {
-            InventorySlot slot;
-            if (!m_items.TryGetValue(index, out slot))
+            if (!m_items.TryGetValue(index, out var slot))
             {
                 slot = new InventorySlot();
                 m_items[index] = slot;
@@ -339,7 +331,6 @@ namespace Ghost.Server.Mgrs.Player
         [Rpc(6, false)]
         private void AddItem(int itemId, int amount)
         {
-            DB_Item item;
             if (_mPlayer.User.Access >= AccessLevel.TeamMember)
             {
                 if (itemId == -1)
@@ -348,7 +339,7 @@ namespace Ghost.Server.Mgrs.Player
                     _player.SystemMsg($"Added {amount} bits");
                     return;
                 }
-                if (DataMgr.Select(itemId, out item))
+                if (DataMgr.Select(itemId, out DB_Item item))
                 {
                     var count = AddItem(item, amount);
                     if (count != 0)
@@ -384,13 +375,12 @@ namespace Ghost.Server.Mgrs.Player
         [Rpc(8, false)]
         private void WearItem(WornSlot wslot, byte islot)
         {
-            DB_Item item; InventoryItem witem;
             var itemSlot = GetSlot(islot);
             if (itemSlot?.IsEmpty ?? true)
                 _player.SystemMsg($"Inventory slot {islot} is empty");
             else
             {
-                if (DataMgr.Select(itemSlot.Item.Id, out item))
+                if (DataMgr.Select(itemSlot.Item.Id, out DB_Item item))
                 {
                     var wPosition = wslot.Position;
                     if ((item.Slot & wPosition) == wPosition)
@@ -399,7 +389,7 @@ namespace Ghost.Server.Mgrs.Player
                         var index = wslot.Index;
                         m_items.Remove(islot);
                         m_view.UpdateSlot(itemSlot.Delete(), islot);
-                        if (m_wears.TryGetValue(index, out witem))
+                        if (m_wears.TryGetValue(index, out var witem))
                         {
                             item = DataMgr.SelectItem(witem.Id);
                             SetSlot(islot, item, witem, 1);
@@ -423,11 +413,10 @@ namespace Ghost.Server.Mgrs.Player
         [Rpc(9, false)]
         private void UnwearItem(WornSlot wslot, byte islot)
         {
-            DB_Item item; InventoryItem witem;
             var index = wslot.Index;
-            if (m_wears.TryGetValue(index, out witem))
+            if (m_wears.TryGetValue(index, out var witem))
             {
-                if (DataMgr.Select(witem.Id, out item))
+                if (DataMgr.Select(witem.Id, out DB_Item item))
                 {
                     int itemSlot = islot;
                     if (!GetInventorySlot(islot).IsEmpty)
@@ -468,11 +457,10 @@ namespace Ghost.Server.Mgrs.Player
         [Rpc(12, false)]//Use item
         private void UseItem(byte islot)
         {
-            DB_Item item;
             var itemSlot = GetSlot(islot);
             if (itemSlot?.IsEmpty ?? true)
                 _player.SystemMsg($"Inventory slot {islot} is empty");
-            else if (DataMgr.Select(itemSlot.Item.Id, out item))
+            else if (DataMgr.Select(itemSlot.Item.Id, out DB_Item item))
             {
                 if ((item.Flags & ItemFlags.Usable) > 0)
                     ItemsScript.Use(item.ID, _mPlayer);

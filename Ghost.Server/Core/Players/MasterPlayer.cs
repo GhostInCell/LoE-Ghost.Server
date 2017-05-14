@@ -9,6 +9,7 @@ using PNet;
 using PNetS;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Ghost.Server.Core.Players
 {
@@ -125,7 +126,6 @@ namespace Ghost.Server.Core.Players
         {
             //MasterPlayer target;
             _player.ClearSubscriptions();
-            CharsMgr.RemoveCharacter(_user.Char);
             //ServerDB.UpdateUserSave(_user.ID, _save);
             _player.NetUserDataChanged -= Player_NetUserDataChanged;
             _player.FinishedSwitchingRooms -= Player_FinishedSwitchingRooms;
@@ -143,6 +143,7 @@ namespace Ghost.Server.Core.Players
             _rPlayer = null;
             _lastWhisper = null;
         }
+
         private void UpdateStatus()
         {
             MasterPlayer target = null; Tuple<byte, string, short, DateTime> state;
@@ -194,9 +195,9 @@ namespace Ghost.Server.Core.Players
                             ServerLogger.LogInfo($"Player[{_player.Id}] received update friend status for offline user[{_status.ID}] status: {_status.Status}");
                         break;
                 }
-                ServerDB.UpdateUserSave(_user.ID, _save);
-                if (target != null)
-                    ServerDB.UpdateUserSave(target._user.ID, target._save);
+                //ServerDB.UpdateUserSave(_user.ID, _save);
+                //if (target != null)
+                //    ServerDB.UpdateUserSave(target._user.ID, target._save);
             }
             else if (_status.PlayerID != 0)
             {
@@ -236,6 +237,7 @@ namespace Ghost.Server.Core.Players
                 }
             }
         }
+
         private bool DoCommand(CommandArgs args)
         {
             switch (args.Command)
@@ -243,14 +245,11 @@ namespace Ghost.Server.Core.Players
                 case "ban":
                     if (_user.Access <= AccessLevel.Moderator) break;
                     {
-                        int time;
-                        string reason;
-                        string request;
-                        if (args.TryGet(out request) && args.TryGet(out time))
+                        if (args.TryGet(out string request) && args.TryGet(out int time))
                         {
-                            if (args.TryGet(out reason))
+                            if (args.TryGet(out string reason))
                                 BanPlayer(request, false, time, BanType.Ban, reason);
-                            else BanPlayer(request, false, time, BanType.Ban);  
+                            else BanPlayer(request, false, time, BanType.Ban);
                         }
                         else _player.SystemMsg($":ban \"Player or User Name\" \"time in minutes\" \"reason\" { Environment.NewLine}");
                         return true;
@@ -258,12 +257,9 @@ namespace Ghost.Server.Core.Players
                 case "banip":
                     if (_user.Access <= AccessLevel.Moderator) break;
                     {
-                        int time;
-                        string reason;
-                        string request;
-                        if (args.TryGet(out request) && args.TryGet(out time))
+                        if (args.TryGet(out string request) && args.TryGet(out int time))
                         {
-                            if (args.TryGet(out reason))
+                            if (args.TryGet(out string reason))
                                 BanPlayer(request, true, time, BanType.Ban, reason);
                             else BanPlayer(request, true, time, BanType.Ban);
                         }
@@ -273,7 +269,8 @@ namespace Ghost.Server.Core.Players
             }
             return false;
         }
-        private void BanPlayer(string request, bool includeIp, int time, BanType type, string reason = "Unspecified")
+
+        private async void BanPlayer(string request, bool includeIp, int time, BanType type, string reason = "Unspecified")
         {
             var players = _server.FindPlayers(request.ToLowerInvariant());
             var count = players.Count();
@@ -282,12 +279,14 @@ namespace Ghost.Server.Core.Players
                 _player.SystemMsg($"Found more then one player: {Environment.NewLine}" +
                     $"{string.Join(Environment.NewLine, players.Select(x => $"User '{x.User.Name}', Pony '{x.Char.Pony.Name}'"))}");
             }
-            else if (count == 1)
+            else if(count == 0)
+                _player.SystemMsg($"Search result for {request} returns nothing!");
+            else
             {
                 var player = players.First();
                 if (time != 0)
                 {
-                    if (ServerDB.CreateBan(player.User.ID, includeIp ? player.Player.EndPoint.Address : null, type, _user.ID, time, reason))
+                    if (await ServerDB.CreateBanAsync(player.User.ID, includeIp ? player.Player.EndPoint.Address : null, type, _user.ID, time, reason))
                     {
                         _player.SystemMsg($"{type} applied to {player.User.Name}({player.Char.Pony.Name}) for {time} minutes");
                         if (type == BanType.Ban)
@@ -297,16 +296,15 @@ namespace Ghost.Server.Core.Players
                 }
                 else
                 {
-                    if (ServerDB.DeleteBan(player.User.ID, null, type))
+                    if (await ServerDB.DeleteBanAsync(player.User.ID, null, type))
                         _player.SystemMsg($"{type} removed from {player.User.Name}({player.Char.Pony.Name})!");
                     else _player.SystemMsg($"Error while removing {type} from {player.User.Name}({player.Char.Pony.Name})");
                 }
             }
-            else _player.SystemMsg($"Search result for {request} returns nothing!");
         }
         #region RPC Handlers
         [Rpc(15, false)]
-        private void RPC_015(NetMessage arg1, PlayerMessageInfo arg2)
+        private async void RPC_015(NetMessage arg1, PlayerMessageInfo arg2)
         {
             var message = default(ChatMsg);
             message.OnDeserialize(arg1);
@@ -317,10 +315,7 @@ namespace Ghost.Server.Core.Players
             }
             if (message.Time >= m_mute_chek)
             {
-                if (ServerDB.SelectBan(_user.ID, _player.EndPoint.Address, BanType.Mute, message.Time, out m_mute))
-                {
-
-                }
+                m_mute = await ServerDB.SelectBanAsync(_user.ID, _player.EndPoint.Address, BanType.Mute, message.Time);
                 m_mute_chek = message.Time.AddSeconds(Constants.MuteCheckDelay);
             }
             if (m_mute.End > message.Time)
@@ -336,7 +331,6 @@ namespace Ghost.Server.Core.Players
                 message.CharID = _user.Char;
                 message.PlayerID = _player.Id;
                 message.Name = m_name ?? _user.Name;
-                
                 _time = message.Time.AddMilliseconds(SpamDelay);
                 switch (message.Type)
                 {
@@ -352,8 +346,8 @@ namespace Ghost.Server.Core.Players
                     case ChatType.Whisper:
                         if (_lastWhisper != null)
                         {
-                            MasterPlayer player;
-                            if (_server.TryGetByPonyName(_lastWhisper, out player))
+                            var player = _server.FindPlayers(_lastWhisper).FirstOrDefault();
+                            if (player != null)
                                 _player.Whisper(player.Player, message);
                             else
                                 _lastWhisper = null;
@@ -369,15 +363,21 @@ namespace Ghost.Server.Core.Players
         [Rpc(16, false)]
         private void RPC_016(NetMessage arg1, PlayerMessageInfo arg2)
         {
-            string targetName = arg1.ReadString();
-            string text = arg1.ReadString();
+            var target = arg1.ReadString();
+            var text = arg1.ReadString();
             ChatIcon icon = (ChatIcon)arg1.ReadByte();
-            if (targetName == _user.Name || targetName == m_name)
+            if (target == _user.Name || target == m_name)
                 return;
             if (icon != ChatIcon.None && _user.Access < AccessLevel.Moderator)
                 icon = ChatIcon.None;
-            MasterPlayer player;
-            if (_server.TryGetByPonyName(targetName, out player))
+            _lastWhisper = target.ToLowerInvariant();
+            var players = _server.FindPlayers(_lastWhisper);
+            var count = players.Count();
+            if (count > 1)
+                _player.SystemMsg($"Found more then one player, try to be more specific");
+            else if (count == 0)
+                _player.SystemMsg($"Search result for \"{target}\" returns nothing!");
+            else
             {
                 var message = default(ChatMsg);
                 message.Icon = icon;
@@ -387,12 +387,9 @@ namespace Ghost.Server.Core.Players
                 message.PlayerID = _player.Id;
                 message.Type = ChatType.Whisper;
                 message.Name = m_name ?? _user.Name;
-                _lastWhisper = player.Char?.Pony.Name;
                 //_player.PlayerRpc(15, ChatType.Whisper, _message.Name ?? _user.Name, message, time, _user.Char, icon, (int)_player.Id);
-                player.Player.PlayerRpc(15, message);
+                players.First().Player.PlayerRpc(15, message);
             }
-            else
-                _lastWhisper = null;
         }
         [Rpc(20, false)]
         private void RPC_020(NetMessage arg1, PlayerMessageInfo arg2)
@@ -410,14 +407,14 @@ namespace Ghost.Server.Core.Players
                         _player.PlayerSubRpc(20, 51, _server.FindPlayers(arg1.ReadString().ToLowerInvariant())
                             .Select(x => new FriendStatus()
                             {
-                                ID = x?.Char.ID ?? 0,
+                                ID = x?.Char.Id ?? 0,
                                 PlayerID = x.Player.Id,
                                 CharacterName = x.Char.Pony.Name,
                                 CutieMarkID = (short)x.Char.Pony.CutieMark0,
                                 LastOnline = DateTime.Now,
                                 MapName = _player.Room.RoomId,
                                 MapID = _player.Room.Guid.ToString(),
-                                Race = (CharacterType)x.Char.Pony.Race,
+                                Race = x.Char.Pony.Race,
                                 UserName = x.User?.Name,
                                 Status = OnlineStatus.Online
                             }));
@@ -484,12 +481,13 @@ namespace Ghost.Server.Core.Players
         }
         #endregion
         #region Events Handlers
-        private void Player_NetUserDataChanged(Player obj)
+        private async void Player_NetUserDataChanged(Player obj)
         {
-            if (_user.Char != 0 && (_user.Char != (_char?.ID ?? -1)))
+            if (_user.Char != 0 && (_user.Char != (_char?.Id ?? -1)))
             {
                 m_name = null;
-                if (!CharsMgr.SelectCharacter(_user.Char, out _char))
+                _char = await ServerDB.SelectCharacterAsync(_user.Char);
+                if (_char == null)
                     ServerLogger.LogServer(_server, $"{obj.Id} couldn't load character {_user.Char}");
                 else
                     m_name = _char.Pony.Name;

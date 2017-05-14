@@ -38,7 +38,7 @@ namespace Ghost.Server.Mgrs.Map
         public ObjectsMgr(MapServer server)
         {
             _server = server;
-            _mapID = server.Map.ID;
+            _mapID = server.Map.Id;
             _released = new ConcurrentQueue<ushort>();
             _objects = new ConcurrentDictionary<uint, WorldObject>();
             _nsObjects = new ConcurrentDictionary<ushort, WorldObject>();
@@ -78,10 +78,10 @@ namespace Ghost.Server.Mgrs.Map
             _dnObjects = null;
         }
 
-        public void LoadObjects()
+        public async void LoadObjects()
         {
-            List<DB_WorldObject> objects;
-            if (ServerDB.SelectAllMapObjects(_mapID, out objects) && objects != null)
+            var objects = await ServerDB.SelectAllMapObjectsAsync(_mapID);
+            if (objects?.Any() ?? false)
             {
                 uint guid;
                 foreach (var item in objects)
@@ -99,8 +99,7 @@ namespace Ghost.Server.Mgrs.Map
 
         public ushort GetNewGuid()
         {
-            ushort result;
-            if (!_released.TryDequeue(out result))
+            if (!_released.TryDequeue(out var result))
                 result = checked((ushort)Interlocked.Increment(ref _currentN));
             return result;
         }
@@ -113,8 +112,7 @@ namespace Ghost.Server.Mgrs.Map
 
         public void Remove(WorldObject obj)
         {
-            WorldObject value;
-            if (!_objects.TryRemove(obj.Guid, out value))
+            if (!_objects.TryRemove(obj.Guid, out var value))
                 ServerLogger.LogServer(_server, $"attempt to remove unregistered object guid {obj.Guid}");
             else if (!ReferenceEquals(obj, value))
                 throw new InvalidOperationException();
@@ -167,8 +165,7 @@ namespace Ghost.Server.Mgrs.Map
 
         public void Teleport(WO_Player obj, ushort id = 0)
         {
-            WorldObject obj01;
-            if (_nsObjects.TryGetValue(id, out obj01) || _nsObjects.TryGetValue(0, out obj01))
+            if (_nsObjects.TryGetValue(id, out var obj01) || _nsObjects.TryGetValue(0, out obj01))
             {
                 obj.Teleport(obj01.Position);
                 obj.Rotation = obj01.Rotation.ToRadians();
@@ -177,8 +174,7 @@ namespace Ghost.Server.Mgrs.Map
 
         public void SetPosition(WorldObject obj, ushort id = 0)
         {
-            WorldObject obj01;
-            if (_nsObjects.TryGetValue(id, out obj01) || _nsObjects.TryGetValue(0, out obj01))
+            if (_nsObjects.TryGetValue(id, out var obj01) || _nsObjects.TryGetValue(0, out obj01))
             {
                 obj.Position = obj01.Position;
                 obj.Rotation = obj01.Rotation.ToRadians();
@@ -203,8 +199,8 @@ namespace Ghost.Server.Mgrs.Map
 
         public bool TryGetCreature(ushort guid, out CreatureObject obj)
         {
-            WorldObject ret; obj = null;
-            if (_nvObjects.TryGetValue(guid, out ret) || _plObjects.TryGetValue(guid, out ret))
+            obj = null;
+            if (_nvObjects.TryGetValue(guid, out var ret) || _plObjects.TryGetValue(guid, out ret))
                 obj = ret as CreatureObject;
             return obj != null;
         }

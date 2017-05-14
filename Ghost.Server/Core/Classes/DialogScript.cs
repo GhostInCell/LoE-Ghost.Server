@@ -80,7 +80,7 @@ namespace Ghost.Server.Core.Classes
         }
         public DialogScript(DB_Dialog data, MapServer server)
         {
-            _id = data.ID;
+            _id = data.Id;
             _server = server;
             _npcs = new WO_NPC[2];
             _entries = data.Entries;
@@ -102,9 +102,8 @@ namespace Ghost.Server.Core.Classes
         }
         public void OnDialogNext(MapPlayer player)
         {
-            DialogEntry entry;
             short dState = player.Data.GetDialogState(_id);
-            if (_entries.TryGetValue(dState, out entry))
+            if (_entries.TryGetValue(dState, out var entry))
             {
                 ExecuteCommand(ref dState, false, player, entry);
                 if (!entry.IsEnd)
@@ -147,8 +146,7 @@ namespace Ghost.Server.Core.Classes
         }
         private void Execute(ref short dState, bool isStart, MapPlayer player)
         {
-            DialogEntry entry;
-            while (_entries.TryGetValue(dState, out entry))
+            while (_entries.TryGetValue(dState, out var entry))
             {
                 if (entry.Type == DialogType.Greetings && (!isStart || _npcs[entry.Npc] != player.Dialog))
                 {
@@ -193,11 +191,10 @@ namespace Ghost.Server.Core.Classes
         }
         private bool SelectChoice(ref short dState, bool isStart, MapPlayer player, int index)
         {
-            List<DialogChoice> choices = player.Choices; DialogEntry entry;
-            if (index < 0 || index >= choices.Count)
+            List<DialogChoice> choices = player.Choices; if (index < 0 || index >= choices.Count)
                 return false;
             var choice = choices[index]; choices.Clear();
-            if (_entries.TryGetValue(choice.State, out entry))
+            if (_entries.TryGetValue(choice.State, out var entry))
             {
                 dState = choice.State;
                 if (entry.Condition == DialogCondition.Always || CheckCondition(dState, isStart, player, entry))
@@ -234,9 +231,9 @@ namespace Ghost.Server.Core.Classes
                 case DialogCondition.NpcIndex_NotEqual:
                     return _npcs[entry.Npc] != player.Dialog;
                 case DialogCondition.Race_Equal:
-                    return player.Char.Pony.Race == entry.ConditionData01;
+                    return player.Char.Pony.Race == (CharacterType)entry.ConditionData01;
                 case DialogCondition.Race_NotEqual:
-                    return player.Char.Pony.Race != entry.ConditionData01;
+                    return player.Char.Pony.Race != (CharacterType)entry.ConditionData01;
                 case DialogCondition.State_Equal:
                     return dState == entry.ConditionData01;
                 case DialogCondition.State_NotEqual:
@@ -290,16 +287,15 @@ namespace Ghost.Server.Core.Classes
                         return player.Data.Bits >= entry.ConditionData02;
                     return player.Items.HasItems(entry.ConditionData01, entry.ConditionData02);
                 case DialogCondition.Gender_Equal:
-                    return player.Char.Pony.Gender == entry.ConditionData01;
+                    return player.Char.Pony.Gender == (Gender)entry.ConditionData01;
                 case DialogCondition.Gender_NotEqual:
-                    return player.Char.Pony.Gender != entry.ConditionData01;
+                    return player.Char.Pony.Gender != (Gender)entry.ConditionData01;
                 default: return false;
             }
         }
         private void ExecuteCommand(ref short dState, bool isStart, MapPlayer player, DialogEntry entry)
         {
-            int var01; WO_NPC var02;
-            switch (entry.Command)
+            int var01; switch (entry.Command)
             {
                 case DialogCommand.DialogEnd:
                     if (entry.CommandData01 >= 0)
@@ -339,7 +335,7 @@ namespace Ghost.Server.Core.Classes
                     break;
                 case DialogCommand.SetCloneMoveState:
                     var01 = _npcs[entry.Npc].NPC.ID;
-                    if (player.Clones.TryGetValue(var01, out var02) && var02.Movement is ScriptedMovement)
+                    if (player.Clones.TryGetValue(var01, out var var02) && var02.Movement is ScriptedMovement)
                         (var02.Movement as ScriptedMovement).State = (ushort)entry.CommandData01;
                     break;
                 case DialogCommand.AddQuest:

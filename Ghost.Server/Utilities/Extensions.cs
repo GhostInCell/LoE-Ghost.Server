@@ -11,12 +11,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Net;
 using System.Numerics;
 using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using static PNet.NetConverter;
 
 namespace Ghost.Server.Utilities
@@ -28,6 +30,7 @@ namespace Ghost.Server.Utilities
         Ban,
         Mute
     }
+
     public enum StatIndex
     {
         Null = -1,
@@ -77,17 +80,22 @@ namespace Ghost.Server.Utilities
         Filly,
         Colt,
         Mare,
-        Stallion
+        Stallion,
+        BatStallion,
+        BatMare
     }
+
     public enum MovementType : byte
     {
         Move = 0,
         Stay = 1,
     }
+
     public enum MovementCommand : byte
     {
         None, SetSpeed, GoTo = 5
     }
+
     public enum OnlineStatus : byte
     {
         Offline,
@@ -98,12 +106,14 @@ namespace Ghost.Server.Utilities
         Incoming = 25,
         Outgoing
     }
+
     [Flags]
     public enum SpellTarget : byte
     {
         None, Position, Creature, Player = 4, Self = 8,
         NotMain = 128
     }
+
     public enum SpellEffectType : byte
     {
         Init,
@@ -122,6 +132,7 @@ namespace Ghost.Server.Utilities
         AreaPeriodicMagickDamage = 254,
         Teleport = 255
     }
+
     public enum DialogType : byte
     {
         Command = 255,
@@ -129,12 +140,14 @@ namespace Ghost.Server.Utilities
         Greetings = 253,
         Say = 0
     }
+
     public enum DialogCommand : byte
     {
         None, DialogEnd, GoTo, AddXP, AddBits, AddItem, RemoveBits, RemoveItem,
         AddQuest, RemoveQuest, SetQuestState,
         CloneNPCIndex = 32, SetCloneMoveState
     }
+
     public enum DialogCondition : byte
     {
         Always = 0x00,
@@ -182,19 +195,24 @@ namespace Ghost.Server.Utilities
 
         Item_HasCount = 0x07,
     }
+
     [Flags]
     public enum CreatureFlags : byte
     {
         None, Scripted, Elite
     }
+
     public enum CharacterType : byte
     {
         None,
-        Earth_Pony,
+        EarthPony,
         Unicorn,
         Pegasus,
-        Moose
+        Moose,
+        Gryphon,
+        Crystal
     }
+
     public enum Stats : byte
     {
         None,
@@ -216,11 +234,13 @@ namespace Ghost.Server.Utilities
         Taunt,
         Unspecified = 255
     }
+
     [Flags]
     public enum NPCFlags : byte
     {
         None, Trader, Wears, Dialog = 4, ScriptedMovement = 8
     }
+
     [Flags]
     public enum ChatType : byte
     {
@@ -233,6 +253,7 @@ namespace Ghost.Server.Utilities
         Herd = 32,
         Whisper = 64
     }
+
     public enum ChatIcon : byte
     {
         None = 0,
@@ -240,6 +261,7 @@ namespace Ghost.Server.Utilities
         System = 2,
         Admin = 3
     }
+
     [Flags]
     public enum WearablePosition : uint
     {
@@ -262,6 +284,7 @@ namespace Ghost.Server.Utilities
         SaddleBags = 1073741824,
         Hat = 2147483648
     }
+
     [Flags]
     public enum TalentMarkId
     {
@@ -278,17 +301,20 @@ namespace Ghost.Server.Utilities
         CombatRelated = 99724,
         All = 42396
     }
+
     [Flags]
     public enum ItemFlags : byte
     {
         None, Stackable, Salable, Stats = 4, Usable = 8,
         Color01 = 64, Color02 = 128
     }
+
     [Flags]
     public enum MapFlags : byte
     {
         None, NoAccess, NoObjects, Instance = 4, Scripted = 8,
     }
+
     public enum AccessLevel
     {
         Default,
@@ -298,6 +324,7 @@ namespace Ghost.Server.Utilities
         Moderator = 30,
         Admin = 255
     }
+
     public enum ContainmentType : int
     {
         Disjoint,
@@ -540,6 +567,13 @@ namespace Ghost.Server.Utilities
     public static class MathHelper
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static byte Clamp(byte value, byte min, byte max)
+        {
+            if (value > max) return max;
+            if (value < min) return min;
+            return value;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Clamp(float value, float min, float max)
         {
             if (value > max) return max;
@@ -601,7 +635,7 @@ namespace Ghost.Server.Utilities
             var nameIndex = 1;
             var ret = new PonyData();
             var bits = new BitArray(Convert.FromBase64String(ponycode));
-            ret.Race = (byte)bits.GetBits(ref index, 2);
+            ret.Race = (CharacterType)bits.GetBits(ref index, 2);
             ret.HairColor0 = bits.GetBits(ref index, 24);
             ret.HairColor1 = bits.GetBits(ref index, 24);
             ret.BodyColor = bits.GetBits(ref index, 24);
@@ -614,7 +648,7 @@ namespace Ghost.Server.Utilities
             ret.CutieMark0 = bits.GetBits(ref index, 10);
             ret.CutieMark1 = bits.GetBits(ref index, 10);
             ret.CutieMark2 = bits.GetBits(ref index, 10);
-            ret.Gender = (byte)bits.GetBits(ref index, 2);
+            ret.Gender = (Gender)bits.GetBits(ref index, 2);
             ret.BodySize = MathHelper.Clamp(bits.GetBits(ref index, 32).BitsToFloat(), 0.9f, 1.1f);
             ret.HornSize = MathHelper.Clamp(bits.GetBits(ref index, 32).BitsToFloat(), 0.8f, 1.25f);
             ret.Name = new string(new char[nameIndex += bits.GetBits(ref index, 5)]);
@@ -833,7 +867,7 @@ namespace Ghost.Server.Utilities
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void AnnounceAll(this PNetS.Player player, string msg, float duration = Constants.AnnounceDuration)
         {
-            player.Server.AllPlayersRpc(player, 201, new RPC201(msg, duration));
+            player.Server.AllPlayersRpc(201, new RPC201(msg, duration));
         }
     }
     public static class BitArrayExtension
@@ -851,6 +885,18 @@ namespace Ghost.Server.Utilities
         {
             for (int i = 0; i < count; i++, index++)
                 bit.Set(index, (value & 1 << i) > 0);
+        }
+    }
+    public static class IPAddressExtension
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static long ToInt64(this IPAddress ip)
+        {
+            var ipBytes = ip.GetAddressBytes();
+            if (ipBytes.Length > 8)
+                throw new InvalidOperationException();
+            Array.Resize(ref ipBytes, 8);
+            return BitConverter.ToInt64(ipBytes, 0);
         }
     }
     public static class IEnumerableExtensions
@@ -877,13 +923,34 @@ namespace Ghost.Server.Utilities
     public static class ValueTypeExtension
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static string GetRaceName(this byte race)
+        public static string GetGenderName(this Gender gender)
+        {
+            switch (gender)
+            {
+                case Gender.Filly:
+                case Gender.Colt:
+                case Gender.Mare:
+                case Gender.Stallion:
+                    return gender.ToString();
+                case Gender.BatMare:
+                case Gender.BatStallion:
+                    return gender.ToString().Substring(3);
+                default: return string.Empty;
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static string GetRaceName(this CharacterType race)
         {
             switch (race)
             {
-                case 1: return "Earth Pony";
-                case 2: return "Unicorn";
-                case 3: return "Pegasus";
+                case CharacterType.EarthPony:
+                    return "Earth Pony";
+                case CharacterType.Moose:
+                case CharacterType.Unicorn:
+                case CharacterType.Pegasus:
+                case CharacterType.Gryphon:
+                    return race.ToString();
                 default: return string.Empty;
             }
         }
@@ -892,7 +959,7 @@ namespace Ghost.Server.Utilities
         {
             var bits = new BitArray(data.Name.Length * 6 + 276);
             var index = 0;
-            bits.AddBits(ref index, data.Race, 2);
+            bits.AddBits(ref index, (byte)data.Race, 2);
             bits.AddBits(ref index, data.HairColor0, 24);
             bits.AddBits(ref index, data.HairColor1, 24);
             bits.AddBits(ref index, data.BodyColor, 24);
@@ -905,7 +972,7 @@ namespace Ghost.Server.Utilities
             bits.AddBits(ref index, data.CutieMark0, 10);
             bits.AddBits(ref index, data.CutieMark1, 10);
             bits.AddBits(ref index, data.CutieMark2, 10);
-            bits.AddBits(ref index, data.Gender, 2);
+            bits.AddBits(ref index, (byte)data.Gender, 2);
             bits.AddBits(ref index, BitConverter.ToInt32(BitConverter.GetBytes(data.BodySize), 0), 32);
             bits.AddBits(ref index, BitConverter.ToInt32(BitConverter.GetBytes(data.HornSize), 0), 32);
             bits.AddBits(ref index, Math.Min(31, data.Name.Length - 1), 5);
@@ -920,18 +987,7 @@ namespace Ghost.Server.Utilities
             bits.CopyTo(buffer, 0);
             return Convert.ToBase64String(buffer);
         }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static string GetGenderName(this byte gender)
-        {
-            switch (gender)
-            {
-                case 0: return "Filly";
-                case 1: return "Colt";
-                case 2: return "Mare";
-                case 3: return "Stallion";
-                default: return string.Empty;
-            }
-        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static unsafe float BitsToFloat(this int @value)
         {
@@ -1136,15 +1192,54 @@ namespace Ghost.Server.Utilities
             view.Rpc(7, 4, player, data.SerWears);
         }
     }
+
+    public static class MySqlCommandExtension
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Task<MySqlDataReader> ExecuteReaderAsyncEx(this MySqlCommand command)
+        {
+            return Task.Factory.StartNew(x =>
+            {
+                return ((MySqlCommand)x).ExecuteReader();
+            }, command);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Task<int> ExecuteNonQueryAsyncEx(this MySqlCommand command)
+        {
+            return Task.Factory.StartNew(x =>
+            {
+                return ((MySqlCommand)x).ExecuteNonQuery();
+            }, command);
+        }
+    }
+    public static class MySqlConnectionExtension
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Task OpenAsyncEx(this MySqlConnection connection)
+        {
+            return Task.Factory.StartNew(x =>
+            {
+                ((MySqlConnection)x).Open();
+            }, connection);
+        }
+    }
     public static class MySqlDataReaderExtension
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Task<bool> ReadAsyncEx(this MySqlDataReader reader)
+        {
+            return Task.Factory.StartNew(x =>
+            {
+                return ((MySqlDataReader)x).Read();
+            }, reader);
+        }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PonyData GetPony(this MySqlDataReader reader, int i)
         {
             var ret = new PonyData()
             {
-                Race = reader.GetByte(i),
-                Gender = reader.GetByte(++i),
+                Race = (CharacterType)reader.GetByte(i),
+                Gender = (Gender)reader.GetByte(++i),
                 Name = reader.GetString(++i)
             };
             if (reader.IsDBNull(++i)) return ret;
@@ -1162,8 +1257,8 @@ namespace Ghost.Server.Utilities
             return new PonyData()
             {
                 Name = reader.GetString(i),
-                Race = reader.GetByte(++i),
-                Gender = reader.GetByte(++i),
+                Race = (CharacterType)reader.GetByte(++i),
+                Gender = (Gender)reader.GetByte(++i),
                 Eye = reader.GetInt16(++i),
                 Tail = reader.GetInt16(++i),
                 Hoof = reader.GetInt16(++i),

@@ -141,19 +141,19 @@ namespace Ghost.Server.Mgrs.Player
             _stats[Stats.Attack] = new StatValue(1 + (_level - 1) * 17);
             switch (_mPlayer.Char.Pony.Race)
             {
-                case 1:
+                case CharacterType.EarthPony:
                     _stats[Stats.Speed] = new StatValue(350);
                     _stats[Stats.Energy] = new StatValue(125);
                     _stats[Stats.EnergyRegen] = new StatValue(10);
                     _stats[Stats.HealthRegen] = new StatValue(20 + _level * 10);
                     break;
-                case 2:
+                case CharacterType.Unicorn:
                     _stats[Stats.Speed] = new StatValue(307);
                     _stats[Stats.Energy] = new StatValue(100);
                     _stats[Stats.EnergyRegen] = new StatValue(11);
                     _stats[Stats.HealthRegen] = new StatValue(28 + (_level - 1) * 9.5f);
                     break;
-                case 3:
+                case CharacterType.Pegasus:
                     _stats[Stats.Speed] = new StatValue(310);
                     _stats[Stats.Energy] = new StatValue(100);
                     _stats[Stats.EnergyRegen] = new StatValue(11);
@@ -168,11 +168,11 @@ namespace Ghost.Server.Mgrs.Player
             _stats[Stats.Attack].SetBase(1 + (_level - 1) * 17);
             switch (_mPlayer.Char.Pony.Race)
             {
-                case 1:
+                case CharacterType.EarthPony:
                     _stats[Stats.HealthRegen].SetBase(20 + _level * 10);
                     break;
-                case 2:
-                case 3:
+                case CharacterType.Unicorn:
+                case CharacterType.Pegasus:
                     _stats[Stats.HealthRegen].SetBase(28 + (_level - 1) * 9.5f);
                     break;
             }
