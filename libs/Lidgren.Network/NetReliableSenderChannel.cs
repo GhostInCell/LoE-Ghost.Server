@@ -61,69 +61,69 @@ namespace Lidgren.Network
 			return NetSendResult.Queued;
 		}
 
-		// call this regularely
-		internal override void SendQueuedMessages(double now)
-		{
-			//
-			// resends
-			//
-			if (m_usedStoredMessages != 0)
-			{
-			for (int i = 0; i < m_storedMessages.Length; i++)
-			{
-				if ((m_usedStoredMessages & ((ulong)1 << i)) == 0)
-					continue;
-                
-				var storedMsg = m_storedMessages[i];
-				NetOutgoingMessage om = storedMsg.Message;
-				if (om == null)
-					continue;
+        // call this regularely
+        internal override void SendQueuedMessages(double now)
+        {
+            //
+            // resends
+            //
+            if (m_usedStoredMessages != 0)
+            {
+                for (int i = 0; i < m_storedMessages.Length; i++)
+                {
+                    if ((m_usedStoredMessages & ((ulong)1 << i)) == 0)
+                        continue;
 
-				double t = storedMsg.LastSent;
-				if (t > 0 && (now - t) > m_resendDelay)
-				{
-					// deduce sequence number
-					/*
-					int startSlot = m_windowStart % m_windowSize;
-					int seqNr = m_windowStart;
-					while (startSlot != i)
-					{
-						startSlot--;
-						if (startSlot < 0)
-							startSlot = m_windowSize - 1;
-						seqNr--;
-					}
-					*/
+                    var storedMsg = m_storedMessages[i];
+                    NetOutgoingMessage om = storedMsg.Message;
+                    if (om == null)
+                        continue;
 
-					//m_connection.m_peer.LogVerbose("Resending due to delay #" + m_storedMessages[i].SequenceNumber + " " + om.ToString());
-					m_connection.m_statistics.MessageResent(MessageResendReason.Delay);
+                    double t = storedMsg.LastSent;
+                    if (t > 0 && (now - t) > m_resendDelay)
+                    {
+                        // deduce sequence number
+                        /*
+                        int startSlot = m_windowStart % m_windowSize;
+                        int seqNr = m_windowStart;
+                        while (startSlot != i)
+                        {
+                            startSlot--;
+                            if (startSlot < 0)
+                                startSlot = m_windowSize - 1;
+                            seqNr--;
+                        }
+                        */
 
-					Interlocked.Increment(ref om.m_recyclingCount); // increment this since it's being decremented in QueueSendMessage
-					m_connection.QueueSendMessage(om, storedMsg.SequenceNumber);
+                        //m_connection.m_peer.LogVerbose("Resending due to delay #" + m_storedMessages[i].SequenceNumber + " " + om.ToString());
+                        m_connection.m_statistics.MessageResent(MessageResendReason.Delay);
 
-					m_storedMessages[i].LastSent = now;
-					m_storedMessages[i].NumSent++;
-				}
-			}
-			}
+                        Interlocked.Increment(ref om.m_recyclingCount); // increment this since it's being decremented in QueueSendMessage
+                        m_connection.QueueSendMessage(om, storedMsg.SequenceNumber);
 
-			int num = GetAllowedSends();
-			if (num == 1)
-				return;
+                        m_storedMessages[i].LastSent = now;
+                        m_storedMessages[i].NumSent++;
+                    }
+                }
+            }
 
-			// queued sends
-			int queued = m_queuedSends.Count;
-			while (num > 0 && queued > 0)
-			{
+            int num = GetAllowedSends();
+            if (num == 1)
+                return;
+
+            // queued sends
+            int queued = m_queuedSends.Count;
+            while (num > 0 && queued > 0)
+            {
                 if (m_queuedSends.TryDequeue(out var om))
                 {
                     ExecuteSend(now, om);
                     queued--;
                 }
                 num--;
-				NetException.Assert(num == GetAllowedSends());
-			}
-		}
+                NetException.Assert(num == GetAllowedSends());
+            }
+        }
 
 		private void ExecuteSend(double now, NetOutgoingMessage message)
 		{

@@ -603,6 +603,12 @@ namespace Ghost.Server.Utilities
         {
             return (((h1 << 5) + h1) ^ h2);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int CombineHashCodes(int h1, int h2, int h3, int h4)
+        {
+            return CombineHashCodes(CombineHashCodes(h1, h2), CombineHashCodes(h3, h4));
+        }
     }
     public static class StringExtension
     {

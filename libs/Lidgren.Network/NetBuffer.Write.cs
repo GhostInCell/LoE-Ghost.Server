@@ -27,26 +27,6 @@ using System.Runtime.InteropServices;
 
 namespace Lidgren.Network
 {
-	/// <summary>
-	/// Utility struct for writing Singles
-	/// </summary>
-	[StructLayout(LayoutKind.Explicit)]
-	public struct SingleUIntUnion
-	{
-		/// <summary>
-		/// Value as a 32 bit float
-		/// </summary>
-		[FieldOffset(0)]
-		public float SingleValue;
-
-		/// <summary>
-		/// Value as an unsigned 32 bit integer
-		/// </summary>
-		[FieldOffset(0)]
-		[CLSCompliant(false)]
-		public uint UIntValue;
-	}
-
 	public partial class NetBuffer
 	{
 		/// <summary>
@@ -61,7 +41,7 @@ namespace Lidgren.Network
 				return;
 			}
 			if (m_data.Length < byteLen)
-				Array.Resize<byte>(ref m_data, byteLen + c_overAllocateAmount);
+				Array.Resize(ref m_data, byteLen + c_overAllocateAmount);
 			return;
 		}
 
@@ -77,7 +57,7 @@ namespace Lidgren.Network
 				return;
 			}
 			if (m_data.Length < byteLen)
-				Array.Resize<byte>(ref m_data, byteLen);
+				Array.Resize(ref m_data, byteLen);
 			return;
 		}
 
@@ -394,89 +374,39 @@ namespace Lidgren.Network
 		//
 		// Floating point
 		//
-#if UNSAFE
-		/// <summary>
-		/// Writes a 32 bit floating point value
-		/// </summary>
-		public unsafe void Write(float source)
-		{
-			uint val = *((uint*)&source);
-#if BIGENDIAN
-				val = NetUtility.SwapByteOrder(val);
-#endif
-			Write(val);
-		}
-#else
 		/// <summary>
 		/// Writes a 32 bit floating point value
 		/// </summary>
 		public void Write(float source)
 		{
-			// Use union to avoid BitConverter.GetBytes() which allocates memory on the heap
-			SingleUIntUnion su;
-			su.UIntValue = 0; // must initialize every member of the union to avoid warning
-			su.SingleValue = source;
-
+            var value = (uint)BitConverter.SingleToInt32Bits(source);
 #if BIGENDIAN
 			// swap byte order
-			su.UIntValue = NetUtility.SwapByteOrder(su.UIntValue);
+			value = NetUtility.SwapByteOrder(value);
 #endif
-			Write(su.UIntValue);
+            Write(value);
 		}
-#endif
 
-#if UNSAFE
-		/// <summary>
-		/// Writes a 64 bit floating point value
-		/// </summary>
-		public unsafe void Write(double source)
-		{
-			ulong val = *((ulong*)&source);
-#if BIGENDIAN
-			val = NetUtility.SwapByteOrder(val);
-#endif
-			Write(val);
-		}
-#else
 		/// <summary>
 		/// Writes a 64 bit floating point value
 		/// </summary>
 		public void Write(double source)
 		{
-			byte[] val = BitConverter.GetBytes(source);
+            var value = (ulong)BitConverter.DoubleToInt64Bits(source);
 #if BIGENDIAN
-			// 0 1 2 3   4 5 6 7
-
-			// swap byte order
-			byte tmp = val[7];
-			val[7] = val[0];
-			val[0] = tmp;
-
-			tmp = val[6];
-			val[6] = val[1];
-			val[1] = tmp;
-
-			tmp = val[5];
-			val[5] = val[2];
-			val[2] = tmp;
-
-			tmp = val[4];
-			val[4] = val[3];
-			val[3] = tmp;
+			value = NetUtility.SwapByteOrder(value);
 #endif
-			Write(val);
-		}
-#endif
+            Write(value);
+        }
+        //
+        // Variable bits
+        //
 
-		//
-		// Variable bits
-		//
-
-		/// <summary>
-		/// Write Base128 encoded variable sized unsigned integer of up to 32 bits
-		/// </summary>
-		/// <returns>number of bytes written</returns>
-		[CLSCompliant(false)]
+        /// <summary>
+        /// Write Base128 encoded variable sized unsigned integer of up to 32 bits
+        /// </summary>
+        /// <returns>number of bytes written</returns>
+        [CLSCompliant(false)]
 		public int WriteVariableUInt32(uint value)
 		{
 			int retval = 1;

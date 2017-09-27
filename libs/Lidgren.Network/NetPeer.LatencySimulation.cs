@@ -82,11 +82,13 @@ namespace Lidgren.Network
 			{
 				delay = m_configuration.m_minimumOneWayLatency + (MWCRandom.Instance.NextSingle() * m_configuration.m_randomOneWayLatency);
 
-				// Enqueue delayed packet
-				DelayedPacket p = new DelayedPacket();
-				p.Target = target;
-				p.Data = new byte[numBytes];
-				Buffer.BlockCopy(m_sendBuffer, 0, p.Data, 0, numBytes);
+                // Enqueue delayed packet
+                var p = new DelayedPacket()
+                {
+                    Target = target,
+                    Data = new byte[numBytes]
+                };
+                Buffer.BlockCopy(m_sendBuffer, 0, p.Data, 0, numBytes);
 				p.DelayedUntil = NetTime.Now + delay;
 
 				m_delayedPackets.Add(p);
@@ -102,28 +104,26 @@ namespace Lidgren.Network
 
 			double now = NetTime.Now;
 
-			bool connectionReset;
 
-		RestartDelaySending:
-			foreach (DelayedPacket p in m_delayedPackets)
-			{
-				if (now > p.DelayedUntil)
-				{
-					ActuallySendPacket(p.Data, p.Data.Length, p.Target, out connectionReset);
-					m_delayedPackets.Remove(p);
-					goto RestartDelaySending;
-				}
-			}
-		}
+            RestartDelaySending:
+            foreach (DelayedPacket p in m_delayedPackets)
+            {
+                if (now > p.DelayedUntil)
+                {
+                    ActuallySendPacket(p.Data, p.Data.Length, p.Target, out var connectionReset);
+                    m_delayedPackets.Remove(p);
+                    goto RestartDelaySending;
+                }
+            }
+        }
 
 		private void FlushDelayedPackets()
 		{
 			try
 			{
-				bool connectionReset;
-				foreach (DelayedPacket p in m_delayedPackets)
-					ActuallySendPacket(p.Data, p.Data.Length, p.Target, out connectionReset);
-				m_delayedPackets.Clear();
+                foreach (DelayedPacket p in m_delayedPackets)
+                    ActuallySendPacket(p.Data, p.Data.Length, p.Target, out var connectionReset);
+                m_delayedPackets.Clear();
 			}
 			catch { }
 		}
@@ -252,9 +252,7 @@ namespace Lidgren.Network
 		//
 		internal void SendPacket(int numBytes, IPEndPoint target, int numMessages, out bool connectionReset)
 		{
-#if USE_RELEASE_STATISTICS
 			m_statistics.PacketSent(numBytes, numMessages);
-#endif
 			connectionReset = false;
 			try
 			{
@@ -298,5 +296,5 @@ namespace Lidgren.Network
 		{
 		}
 #endif
-	}
+    }
 }

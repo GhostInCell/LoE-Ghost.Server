@@ -6,7 +6,7 @@ namespace Ghost.Server.Core.Structs
 {
     public struct DB_Ban
     {
-        public static readonly DB_Ban Empty = new DB_Ban(-1, 0, null, 0, 0, DateTime.MinValue, DateTime.MinValue, 0);
+        public static readonly DB_Ban Empty = new DB_Ban(-1, 0, null, 0, 0, DateTime.MinValue, DateTime.MaxValue, 0);
 
         public readonly int Id;
         public readonly int BanBy;

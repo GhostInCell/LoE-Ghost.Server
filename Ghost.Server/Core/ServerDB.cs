@@ -48,11 +48,12 @@ namespace Ghost.Server.Core
                 Server = Configs.Get<string>(Configs.MySQL_Host),
                 Database = Configs.Get<string>(Configs.MySQL_Db),
                 Password = Configs.Get<string>(Configs.MySQL_Pass),
+                SslMode = MySqlSslMode.None,
                 Pooling = true,
                 UseCompression = true,
             };
             s_maxChars = Configs.Get<int>(Configs.Game_MaxChars);
-            s_connectionString = builder.GetConnectionString(true);
+            s_connectionString = builder.ConnectionString;
         }
 
         private static async Task<MySqlConnection> GetConnectionAsync()

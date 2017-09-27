@@ -17,12 +17,8 @@ namespace PNet
         /// <param name="serialize">function that serializes the object</param>
         public Serializer(Func<object, int> sizeOf, Action<object, NetMessage> serialize)
         {
-            if (sizeOf == null)
-                throw new ArgumentNullException("sizeOf");
-            if (serialize == null)
-                throw new ArgumentNullException("serialize");
-            SizeOf = sizeOf;
-            Serialize = serialize;
+            SizeOf = sizeOf ?? throw new ArgumentNullException("sizeOf");
+            Serialize = serialize ?? throw new ArgumentNullException("serialize");
         }
     }
 

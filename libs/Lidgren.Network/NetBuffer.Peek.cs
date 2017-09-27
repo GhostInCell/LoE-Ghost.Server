@@ -232,7 +232,7 @@ namespace Lidgren.Network
 			ulong retval;
 			if (numberOfBits <= 32)
 			{
-				retval = (ulong)NetBitWriter.ReadUInt32(m_data, numberOfBits, m_readPosition);
+				retval = NetBitWriter.ReadUInt32(m_data, numberOfBits, m_readPosition);
 			}
 			else
 			{
@@ -266,41 +266,18 @@ namespace Lidgren.Network
 		/// Reads a 32-bit Single without advancing the read pointer
 		/// </summary>
 		public float PeekSingle()
-		{
-			NetException.Assert(m_bitLength - m_readPosition >= 32, c_readOverflowError);
+            => BitConverter.Int32BitsToSingle(PeekInt32());
 
-			if ((m_readPosition & 7) == 0) // read directly
-			{
-				float retval = BitConverter.ToSingle(m_data, m_readPosition >> 3);
-				return retval;
-			}
+        /// <summary>
+        /// Reads a 64-bit Double without advancing the read pointer
+        /// </summary>
+        public double PeekDouble()
+            => BitConverter.Int64BitsToDouble(PeekInt64());
 
-			byte[] bytes = PeekBytes(4);
-			return BitConverter.ToSingle(bytes, 0);
-		}
-
-		/// <summary>
-		/// Reads a 64-bit Double without advancing the read pointer
-		/// </summary>
-		public double PeekDouble()
-		{
-			NetException.Assert(m_bitLength - m_readPosition >= 64, c_readOverflowError);
-
-			if ((m_readPosition & 7) == 0) // read directly
-			{
-				// read directly
-				double retval = BitConverter.ToDouble(m_data, m_readPosition >> 3);
-				return retval;
-			}
-
-			byte[] bytes = PeekBytes(8);
-			return BitConverter.ToDouble(bytes, 0);
-		}
-
-		/// <summary>
-		/// Reads a string without advancing the read pointer
-		/// </summary>
-		public string PeekString()
+        /// <summary>
+        /// Reads a string without advancing the read pointer
+        /// </summary>
+        public string PeekString()
 		{
 			int wasReadPosition = m_readPosition;
 			string retval = ReadString();

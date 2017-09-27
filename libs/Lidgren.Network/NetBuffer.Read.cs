@@ -334,74 +334,40 @@ namespace Lidgren.Network
 			return ReadSingle();
 		}
 
-		/// <summary>
-		/// Reads a 32 bit floating point value written using Write(Single)
-		/// </summary>
-		public float ReadSingle()
-		{
-			NetException.Assert(m_bitLength - m_readPosition >= 32, c_readOverflowError);
-
-			if ((m_readPosition & 7) == 0) // read directly
-			{
-				float retval = BitConverter.ToSingle(m_data, m_readPosition >> 3);
-				m_readPosition += 32;
-				return retval;
-			}
-
-			byte[] bytes = ReadBytes(4);
-			return BitConverter.ToSingle(bytes, 0);
-		}
+        /// <summary>
+        /// Reads a 32 bit floating point value written using Write(Single)
+        /// </summary>
+        public float ReadSingle()
+            => BitConverter.Int32BitsToSingle(ReadInt32());
 
 		/// <summary>
 		/// Reads a 32 bit floating point value written using Write(Single)
 		/// </summary>
 		public bool ReadSingle(out float result)
 		{
-			if (m_bitLength - m_readPosition < 32)
-			{
-				result = 0.0f;
-				return false;
-			}
-
-			if ((m_readPosition & 7) == 0) // read directly
-			{
-				result = BitConverter.ToSingle(m_data, m_readPosition >> 3);
-				m_readPosition += 32;
-				return true;
-			}
-
-			byte[] bytes = ReadBytes(4);
-			result = BitConverter.ToSingle(bytes, 0);
-			return true;
-		}
+            if (ReadInt32(out var bits))
+            {
+                result = BitConverter.Int32BitsToSingle(ReadInt32());
+                return true;
+            }
+            result = 0.0f;
+            return false;
+        }
 
 		/// <summary>
 		/// Reads a 64 bit floating point value written using Write(Double)
 		/// </summary>
 		public double ReadDouble()
-		{
-			NetException.Assert(m_bitLength - m_readPosition >= 64, c_readOverflowError);
+            => BitConverter.Int64BitsToDouble(ReadInt64());
 
-			if ((m_readPosition & 7) == 0) // read directly
-			{
-				// read directly
-				double retval = BitConverter.ToDouble(m_data, m_readPosition >> 3);
-				m_readPosition += 64;
-				return retval;
-			}
+        //
+        // Variable bit count
+        //
 
-			byte[] bytes = ReadBytes(8);
-			return BitConverter.ToDouble(bytes, 0);
-		}
-
-		//
-		// Variable bit count
-		//
-
-		/// <summary>
-		/// Reads a variable sized UInt32 written using WriteVariableUInt32()
-		/// </summary>
-		[CLSCompliant(false)]
+        /// <summary>
+        /// Reads a variable sized UInt32 written using WriteVariableUInt32()
+        /// </summary>
+        [CLSCompliant(false)]
 		public uint ReadVariableUInt32()
 		{
 			int num1 = 0;

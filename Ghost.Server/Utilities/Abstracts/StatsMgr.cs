@@ -20,7 +20,7 @@ namespace Ghost.Server.Utilities.Abstracts
         protected Dictionary<Stats, StatValue> _stats;
         private SER_Stats stats_ser;
         private List<TimedModifer> _modifers;
-        private Dictionary<uint, List<Tuple<Stats, float, bool>>> _auras;
+        private Dictionary<uint, List<(Stats, float, bool)>> _auras;
         public int Team
         {
             get; set;
@@ -76,7 +76,7 @@ namespace Ghost.Server.Utilities.Abstracts
             _creature = parent;
             _modifers = new List<TimedModifer>();
             _stats = new Dictionary<Stats, StatValue>();
-            _auras = new Dictionary<uint, List<Tuple<Stats, float, bool>>>();
+            _auras = new Dictionary<uint, List<(Stats, float, bool)>>();
             stats_ser = new SER_Stats(_stats);
             parent.OnSpawn += StatsMgr_OnSpawn;
             parent.OnDespawn += StatsMgr_OnDespawn;
@@ -176,8 +176,8 @@ namespace Ghost.Server.Utilities.Abstracts
                 lock (_modifersLock)
                 {
                     if (!_auras.TryGetValue(guid, out var aura))
-                        _auras[guid] = aura = new List<Tuple<Stats, float, bool>>();
-                    aura.Add(new Tuple<Stats, float, bool>(stat, value, isMul));
+                        _auras[guid] = aura = new List<(Stats, float, bool)>();
+                    aura.Add((stat, value, isMul));
                     if (isMul)
                         mStat.AddMultiplier(value);
                     else

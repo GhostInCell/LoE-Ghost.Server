@@ -1,11 +1,11 @@
 <?php
 include 'config.php';
 include 'accounts_class.php';
-if (!isset($_POST["commfunction"]) || empty($_POST["commfunction"])) 
+if (empty($_POST["commfunction"])) 
 {
 	echo "failed:\n";
 } 
-elseif (!isset($_POST["version"]) || $_POST["version"] != $game_version) 
+elseif ($_POST["version"] !== $game_version) 
 {
     echo "versionresponse:\n".$game_version;
 } 
@@ -17,32 +17,48 @@ else
 		switch ($_POST["commfunction"]) 
 		{
 			case "login":
-			if($account->Login())
-			{
-				echo "authresponse:\ntrue\n".$account->Session()."\n".$account->AccessLevel()."\n".$account->Id()."\n".$game_servers;
-				exit;
-			}
-			break;
+				if($account->Login())
+				{
+					echo "authresponse:\ntrue\n".$account->Session()."\n".$account->AccessLevel()."\n".$account->Id()."\n".$game_servers;
+					exit;
+				}
+				break;
+			case "login_21":
+				$_POST["passhash"] = sha1(strtolower($_POST["username"]).$_POST["passwrd"]);
+				if($account->Login())
+				{
+					echo "authresponse:\ntrue\n".$account->Session()."\n".$account->AccessLevel()."\n".$account->Id()."\n".$game_servers;
+					exit;
+				}
+				break;
 			case "ucheck":
-			if($account->Valid())
-			{
-				echo "ucheckresponse:\nSuccess\n".$account->AccessLevel();
+				if($account->Valid())
+				{
+					echo "ucheckresponse:\nSuccess\n".$account->AccessLevel();
+					exit;
+				}
+				echo "ucheckresponse:\nFalse\n0";
 				exit;
-			}
-			break;
 			case "removesession":
-			if(!$account->RemoveSession())
-			{
-				echo "failed:\n";
-				exit;
-			}
-			break;
+				if(!$account->RemoveSession())
+				{
+					echo "failed:\n";
+					exit;
+				}
+				break;
 		}
 	}
-	else if($game_autologin && $account->Create())
+	else if($game_autologin)
 	{
-		echo "authresponse:\ntrue\n".$account->Session()."\n".$account->AccessLevel()."\n".$account->Id()."\n".$game_servers;
-		exit;	
+		if ($_POST["commfunction"] === "login_21")
+		{
+			$_POST["passhash"] = sha1(strtolower($_POST["username"]).$_POST["passwrd"]);
+		}
+		if($account->Create())
+		{
+			echo "authresponse:\ntrue\n".$account->Session()."\n".$account->AccessLevel()."\n".$account->Id()."\n".$game_servers;		
+			exit;
+		}
 	}
 	echo "authresponse:\nfalse\n";
 }

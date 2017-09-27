@@ -52,10 +52,10 @@ namespace Ghost.Server.Core.Objects
         {
             _data = data;
             if (data.Data01 <= 0)
-                ServerLogger.LogWarn($"Pickup {data.Guid} on map {data.Map} has negative or zero amount {data.Data01} of {data.ObjectID}");
+                ServerLogger.LogWarning($"Pickup {data.Guid} on map {data.Map} has negative or zero amount {data.Data01} of {data.ObjectID}");
             if ((_data.Flags & 1) == 1 && data.Time.TotalSeconds <= 0)
             {
-                ServerLogger.LogWarn($"Pickup {data.Guid} on map {data.Map} has respawn flag but negative or zero respawn time {data.Time}");
+                ServerLogger.LogWarning($"Pickup {data.Guid} on map {data.Map} has respawn flag but negative or zero respawn time {data.Time}");
                 _data.Flags &= 254;
             }
             if (!DataMgr.Select(data.ObjectID, out _item))

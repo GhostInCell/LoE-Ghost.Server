@@ -67,7 +67,7 @@ namespace Ghost.Server.Mgrs
                 var value = MathHelper.Clamp(pony.HornSize, MinHornSize, MaxHornSize);
                 if (value != pony.HornSize)
                 {
-                    ServerLogger.LogWarn($"Resetting character \"{pony.Name}\" horn size from {pony.HornSize} to {value}");
+                    ServerLogger.LogWarning($"Resetting character \"{pony.Name}\" horn size from {pony.HornSize} to {value}");
                     pony.HornSize = value;
                 }
             }
@@ -75,15 +75,15 @@ namespace Ghost.Server.Mgrs
                 var value = MathHelper.Clamp(pony.BodySize, MinBodySize, MaxBodySize);
                 if (value != pony.BodySize)
                 {
-                    ServerLogger.LogWarn($"Resetting character \"{pony.Name}\" body size from {pony.BodySize} to {value}");
+                    ServerLogger.LogWarning($"Resetting character \"{pony.Name}\" body size from {pony.BodySize} to {value}");
                     pony.BodySize = value;
                 }
             }
             {
-                var value = (Gender)MathHelper.Clamp((byte)pony.Gender, (byte)Gender.Mare, (byte)Gender.Stallion);
+                var value = (Gender)MathHelper.Clamp((byte)pony.Gender, (byte)Gender.Filly, (byte)Gender.Stallion);
                 if (value != pony.Gender)
                 {
-                    ServerLogger.LogWarn($"Resetting character \"{pony.Name}\" gender from {pony.Gender} to {value}");
+                    ServerLogger.LogWarning($"Resetting character \"{pony.Name}\" gender from {pony.Gender} to {value}");
                     pony.Gender = value;
                 }
             }
@@ -91,7 +91,7 @@ namespace Ghost.Server.Mgrs
                 var value = (CharacterType)MathHelper.Clamp((byte)pony.Race, (byte)CharacterType.EarthPony, (byte)CharacterType.Pegasus);
                 if (value != pony.Race)
                 {
-                    ServerLogger.LogWarn($"Resetting character \"{pony.Name}\" race from {pony.Race} to {value}");
+                    ServerLogger.LogWarning($"Resetting character \"{pony.Name}\" race from {pony.Race} to {value}");
                     pony.Race = value;
                 }
             }
@@ -100,14 +100,14 @@ namespace Ghost.Server.Mgrs
         public static async void SaveCharacter(Character entry)
         {
             if (!await ServerDB.UpdateCharacterAsync(entry))
-                ServerLogger.LogError($"Couldn't save character {entry.Id}");
+                ServerLogger.LogWarning($"Couldn't save character {entry.Id}");
         }
 
         public static async Task<bool> SaveCharacterAsync(Character entry)
         {
             if (await ServerDB.UpdateCharacterAsync(entry))
                 return true;
-            ServerLogger.LogError($"Couldn't save character {entry.Id}");
+            ServerLogger.LogWarning($"Couldn't save character {entry.Id}");
             return false;
         }
 

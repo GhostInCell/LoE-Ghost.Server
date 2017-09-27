@@ -1,0 +1,17 @@
+appleofcertainty.png
+basicheal.png
+celestial_beam1.png
+dualcyclone.png
+gale.png
+groundpound.png
+horseshoeshot.png
+magicarrow.png
+minor_heal1.png
+rainbowfields.png
+roughterrain.png
+shadowbolt.png
+shadow_strike1.png
+solarblast.png
+stomp.png
+sunshine.png
+teleport.png

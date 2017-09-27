@@ -7,6 +7,7 @@ using Ghost.Server.Utilities;
 using Ghost.Server.Utilities.Abstracts;
 using PNet;
 using PNetR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -135,8 +136,9 @@ namespace Ghost.Server.Mgrs.Player
                     count--;
                     if (slot.Item.Id == id)
                     {
+                        slot.Amount = 0;
                         m_items.Remove(index);
-                        m_view.UpdateSlot(slot.Delete(), index);
+                        m_view.UpdateSlot(slot, index);
                     }
                 }
             }
@@ -145,13 +147,6 @@ namespace Ghost.Server.Mgrs.Player
         public int GetItemsCount(int id)
         {
             return m_items.Sum(x => x.Value.Item.Id == id ? x.Value.Amount : 0);
-        }
-
-        public void ClearSlot(int index)
-        {
-            var slot = GetSlot(index);
-            if (slot != null && m_items.Remove(index))
-                m_view.UpdateSlot(slot.Delete(), index);
         }
 
         public int AddItems(int id, int amount)
@@ -180,7 +175,14 @@ namespace Ghost.Server.Mgrs.Player
                     {
                         count--;
                         if (slot.Item.Id == id)
-                            amount = RemoveFromSlot(index, amount);
+                        {
+                            var toRemove = Math.Min(slot.Amount, amount);
+                            amount -= toRemove;
+                            slot.Amount -= toRemove;
+                            m_view.UpdateSlot(slot, index);
+                            if (slot.Amount == 0)
+                                m_items.Remove(index);
+                        }
                     }
                 }
                 return amount;
@@ -189,27 +191,20 @@ namespace Ghost.Server.Mgrs.Player
         }
 
         public bool HasInSlot(int index, int id, int amount)
-        {
-            var slot = GetSlot(index);
-            return slot.Item.Id == id && slot.Amount >= amount;
-        }
+            => m_items.TryGetValue(index, out var slot) && slot.Item.Id == id && slot.Amount >= amount;
 
         public int RemoveFromSlot(int index, int amount)
         {
-            var slot = m_items[index];
-            int slotAmount = slot.Amount;
-            if (slotAmount <= amount)
+            if (m_items.TryGetValue(index, out var slot))
             {
-                m_items.Remove(index);
-                m_view.UpdateSlot(slot.Delete(), index);
-                return amount - slotAmount;
-            }
-            else
-            {
-                slot.Amount -= amount;
+                var toRemove = Math.Min(slot.Amount, amount);
+                amount -= toRemove;
+                slot.Amount -= toRemove;
                 m_view.UpdateSlot(slot, index);
-                return 0;
+                if (slot.Amount == 0)
+                    m_items.Remove(index);
             }
+            return amount;
         }
 
         private int GetFreeSlot()
@@ -220,11 +215,6 @@ namespace Ghost.Server.Mgrs.Player
                     return index;
             }
             return -1;
-        }
-
-        private InventorySlot GetSlot(int index)
-        {
-            return m_items.TryGetValue(index, out var slot) ? slot : null;
         }
 
         private int AddItem(DB_Item item, int amount)
@@ -260,16 +250,6 @@ namespace Ghost.Server.Mgrs.Player
             return amount;
         }
 
-        private InventorySlot GetInventorySlot(int index)
-        {
-            if (!m_items.TryGetValue(index, out var slot))
-            {
-                slot = new InventorySlot();
-                m_items[index] = slot;
-            }
-            return slot;
-        }
-
         private int AddItem(int index, DB_Item item, int amount)
         {
             if (!m_items.ContainsKey(index))
@@ -298,18 +278,6 @@ namespace Ghost.Server.Mgrs.Player
             return amount - slot.Amount;
         }
 
-        private int SetSlot(int index, DB_Item item, InventoryItem data, int amount)
-        {
-            var slot = new InventorySlot() { Item = data };
-            if ((item.Flags & ItemFlags.Stackable) == 0)
-                slot.Amount = 1;
-            else
-                slot.Amount = amount < item.Stack ? amount : item.Stack;
-            m_items[index] = slot;
-            m_view.UpdateSlot(slot, index);
-            return amount - slot.Amount;
-        }
-
         private int AddSlot(int index, DB_Item item, int amount)
         {
             if ((item.Flags & ItemFlags.Stackable) == 0) return amount;
@@ -318,6 +286,25 @@ namespace Ghost.Server.Mgrs.Player
             slot.Amount = nAmount < item.Stack ? nAmount : item.Stack;
             m_view.UpdateSlot(slot, index);
             return amount - slot.Amount;
+        }
+
+        private void SetSlot(int index, InventoryItem item, int amount)
+        {
+            if (!m_items.TryGetValue(index, out var slot))
+                m_items[index] = slot = new InventorySlot();
+            slot.Item = item;
+            slot.Amount = amount;
+            m_view.UpdateSlot(slot, index);
+        }
+
+        private void RemoveSlot(int index, InventorySlot slot)
+        {
+            if (slot != null || m_items.TryGetValue(index, out slot))
+            {
+                slot.Amount = 0;
+                m_view.UpdateSlot(slot, index);
+                m_items.Remove(index);
+            }
         }
 
         #region RPC Handlers
@@ -357,47 +344,41 @@ namespace Ghost.Server.Mgrs.Player
         [Rpc(7, false)]
         private void DeleteItem(byte islot, int amount)
         {
-            var itemSlot = GetSlot(islot);
-            if (itemSlot?.IsEmpty ?? true)
-                _player.SystemMsg($"Inventory slot {islot} is empty");
-            else
+            if (m_items.TryGetValue(islot, out var slot))
             {
-                int ramount = RemoveItems(itemSlot.Item.Id, amount);
+                int ramount = RemoveItems(slot.Item.Id, amount);
                 if (ramount == 0)
-                    _player.SystemMsg($"Removed {amount} items {itemSlot.Item.Id} from {islot}");
+                    _player.SystemMsg($"Removed {amount} items {slot.Item.Id} from {islot}");
                 else
 
-                    _player.SystemMsg($"Error while removing items {itemSlot.Item.Id} from {islot} removed {amount - ramount}/{amount}");
+                    _player.SystemMsg($"Error while removing items {slot.Item.Id} from {islot} removed {amount - ramount}/{amount}");
             }
+            else _player.SystemMsg($"Inventory slot {islot} is empty");
         }
 
         [OwnerOnly]
         [Rpc(8, false)]
         private void WearItem(WornSlot wslot, byte islot)
         {
-            var itemSlot = GetSlot(islot);
-            if (itemSlot?.IsEmpty ?? true)
-                _player.SystemMsg($"Inventory slot {islot} is empty");
-            else
+            if (m_items.TryGetValue(islot, out var slot))
             {
-                if (DataMgr.Select(itemSlot.Item.Id, out DB_Item item))
+                if (DataMgr.Select(slot.Item.Id, out DB_Item item))
                 {
                     var wPosition = wslot.Position;
-                    if ((item.Slot & wPosition) == wPosition)
+                    if ((item.Slot & wPosition) > 0)
                     {
                         var flags = item.Flags;
                         var index = wslot.Index;
-                        m_items.Remove(islot);
-                        m_view.UpdateSlot(itemSlot.Delete(), islot);
+                        RemoveSlot(islot, slot);
                         if (m_wears.TryGetValue(index, out var witem))
                         {
                             item = DataMgr.SelectItem(witem.Id);
-                            SetSlot(islot, item, witem, 1);
+                            SetSlot(islot, witem, 1);
                             flags |= item.Flags;
                         }
                         m_wearSlotsUsed |= wPosition;
-                        m_wears[index] = itemSlot.Item;
-                        m_view.WearItem(itemSlot.Item, wslot.Value, m_wearSlotsUsed);
+                        m_wears[index] = slot.Item;
+                        m_view.WearItem(slot.Item, wslot.Value, m_wearSlotsUsed);
                         if ((flags & ItemFlags.Stats) > 0)
                             _mPlayer.Stats.UpdateStats();
                     }
@@ -405,8 +386,9 @@ namespace Ghost.Server.Mgrs.Player
                         _player.SystemMsg($"You can't wear {item.Name} in {wPosition}");
                 }
                 else
-                    _player.SystemMsg($"Item {itemSlot.Item.Id} not found");
+                    _player.SystemMsg($"Item {slot.Item.Id} not found");
             }
+            else _player.SystemMsg($"Inventory slot {islot} is empty");
         }
 
         [OwnerOnly]
@@ -418,13 +400,12 @@ namespace Ghost.Server.Mgrs.Player
             {
                 if (DataMgr.Select(witem.Id, out DB_Item item))
                 {
-                    int itemSlot = islot;
-                    if (!GetInventorySlot(islot).IsEmpty)
-                        itemSlot = GetFreeSlot();
-                    if (itemSlot != -1)
+                    if (m_items.TryGetValue(islot, out var slot))
                     {
-                        if (SetSlot(itemSlot, item, witem, 1) == 0)
+                        var itemSlot = GetFreeSlot();
+                        if (itemSlot != -1)
                         {
+                            SetSlot(itemSlot, witem, 1);
                             m_wears.Remove(index);
                             m_wearSlotsUsed &= ~wslot.Position;
                             m_view.UnwearItem(wslot.Value, m_wearSlotsUsed);
@@ -433,15 +414,11 @@ namespace Ghost.Server.Mgrs.Player
                         }
                         else
                         {
-                            _player.SystemMsg($"Couldn't unwear item {item.Name}");
+                            _player.SystemMsg($"You inventory is full");
                             m_view.WearItem(witem, wslot.Value, m_wearSlotsUsed);
                         }
                     }
-                    else
-                    {
-                        _player.SystemMsg($"You inventory is full");
-                        m_view.WearItem(witem, wslot.Value, m_wearSlotsUsed);
-                    }
+                    else SetSlot(islot, witem, 1);
                 }
                 else
                 {
@@ -457,35 +434,33 @@ namespace Ghost.Server.Mgrs.Player
         [Rpc(12, false)]//Use item
         private void UseItem(byte islot)
         {
-            var itemSlot = GetSlot(islot);
-            if (itemSlot?.IsEmpty ?? true)
-                _player.SystemMsg($"Inventory slot {islot} is empty");
-            else if (DataMgr.Select(itemSlot.Item.Id, out DB_Item item))
+            if (m_items.TryGetValue(islot, out var slot))
             {
-                if ((item.Flags & ItemFlags.Usable) > 0)
-                    ItemsScript.Use(item.ID, _mPlayer);
-                else
-                    _player.SystemMsg($"You can't use item {item.Name ?? item.ID.ToString()}");
+                if (DataMgr.Select(slot.Item.Id, out DB_Item item))
+                {
+                    if ((item.Flags & ItemFlags.Usable) > 0)
+                        ItemsScript.Use(item.ID, _mPlayer);
+                    else _player.SystemMsg($"You can't use item {item.Name ?? item.ID.ToString()}");
+                }
+                else _player.SystemMsg($"Item {slot.Item.Id} not found");
             }
-            else
-                _player.SystemMsg($"Item {itemSlot.Item.Id} not found");
+            else _player.SystemMsg($"Inventory slot {islot} is empty");
         }
 
         [OwnerOnly]
         [Rpc(14, false)]
-        private void ColorItem(byte islot, uint color01)
+        private void ColorItem(byte islot, byte colors, uint color01, uint color02)
         {
             if (m_data.Bits >= ColorItemPrice)
             {
-                var itemSlot = GetSlot(islot);
-                if (itemSlot?.IsEmpty ?? true)
-                    _player.SystemMsg($"Inventory slot {islot} is empty");
-                else
+                if (m_items.TryGetValue(islot, out var slot))
                 {
                     AddBits(-ColorItemPrice);
-                    itemSlot.Item.Color01 = color01;
-                    m_view.UpdateSlot(itemSlot, islot);
+                    if ((colors & 0x1) > 0) slot.Item.Color01 = color01;
+                    if ((colors & 0x2) > 0) slot.Item.Color02 = color02;
+                    m_view.UpdateSlot(slot, islot);
                 }
+                else _player.SystemMsg($"Inventory slot {islot} is empty");
             }
             else
                 _player.SystemMsg($"You have not enough bits {ColorItemPrice - m_data.Bits}");
@@ -495,24 +470,20 @@ namespace Ghost.Server.Mgrs.Player
         [Rpc(20, false)]
         private void MoveSlotToSlot(int first, int second)
         {
-            var slotFirst = GetSlot(first);
-            var slotSecond = GetSlot(second);
-            if (slotFirst?.IsEmpty ?? true)
-                _player.SystemMsg($"Inventory slot {first} is empty");
-            else
+            if (m_items.TryGetValue(first, out var fSlot))
             {
-                if (slotSecond?.IsEmpty ?? true)
+                if (m_items.TryGetValue(second, out var sSlot))
                 {
-                    m_items.Remove(first);
-                    SetSlot(second, slotFirst);
-                    m_view.UpdateSlot(slotFirst.Delete(), first);
+                    SetSlot(first, sSlot);
+                    SetSlot(second, fSlot);
                 }
                 else
                 {
-                    SetSlot(first, slotSecond);
-                    SetSlot(second, slotFirst);
+                    SetSlot(second, fSlot);
+                    RemoveSlot(first, fSlot);
                 }
             }
+            else _player.SystemMsg($"Inventory slot {first} is empty");
         }
         #endregion
         #region Events Handlers

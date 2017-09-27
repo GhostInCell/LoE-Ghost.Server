@@ -318,7 +318,7 @@ namespace Ghost.Server.Core.Players
                 m_mute = await ServerDB.SelectBanAsync(_user.ID, _player.EndPoint.Address, BanType.Mute, message.Time);
                 m_mute_chek = message.Time.AddSeconds(Constants.MuteCheckDelay);
             }
-            if (m_mute.End > message.Time)
+            if (!m_mute.IsEmpty && m_mute.End > message.Time)
             {
                 _player.MuteMsg(m_mute);
                 return;
@@ -435,7 +435,7 @@ namespace Ghost.Server.Core.Players
                         BanPlayer(arg1.ReadString(), false, arg1.ReadInt32(), BanType.Ban, null);
                         break;
                     default:
-                        ServerLogger.LogWarn($"Unhandled: Rpc 49; SubRpc: {subRpc}");
+                        ServerLogger.LogWarning($"Unhandled: Rpc 49; SubRpc: {subRpc}");
                         break;
                 }
             }

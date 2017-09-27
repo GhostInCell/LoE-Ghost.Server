@@ -13,10 +13,31 @@
     <Price>3</Price>
     <Salable>true</Salable>
     <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable">
+      <Effects>
+        <Effect>
+          <Name />
+          <SubId>0</SubId>
+          <Stat>Health</Stat>
+          <Targets>Enemy</Targets>
+          <SkillId>-1</SkillId>
+          <Chance>1</Chance>
+          <Duration>0</Duration>
+          <TickDuration>0</TickDuration>
+          <IsDPS>false</IsDPS>
+          <Amount>50</Amount>
+          <IsMultiplier>true</IsMultiplier>
+          <Statuses>None</Statuses>
+          <EffectId>-1</EffectId>
+          <AccumulationTimer>0</AccumulationTimer>
+          <IsUnique>false</IsUnique>
+        </Effect>
+      </Effects>
+    </ItemUse>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString />
+    <StatString>Health=50</StatString>
   </Item>
   <Item>
     <ID>1</ID>
@@ -24,17 +45,38 @@
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>A red apple fresh from the farm.</Description>
-    <Name>Red apple</Name>
+    <Name>Red Apple</Name>
     <ResourcePath />
     <Stackable>true</Stackable>
     <MaxStackSize>10</MaxStackSize>
     <Price>3</Price>
     <Salable>true</Salable>
     <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable">
+      <Effects>
+        <Effect>
+          <Name />
+          <SubId>0</SubId>
+          <Stat>Health</Stat>
+          <Targets>Enemy</Targets>
+          <SkillId>-1</SkillId>
+          <Chance>1</Chance>
+          <Duration>0</Duration>
+          <TickDuration>0</TickDuration>
+          <IsDPS>false</IsDPS>
+          <Amount>50</Amount>
+          <IsMultiplier>true</IsMultiplier>
+          <Statuses>None</Statuses>
+          <EffectId>-1</EffectId>
+          <AccumulationTimer>0</AccumulationTimer>
+          <IsUnique>false</IsUnique>
+        </Effect>
+      </Effects>
+    </ItemUse>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString />
+    <StatString>Health=50</StatString>
   </Item>
   <Item>
     <ID>2</ID>
@@ -49,10 +91,31 @@
     <Price>3</Price>
     <Salable>true</Salable>
     <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable">
+      <Effects>
+        <Effect>
+          <Name />
+          <SubId>0</SubId>
+          <Stat>Health</Stat>
+          <Targets>Enemy</Targets>
+          <SkillId>-1</SkillId>
+          <Chance>1</Chance>
+          <Duration>0</Duration>
+          <TickDuration>0</TickDuration>
+          <IsDPS>false</IsDPS>
+          <Amount>50</Amount>
+          <IsMultiplier>true</IsMultiplier>
+          <Statuses>None</Statuses>
+          <EffectId>-1</EffectId>
+          <AccumulationTimer>0</AccumulationTimer>
+          <IsUnique>false</IsUnique>
+        </Effect>
+      </Effects>
+    </ItemUse>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString />
+    <StatString>Health=50</StatString>
   </Item>
   <Item>
     <ID>3</ID>
@@ -67,10 +130,31 @@
     <Price>5</Price>
     <Salable>true</Salable>
     <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable">
+      <Effects>
+        <Effect>
+          <Name />
+          <SubId>0</SubId>
+          <Stat>Health</Stat>
+          <Targets>Enemy</Targets>
+          <SkillId>-1</SkillId>
+          <Chance>1</Chance>
+          <Duration>0</Duration>
+          <TickDuration>0</TickDuration>
+          <IsDPS>false</IsDPS>
+          <Amount>50</Amount>
+          <IsMultiplier>true</IsMultiplier>
+          <Statuses>None</Statuses>
+          <EffectId>-1</EffectId>
+          <AccumulationTimer>0</AccumulationTimer>
+          <IsUnique>false</IsUnique>
+        </Effect>
+      </Effects>
+    </ItemUse>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString />
+    <StatString>Health=50</StatString>
   </Item>
   <Item>
     <ID>4</ID>
@@ -85,10 +169,31 @@
     <Price>5</Price>
     <Salable>true</Salable>
     <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable">
+      <Effects>
+        <Effect>
+          <Name />
+          <SubId>0</SubId>
+          <Stat>Health</Stat>
+          <Targets>Enemy</Targets>
+          <SkillId>-1</SkillId>
+          <Chance>1</Chance>
+          <Duration>0</Duration>
+          <TickDuration>0</TickDuration>
+          <IsDPS>false</IsDPS>
+          <Amount>50</Amount>
+          <IsMultiplier>true</IsMultiplier>
+          <Statuses>None</Statuses>
+          <EffectId>-1</EffectId>
+          <AccumulationTimer>0</AccumulationTimer>
+          <IsUnique>false</IsUnique>
+        </Effect>
+      </Effects>
+    </ItemUse>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString />
+    <StatString>Health=50</StatString>
   </Item>
   <Item>
     <ID>5</ID>
@@ -103,10 +208,31 @@
     <Price>5</Price>
     <Salable>true</Salable>
     <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable">
+      <Effects>
+        <Effect>
+          <Name />
+          <SubId>0</SubId>
+          <Stat>Health</Stat>
+          <Targets>Enemy</Targets>
+          <SkillId>-1</SkillId>
+          <Chance>1</Chance>
+          <Duration>0</Duration>
+          <TickDuration>0</TickDuration>
+          <IsDPS>false</IsDPS>
+          <Amount>50</Amount>
+          <IsMultiplier>true</IsMultiplier>
+          <Statuses>None</Statuses>
+          <EffectId>-1</EffectId>
+          <AccumulationTimer>0</AccumulationTimer>
+          <IsUnique>false</IsUnique>
+        </Effect>
+      </Effects>
+    </ItemUse>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString />
+    <StatString>Health=50</StatString>
   </Item>
   <Item>
     <ID>6</ID>
@@ -121,10 +247,31 @@
     <Price>5</Price>
     <Salable>true</Salable>
     <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable">
+      <Effects>
+        <Effect>
+          <Name />
+          <SubId>0</SubId>
+          <Stat>Energy</Stat>
+          <Targets>Enemy</Targets>
+          <SkillId>-1</SkillId>
+          <Chance>1</Chance>
+          <Duration>0</Duration>
+          <TickDuration>0</TickDuration>
+          <IsDPS>false</IsDPS>
+          <Amount>25</Amount>
+          <IsMultiplier>true</IsMultiplier>
+          <Statuses>None</Statuses>
+          <EffectId>-1</EffectId>
+          <AccumulationTimer>0</AccumulationTimer>
+          <IsUnique>false</IsUnique>
+        </Effect>
+      </Effects>
+    </ItemUse>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString />
+    <StatString>Health=25</StatString>
   </Item>
   <Item>
     <ID>7</ID>
@@ -136,13 +283,34 @@
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>true</Stackable>
     <MaxStackSize>8</MaxStackSize>
-    <Price>5</Price>
+    <Price>7</Price>
     <Salable>true</Salable>
     <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable">
+      <Effects>
+        <Effect>
+          <Name />
+          <SubId>0</SubId>
+          <Stat>Health</Stat>
+          <Targets>Enemy</Targets>
+          <SkillId>-1</SkillId>
+          <Chance>1</Chance>
+          <Duration>0</Duration>
+          <TickDuration>0</TickDuration>
+          <IsDPS>false</IsDPS>
+          <Amount>30</Amount>
+          <IsMultiplier>true</IsMultiplier>
+          <Statuses>None</Statuses>
+          <EffectId>-1</EffectId>
+          <AccumulationTimer>0</AccumulationTimer>
+          <IsUnique>false</IsUnique>
+        </Effect>
+      </Effects>
+    </ItemUse>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString />
+    <StatString>Health=30</StatString>
   </Item>
   <Item>
     <ID>8</ID>
@@ -154,13 +322,34 @@
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>true</Stackable>
     <MaxStackSize>10</MaxStackSize>
-    <Price>0</Price>
+    <Price>4</Price>
     <Salable>true</Salable>
     <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable">
+      <Effects>
+        <Effect>
+          <Name />
+          <SubId>0</SubId>
+          <Stat>Health</Stat>
+          <Targets>Enemy</Targets>
+          <SkillId>-1</SkillId>
+          <Chance>1</Chance>
+          <Duration>0</Duration>
+          <TickDuration>0</TickDuration>
+          <IsDPS>false</IsDPS>
+          <Amount>50</Amount>
+          <IsMultiplier>true</IsMultiplier>
+          <Statuses>None</Statuses>
+          <EffectId>-1</EffectId>
+          <AccumulationTimer>0</AccumulationTimer>
+          <IsUnique>false</IsUnique>
+        </Effect>
+      </Effects>
+    </ItemUse>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString />
+    <StatString>Health=50</StatString>
   </Item>
   <Item>
     <ID>9</ID>
@@ -374,7 +563,7 @@
     <Salable>true</Salable>
     <WearableSlots>Shirt</WearableSlots>
     <SocketCount>0</SocketCount>
-    <Coloring>None</Coloring>
+    <Coloring>Single</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
     <StatString />
   </Item>
@@ -456,17 +645,38 @@
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>A juicy strawberry filled with strawberry juice.</Description>
-    <Name>Strawberry </Name>
+    <Name>Strawberry</Name>
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>true</Stackable>
     <MaxStackSize>10</MaxStackSize>
     <Price>5</Price>
     <Salable>true</Salable>
     <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable">
+      <Effects>
+        <Effect>
+          <Name />
+          <SubId>0</SubId>
+          <Stat>Health</Stat>
+          <Targets>Enemy</Targets>
+          <SkillId>-1</SkillId>
+          <Chance>1</Chance>
+          <Duration>0</Duration>
+          <TickDuration>0</TickDuration>
+          <IsDPS>false</IsDPS>
+          <Amount>50</Amount>
+          <IsMultiplier>true</IsMultiplier>
+          <Statuses>None</Statuses>
+          <EffectId>-1</EffectId>
+          <AccumulationTimer>0</AccumulationTimer>
+          <IsUnique>false</IsUnique>
+        </Effect>
+      </Effects>
+    </ItemUse>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString />
+    <StatString>Health=50</StatString>
   </Item>
   <Item>
     <ID>27</ID>
@@ -481,10 +691,31 @@
     <Price>8</Price>
     <Salable>true</Salable>
     <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable">
+      <Effects>
+        <Effect>
+          <Name />
+          <SubId>0</SubId>
+          <Stat>Health</Stat>
+          <Targets>Enemy</Targets>
+          <SkillId>-1</SkillId>
+          <Chance>1</Chance>
+          <Duration>0</Duration>
+          <TickDuration>0</TickDuration>
+          <IsDPS>false</IsDPS>
+          <Amount>150</Amount>
+          <IsMultiplier>true</IsMultiplier>
+          <Statuses>None</Statuses>
+          <EffectId>-1</EffectId>
+          <AccumulationTimer>0</AccumulationTimer>
+          <IsUnique>false</IsUnique>
+        </Effect>
+      </Effects>
+    </ItemUse>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString />
+    <StatString>Health=150</StatString>
   </Item>
   <Item>
     <ID>28</ID>
@@ -547,12 +778,12 @@
     <RequiredLevel>1</RequiredLevel>
     <Description>A cap that shows you are an assitant nurse. (Although it is best to stay out of medical matters until you've had the proper training.)</Description>
     <Name>Assistant Nurse Cap</Name>
-    <ResourcePath>Undefined</ResourcePath>
+    <ResourcePath>Hats/NurseCap</ResourcePath>
     <Stackable>true</Stackable>
     <MaxStackSize>10</MaxStackSize>
     <Price>5</Price>
     <Salable>true</Salable>
-    <WearableSlots>None</WearableSlots>
+    <WearableSlots>Hat</WearableSlots>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
@@ -582,7 +813,7 @@
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>Nothing is getting through that. But just to be safe, don't try it.</Description>
-    <Name>Hard Hat </Name>
+    <Name>Hard Hat</Name>
     <ResourcePath>Hats/firepony</ResourcePath>
     <Stackable>false</Stackable>
     <MaxStackSize>10</MaxStackSize>
@@ -604,13 +835,34 @@
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>true</Stackable>
     <MaxStackSize>30</MaxStackSize>
-    <Price>5</Price>
+    <Price>50</Price>
     <Salable>true</Salable>
     <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable">
+      <Effects>
+        <Effect>
+          <Name />
+          <SubId>0</SubId>
+          <Stat>Health</Stat>
+          <Targets>Enemy</Targets>
+          <SkillId>-1</SkillId>
+          <Chance>1</Chance>
+          <Duration>0</Duration>
+          <TickDuration>0</TickDuration>
+          <IsDPS>false</IsDPS>
+          <Amount>300</Amount>
+          <IsMultiplier>true</IsMultiplier>
+          <Statuses>None</Statuses>
+          <EffectId>-1</EffectId>
+          <AccumulationTimer>0</AccumulationTimer>
+          <IsUnique>false</IsUnique>
+        </Effect>
+      </Effects>
+    </ItemUse>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString />
+    <StatString>Health=300</StatString>
   </Item>
   <Item>
     <ID>35</ID>
@@ -733,10 +985,31 @@
     <Price>2</Price>
     <Salable>true</Salable>
     <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable">
+      <Effects>
+        <Effect>
+          <Name />
+          <SubId>0</SubId>
+          <Stat>Energy</Stat>
+          <Targets>Enemy</Targets>
+          <SkillId>-1</SkillId>
+          <Chance>1</Chance>
+          <Duration>0</Duration>
+          <TickDuration>0</TickDuration>
+          <IsDPS>false</IsDPS>
+          <Amount>200</Amount>
+          <IsMultiplier>true</IsMultiplier>
+          <Statuses>None</Statuses>
+          <EffectId>-1</EffectId>
+          <AccumulationTimer>0</AccumulationTimer>
+          <IsUnique>false</IsUnique>
+        </Effect>
+      </Effects>
+    </ItemUse>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString />
+    <StatString>Health=200</StatString>
   </Item>
   <Item>
     <ID>42</ID>
@@ -744,7 +1017,7 @@
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>The book Skyhammer gave me to return to Final Ink at the Canterlot Library. </Description>
-    <Name>Skyhammer's Book </Name>
+    <Name>Skyhammer's Book</Name>
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>true</Stackable>
     <MaxStackSize>5</MaxStackSize>
@@ -762,17 +1035,38 @@
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>A fine pastry topped with a mountain of whipped cream. Looks delicious. </Description>
-    <Name>Whipped Cream Pie </Name>
+    <Name>Whipped Cream Pie</Name>
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>true</Stackable>
     <MaxStackSize>10</MaxStackSize>
     <Price>6</Price>
     <Salable>true</Salable>
     <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable">
+      <Effects>
+        <Effect>
+          <Name />
+          <SubId>0</SubId>
+          <Stat>Health</Stat>
+          <Targets>Enemy</Targets>
+          <SkillId>-1</SkillId>
+          <Chance>1</Chance>
+          <Duration>0</Duration>
+          <TickDuration>0</TickDuration>
+          <IsDPS>false</IsDPS>
+          <Amount>150</Amount>
+          <IsMultiplier>true</IsMultiplier>
+          <Statuses>None</Statuses>
+          <EffectId>-1</EffectId>
+          <AccumulationTimer>0</AccumulationTimer>
+          <IsUnique>false</IsUnique>
+        </Effect>
+      </Effects>
+    </ItemUse>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString />
+    <StatString>Health=150</StatString>
   </Item>
   <Item>
     <ID>44</ID>
@@ -787,10 +1081,31 @@
     <Price>6</Price>
     <Salable>true</Salable>
     <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable">
+      <Effects>
+        <Effect>
+          <Name />
+          <SubId>0</SubId>
+          <Stat>Health</Stat>
+          <Targets>Enemy</Targets>
+          <SkillId>-1</SkillId>
+          <Chance>1</Chance>
+          <Duration>0</Duration>
+          <TickDuration>0</TickDuration>
+          <IsDPS>false</IsDPS>
+          <Amount>150</Amount>
+          <IsMultiplier>true</IsMultiplier>
+          <Statuses>None</Statuses>
+          <EffectId>-1</EffectId>
+          <AccumulationTimer>0</AccumulationTimer>
+          <IsUnique>false</IsUnique>
+        </Effect>
+      </Effects>
+    </ItemUse>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString />
+    <StatString>Health=150</StatString>
   </Item>
   <Item>
     <ID>45</ID>
@@ -805,10 +1120,31 @@
     <Price>6</Price>
     <Salable>true</Salable>
     <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable">
+      <Effects>
+        <Effect>
+          <Name />
+          <SubId>0</SubId>
+          <Stat>Health</Stat>
+          <Targets>Enemy</Targets>
+          <SkillId>-1</SkillId>
+          <Chance>1</Chance>
+          <Duration>0</Duration>
+          <TickDuration>0</TickDuration>
+          <IsDPS>false</IsDPS>
+          <Amount>150</Amount>
+          <IsMultiplier>true</IsMultiplier>
+          <Statuses>None</Statuses>
+          <EffectId>-1</EffectId>
+          <AccumulationTimer>0</AccumulationTimer>
+          <IsUnique>false</IsUnique>
+        </Effect>
+      </Effects>
+    </ItemUse>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString />
+    <StatString>Health=150</StatString>
   </Item>
   <Item>
     <ID>46</ID>
@@ -823,10 +1159,31 @@
     <Price>6</Price>
     <Salable>true</Salable>
     <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable">
+      <Effects>
+        <Effect>
+          <Name />
+          <SubId>0</SubId>
+          <Stat>Health</Stat>
+          <Targets>Enemy</Targets>
+          <SkillId>-1</SkillId>
+          <Chance>1</Chance>
+          <Duration>0</Duration>
+          <TickDuration>0</TickDuration>
+          <IsDPS>false</IsDPS>
+          <Amount>150</Amount>
+          <IsMultiplier>true</IsMultiplier>
+          <Statuses>None</Statuses>
+          <EffectId>-1</EffectId>
+          <AccumulationTimer>0</AccumulationTimer>
+          <IsUnique>false</IsUnique>
+        </Effect>
+      </Effects>
+    </ItemUse>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString />
+    <StatString>Health=150</StatString>
   </Item>
   <Item>
     <ID>47</ID>
@@ -834,17 +1191,38 @@
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>A nice strawberry pie. Looks delicious. </Description>
-    <Name>Strawberry Pie </Name>
+    <Name>Strawberry Pie</Name>
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>true</Stackable>
     <MaxStackSize>10</MaxStackSize>
     <Price>6</Price>
     <Salable>true</Salable>
     <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable">
+      <Effects>
+        <Effect>
+          <Name />
+          <SubId>0</SubId>
+          <Stat>Health</Stat>
+          <Targets>Enemy</Targets>
+          <SkillId>-1</SkillId>
+          <Chance>1</Chance>
+          <Duration>0</Duration>
+          <TickDuration>0</TickDuration>
+          <IsDPS>false</IsDPS>
+          <Amount>150</Amount>
+          <IsMultiplier>true</IsMultiplier>
+          <Statuses>None</Statuses>
+          <EffectId>-1</EffectId>
+          <AccumulationTimer>0</AccumulationTimer>
+          <IsUnique>false</IsUnique>
+        </Effect>
+      </Effects>
+    </ItemUse>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString />
+    <StatString>Health=150</StatString>
   </Item>
   <Item>
     <ID>48</ID>
@@ -859,10 +1237,31 @@
     <Price>6</Price>
     <Salable>true</Salable>
     <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable">
+      <Effects>
+        <Effect>
+          <Name />
+          <SubId>0</SubId>
+          <Stat>Health</Stat>
+          <Targets>Enemy</Targets>
+          <SkillId>-1</SkillId>
+          <Chance>1</Chance>
+          <Duration>0</Duration>
+          <TickDuration>0</TickDuration>
+          <IsDPS>false</IsDPS>
+          <Amount>150</Amount>
+          <IsMultiplier>true</IsMultiplier>
+          <Statuses>None</Statuses>
+          <EffectId>-1</EffectId>
+          <AccumulationTimer>0</AccumulationTimer>
+          <IsUnique>false</IsUnique>
+        </Effect>
+      </Effects>
+    </ItemUse>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString />
+    <StatString>Health=150</StatString>
   </Item>
   <Item>
     <ID>49</ID>
@@ -870,17 +1269,38 @@
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>A fresh cherry pie. Looks delicious. </Description>
-    <Name>Cherry Pie </Name>
+    <Name>Cherry Pie</Name>
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>true</Stackable>
     <MaxStackSize>10</MaxStackSize>
     <Price>6</Price>
     <Salable>true</Salable>
     <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable">
+      <Effects>
+        <Effect>
+          <Name />
+          <SubId>0</SubId>
+          <Stat>Health</Stat>
+          <Targets>Enemy</Targets>
+          <SkillId>-1</SkillId>
+          <Chance>1</Chance>
+          <Duration>0</Duration>
+          <TickDuration>0</TickDuration>
+          <IsDPS>false</IsDPS>
+          <Amount>150</Amount>
+          <IsMultiplier>true</IsMultiplier>
+          <Statuses>None</Statuses>
+          <EffectId>-1</EffectId>
+          <AccumulationTimer>0</AccumulationTimer>
+          <IsUnique>false</IsUnique>
+        </Effect>
+      </Effects>
+    </ItemUse>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString />
+    <StatString>Health=150</StatString>
   </Item>
   <Item>
     <ID>50</ID>
@@ -895,10 +1315,31 @@
     <Price>6</Price>
     <Salable>true</Salable>
     <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable">
+      <Effects>
+        <Effect>
+          <Name />
+          <SubId>0</SubId>
+          <Stat>Health</Stat>
+          <Targets>Enemy</Targets>
+          <SkillId>-1</SkillId>
+          <Chance>1</Chance>
+          <Duration>0</Duration>
+          <TickDuration>0</TickDuration>
+          <IsDPS>false</IsDPS>
+          <Amount>150</Amount>
+          <IsMultiplier>true</IsMultiplier>
+          <Statuses>None</Statuses>
+          <EffectId>-1</EffectId>
+          <AccumulationTimer>0</AccumulationTimer>
+          <IsUnique>false</IsUnique>
+        </Effect>
+      </Effects>
+    </ItemUse>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString />
+    <StatString>Health=150</StatString>
   </Item>
   <Item>
     <ID>51</ID>
@@ -906,7 +1347,7 @@
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>Hmm, an empty pie tin. This could fit on your head...</Description>
-    <Name>Empty Pie Tin </Name>
+    <Name>Empty Pie Tin</Name>
     <ResourcePath>Hats/pie_tin</ResourcePath>
     <Stackable>true</Stackable>
     <MaxStackSize>20</MaxStackSize>
@@ -924,7 +1365,7 @@
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>General Messerchmitt's script. It's full of jargon and words that are long and weird. It says "rhododendron" at one point. No joke.</Description>
-    <Name>General Messerschmitt's Speech </Name>
+    <Name>General Messerschmitt's Speech</Name>
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>false</Stackable>
     <MaxStackSize>1</MaxStackSize>
@@ -970,7 +1411,7 @@
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString>Health=33,HealthRegen=3,Armor=4,MagicResist=3</StatString>
+    <StatString>Health=33,None=1,Armor=4,MagicResist=3</StatString>
   </Item>
   <Item>
     <ID>55</ID>
@@ -984,11 +1425,11 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>75</Price>
     <Salable>true</Salable>
-    <WearableSlots>Mask</WearableSlots>
+    <WearableSlots>Hat</WearableSlots>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString>Health=50,HealthRegen=8,Armor=4,MagicResist=3</StatString>
+    <StatString>Health=50,None=1,Armor=4,MagicResist=3</StatString>
   </Item>
   <Item>
     <ID>56</ID>
@@ -1006,7 +1447,7 @@
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString>Health=50,HealthRegen=8,Armor=4,MagicResist=3</StatString>
+    <StatString>Health=50,None=1,Armor=4,MagicResist=3</StatString>
   </Item>
   <Item>
     <ID>57</ID>
@@ -1024,7 +1465,7 @@
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString>Health=33,HealthRegen=3,Armor=4,MagicResist=3</StatString>
+    <StatString>Health=33,None=1,Armor=4,MagicResist=3</StatString>
   </Item>
   <Item>
     <ID>58</ID>
@@ -1141,7 +1582,7 @@
     <RequiredLevel>1</RequiredLevel>
     <Description>A freshly picked dandelion. It looks pretty. </Description>
     <Name>Dandelion</Name>
-    <ResourcePath>Undefined</ResourcePath>
+    <ResourcePath>undefined</ResourcePath>
     <Stackable>true</Stackable>
     <MaxStackSize>50</MaxStackSize>
     <Price>0</Price>
@@ -1155,8 +1596,8 @@
   <Item>
     <ID>65</ID>
     <Icon>20</Icon>
-    <ItemLevel>1</ItemLevel>
-    <RequiredLevel>1</RequiredLevel>
+    <ItemLevel>100</ItemLevel>
+    <RequiredLevel>100</RequiredLevel>
     <Description>Thbbbpt</Description>
     <Name>Fluffle Puff</Name>
     <ResourcePath>Clothes/Flufflepuff</ResourcePath>
@@ -1164,7 +1605,7 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>666</Price>
     <Salable>false</Salable>
-    <WearableSlots>FrontShoes BackShoes Shirt</WearableSlots>
+    <WearableSlots>None</WearableSlots>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
@@ -1231,14 +1672,14 @@
     <RequiredLevel>1</RequiredLevel>
     <Description>A flower from high up in the mountains of Cantermore.</Description>
     <Name>Mountain Flower</Name>
-    <ResourcePath>Undefined</ResourcePath>
+    <ResourcePath>Hats/flower</ResourcePath>
     <Stackable>true</Stackable>
     <MaxStackSize>10</MaxStackSize>
     <Price>1</Price>
     <Salable>true</Salable>
-    <WearableSlots>None</WearableSlots>
+    <WearableSlots>Hat</WearableSlots>
     <SocketCount>0</SocketCount>
-    <Coloring>None</Coloring>
+    <Coloring>Dual</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
     <StatString />
   </Item>
@@ -1466,7 +1907,7 @@
   </Item>
   <Item>
     <ID>83</ID>
-    <Icon>0</Icon>
+    <Icon>137</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>One of the three missing pieces of the Aperit Amphora, now no longer missing.</Description>
@@ -1484,7 +1925,7 @@
   </Item>
   <Item>
     <ID>84</ID>
-    <Icon>0</Icon>
+    <Icon>80</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>One of the three missing pieces of the Aperit Amphora, now no longer missing.</Description>
@@ -1502,7 +1943,7 @@
   </Item>
   <Item>
     <ID>85</ID>
-    <Icon>0</Icon>
+    <Icon>150</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
     <Description>One of the three missing pieces of the Aperit Amphora, now no longer missing.</Description>
@@ -1714,10 +2155,31 @@
     <Price>1</Price>
     <Salable>true</Salable>
     <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable">
+      <Effects>
+        <Effect>
+          <Name />
+          <SubId>0</SubId>
+          <Stat>Health</Stat>
+          <Targets>Enemy</Targets>
+          <SkillId>-1</SkillId>
+          <Chance>1</Chance>
+          <Duration>0</Duration>
+          <TickDuration>0</TickDuration>
+          <IsDPS>false</IsDPS>
+          <Amount>150</Amount>
+          <IsMultiplier>true</IsMultiplier>
+          <Statuses>None</Statuses>
+          <EffectId>-1</EffectId>
+          <AccumulationTimer>0</AccumulationTimer>
+          <IsUnique>false</IsUnique>
+        </Effect>
+      </Effects>
+    </ItemUse>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString />
+    <StatString>Health=150</StatString>
   </Item>
   <Item>
     <ID>97</ID>
@@ -1825,7 +2287,7 @@
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString>Health=666,HealthRegen=66,Armor=75,MagicResist=50</StatString>
+    <StatString>Health=666,None=1,Armor=75,MagicResist=50</StatString>
   </Item>
   <Item>
     <ID>103</ID>
@@ -1843,7 +2305,7 @@
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString>Health=800,HealthRegen=50,Armor=75,MagicResist=50</StatString>
+    <StatString>Health=800,None=1,Armor=75,MagicResist=50</StatString>
   </Item>
   <Item>
     <ID>104</ID>
@@ -1861,7 +2323,7 @@
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString>Health=1000,HealthRegen=150,Armor=80,MagicResist=60</StatString>
+    <StatString>Health=1000,None=1,Armor=80,MagicResist=60</StatString>
   </Item>
   <Item>
     <ID>105</ID>
@@ -1879,7 +2341,7 @@
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString>Health=666,HealthRegen=66,Armor=75,MagicResist=50</StatString>
+    <StatString>Health=666,None=1,Armor=75,MagicResist=50</StatString>
   </Item>
   <Item>
     <ID>106</ID>
@@ -1893,11 +2355,11 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>4450</Price>
     <Salable>true</Salable>
-    <WearableSlots>Mask</WearableSlots>
+    <WearableSlots>Hat</WearableSlots>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString>Health=1000,HealthRegen=150,Armor=80,MagicResist=60</StatString>
+    <StatString>Health=1000,None=1,Armor=80,MagicResist=60</StatString>
   </Item>
   <Item>
     <ID>107</ID>
@@ -1915,7 +2377,7 @@
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString>Health=400,HealthRegen=40,Armor=45,MagicResist=24</StatString>
+    <StatString>Health=400,None=1,Armor=45,MagicResist=24</StatString>
   </Item>
   <Item>
     <ID>108</ID>
@@ -1933,7 +2395,7 @@
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString>Health=480,HealthRegen=30,Armor=45,MagicResist=30</StatString>
+    <StatString>Health=480,None=1,Armor=45,MagicResist=30</StatString>
   </Item>
   <Item>
     <ID>109</ID>
@@ -1951,7 +2413,7 @@
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString>Health=600,HealthRegen=90,Armor=48,MagicResist=36</StatString>
+    <StatString>Health=600,None=1,Armor=48,MagicResist=36</StatString>
   </Item>
   <Item>
     <ID>110</ID>
@@ -1969,7 +2431,7 @@
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString>Health=400,HealthRegen=40,Armor=45,MagicResist=24</StatString>
+    <StatString>Health=400,None=1,Armor=45,MagicResist=24</StatString>
   </Item>
   <Item>
     <ID>111</ID>
@@ -1983,11 +2445,11 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>900</Price>
     <Salable>true</Salable>
-    <WearableSlots>Mask</WearableSlots>
+    <WearableSlots>Hat</WearableSlots>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString>Health=600,HealthRegen=90,Armor=48,MagicResist=36</StatString>
+    <StatString>Health=600,None=1,Armor=48,MagicResist=36</StatString>
   </Item>
   <Item>
     <ID>112</ID>
@@ -2005,7 +2467,7 @@
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString>Health=133,HealthRegen=13,Armor=15,MagicResist=10</StatString>
+    <StatString>Health=133,None=1,Armor=15,MagicResist=10</StatString>
   </Item>
   <Item>
     <ID>113</ID>
@@ -2023,7 +2485,7 @@
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString>Health=160,HealthRegen=10,Armor=15,MagicResist=10</StatString>
+    <StatString>Health=160,None=1,Armor=15,MagicResist=10</StatString>
   </Item>
   <Item>
     <ID>114</ID>
@@ -2041,7 +2503,7 @@
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString>Health=200,HealthRegen=30,Armor=16,MagicResist=12</StatString>
+    <StatString>Health=200,None=1,Armor=16,MagicResist=12</StatString>
   </Item>
   <Item>
     <ID>115</ID>
@@ -2059,7 +2521,7 @@
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString>Health=133,HealthRegen=13,Armor=15,MagicResist=10</StatString>
+    <StatString>Health=133,None=1,Armor=15,MagicResist=10</StatString>
   </Item>
   <Item>
     <ID>116</ID>
@@ -2073,11 +2535,11 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>350</Price>
     <Salable>true</Salable>
-    <WearableSlots>Mask</WearableSlots>
+    <WearableSlots>Hat</WearableSlots>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString>Health=200,HealthRegen=30,Armor=16,MagicResist=12</StatString>
+    <StatString>Health=200,None=1,Armor=16,MagicResist=12</StatString>
   </Item>
   <Item>
     <ID>117</ID>
@@ -2131,7 +2593,7 @@
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString>Health=666,HealthRegen=66,Armor=50,MagicResist=75</StatString>
+    <StatString>Health=666,None=1,Armor=50,MagicResist=75</StatString>
   </Item>
   <Item>
     <ID>120</ID>
@@ -2149,7 +2611,7 @@
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString>Health=800,HealthRegen=50,Armor=50,MagicResist=75</StatString>
+    <StatString>Health=800,None=1,Armor=50,MagicResist=75</StatString>
   </Item>
   <Item>
     <ID>121</ID>
@@ -2167,7 +2629,7 @@
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString>Health=1000,HealthRegen=150,Armor=60,MagicResist=80</StatString>
+    <StatString>Health=1000,None=1,Armor=60,MagicResist=80</StatString>
   </Item>
   <Item>
     <ID>122</ID>
@@ -2185,7 +2647,7 @@
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString>Health=666,HealthRegen=66,Armor=50,MagicResist=75</StatString>
+    <StatString>Health=666,None=1,Armor=50,MagicResist=75</StatString>
   </Item>
   <Item>
     <ID>123</ID>
@@ -2199,11 +2661,11 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>4450</Price>
     <Salable>true</Salable>
-    <WearableSlots>Mask</WearableSlots>
+    <WearableSlots>Hat</WearableSlots>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString>Health=1000,HealthRegen=150,Armor=60,MagicResist=80</StatString>
+    <StatString>Health=1000,None=1,Armor=60,MagicResist=80</StatString>
   </Item>
   <Item>
     <ID>124</ID>
@@ -2217,7 +2679,7 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>999</Price>
     <Salable>true</Salable>
-    <WearableSlots>Mask</WearableSlots>
+    <WearableSlots>Hat</WearableSlots>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
@@ -3495,7 +3957,7 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>1</Price>
     <Salable>true</Salable>
-    <WearableSlots>Mask</WearableSlots>
+    <WearableSlots>Hat</WearableSlots>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
@@ -3585,7 +4047,7 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>1</Price>
     <Salable>true</Salable>
-    <WearableSlots>Mask</WearableSlots>
+    <WearableSlots>Hat</WearableSlots>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
@@ -3675,7 +4137,7 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>1</Price>
     <Salable>true</Salable>
-    <WearableSlots>Mask</WearableSlots>
+    <WearableSlots>Hat</WearableSlots>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
@@ -3765,7 +4227,7 @@
     <MaxStackSize>10</MaxStackSize>
     <Price>1</Price>
     <Salable>true</Salable>
-    <WearableSlots>Mask</WearableSlots>
+    <WearableSlots>Hat</WearableSlots>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
@@ -5528,20 +5990,41 @@ Written by Pulpy Prose.</Description>
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>true</Stackable>
     <MaxStackSize>10</MaxStackSize>
-    <Price>1</Price>
+    <Price>7</Price>
     <Salable>true</Salable>
     <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable">
+      <Effects>
+        <Effect>
+          <Name />
+          <SubId>0</SubId>
+          <Stat>Health</Stat>
+          <Targets>Enemy</Targets>
+          <SkillId>-1</SkillId>
+          <Chance>1</Chance>
+          <Duration>0</Duration>
+          <TickDuration>0</TickDuration>
+          <IsDPS>false</IsDPS>
+          <Amount>30</Amount>
+          <IsMultiplier>true</IsMultiplier>
+          <Statuses>None</Statuses>
+          <EffectId>-1</EffectId>
+          <AccumulationTimer>0</AccumulationTimer>
+          <IsUnique>false</IsUnique>
+        </Effect>
+      </Effects>
+    </ItemUse>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString />
+    <StatString>Health=30</StatString>
   </Item>
   <Item>
     <ID>310</ID>
     <Icon>54</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
-    <Description>The Universe is perfectly suited to the existence of pumpkin pie because otherwise pumpkin pie would not exist.</Description>
+    <Description>The Universe is perfectly suited to the existence of pumpkin pie.</Description>
     <Name>Pumpkin Pie</Name>
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>true</Stackable>
@@ -5549,10 +6032,31 @@ Written by Pulpy Prose.</Description>
     <Price>6</Price>
     <Salable>true</Salable>
     <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable">
+      <Effects>
+        <Effect>
+          <Name />
+          <SubId>0</SubId>
+          <Stat>Health</Stat>
+          <Targets>Enemy</Targets>
+          <SkillId>-1</SkillId>
+          <Chance>1</Chance>
+          <Duration>0</Duration>
+          <TickDuration>0</TickDuration>
+          <IsDPS>false</IsDPS>
+          <Amount>150</Amount>
+          <IsMultiplier>true</IsMultiplier>
+          <Statuses>None</Statuses>
+          <EffectId>-1</EffectId>
+          <AccumulationTimer>0</AccumulationTimer>
+          <IsUnique>false</IsUnique>
+        </Effect>
+      </Effects>
+    </ItemUse>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString />
+    <StatString>Health=150</StatString>
   </Item>
   <Item>
     <ID>311</ID>
@@ -5580,17 +6084,17 @@ Written by Pulpy Prose.</Description>
     <Icon>199</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
-    <Description>A simple pencil.</Description>
+    <Description>You can write AND erase with a pencil!</Description>
     <Name>Pencil</Name>
-    <ResourcePath>Undefined</ResourcePath>
+    <ResourcePath>Saddlebags/pencil</ResourcePath>
     <Stackable>true</Stackable>
-    <MaxStackSize>10</MaxStackSize>
-    <Price>1</Price>
+    <MaxStackSize>19</MaxStackSize>
+    <Price>5</Price>
     <Salable>true</Salable>
-    <WearableSlots>None</WearableSlots>
+    <WearableSlots>Mouth</WearableSlots>
     <SocketCount>0</SocketCount>
-    <Coloring>None</Coloring>
-    <DefaultColor>ffffffff</DefaultColor>
+    <Coloring>Single</Coloring>
+    <DefaultColor>efcc00ff</DefaultColor>
     <StatString />
   </Item>
   <Item>
@@ -5606,18 +6110,39 @@ Written by Pulpy Prose.</Description>
     <Price>1</Price>
     <Salable>true</Salable>
     <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable">
+      <Effects>
+        <Effect>
+          <Name />
+          <SubId>0</SubId>
+          <Stat>Health</Stat>
+          <Targets>Enemy</Targets>
+          <SkillId>-1</SkillId>
+          <Chance>1</Chance>
+          <Duration>0</Duration>
+          <TickDuration>0</TickDuration>
+          <IsDPS>false</IsDPS>
+          <Amount>50</Amount>
+          <IsMultiplier>true</IsMultiplier>
+          <Statuses>None</Statuses>
+          <EffectId>-1</EffectId>
+          <AccumulationTimer>0</AccumulationTimer>
+          <IsUnique>false</IsUnique>
+        </Effect>
+      </Effects>
+    </ItemUse>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
-    <StatString />
+    <StatString>Health=50</StatString>
   </Item>
   <Item>
     <ID>314</ID>
-    <Icon>0</Icon>
+    <Icon>21</Icon>
     <ItemLevel>1</ItemLevel>
     <RequiredLevel>1</RequiredLevel>
-    <Description>Justice Eye Brooch</Description>
-    <Name>Eye Brooch</Name>
+    <Description>A brooch belonging to Minister True Vision.</Description>
+    <Name>True Vision's Brooch</Name>
     <ResourcePath>Undefined</ResourcePath>
     <Stackable>true</Stackable>
     <MaxStackSize>10</MaxStackSize>
@@ -5806,10 +6331,1622 @@ Written by Pulpy Prose.</Description>
     <MaxStackSize>10</MaxStackSize>
     <Price>4450</Price>
     <Salable>true</Salable>
-    <WearableSlots>Mask</WearableSlots>
+    <WearableSlots>Hat</WearableSlots>
     <SocketCount>0</SocketCount>
     <Coloring>None</Coloring>
     <DefaultColor>ffffffff</DefaultColor>
     <StatString>Health=1000,HealthRegen=150,Armor=80,MagicResist=60</StatString>
+  </Item>
+  <Item>
+    <ID>325</ID>
+    <Icon>27</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>An article promoting lesser used functions in the Cantermore bank for the Cantermore Chronicles.</Description>
+    <Name>Salarymane's Article</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>326</ID>
+    <Icon>27</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>An important document of accounting.  You'd best not open it!</Description>
+    <Name>Accounting Document</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>327</ID>
+    <Icon>27</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>These alchemy notes are a mess of barely-legible penponyship. Not that you could probably make heads or tails of them, anyway.
+Gameplay: Not saleable.</Description>
+    <Name>Gypsum's Notes</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>19</MaxStackSize>
+    <Price>0</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>328</ID>
+    <Icon>28</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A burst of magical energy, packed VERY SAFELY in a convenient tiny crystal shape! Halite’s pride and joy, it could revolutionize magic usage worldwide if mass-produced. Should no longer cause random sentence reversal upon touch.</Description>
+    <Name>Power Crystal, RC 4.0</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>0</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>329</ID>
+    <Icon>43</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A burst of magical energy, packed in a convenient tiny crystal shape! Halite’s pride and joy, it could revolutionize magic usage worldwide if mass-produced. Displays a . . . negligible, completely-within-the-margin-of-error propensity to violently explode. DON’T drop it.</Description>
+    <Name>Prototype Power Crystal 3.7.1</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>0</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>330</ID>
+    <Icon>28</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A burst of magical energy, packed in a convenient tiny crystal shape! Use this to fully refresh your energy. Totally safe, or so they say. Still, just in case, DON’T drop it.</Description>
+    <Name>Mana Crystal</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>3</MaxStackSize>
+    <Price>25</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>331</ID>
+    <Icon>201</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>I say, good show!</Description>
+    <Name>Tophat</Name>
+    <ResourcePath>Hats/tophat</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>3</MaxStackSize>
+    <Price>9</Price>
+    <Salable>true</Salable>
+    <WearableSlots>Hat</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <Coloring>Single</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>332</ID>
+    <Icon>166</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A battle-ready recreation of ancient armor. It was modeled after a beetle carapice.</Description>
+    <Name>Fyre Flye Body</Name>
+    <ResourcePath>Clothes/Armor/Fyre Flye/Fyre Flye Armor Back Plate</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>19</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>Shirt</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>333</ID>
+    <Icon>167</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A battle-ready recreation of ancient greaves.</Description>
+    <Name>Fyre Flye Front Legs</Name>
+    <ResourcePath>Clothes/Armor/Fyre Flye/Fyre Flye Armor Front Legs</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>19</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>FrontShoes</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>334</ID>
+    <Icon>167</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A battle-ready recreation of ancient greaves.
+</Description>
+    <Name>Fyre Flye Back Legs</Name>
+    <ResourcePath>Clothes/Armor/Fyre Flye/Fyre Flye Armor Back Legs</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>19</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>BackShoes</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>335</ID>
+    <Icon>27</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>With this easy-to-follow sheet music, even a foal could sing the Crystal Song! If they actually rehearsed it. And they weren’t just plain tone-deaf to begin with.</Description>
+    <Name>Song Sheet Music</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>27</MaxStackSize>
+    <Price>0</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>336</ID>
+    <Icon>202</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Best worn at night.</Description>
+    <Name>Sunglasses</Name>
+    <ResourcePath>Hats/sunglasses</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>3</MaxStackSize>
+    <Price>19</Price>
+    <Salable>true</Salable>
+    <WearableSlots>Mask</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <Coloring>Single</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>337</ID>
+    <Icon>59</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Stump's bracelet, symbolic of his friendship with Shelly.</Description>
+    <Name>Stump's Friendship Bracelet</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>338</ID>
+    <Icon>59</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Not to be confused with Stump's Friendship Bracelet.</Description>
+    <Name>Shelly's Friendship Bracelet</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>339</ID>
+    <Icon>43</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A container of flour that belongs to Chef Linguine.</Description>
+    <Name>Chef Linguine's Flour</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>340</ID>
+    <Icon>198</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A basket of freshly baked miniature loaves of bread from Chef Linguine.</Description>
+    <Name>Linguine's Mini Loaves</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>15</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable">
+      <Effects>
+        <Effect>
+          <Name />
+          <SubId>0</SubId>
+          <Stat>Health</Stat>
+          <Targets>Player</Targets>
+          <SkillId>-1</SkillId>
+          <Chance>1</Chance>
+          <Duration>0</Duration>
+          <TickDuration>0</TickDuration>
+          <IsDPS>false</IsDPS>
+          <Amount>300</Amount>
+          <IsMultiplier>true</IsMultiplier>
+          <Statuses>None</Statuses>
+          <EffectId>-1</EffectId>
+          <AccumulationTimer>0</AccumulationTimer>
+          <IsUnique>false</IsUnique>
+        </Effect>
+      </Effects>
+    </ItemUse>
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString>Health=300</StatString>
+  </Item>
+  <Item>
+    <ID>341</ID>
+    <Icon>162</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>The saddle Pumpkin Pie bought for his wife for Hearts and Hooves Day.</Description>
+    <Name>Leather Saddle</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>342</ID>
+    <Icon>27</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Silver Tongue gave me these official-looking papers. He told me to show them to the Cantermore University of Magic staff so they would agree to host a Crystal cultural expedition. I should NOT lose them.</Description>
+    <Name>Crystal Kingdom Foreign Office Papers</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>343</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Almond</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>344</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Cherry</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>345</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Daisy</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>346</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Grape</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>347</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Hay</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>348</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Lettuce</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>349</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Mint Leaf</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>350</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Onion</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>351</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Orange</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>352</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Salt</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>353</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Tomato</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>354</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Wheat</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>355</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Milk</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>356</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Water</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>357</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Cocoa Bean</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>358</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Sugar</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>359</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Vanilla</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>360</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Applesauce</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>361</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Baked Potato</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>362</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Basic Salad</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>363</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Butter</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>364</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Chopped Veggies</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>365</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Flour</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>366</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Hay Fries</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>367</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Mint Extract</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>368</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Pizza Sauce</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>369</ID>
+    <Icon>0</Icon>
+    <ItemLevel>10</ItemLevel>
+    <RequiredLevel>10</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Citrus Salad</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>370</ID>
+    <Icon>0</Icon>
+    <ItemLevel>10</ItemLevel>
+    <RequiredLevel>10</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Pizza Dough</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>371</ID>
+    <Icon>0</Icon>
+    <ItemLevel>10</ItemLevel>
+    <RequiredLevel>10</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Vegetable Stew</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>372</ID>
+    <Icon>0</Icon>
+    <ItemLevel>20</ItemLevel>
+    <RequiredLevel>20</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Deluxe Salad</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>373</ID>
+    <Icon>0</Icon>
+    <ItemLevel>20</ItemLevel>
+    <RequiredLevel>20</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Veggie Pizza</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>374</ID>
+    <Icon>0</Icon>
+    <ItemLevel>30</ItemLevel>
+    <RequiredLevel>30</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Deluxe Veggie Pizza</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>375</ID>
+    <Icon>0</Icon>
+    <ItemLevel>30</ItemLevel>
+    <RequiredLevel>30</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Pie Crust</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>376</ID>
+    <Icon>0</Icon>
+    <ItemLevel>40</ItemLevel>
+    <RequiredLevel>40</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Fruit Salad</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>377</ID>
+    <Icon>0</Icon>
+    <ItemLevel>40</ItemLevel>
+    <RequiredLevel>40</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Veggie Pot Pie</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>378</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Apple Juice</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>379</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Cream</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>380</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Grape Juice</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>381</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Orange Juice</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>382</ID>
+    <Icon>0</Icon>
+    <ItemLevel>10</ItemLevel>
+    <RequiredLevel>10</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Garden Smoothie</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>383</ID>
+    <Icon>0</Icon>
+    <ItemLevel>30</ItemLevel>
+    <RequiredLevel>30</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Deluxe Smoothie</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>384</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Smoothie Mix</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>385</ID>
+    <Icon>0</Icon>
+    <ItemLevel>10</ItemLevel>
+    <RequiredLevel>10</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Breath Mints</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>386</ID>
+    <Icon>0</Icon>
+    <ItemLevel>10</ItemLevel>
+    <RequiredLevel>10</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Chocolate</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>387</ID>
+    <Icon>0</Icon>
+    <ItemLevel>10</ItemLevel>
+    <RequiredLevel>10</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Cookie Dough</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>388</ID>
+    <Icon>0</Icon>
+    <ItemLevel>10</ItemLevel>
+    <RequiredLevel>10</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Whipped Cream</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>389</ID>
+    <Icon>0</Icon>
+    <ItemLevel>20</ItemLevel>
+    <RequiredLevel>20</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Almond Cookies</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>390</ID>
+    <Icon>0</Icon>
+    <ItemLevel>20</ItemLevel>
+    <RequiredLevel>20</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Cake Batter</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>391</ID>
+    <Icon>0</Icon>
+    <ItemLevel>20</ItemLevel>
+    <RequiredLevel>20</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Chocolate Bar</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>392</ID>
+    <Icon>0</Icon>
+    <ItemLevel>20</ItemLevel>
+    <RequiredLevel>20</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Chocolate Chip Cookie Dough</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>393</ID>
+    <Icon>0</Icon>
+    <ItemLevel>20</ItemLevel>
+    <RequiredLevel>20</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Icing</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>394</ID>
+    <Icon>0</Icon>
+    <ItemLevel>20</ItemLevel>
+    <RequiredLevel>20</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Milkshake</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>395</ID>
+    <Icon>0</Icon>
+    <ItemLevel>30</ItemLevel>
+    <RequiredLevel>30</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Basic Cake</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>396</ID>
+    <Icon>0</Icon>
+    <ItemLevel>30</ItemLevel>
+    <RequiredLevel>30</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Basic Cupcakes</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>397</ID>
+    <Icon>0</Icon>
+    <ItemLevel>30</ItemLevel>
+    <RequiredLevel>30</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Deluxe Milkshake</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>398</ID>
+    <Icon>0</Icon>
+    <ItemLevel>30</ItemLevel>
+    <RequiredLevel>30</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Homemade Chocolate Chip Cookies</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>399</ID>
+    <Icon>0</Icon>
+    <ItemLevel>40</ItemLevel>
+    <RequiredLevel>40</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Frosted Cupcakes</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>400</ID>
+    <Icon>0</Icon>
+    <ItemLevel>40</ItemLevel>
+    <RequiredLevel>40</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Frosted Layer Cake</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>401</ID>
+    <Icon>0</Icon>
+    <ItemLevel>40</ItemLevel>
+    <RequiredLevel>40</RequiredLevel>
+    <Description>Blank item</Description>
+    <Name>Homemade Apple Pie</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <ItemUse xsi:type="Consumable" />
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>402</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Sugary treat packed into a sizeable bar.  Pretty sweet!</Description>
+    <Name>Candy Bar</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>7</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>403</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>TASTE THE SUN!</Description>
+    <Name>Sunflower Seeds</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>7</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>404</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Is this made of wolf or made of wood?</Description>
+    <Name>Timberwolf Shavings</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>7</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>405</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Something used to pick with someone.</Description>
+    <Name>Bones</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>7</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>406</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Blank itemA dense book of the study of medicine.  Does not physically contain healing properties.</Description>
+    <Name>Medical Textbook</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>7</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>407</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>A nut that grows from trees.  Does not come from actual walls.</Description>
+    <Name>Walnuts</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>true</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>true</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>408</ID>
+    <Icon>0</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>Perfect for festive occasions</Description>
+    <Name>LAR Party Hat</Name>
+    <ResourcePath>Hats/Party Hat Frilly</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>7</Price>
+    <Salable>false</Salable>
+    <WearableSlots>Hat</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <Coloring>Dual</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
+  </Item>
+  <Item>
+    <ID>409</ID>
+    <Icon>48</Icon>
+    <ItemLevel>1</ItemLevel>
+    <RequiredLevel>1</RequiredLevel>
+    <Description>An official Cloudopolis Post Office Mail Bag. Please make sure that the mail gets properly delivered!</Description>
+    <Name>Cloudopolis Post Office Mail Bag</Name>
+    <ResourcePath>Undefined</ResourcePath>
+    <Stackable>false</Stackable>
+    <MaxStackSize>10</MaxStackSize>
+    <Price>1</Price>
+    <Salable>false</Salable>
+    <WearableSlots>None</WearableSlots>
+    <SocketCount>0</SocketCount>
+    <Coloring>None</Coloring>
+    <DefaultColor>ffffffff</DefaultColor>
+    <StatString />
   </Item>
 </ArrayOfItem>

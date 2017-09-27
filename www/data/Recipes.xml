@@ -1,14 +1,743 @@
 <?xml version="1.0" encoding="utf-16"?>
 <ArrayOfRecipe xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Recipe>
-	<ID>42</ID>
+    <ID>0</ID>
+    <ItemId>88</ItemId>
+    <TalentMark>Artisan</TalentMark>
+    <RequiredLevel>10</RequiredLevel>
+    <CraftingStations>Inventory Sewing</CraftingStations>
+    <Name>Socks</Name>
+    <Reagents>
+      <Reagent ID="158" QTY="5" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>1</ID>
+    <ItemId>360</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>1</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Applesauce</Name>
+    <Reagents>
+      <Reagent ID="0" QTY="1" QLTY="0" />
+      <Reagent ID="358" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>2</ID>
+    <ItemId>360</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>1</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Applesauce</Name>
+    <Reagents>
+      <Reagent ID="1" QTY="1" QLTY="0" />
+      <Reagent ID="358" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>3</ID>
+    <ItemId>360</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>1</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Applesauce</Name>
+    <Reagents>
+      <Reagent ID="2" QTY="1" QLTY="0" />
+      <Reagent ID="358" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>4</ID>
+    <ItemId>361</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>1</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Baked Potato</Name>
+    <Reagents>
+      <Reagent ID="313" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>5</ID>
+    <ItemId>362</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>1</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Basic Salad</Name>
+    <Reagents>
+      <Reagent ID="345" QTY="2" QLTY="0" />
+      <Reagent ID="348" QTY="2" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>6</ID>
+    <ItemId>363</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>1</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Butter</Name>
+    <Reagents>
+      <Reagent ID="355" QTY="1" QLTY="0" />
+      <Reagent ID="352" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>7</ID>
+    <ItemId>364</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>1</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Chopped Veggies</Name>
+    <Reagents>
+      <Reagent ID="4" QTY="2" QLTY="0" />
+      <Reagent ID="350" QTY="2" QLTY="0" />
+      <Reagent ID="313" QTY="2" QLTY="0" />
+      <Reagent ID="353" QTY="2" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>8</ID>
+    <ItemId>365</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>1</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Flour</Name>
+    <Reagents>
+      <Reagent ID="354" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>9</ID>
+    <ItemId>366</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>1</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Hay Fries</Name>
+    <Reagents>
+      <Reagent ID="347" QTY="2" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>10</ID>
+    <ItemId>367</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>1</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Mint Extract</Name>
+    <Reagents>
+      <Reagent ID="349" QTY="2" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>11</ID>
+    <ItemId>368</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>1</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Pizza Sauce</Name>
+    <Reagents>
+      <Reagent ID="353" QTY="2" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>12</ID>
+    <ItemId>369</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>10</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Citrus Salad</Name>
+    <Reagents>
+      <Reagent ID="362" QTY="1" QLTY="0" />
+      <Reagent ID="351" QTY="2" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>13</ID>
+    <ItemId>370</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>10</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Pizza Dough</Name>
+    <Reagents>
+      <Reagent ID="365" QTY="1" QLTY="0" />
+      <Reagent ID="355" QTY="1" QLTY="0" />
+      <Reagent ID="356" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>14</ID>
+    <ItemId>371</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>10</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Vegetable Stew</Name>
+    <Reagents>
+      <Reagent ID="364" QTY="2" QLTY="0" />
+      <Reagent ID="352" QTY="1" QLTY="0" />
+      <Reagent ID="356" QTY="2" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>15</ID>
+    <ItemId>372</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>20</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Deluxe Salad</Name>
+    <Reagents>
+      <Reagent ID="4" QTY="2" QLTY="0" />
+      <Reagent ID="369" QTY="1" QLTY="0" />
+      <Reagent ID="353" QTY="2" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>16</ID>
+    <ItemId>373</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>20</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Veggie Pizza</Name>
+    <Reagents>
+      <Reagent ID="4" QTY="2" QLTY="0" />
+      <Reagent ID="370" QTY="1" QLTY="0" />
+      <Reagent ID="368" QTY="1" QLTY="0" />
+      <Reagent ID="353" QTY="2" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>17</ID>
+    <ItemId>374</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>30</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Deluxe Veggie Pizza</Name>
+    <Reagents>
+      <Reagent ID="0" QTY="1" QLTY="0" />
+      <Reagent ID="1" QTY="1" QLTY="0" />
+      <Reagent ID="2" QTY="1" QLTY="0" />
+      <Reagent ID="351" QTY="3" QLTY="0" />
+      <Reagent ID="26" QTY="3" QLTY="0" />
+      <Reagent ID="373" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>18</ID>
+    <ItemId>375</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>30</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Pie Crust</Name>
+    <Reagents>
+      <Reagent ID="363" QTY="1" QLTY="0" />
+      <Reagent ID="390" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>19</ID>
+    <ItemId>376</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>40</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
     <Name>Fruit Salad</Name>
     <Reagents>
-		<Reagent ID="0" QTY="1" />
-		<Reagent ID="1" QTY="1" />
-		<Reagent ID="2" QTY="1" />
-		<Reagent ID="3" QTY="2" />
-		<Reagent ID="8" QTY="4" />
-	</Reagents>
+      <Reagent ID="0" QTY="1" QLTY="0" />
+      <Reagent ID="1" QTY="1" QLTY="0" />
+      <Reagent ID="2" QTY="1" QLTY="0" />
+      <Reagent ID="3" QTY="3" QLTY="0" />
+      <Reagent ID="8" QTY="3" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>20</ID>
+    <ItemId>377</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>40</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Veggie Pot Pie</Name>
+    <Reagents>
+      <Reagent ID="375" QTY="1" QLTY="0" />
+      <Reagent ID="371" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>21</ID>
+    <ItemId>378</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>1</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Apple Juice</Name>
+    <Reagents>
+      <Reagent ID="0" QTY="2" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>22</ID>
+    <ItemId>378</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>1</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Apple Juice</Name>
+    <Reagents>
+      <Reagent ID="1" QTY="2" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>23</ID>
+    <ItemId>378</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>1</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Apple Juice</Name>
+    <Reagents>
+      <Reagent ID="2" QTY="2" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>24</ID>
+    <ItemId>379</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>1</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Cream</Name>
+    <Reagents>
+      <Reagent ID="355" QTY="1" QLTY="0" />
+      <Reagent ID="358" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>25</ID>
+    <ItemId>380</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>1</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Grape Juice</Name>
+    <Reagents>
+      <Reagent ID="346" QTY="2" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>26</ID>
+    <ItemId>381</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>1</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Orange Juice</Name>
+    <Reagents>
+      <Reagent ID="351" QTY="2" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>27</ID>
+    <ItemId>382</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>10</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Garden Smoothie</Name>
+    <Reagents>
+      <Reagent ID="355" QTY="1" QLTY="0" />
+      <Reagent ID="384" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>28</ID>
+    <ItemId>383</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>30</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Deluxe Smoothie</Name>
+    <Reagents>
+      <Reagent ID="372" QTY="1" QLTY="0" />
+      <Reagent ID="382" QTY="1" QLTY="0" />
+      <Reagent ID="355" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>29</ID>
+    <ItemId>384</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>1</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Smoothie Mix</Name>
+    <Reagents>
+      <Reagent ID="0" QTY="1" QLTY="0" />
+      <Reagent ID="3" QTY="1" QLTY="0" />
+      <Reagent ID="4" QTY="1" QLTY="0" />
+      <Reagent ID="351" QTY="1" QLTY="0" />
+      <Reagent ID="26" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>30</ID>
+    <ItemId>384</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>1</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Smoothie Mix</Name>
+    <Reagents>
+      <Reagent ID="1" QTY="1" QLTY="0" />
+      <Reagent ID="3" QTY="1" QLTY="0" />
+      <Reagent ID="4" QTY="1" QLTY="0" />
+      <Reagent ID="351" QTY="1" QLTY="0" />
+      <Reagent ID="26" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>31</ID>
+    <ItemId>384</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>1</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Smoothie Mix</Name>
+    <Reagents>
+      <Reagent ID="2" QTY="1" QLTY="0" />
+      <Reagent ID="3" QTY="1" QLTY="0" />
+      <Reagent ID="4" QTY="1" QLTY="0" />
+      <Reagent ID="351" QTY="1" QLTY="0" />
+      <Reagent ID="26" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>32</ID>
+    <ItemId>385</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>10</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Breath Mints</Name>
+    <Reagents>
+      <Reagent ID="367" QTY="1" QLTY="0" />
+      <Reagent ID="358" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>33</ID>
+    <ItemId>386</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>10</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Chocolate</Name>
+    <Reagents>
+      <Reagent ID="363" QTY="1" QLTY="0" />
+      <Reagent ID="357" QTY="2" QLTY="0" />
+      <Reagent ID="355" QTY="1" QLTY="0" />
+      <Reagent ID="358" QTY="1" QLTY="0" />
+      <Reagent ID="359" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>34</ID>
+    <ItemId>387</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>10</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Cookie Dough</Name>
+    <Reagents>
+      <Reagent ID="365" QTY="1" QLTY="0" />
+      <Reagent ID="355" QTY="1" QLTY="0" />
+      <Reagent ID="358" QTY="1" QLTY="0" />
+      <Reagent ID="359" QTY="1" QLTY="0" />
+      <Reagent ID="356" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>35</ID>
+    <ItemId>388</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>10</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Whipped Cream</Name>
+    <Reagents>
+      <Reagent ID="379" QTY="3" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>36</ID>
+    <ItemId>389</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>20</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Almond Cookies</Name>
+    <Reagents>
+      <Reagent ID="343" QTY="4" QLTY="0" />
+      <Reagent ID="387" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>37</ID>
+    <ItemId>390</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>20</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Cake Batter</Name>
+    <Reagents>
+      <Reagent ID="386" QTY="1" QLTY="0" />
+      <Reagent ID="365" QTY="1" QLTY="0" />
+      <Reagent ID="355" QTY="1" QLTY="0" />
+      <Reagent ID="358" QTY="1" QLTY="0" />
+      <Reagent ID="356" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>38</ID>
+    <ItemId>391</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>20</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Chocolate Bar</Name>
+    <Reagents>
+      <Reagent ID="386" QTY="3" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>39</ID>
+    <ItemId>392</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>20</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Chocolate Chip Cookie Dough</Name>
+    <Reagents>
+      <Reagent ID="386" QTY="4" QLTY="0" />
+      <Reagent ID="387" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>40</ID>
+    <ItemId>393</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>20</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Icing</Name>
+    <Reagents>
+      <Reagent ID="386" QTY="1" QLTY="0" />
+      <Reagent ID="358" QTY="1" QLTY="0" />
+      <Reagent ID="359" QTY="1" QLTY="0" />
+      <Reagent ID="388" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>41</ID>
+    <ItemId>394</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>20</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Milkshake</Name>
+    <Reagents>
+      <Reagent ID="386" QTY="1" QLTY="0" />
+      <Reagent ID="355" QTY="1" QLTY="0" />
+      <Reagent ID="352" QTY="1" QLTY="0" />
+      <Reagent ID="359" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>42</ID>
+    <ItemId>395</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>30</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Basic Cake</Name>
+    <Reagents>
+      <Reagent ID="363" QTY="1" QLTY="0" />
+      <Reagent ID="390" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>43</ID>
+    <ItemId>396</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>30</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Basic Cupcakes</Name>
+    <Reagents>
+      <Reagent ID="390" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>44</ID>
+    <ItemId>397</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>30</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Deluxe Milkshake</Name>
+    <Reagents>
+      <Reagent ID="344" QTY="1" QLTY="0" />
+      <Reagent ID="394" QTY="1" QLTY="0" />
+      <Reagent ID="388" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>45</ID>
+    <ItemId>398</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>30</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Homemade Chocolate Chip Cookies</Name>
+    <Reagents>
+      <Reagent ID="392" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>46</ID>
+    <ItemId>399</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>40</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Frosted Cupcakes</Name>
+    <Reagents>
+      <Reagent ID="396" QTY="1" QLTY="0" />
+      <Reagent ID="393" QTY="2" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>47</ID>
+    <ItemId>400</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>40</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Frosted Layer Cake</Name>
+    <Reagents>
+      <Reagent ID="395" QTY="1" QLTY="0" />
+      <Reagent ID="393" QTY="3" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>48</ID>
+    <ItemId>401</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>40</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Homemade Apple Pie</Name>
+    <Reagents>
+      <Reagent ID="0" QTY="2" QLTY="0" />
+      <Reagent ID="375" QTY="1" QLTY="0" />
+      <Reagent ID="358" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>49</ID>
+    <ItemId>401</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>40</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Homemade Apple Pie</Name>
+    <Reagents>
+      <Reagent ID="1" QTY="2" QLTY="0" />
+      <Reagent ID="375" QTY="1" QLTY="0" />
+      <Reagent ID="358" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
+  </Recipe>
+  <Recipe>
+    <ID>50</ID>
+    <ItemId>401</ItemId>
+    <TalentMark>Cooking</TalentMark>
+    <RequiredLevel>40</RequiredLevel>
+    <CraftingStations>Inventory</CraftingStations>
+    <Name>Homemade Apple Pie</Name>
+    <Reagents>
+      <Reagent ID="2" QTY="2" QLTY="0" />
+      <Reagent ID="375" QTY="1" QLTY="0" />
+      <Reagent ID="358" QTY="1" QLTY="0" />
+    </Reagents>
+    <RecipeTag>General</RecipeTag>
+    <CraftingTime>0</CraftingTime>
   </Recipe>
 </ArrayOfRecipe>

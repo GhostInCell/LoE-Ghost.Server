@@ -129,7 +129,7 @@ namespace Ghost.Server.Terrain
             {
                 if (Bound.Contains(item.Position))
                     return true;
-                return ArrayEx.Remove(m_items, ref m_items_size, item) && (Parent != null ? Parent.Add(item) : false);
+                return ArrayEx.Remove(m_items, ref m_items_size, item) && (Parent?.Add(item) ?? false);
             }
             return Add(item);
         }

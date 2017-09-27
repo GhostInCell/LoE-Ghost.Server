@@ -133,12 +133,9 @@ namespace PNetR
                 throw new ArgumentException("specified player is no longer connected!", "owner");
             }
 
-            if (resource == null)
-                throw new ArgumentNullException("resource");
-
             var view = NetworkManager.GetNew(owner);
             view.CheckVisibility += visCheck;
-            view.Resource = resource;
+            view.Resource = resource ?? throw new ArgumentNullException("resource");
 
             var msg = ConstructInstMessage(view, position, rotation);
             //rebuildvis causes msg to be recycled. need to clone it first.

@@ -70,7 +70,7 @@ namespace Ghost.Server.Mgrs.Player
                         if (_stats.ContainsKey(stat.Item1))
                             _stats[stat.Item1].AddItemModifer(stat.Item2);
                         else
-                            ServerLogger.LogWarn($"Player stat {stat.Item1} not found");
+                            ServerLogger.LogWarning($"Player stat {stat.Item1} not found");
             }
             if (_view != null) SendStats();
         }

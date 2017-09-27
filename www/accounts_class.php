@@ -5,6 +5,7 @@ class AccountsMgr
 	private $db_base;
 	private $db_stat;
 	private $db_loe_accounts;
+	private $session_salt;
 	private $game_login;
 	private $game_account;
 	private $game_passhash;
@@ -12,13 +13,15 @@ class AccountsMgr
 	private $game_account_data;
 	private $game_account_access;
 	private $game_account_session;
+
 	function __construct() 
 	{
 		require 'config.php';
+		$this->session_salt = $session_salt;
 		$this->db_loe_accounts = $db_loe_accounts;
 		$this->db_conn = new mysqli($db_host, $db_user, $db_pass, $db_loe);
 		$this->db_stat = !$this->db_conn->connect_errno;
-		if($this->db_stat && isset($_POST["username"]) && !empty($_POST["username"]))
+		if($this->db_stat && !empty($_POST["username"]))
 		{
 			$this->game_login = $this->db_conn->real_escape_string($_POST["username"]);
 			$this->game_account = $this->db_conn->query("SELECT id, phash, access, session FROM $db_loe_accounts WHERE login='$this->game_login'");
@@ -32,6 +35,7 @@ class AccountsMgr
 			}
 		}
 	}
+
 	function __destruct() 
 	{
 		if($this->db_stat)
@@ -39,6 +43,7 @@ class AccountsMgr
 			$this->db_conn->close();
 		}
 	}
+
 	function IsExist() 
 	{
 		if($this->game_account_data)
@@ -47,58 +52,63 @@ class AccountsMgr
 		}
 		return false;
 	}
+
 	function Id() 
 	{
 		return $this->game_account_id;
 	}
+
 	function Session() 
 	{
 		return $this->game_account_session;
 	}
+
 	function AccessLevel() 
 	{
 		return $this->game_account_access;
 	}
+
 	function Login() 
 	{
 		if($this->game_account_data)
 		{
-			if (isset($_POST["passhash"]) && !empty($_POST["passhash"]) && $_POST["passhash"] == $this->game_account_data["phash"]) 
+			if ($_POST["passhash"] === $this->game_account_data["phash"]) 
 			{
 				$time = date('Y-m-d H:i:s', time());
-				$this->game_account_session = base64_encode(hash("tiger192,3", "Celestia".$time."Luna".$this->game_login."~zbKG5tGWqv"));
+				$this->game_account_session = hash("sha256", "Celestia".$time."Luna".$this->game_login.$this->session_salt);
 				if($this->db_conn->query("UPDATE $this->db_loe_accounts SET session='$this->game_account_session', time='$time' WHERE id=$this->game_account_id"))
-				{		
+				{
 					return true;
 				}
 			}
 		}
 		return false;
 	}
+
 	function Valid() 
 	{
 		if($this->game_account_data)
 		{
-			if (isset($_POST["memberid"]) && !empty($_POST["memberid"]) && intval($_POST["memberid"]) == $this->game_account_id &&
-				isset($_POST["sessionkey"]) && !empty($_POST["sessionkey"]) && $_POST["sessionkey"] == $this->game_account_session) 
+			if ($_POST["memberid"] === $this->game_account_id && $_POST["sessionkey"] === $this->game_account_session) 
 			{
 				return true;
 			}
 		}
 		return false;
 	}
+
 	function Create() 
 	{
 		if(!$this->game_account_data)
 		{
-			if (isset($_POST["passhash"]) && !empty($_POST["passhash"])) 
+			if (!empty($_POST["passhash"])) 
 			{
 				$time = date('Y-m-d H:i:s', time());
 				$this->game_account_access = 1;
 				$this->game_passhash = $this->db_conn->real_escape_string($_POST["passhash"]);
-				$this->game_account_session = base64_encode(hash("tiger192,3", "Celestia".$time."Luna".$this->game_login."~zbKG5tGWqv"));
+				$this->game_account_session = hash("sha256", "Celestia".$time."Luna".$this->game_login.$this->session_salt);
 				if($this->db_conn->query("INSERT INTO $this->db_loe_accounts (login, phash, access, session, time) VALUES ('$this->game_login', '$this->game_passhash', $this->game_account_access, '$this->game_account_session', '$time')"))
-				{	
+				{
 					$this->game_account_id = $this->db_conn->insert_id;
 					return true;
 				}
@@ -106,6 +116,7 @@ class AccountsMgr
 		}
 		return false;
 	}
+
 	function RemoveSession() 
 	{
 		if($this->game_account_session)

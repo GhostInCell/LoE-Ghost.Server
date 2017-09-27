@@ -94,7 +94,7 @@ namespace Ghost.Server.Mgrs.Map
                 }
             }
             if (!_nsObjects.ContainsKey(0))
-                ServerLogger.LogWarn($"{_server.Name}({_mapID}) default spawn point not found");
+                ServerLogger.LogWarning($"{_server.Name}({_mapID}) default spawn point not found");
         }
 
         public ushort GetNewGuid()
@@ -275,7 +275,7 @@ namespace Ghost.Server.Mgrs.Map
                     case 2://Spawn Pool
                         return new WO_SpawnPool(obj, this).Guid;
                     default:
-                        ServerLogger.LogWarn($"{_server.Name}({_mapID}) unknow NS map object type {obj.Type} guid {obj.Guid}");
+                        ServerLogger.LogWarning($"{_server.Name}({_mapID}) unknow NS map object type {obj.Type} guid {obj.Guid}");
                         break;
                 }
             }
@@ -293,7 +293,7 @@ namespace Ghost.Server.Mgrs.Map
                 case 2://Creature
                     return new WO_MOB(obj, this).Guid;
                 default:
-                    ServerLogger.LogWarn($"{_server.Name}({_mapID}) unknow NV map object type {obj.Type} guid {obj.Guid}");
+                    ServerLogger.LogWarning($"{_server.Name}({_mapID}) unknow NV map object type {obj.Type} guid {obj.Guid}");
                     break;
             }
             return 0;

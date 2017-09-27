@@ -103,7 +103,7 @@ namespace Ghost.Server.Core.Servers
             _server.VerifyPlayer -= MasterServer_VerifyPlayer;
             _server.PlayerRemoved -= MasterServer_PlayerRemoved;
             _server.ConstructNetData -= MasterServer_ConstructNetData;
-            foreach (var item in m_players.Values)
+            foreach (var item in GetPlayers())
                 item.Destroy();
             m_players.Clear();
             m_users.Clear();

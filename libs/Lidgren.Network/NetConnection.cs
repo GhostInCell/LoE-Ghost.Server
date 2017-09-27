@@ -11,7 +11,7 @@ namespace Lidgren.Network
 	/// </summary>
 	[DebuggerDisplay("RemoteUniqueIdentifier={RemoteUniqueIdentifier} RemoteEndPoint={remoteEndPoint}")]
 	public partial class NetConnection
-	{
+    {
 		private const int m_infrequentEventsSkipFrames = 8; // number of heartbeats to skip checking for infrequent events (ping, timeout etc)
 		private const int m_messageCoalesceFrames = 3; // number of heartbeats to wait for more incoming messages before sending packet
 
@@ -26,8 +26,8 @@ namespace Lidgren.Network
 		internal NetReceiverChannelBase[] m_receiveChannels;
 		internal NetOutgoingMessage m_localHailMessage;
 		internal long m_remoteUniqueIdentifier;
-        internal ConcurrentQueue<Tuple<NetMessageType, int>> m_queuedOutgoingAcks;
-        internal ConcurrentQueue<Tuple<NetMessageType, int>> m_queuedIncomingAcks;
+        internal ConcurrentQueue<(NetMessageType, ushort)> m_queuedOutgoingAcks;
+        internal ConcurrentQueue<(NetMessageType, ushort)> m_queuedIncomingAcks;
         private int m_sendBufferWritePtr;
 		private int m_sendBufferNumMessages;
 		private object m_tag;
@@ -92,8 +92,8 @@ namespace Lidgren.Network
 			m_usedSendChannels = new NetSenderChannelBase[NetConstants.NumTotalChannels];
 			m_sendChannels = new NetSenderChannelBase[NetConstants.NumTotalChannels];
 			m_receiveChannels = new NetReceiverChannelBase[NetConstants.NumTotalChannels];
-            m_queuedOutgoingAcks = new ConcurrentQueue<Tuple<NetMessageType, int>>();
-            m_queuedIncomingAcks = new ConcurrentQueue<Tuple<NetMessageType, int>>();
+            m_queuedOutgoingAcks = new ConcurrentQueue<(NetMessageType, ushort)>();
+            m_queuedIncomingAcks = new ConcurrentQueue<(NetMessageType, ushort)>();
             m_statistics = new NetConnectionStatistics(this);
 			m_averageRoundtripTime = -1.0f;
 			m_currentMTU = m_peerConfiguration.MaximumTransmissionUnit;
@@ -442,7 +442,7 @@ namespace Lidgren.Network
 						seqNr |= (m_peer.m_receiveBuffer[ptr++] << 8);
 
 						// need to enqueue this and handle it in the netconnection heartbeat; so be able to send resends together with normal sends
-						m_queuedIncomingAcks.Enqueue(new Tuple<NetMessageType, int>(acktp, seqNr));
+						m_queuedIncomingAcks.Enqueue((acktp, (ushort)seqNr));
 					}
 					break;
 				case NetMessageType.Ping:
@@ -529,7 +529,7 @@ namespace Lidgren.Network
 
 		internal void QueueAck(NetMessageType tp, int sequenceNumber)
 		{
-			m_queuedOutgoingAcks.Enqueue(new Tuple<NetMessageType, int>(tp, sequenceNumber));
+			m_queuedOutgoingAcks.Enqueue((tp, (ushort)sequenceNumber));
 		}
 
 		/// <summary>

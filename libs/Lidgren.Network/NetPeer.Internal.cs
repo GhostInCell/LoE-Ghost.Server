@@ -14,7 +14,7 @@ using System.Collections.Concurrent;
 namespace Lidgren.Network
 {
 	public partial class NetPeer
-	{
+    {
 		private NetPeerStatus m_status;
 		private Thread m_networkThread;
 		private Socket m_socket;
@@ -31,7 +31,7 @@ namespace Lidgren.Network
 
 		internal readonly NetPeerConfiguration m_configuration;
 		private readonly NetQueue<NetIncomingMessage> m_releasedIncomingMessages;
-		internal readonly NetQueue<Tuple<IPEndPoint, NetOutgoingMessage>> m_unsentUnconnectedMessages;
+		internal readonly NetQueue<(IPEndPoint, NetOutgoingMessage)> m_unsentUnconnectedMessages;
 
 		internal Dictionary<IPEndPoint, NetConnection> m_handshakes;
 
@@ -40,7 +40,7 @@ namespace Lidgren.Network
 		internal bool m_executeFlushSendQueue;
 
 		private AutoResetEvent m_messageReceivedEvent;
-		private List<Tuple<SynchronizationContext, SendOrPostCallback>> m_receiveCallbacks;
+		private List<(SynchronizationContext, SendOrPostCallback)> m_receiveCallbacks;
 
 		/// <summary>
 		/// Gets the socket, if Start() has been called
@@ -57,8 +57,8 @@ namespace Lidgren.Network
 			if (syncContext == null)
 				throw new NetException("Need a SynchronizationContext to register callback on correct thread!");
 			if (m_receiveCallbacks == null)
-				m_receiveCallbacks = new List<Tuple<SynchronizationContext, SendOrPostCallback>>();
-			m_receiveCallbacks.Add(new Tuple<SynchronizationContext, SendOrPostCallback>(syncContext, callback));
+				m_receiveCallbacks = new List<(SynchronizationContext, SendOrPostCallback)>();
+			m_receiveCallbacks.Add((syncContext, callback));
 		}
 
 		/// <summary>
@@ -171,10 +171,11 @@ namespace Lidgren.Network
 
 				m_receiveBuffer = new byte[m_configuration.ReceiveBufferSize];
 				m_sendBuffer = new byte[m_configuration.SendBufferSize];
-				m_readHelperMessage = new NetIncomingMessage(NetIncomingMessageType.Error);
-				m_readHelperMessage.m_data = m_receiveBuffer;
-
-				byte[] macBytes = new byte[8];
+                m_readHelperMessage = new NetIncomingMessage(NetIncomingMessageType.Error)
+                {
+                    m_data = m_receiveBuffer
+                };
+                byte[] macBytes = new byte[8];
 				MWCRandom.Instance.NextBytes(macBytes);
 
 #if IS_MAC_AVAILABLE
@@ -696,10 +697,12 @@ namespace Lidgren.Network
 						return;
 					}
 
-					// Ok, start handshake!
-					NetConnection conn = new NetConnection(this, senderEndPoint);
-					conn.m_status = NetConnectionStatus.ReceivedInitiation;
-					m_handshakes.Add(senderEndPoint, conn);
+                    // Ok, start handshake!
+                    var conn = new NetConnection(this, senderEndPoint)
+                    {
+                        m_status = NetConnectionStatus.ReceivedInitiation
+                    };
+                    m_handshakes.Add(senderEndPoint, conn);
 					conn.ReceivedHandshake(now, tp, ptr, payloadByteLength);
 					return;
 

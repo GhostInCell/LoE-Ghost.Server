@@ -30,9 +30,9 @@ CREATE TABLE IF NOT EXISTS `loe_ban` (
   KEY `ban_user` (`ban_user`),
   KEY `ban_ip` (`ban_ip`),
   KEY `ban_by` (`ban_by`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_ban: 0 rows
+-- Дамп данных таблицы legends_of_equestria.loe_ban: ~0 rows (приблизительно)
 DELETE FROM `loe_ban`;
 /*!40000 ALTER TABLE `loe_ban` DISABLE KEYS */;
 /*!40000 ALTER TABLE `loe_ban` ENABLE KEYS */;
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `loe_character` (
   `level` smallint(6) NOT NULL DEFAULT '0',
   `map` int(11) NOT NULL DEFAULT '0',
   `race` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `gender` tinyint(3) NOT NULL DEFAULT '0',
+  `gender` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `name` varchar(64) NOT NULL,
   `vdata` tinyblob,
   `gdata` blob,
@@ -832,8 +832,8 @@ INSERT INTO `loe_map_object` (`map`, `guid`, `object`, `type`, `flags`, `pos_x`,
 	(2, 22, -1, 1, 0, 439.978, 121.302, 523.85, 0, -144.104, 0, -1, 10, 1, -1),
 	(2, 23, -1, 1, 0, 92.8586, 127.791, 450.25, 0, 92.8343, 0, -1, 13, 1, -1),
 	(2, 24, -1, 1, 0, 527.15, 128.88, 256.512, 0, -90.9747, 0, -1, 14, 1, -1),
-	(2, 32768, -71, 2, 1, 321.343, 125.819, 364.795, 32, 4, 32, 25, 5, 2621443, 65537),
-	(2, 32769, -4, 2, 0, 321.343, 125.819, 364.795, 32, 4, 32, 25, -1, 720896, 327681),
+	(2, 32768, -68, 2, 1, 321.343, 125.819, 364.795, 32, 4, 32, 25, 5, 8388672, 65537),
+	(2, 32769, -4, 2, 0, 321.343, 125.819, 364.795, 32, 4, 32, 1, -1, 8388672, 524289),
 	(3, 0, -1, 0, 0, -312.4, 66.1, 61.3, 0, -62.7836, 0, -1, -1, -1, -1),
 	(3, 1, -1, 1, 0, -609.316, 193.066, -304.525, 0, -24.2635, 0, -1, 1, 4, -1),
 	(3, 2, -1, 1, 0, -603.556, 193.066, -322.172, 0, -97.8467, 0, -1, 4, 1, -1),
@@ -1336,7 +1336,7 @@ CREATE TABLE IF NOT EXISTS `loe_spell` (
   PRIMARY KEY (`id`,`index`,`effect`)
 ) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы legends_of_equestria.loe_spell: ~22 rows (приблизительно)
+-- Дамп данных таблицы legends_of_equestria.loe_spell: ~23 rows (приблизительно)
 DELETE FROM `loe_spell`;
 /*!40000 ALTER TABLE `loe_spell` DISABLE KEYS */;
 INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`, `data03`, `base_const`, `mod_level`, `mod_attack`) VALUES
@@ -1358,7 +1358,8 @@ INSERT INTO `loe_spell` (`id`, `index`, `effect`, `targets`, `data01`, `data02`,
 	(16, 1, 252, 2, 0, 0, 0, 6, 7.5, 0.75),
 	(21, 0, 1, 2, 50, 16, 2.5, 25, 25, 1.5),
 	(31, 0, 0, 12, 35, 32, 30, 0, 0, 0),
-	(31, 1, 20, 12, 8, 0, 10, 5, 3.5, 0),
+	(31, 1, 20, 12, 7, 0, 10, 5, 3.5, 0),
+	(31, 2, 20, 12, 8, 0, 10, 5, 3.5, 0),
 	(44, 0, 0, 15, 15, 3, 1.5, 0, 0, 0),
 	(44, 1, 1, 2, 0, 0, 0, 25, 11.5, 1.15),
 	(44, 2, 2, 130, 0, 6, 0, 10, 5, 0.85);

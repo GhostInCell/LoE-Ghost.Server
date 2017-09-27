@@ -48,7 +48,7 @@ namespace Ghost.Server.Core.Objects
             MapPlayer player = _server[arg2.Sender.Id];
             if (player == null)
             {
-                ServerLogger.LogWarn($"Switch from map {m_data.Data01} on portal {m_data.Guid} failed: player {arg2.Sender.Id} not found!");
+                ServerLogger.LogWarning($"Switch from map {m_data.Data01} on portal {m_data.Guid} failed: player {arg2.Sender.Id} not found!");
                 return;
             }
             if (Vector3.DistanceSquared(m_data.Position, player.Object.Position) <= Constants.MaxInteractionDistanceSquared)
@@ -63,7 +63,7 @@ namespace Ghost.Server.Core.Objects
                 else
                 {
                     player.CreateSaveTimer();
-                    ServerLogger.LogWarn($"Switch from map {m_data.Data01} on portal {m_data.Guid} failed: couldn't save player {arg2.Sender.Id} character!");
+                    ServerLogger.LogWarning($"Switch from map {m_data.Data01} on portal {m_data.Guid} failed: couldn't save player {arg2.Sender.Id} character!");
                     player.SystemMsg("Map switch failed: couldn't save character to database!");
                 }
             }

@@ -81,7 +81,7 @@ namespace Ghost.Server.Core.Objects
                     {
                         slot = entry.Slot.ToWearableIndex();
                         if (_wears.ContainsKey(slot))
-                            ServerLogger.LogWarn($"NPC id {_data.ObjectID} duplicate wear slot {entry.Slot}");
+                            ServerLogger.LogWarning($"NPC id {_data.ObjectID} duplicate wear slot {entry.Slot}");
                         else
                             _wears[slot] = new InventoryItem(item);
                     }
@@ -116,7 +116,7 @@ namespace Ghost.Server.Core.Objects
                     {
                         slot = entry.Slot.ToWearableIndex();
                         if (_wears.ContainsKey(slot))
-                            ServerLogger.LogWarn($"NPC id {data.ObjectID} duplicate wear slot {entry.Slot}");
+                            ServerLogger.LogWarning($"NPC id {data.ObjectID} duplicate wear slot {entry.Slot}");
                         else _wears[slot] = new InventoryItem(item);
                     }
             }

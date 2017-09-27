@@ -45,7 +45,7 @@ namespace Ghost.Server.Mgrs
                 if (server is MasterServer)
                     s_master = null;
             }
-            else ServerLogger.LogWarn($"Trying remove unregistered server guid {server.Guid} name {server.Name}");
+            else ServerLogger.LogWarning($"Trying remove unregistered server guid {server.Guid} name {server.Name}");
         }
 
         public static IServer GetServer(Guid guid)

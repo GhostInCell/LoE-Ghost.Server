@@ -58,7 +58,7 @@ namespace Ghost.Server.Scripts.Servers
             string message = arg1.ReadString();
             var player = _server[arg2.Sender.Id];
             var mute = await player.IsMuted();
-            if (mute.End > time)
+            if (!mute.IsEmpty && mute.End > time)
             {
                 player.MuteMsg(mute);
                 return;

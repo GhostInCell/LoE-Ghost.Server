@@ -158,7 +158,7 @@ namespace Lidgren.Network
 				throw new NetException("Failed to resolve " + host);
 
 			Interlocked.Increment(ref msg.m_recyclingCount);
-			m_unsentUnconnectedMessages.Enqueue(new Tuple<IPEndPoint, NetOutgoingMessage>(new IPEndPoint(adr, port), msg));
+			m_unsentUnconnectedMessages.Enqueue((new IPEndPoint(adr, port), msg));
 		}
 
 		/// <summary>
@@ -179,7 +179,7 @@ namespace Lidgren.Network
 			msg.m_isSent = true;
 
 			Interlocked.Increment(ref msg.m_recyclingCount);
-			m_unsentUnconnectedMessages.Enqueue(new Tuple<IPEndPoint, NetOutgoingMessage>(recipient, msg));
+			m_unsentUnconnectedMessages.Enqueue((recipient, msg));
 		}
 
 		/// <summary>
@@ -203,7 +203,7 @@ namespace Lidgren.Network
 
 			Interlocked.Add(ref msg.m_recyclingCount, recipients.Count);
 			foreach(IPEndPoint ep in recipients)
-				m_unsentUnconnectedMessages.Enqueue(new Tuple<IPEndPoint, NetOutgoingMessage>(ep, msg));
+				m_unsentUnconnectedMessages.Enqueue((ep, msg));
 		}
 
 		/// <summary>

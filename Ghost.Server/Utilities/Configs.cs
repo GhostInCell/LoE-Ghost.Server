@@ -107,7 +107,7 @@ namespace Ghost.Server.Utilities
                 if (m_cfgs.Count > 0) m_cfgs.Clear();
                 if (!File.Exists(ConfigFile))
                 {
-                    ServerLogger.LogWarn($"Configuration file: {ConfigFile} not found. Creating default one ...");
+                    ServerLogger.LogWarning($"Configuration file: {ConfigFile} not found. Creating default one ...");
                     return Create();
                 }
                 foreach (var item in File.ReadAllLines(ConfigFile))
