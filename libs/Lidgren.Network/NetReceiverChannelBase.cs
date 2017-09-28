@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Lidgren.Network
+﻿namespace Lidgren.Network
 {
-	internal abstract class NetReceiverChannelBase
+    internal abstract class NetReceiverChannelBase
 	{
 		internal NetPeer m_peer;
 		internal NetConnection m_connection;

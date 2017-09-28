@@ -20,7 +20,7 @@ using System.Diagnostics;
 
 namespace Lidgren.Network
 {
-	public partial class NetPeer
+    public partial class NetPeer
 	{
 		[Conditional("DEBUG")]
 		internal void LogVerbose(string message)

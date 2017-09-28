@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Lidgren.Network
+﻿namespace Lidgren.Network
 {
-	public partial class NetConnection
+    public partial class NetConnection
 	{
 		private double m_sentPingTime;
 		private int m_sentPingNumber;
@@ -46,15 +44,7 @@ namespace Lidgren.Network
 
 		internal void InitializePing()
 		{
-			double now = NetTime.Now;
-
-			// randomize ping sent time (0.25 - 1.0 x ping interval)
-			m_sentPingTime = now;
-			m_sentPingTime -= (m_peerConfiguration.PingInterval * 0.25f); // delay ping for a little while
-			m_sentPingTime -= (MWCRandom.Instance.NextSingle() * (m_peerConfiguration.PingInterval * 0.75f));
-			m_timeoutDeadline = now + (m_peerConfiguration.m_connectionTimeout * 2.0); // initially allow a little more time
-
-			// make it better, quick :-)
+			m_timeoutDeadline = NetTime.Now + (m_peerConfiguration.m_connectionTimeout * 2.0); // initially allow a little more time
 			SendPing();
 		}
 
@@ -70,9 +60,9 @@ namespace Lidgren.Network
 			om.m_messageType = NetMessageType.Ping;
 
 			int len = om.Encode(m_peer.m_sendBuffer, 0, 0);
-            m_peer.SendPacket(len, m_remoteEndPoint, 1, out var connectionReset);
+			m_peer.SendPacket(len, m_remoteEndPoint, 1, out var connectionReset);
 
-            m_statistics.PacketSent(len, 1);
+			m_statistics.PacketSent(len, 1);
 			m_peer.Recycle(om);
 		}
 
@@ -87,9 +77,9 @@ namespace Lidgren.Network
 
 			int len = om.Encode(m_peer.m_sendBuffer, 0, 0);
 
-            m_peer.SendPacket(len, m_remoteEndPoint, 1, out var connectionReset);
+			m_peer.SendPacket(len, m_remoteEndPoint, 1, out var connectionReset);
 
-            m_statistics.PacketSent(len, 1);
+			m_statistics.PacketSent(len, 1);
 			m_peer.Recycle(om);
 		}
 
@@ -128,7 +118,7 @@ namespace Lidgren.Network
 			{
                 if (chan is NetReliableSenderChannel rchan)
                     rchan.m_resendDelay = resendDelay;
-            }
+			}
 
 			// m_peer.LogVerbose("Timeout deadline pushed to  " + m_timeoutDeadline);
 

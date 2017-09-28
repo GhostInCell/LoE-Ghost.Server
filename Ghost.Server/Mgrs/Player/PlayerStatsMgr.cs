@@ -6,7 +6,7 @@ using Ghost.Server.Utilities.Abstracts;
 using PNet;
 using System;
 using System.Linq;
-using static PNet.NetConverter;
+using static Ghost.Server.Utilities.NetConverter;
 
 namespace Ghost.Server.Mgrs.Player
 {

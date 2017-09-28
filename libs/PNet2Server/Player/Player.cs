@@ -1,26 +1,26 @@
-﻿using System;
+﻿using PNet;
+using System;
 using System.Net;
-using PNet;
+using System.Threading;
 
 namespace PNetS
 {
     public partial class Player : IInfoRpcProvider<PlayerMessageInfo>, IProxySingle<IPlayerProxy>
     {
         public ushort Id { get; internal set; }
+        public object Connection { get; internal set; }
 
         /// <summary>
         /// the actual endpoint connection to the player
         /// </summary>
-#if LIDGREN
-        public IPEndPoint EndPoint { get { return Connection.RemoteEndPoint; } }
-#elif TCP
-        public IPEndPoint EndPoint { get { return TcpClient.Client.RemoteEndPoint as IPEndPoint; } }
-#endif
+        public IPEndPoint EndPoint { get; internal set; }
 
         /// <summary>
         /// custom object to associate with the player. not synched over the network.
         /// </summary>
         public object UserData;
+
+        private int _changingRooms = 0;
         private Guid _currentRoom = Guid.Empty;
         internal Guid CurrentRoomGuid{ get { return _currentRoom; }}
         private Guid _switchingToRoom = Guid.Empty;
@@ -52,9 +52,7 @@ namespace PNetS
         public event Action<Player> SwitchingToRoomInvalidated;
 
         internal virtual void OnNetUserDataChanged()
-        {
-            NetUserDataChanged?.Invoke(this);
-        }
+            => NetUserDataChanged?.Invoke(this);
 
         internal virtual void OnSwitchingToRoomInvalidated()
         {
@@ -170,6 +168,12 @@ namespace PNetS
         {
             if (this == ServerPlayer) return false;
 
+            if (Interlocked.CompareExchange(ref _changingRooms, 1, 0) == 1)
+            {
+                Debug.LogError($"Player {this} is currently in the process of changing rooms");
+                return false;
+            }
+
             Room room;
 
             if (!Server.TryGetRooms(roomId, out var rooms))
@@ -229,6 +233,12 @@ namespace PNetS
             if (room == null)
                 throw new ArgumentNullException("room");
 
+            if (Interlocked.CompareExchange(ref _changingRooms, 1, 0) == 1)
+            {
+                Debug.LogError($"Player {this} is currently in the process of changing rooms");
+                return false;
+            }
+
             var guid = room.Guid;
             if (!Server.TryGetRoom(guid, out room))
             {
@@ -239,7 +249,7 @@ namespace PNetS
             return true;
         }
 
-        private Guid _switchToken;
+        internal Guid _switchToken;
         void SendRoomSwitch(Room room)
         {
             _switchToken = Guid.NewGuid();
@@ -307,7 +317,20 @@ namespace PNetS
             _oldRoom = Guid.Empty;
             //and synchronize data
             SynchNetData();
-            FinishedSwitchingRooms?.Invoke(Server.GetRoom(_currentRoom));
+
+            try
+            {
+                FinishedSwitchingRooms.Raise(Server.GetRoom(_currentRoom));
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+            }
+
+            if (Interlocked.Exchange(ref _changingRooms, 0) != 1)
+            {
+                Debug.LogError($"Player {this} was marked as having finished switching rooms, but they were not actually in the process of doing so. This should never happen");
+            }
         }
 
         /// <summary>
@@ -318,11 +341,9 @@ namespace PNetS
         {
             if (this == ServerPlayer) return;
 
-            ImplementationDisconnect(reason);
-
+            Server.DisconnectPlayer(this, reason);
             DisconnectOnRoom();
         }
-        partial void ImplementationDisconnect(string reason);
 
         /// <summary>
         /// tell the room, if this is in one, to disconnect the player
@@ -348,9 +369,7 @@ namespace PNetS
             if (this == ServerPlayer) return;
 
             Server.BeginPlayerAdd(this);
-            ImplementationAllowConnect();
         }
-        partial void ImplementationAllowConnect();
 
         private void CallRpc(byte rpcId, NetMessage msg, PlayerMessageInfo info)
         {
@@ -443,11 +462,12 @@ namespace PNetS
 
             ImplSend(msg, mode);
         }
-        partial void ImplSend(NetMessage msg, ReliabilityMode mode, bool recycle = true);
 
-        public override string ToString()
+        void ImplSend(NetMessage msg, ReliabilityMode mode, bool recycle = true)
         {
-            return string.Format("{{Player {0} {1} {2}}}", Id, UserData, NetUserData);
+            Server.SendPlayerMessage(this, msg, mode, recycle);
         }
+
+        public override string ToString() => $"{{Player {Id} {UserData} {NetUserData}}}";
     }
 }

@@ -1,53 +1,52 @@
-﻿using PNet;
-#if S_LIDGREN
-using Lidgren.Network;
+﻿using Lidgren.Network;
+using PNet;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace PNetR
+namespace PNetR.Impl
 {
-    partial class Room
+    public class LidgrenDispatchClient : ADispatchClient
     {
         internal NetClient DispatchClient { get; private set; }
         private NetPeerConfiguration _dispatchConfiguration;
+        
+        private int _lastQueueSize = 16;
 
-        partial void ImplDispatchSetup()
+        protected internal override void Setup()
         {
-            _dispatchConfiguration = new NetPeerConfiguration(Configuration.AppIdentifier + "DPT");
+            _dispatchConfiguration = new NetPeerConfiguration(Room.Configuration.AppIdentifier + "DPT");
+
             DispatchClient = new NetClient(_dispatchConfiguration);
         }
 
-        partial void ImplDispatchConnect()
+        protected internal override void Connect()
         {
             DispatchClient.Start();
 
             var hailMsg = DispatchClient.CreateMessage(100);
-            hailMsg.Write(Configuration.RoomIdentifier);
+            hailMsg.Write(Room.Configuration.RoomIdentifier);
 
             //auth data
-            hailMsg.Write((int)Configuration.RoomAuthType);
-            hailMsg.Write(Configuration.AuthData);
-            hailMsg.Write(Configuration.UserDefinedAuthData);
+            hailMsg.Write((int)Room.Configuration.RoomAuthType);
+            hailMsg.Write(Room.Configuration.AuthData);
+            hailMsg.Write(Room.Configuration.UserDefinedAuthData);
 
             //connection info
-            hailMsg.Write(_serverConfiguration.Port);
-            hailMsg.Write(Configuration.MaximumPlayers);
-            if (Configuration.ListenAddress != null && Configuration.ListenAddress.Trim() != string.Empty)
+            hailMsg.Write(Room.Configuration.ListenPort);
+            hailMsg.Write(Room.Configuration.MaximumPlayers);
+            if (Room.Configuration.ListenAddress != null && Room.Configuration.ListenAddress.Trim() != string.Empty)
             {
-                hailMsg.Write(Configuration.ListenAddress);
+                hailMsg.Write(Room.Configuration.ListenAddress);
             }
-            DispatchClient.Connect(Configuration.DispatcherAddress, Configuration.DispatcherPort, hailMsg);
+            DispatchClient.Connect(Room.Configuration.DispatcherAddress, Room.Configuration.DispatcherPort, hailMsg);
         }
 
-        private int _lastDispatchSize = 16;
-        partial void ImplDispatchRead()
+        protected internal override void ReadQueue()
         {
             if (DispatchClient == null) return;
 
-            var messages = m_messages;
-            _lastDispatchSize = DispatchClient.ReadMessages(messages);
+            var messages = new List<NetIncomingMessage>(_lastQueueSize * 2);
+            _lastQueueSize = DispatchClient.ReadMessages(messages);
             // ReSharper disable once ForCanBeConvertedToForeach
             for (int i = 0; i < messages.Count; i++)
             {
@@ -59,12 +58,7 @@ namespace PNetR
 
                 if (msgType == NetIncomingMessageType.Data)
                 {
-                    if (Server != null)
-                        Server.ConsumeData(msg);
-                    else
-                    {
-                        Debug.LogWarning("Received server data when not connected");
-                    }
+                    ConsumeData(msg);
                 }
                 else if (msgType == NetIncomingMessageType.DebugMessage)
                 {
@@ -88,25 +82,20 @@ namespace PNetR
                         var remsg = serverConn.RemoteHailMessage;
                         if (remsg == null)
                             throw new NullReferenceException("Could not get room guid");
-                        byte[] gid;
-                        if (!remsg.ReadBytes(16, out gid))
+                        if (!remsg.ReadBytes(16, out var gid))
                             throw new Exception("Could not read room guid");
-                        RoomId = new Guid(gid);
-                        Debug.Log($"Connected to dispatcher. Id is {RoomId}");
-                        Server = new Server(this) { Connection = serverConn };
+
+                        Connected(new Guid(gid), serverConn);
                     }
                     else if (status == NetConnectionStatus.Disconnected)
                     {
-                        Server = null;
-                        RoomId = Guid.Empty;
-                        Debug.Log("Disconnected from dispatcher");
+                        Disconnected();
                     }
                     else
                     {
                         Debug.Log($"DConn ServerStatus: {status}, {statusReason}");
                     }
-                    ServerStatus = status.ToPNet();
-                    ServerStatusChanged?.Invoke();
+                    UpdateConnectionStatus(status.ToPNet());
                 }
                 else if (msgType == NetIncomingMessageType.Error)
                 {
@@ -119,18 +108,26 @@ namespace PNetR
 
                 NetMessage.RecycleMessage(msg);
             }
-            messages.Clear();
         }
 
-        partial void ImplDispatchDisconnect(string reason)
+        protected internal override void Disconnect(string reason)
         {
             DispatchClient.Shutdown(reason);
         }
 
-        partial void ImplServerGetMessage(int size, ref NetMessage msg)
+        protected internal override void SendMessage(NetMessage msg, ReliabilityMode mode)
         {
-            msg = NetMessage.GetMessage(size);
+            var lmsg = DispatchClient.CreateMessage(msg.Data.Length);
+            msg.Clone(lmsg);
+            NetMessage.RecycleMessage(msg);
+
+            var method = mode.RoomDelivery();
+            DispatchClient.SendMessage(lmsg, method);
+        }
+
+        protected internal override NetMessage GetMessage(int size)
+        {
+            return NetMessage.GetMessage(size);
         }
     }
 }
-#endif

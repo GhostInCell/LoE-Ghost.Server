@@ -22,12 +22,10 @@
  */
 #endregion
 
+using PNet;
 using System;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Collections.Generic;
-using System.Text;
-using PNet;
 
 namespace SharpFactory.DMDDemo
 {

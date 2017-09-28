@@ -9,6 +9,11 @@ namespace PNetR
     public class SceneViewManager
     {
         public readonly Room Room;
+        /// <summary>
+        /// For rpcs that are not handled by a subscribed method, either allow or disallow them to continue forwarding
+        /// </summary>
+        public bool AllowUnhandledRpcForwarding { get; set; }
+
         internal SceneViewManager(Room room)
         {
             Room = room;
@@ -38,7 +43,7 @@ namespace PNetR
         /// <returns></returns>
         public NetworkedSceneObjectView CreateNetworkedSceneObjectView(ushort id)
         {
-            var view = new NetworkedSceneObjectView(Room) {NetworkID = id};
+            var view = new NetworkedSceneObjectView(this, Room) {NetworkID = id};
             _views[id] = view;
             return view;
         }

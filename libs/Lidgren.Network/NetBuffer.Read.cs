@@ -1,15 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
-using System.Reflection;
-using System.Net;
+
+#if !__NOIPENDPOINT__
+using NetEndPoint = System.Net.IPEndPoint;
+#endif
 
 namespace Lidgren.Network
 {
-	/// <summary>
-	/// Base class for NetIncomingMessage and NetOutgoingMessage
-	/// </summary>
-	public partial class NetBuffer
+    /// <summary>
+    /// Base class for NetIncomingMessage and NetOutgoingMessage
+    /// </summary>
+    public partial class NetBuffer
 	{
 		private const string c_readOverflowError = "Trying to read past the buffer size - likely caused by mismatching Write/Reads, different size or order.";
 
@@ -311,7 +312,7 @@ namespace Lidgren.Network
 			else
 			{
 				retval = NetBitWriter.ReadUInt32(m_data, 32, m_readPosition);
-				retval |= NetBitWriter.ReadUInt32(m_data, numberOfBits - 32, m_readPosition) << 32;
+				retval |= (UInt64)NetBitWriter.ReadUInt32(m_data, numberOfBits - 32, m_readPosition + 32) << 32;
 			}
 			m_readPosition += numberOfBits;
 			return retval;
@@ -334,17 +335,17 @@ namespace Lidgren.Network
 			return ReadSingle();
 		}
 
-        /// <summary>
-        /// Reads a 32 bit floating point value written using Write(Single)
-        /// </summary>
-        public float ReadSingle()
-            => BitConverter.Int32BitsToSingle(ReadInt32());
-
 		/// <summary>
 		/// Reads a 32 bit floating point value written using Write(Single)
 		/// </summary>
+		public float ReadSingle()
+            => BitConverter.Int32BitsToSingle(ReadInt32());
+
+        /// <summary>
+        /// Reads a 32 bit floating point value written using Write(Single)
+        /// </summary>
 		public bool ReadSingle(out float result)
-		{
+        {
             if (ReadInt32(out var bits))
             {
                 result = BitConverter.Int32BitsToSingle(ReadInt32());
@@ -354,9 +355,9 @@ namespace Lidgren.Network
             return false;
         }
 
-		/// <summary>
-		/// Reads a 64 bit floating point value written using Write(Double)
-		/// </summary>
+        /// <summary>
+        /// Reads a 64 bit floating point value written using Write(Double)
+        /// </summary>
 		public double ReadDouble()
             => BitConverter.Int64BitsToDouble(ReadInt64());
 
@@ -395,12 +396,12 @@ namespace Lidgren.Network
 			int num2 = 0;
 			while (m_bitLength - m_readPosition >= 8)
 			{
-                if (ReadByte(out var num3) == false)
-                {
-                    result = 0;
-                    return false;
-                }
-                num1 |= (num3 & 0x7f) << num2;
+				if (ReadByte(out var num3) == false)
+				{
+					result = 0;
+					return false;
+				}
+				num1 |= (num3 & 0x7f) << num2;
 				num2 += 7;
 				if ((num3 & 0x80) == 0)
 				{
@@ -509,10 +510,25 @@ namespace Lidgren.Network
 			return (int)(min + rvalue);
 		}
 
-		/// <summary>
-		/// Reads a string written using Write(string)
-		/// </summary>
-		public string ReadString()
+        /// <summary>
+        /// Reads a 64 bit integer value written using WriteRangedInteger() (64 version)
+        /// </summary>
+        /// <param name="min">The minimum value used when writing the value</param>
+        /// <param name="max">The maximum value used when writing the value</param>
+        /// <returns>A signed integer value larger or equal to MIN and smaller or equal to MAX</returns>
+        public long ReadRangedInteger(long min, long max)
+        {
+            ulong range = (ulong)(max - min);
+            int numBits = NetUtility.BitsToHoldUInt64(range);
+
+            ulong rvalue = ReadUInt64(numBits);
+            return min + (long)rvalue;
+        }
+
+        /// <summary>
+        /// Reads a string written using Write(string)
+        /// </summary>
+        public string ReadString()
 		{
 			int byteLen = (int)ReadVariableUInt32();
 
@@ -548,13 +564,13 @@ namespace Lidgren.Network
 		/// </summary>
 		public bool ReadString(out string result)
 		{
-            if (ReadVariableUInt32(out var byteLen) == false)
-            {
-                result = String.Empty;
-                return false;
-            }
+			if (ReadVariableUInt32(out var byteLen) == false)
+			{
+				result = String.Empty;
+				return false;
+			}
 
-            if (byteLen <= 0)
+			if (byteLen <= 0)
 			{
 				result = String.Empty;
 				return true;
@@ -574,13 +590,13 @@ namespace Lidgren.Network
 				return true;
 			}
 
-            if (ReadBytes((int)byteLen, out var bytes) == false)
-            {
-                result = String.Empty;
-                return false;
-            }
+			if (ReadBytes((int)byteLen, out var bytes) == false)
+			{
+				result = String.Empty;
+				return false;
+			}
 
-            result = System.Text.Encoding.UTF8.GetString(bytes, 0, bytes.Length);
+			result = System.Text.Encoding.UTF8.GetString(bytes, 0, bytes.Length);
 			return true;
 		}
 
@@ -601,14 +617,14 @@ namespace Lidgren.Network
 		/// <summary>
 		/// Reads a stored IPv4 endpoint description
 		/// </summary>
-		public IPEndPoint ReadIPEndPoint()
+		public NetEndPoint ReadIPEndPoint()
 		{
 			byte len = ReadByte();
 			byte[] addressBytes = ReadBytes(len);
 			int port = (int)ReadUInt16();
 
-			IPAddress address = new IPAddress(addressBytes);
-			return new IPEndPoint(address, port);
+			var address = NetUtility.CreateAddressFromBytes(addressBytes);
+			return new NetEndPoint(address, port);
 		}
 
 		/// <summary>

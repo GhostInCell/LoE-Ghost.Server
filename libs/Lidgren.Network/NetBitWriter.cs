@@ -20,16 +20,14 @@ USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 */
 using System;
-using System.Collections.Generic;
-
 using System.Diagnostics;
 
 namespace Lidgren.Network
 {
-	/// <summary>
-	/// Helper class for NetBuffer to write/read bits
-	/// </summary>
-	public static class NetBitWriter
+    /// <summary>
+    /// Helper class for NetBuffer to write/read bits
+    /// </summary>
+    public static class NetBitWriter
 	{
 		/// <summary>
 		/// Read 1-8 bits from a buffer into a byte
@@ -188,38 +186,36 @@ namespace Lidgren.Network
 		/// Reads an unsigned 16 bit integer
 		/// </summary>
 		[CLSCompliant(false)]
-#if UNSAFE
-		public static unsafe ushort ReadUInt16(byte[] fromBuffer, int numberOfBits, int readBitOffset)
-		{
-			Debug.Assert(((numberOfBits > 0) && (numberOfBits <= 16)), "ReadUInt16() can only read between 1 and 16 bits");
-
-			if (numberOfBits == 16 && ((readBitOffset % 8) == 0))
-			{
-				fixed (byte* ptr = &(fromBuffer[readBitOffset / 8]))
-				{
-					return *(((ushort*)ptr));
-				}
-			}
-#else
 		public static ushort ReadUInt16(byte[] fromBuffer, int numberOfBits, int readBitOffset)
 		{
 			Debug.Assert(((numberOfBits > 0) && (numberOfBits <= 16)), "ReadUInt16() can only read between 1 and 16 bits");
+            ushort returnValue;
+#if UNSAFE
+            if (numberOfBits == 16 && ((readBitOffset % 8) == 0))
+            {
+                unsafe
+                {
+                    fixed (byte* ptr = &(fromBuffer[readBitOffset / 8]))
+                        returnValue = *(ushort*)ptr;
+                }
+            }
+            else
 #endif
-			ushort returnValue;
-			if (numberOfBits <= 8)
-			{
-				returnValue = ReadByte(fromBuffer, numberOfBits, readBitOffset);
-				return returnValue;
-			}
-			returnValue = ReadByte(fromBuffer, 8, readBitOffset);
-			numberOfBits -= 8;
-			readBitOffset += 8;
+            {
+                if (numberOfBits <= 8)
+                {
+                    returnValue = ReadByte(fromBuffer, numberOfBits, readBitOffset);
+                    return returnValue;
+                }
+                returnValue = ReadByte(fromBuffer, 8, readBitOffset);
+                numberOfBits -= 8;
+                readBitOffset += 8;
 
-			if (numberOfBits <= 8)
-			{
-				returnValue |= (ushort)(ReadByte(fromBuffer, numberOfBits, readBitOffset) << 8);
-			}
-
+                if (numberOfBits <= 8)
+                {
+                    returnValue |= (ushort)(ReadByte(fromBuffer, numberOfBits, readBitOffset) << 8);
+                }
+            }
 #if BIGENDIAN
 			// reorder bytes
 			uint retVal = returnValue;
@@ -230,60 +226,57 @@ namespace Lidgren.Network
 #endif
 		}
 
-		/// <summary>
-		/// Reads the specified number of bits into an UInt32
-		/// </summary>
-		[CLSCompliant(false)]
+        /// <summary>
+        /// Reads the specified number of bits into an UInt32
+        /// </summary>
+        [CLSCompliant(false)]
+        public static uint ReadUInt32(byte[] fromBuffer, int numberOfBits, int readBitOffset)
+        {
+            NetException.Assert(((numberOfBits > 0) && (numberOfBits <= 32)), "ReadUInt32() can only read between 1 and 32 bits");
+            uint returnValue;
 #if UNSAFE
-		public static unsafe uint ReadUInt32(byte[] fromBuffer, int numberOfBits, int readBitOffset)
-		{
-			NetException.Assert(((numberOfBits > 0) && (numberOfBits <= 32)), "ReadUInt32() can only read between 1 and 32 bits");
-
-			if (numberOfBits == 32 && ((readBitOffset % 8) == 0))
-			{
-				fixed (byte* ptr = &(fromBuffer[readBitOffset / 8]))
-				{
-					return *(((uint*)ptr));
-				}
-			}
-#else
-		
-		public static uint ReadUInt32(byte[] fromBuffer, int numberOfBits, int readBitOffset)
-		{
-			NetException.Assert(((numberOfBits > 0) && (numberOfBits <= 32)), "ReadUInt32() can only read between 1 and 32 bits");
+            if (numberOfBits == 32 && ((readBitOffset % 8) == 0))
+            {
+                unsafe
+                {
+                    fixed (byte* ptr = &(fromBuffer[readBitOffset / 8]))
+                        returnValue = *(uint*)ptr;
+                }
+            }
+            else
 #endif
-			uint returnValue;
-			if (numberOfBits <= 8)
-			{
-				returnValue = ReadByte(fromBuffer, numberOfBits, readBitOffset);
-				return returnValue;
-			}
-			returnValue = ReadByte(fromBuffer, 8, readBitOffset);
-			numberOfBits -= 8;
-			readBitOffset += 8;
+            {
+                if (numberOfBits <= 8)
+                {
+                    returnValue = ReadByte(fromBuffer, numberOfBits, readBitOffset);
+                    return returnValue;
+                }
+                returnValue = ReadByte(fromBuffer, 8, readBitOffset);
+                numberOfBits -= 8;
+                readBitOffset += 8;
 
-			if (numberOfBits <= 8)
-			{
-				returnValue |= (uint)(ReadByte(fromBuffer, numberOfBits, readBitOffset) << 8);
-				return returnValue;
-			}
-			returnValue |= (uint)(ReadByte(fromBuffer, 8, readBitOffset) << 8);
-			numberOfBits -= 8;
-			readBitOffset += 8;
+                if (numberOfBits <= 8)
+                {
+                    returnValue |= (uint)(ReadByte(fromBuffer, numberOfBits, readBitOffset) << 8);
+                    return returnValue;
+                }
+                returnValue |= (uint)(ReadByte(fromBuffer, 8, readBitOffset) << 8);
+                numberOfBits -= 8;
+                readBitOffset += 8;
 
-			if (numberOfBits <= 8)
-			{
-				uint r = ReadByte(fromBuffer, numberOfBits, readBitOffset);
-				r <<= 16;
-				returnValue |= r;
-				return returnValue;
-			}
-			returnValue |= (uint)(ReadByte(fromBuffer, 8, readBitOffset) << 16);
-			numberOfBits -= 8;
-			readBitOffset += 8;
+                if (numberOfBits <= 8)
+                {
+                    uint r = ReadByte(fromBuffer, numberOfBits, readBitOffset);
+                    r <<= 16;
+                    returnValue |= r;
+                    return returnValue;
+                }
+                returnValue |= (uint)(ReadByte(fromBuffer, 8, readBitOffset) << 16);
+                numberOfBits -= 8;
+                readBitOffset += 8;
 
-			returnValue |= (uint)(ReadByte(fromBuffer, numberOfBits, readBitOffset) << 24);
-
+                returnValue |= (uint)(ReadByte(fromBuffer, numberOfBits, readBitOffset) << 24);
+            }
 #if BIGENDIAN
 			// reorder bytes
 			return
@@ -317,15 +310,15 @@ namespace Lidgren.Network
 #endif
 			if (numberOfBits <= 8)
 			{
-				NetBitWriter.WriteByte((byte)source, numberOfBits, destination, destinationBitOffset);
+                WriteByte((byte)source, numberOfBits, destination, destinationBitOffset);
 				return;
 			}
 
-			NetBitWriter.WriteByte((byte)source, 8, destination, destinationBitOffset);
+            WriteByte((byte)source, 8, destination, destinationBitOffset);
 
 			numberOfBits -= 8;
 			if (numberOfBits > 0)
-				NetBitWriter.WriteByte((byte)(source >> 8), numberOfBits, destination, destinationBitOffset + 8);
+                WriteByte((byte)(source >> 8), numberOfBits, destination, destinationBitOffset + 8);
 		}
 
 		/// <summary>
@@ -345,32 +338,32 @@ namespace Lidgren.Network
 			int returnValue = destinationBitOffset + numberOfBits;
 			if (numberOfBits <= 8)
 			{
-				NetBitWriter.WriteByte((byte)source, numberOfBits, destination, destinationBitOffset);
+                WriteByte((byte)source, numberOfBits, destination, destinationBitOffset);
 				return returnValue;
 			}
-			NetBitWriter.WriteByte((byte)source, 8, destination, destinationBitOffset);
+            WriteByte((byte)source, 8, destination, destinationBitOffset);
 			destinationBitOffset += 8;
 			numberOfBits -= 8;
 
 			if (numberOfBits <= 8)
 			{
-				NetBitWriter.WriteByte((byte)(source >> 8), numberOfBits, destination, destinationBitOffset);
+                WriteByte((byte)(source >> 8), numberOfBits, destination, destinationBitOffset);
 				return returnValue;
 			}
-			NetBitWriter.WriteByte((byte)(source >> 8), 8, destination, destinationBitOffset);
+            WriteByte((byte)(source >> 8), 8, destination, destinationBitOffset);
 			destinationBitOffset += 8;
 			numberOfBits -= 8;
 
 			if (numberOfBits <= 8)
 			{
-				NetBitWriter.WriteByte((byte)(source >> 16), numberOfBits, destination, destinationBitOffset);
+                WriteByte((byte)(source >> 16), numberOfBits, destination, destinationBitOffset);
 				return returnValue;
 			}
-			NetBitWriter.WriteByte((byte)(source >> 16), 8, destination, destinationBitOffset);
+            WriteByte((byte)(source >> 16), 8, destination, destinationBitOffset);
 			destinationBitOffset += 8;
 			numberOfBits -= 8;
 
-			NetBitWriter.WriteByte((byte)(source >> 24), numberOfBits, destination, destinationBitOffset);
+            WriteByte((byte)(source >> 24), numberOfBits, destination, destinationBitOffset);
 			return returnValue;
 		}
 
@@ -394,73 +387,73 @@ namespace Lidgren.Network
 			int returnValue = destinationBitOffset + numberOfBits;
 			if (numberOfBits <= 8)
 			{
-				NetBitWriter.WriteByte((byte)source, numberOfBits, destination, destinationBitOffset);
+                WriteByte((byte)source, numberOfBits, destination, destinationBitOffset);
 				return returnValue;
 			}
-			NetBitWriter.WriteByte((byte)source, 8, destination, destinationBitOffset);
+            WriteByte((byte)source, 8, destination, destinationBitOffset);
 			destinationBitOffset += 8;
 			numberOfBits -= 8;
 
 			if (numberOfBits <= 8)
 			{
-				NetBitWriter.WriteByte((byte)(source >> 8), numberOfBits, destination, destinationBitOffset);
+                WriteByte((byte)(source >> 8), numberOfBits, destination, destinationBitOffset);
 				return returnValue;
 			}
-			NetBitWriter.WriteByte((byte)(source >> 8), 8, destination, destinationBitOffset);
+            WriteByte((byte)(source >> 8), 8, destination, destinationBitOffset);
 			destinationBitOffset += 8;
 			numberOfBits -= 8;
 
 			if (numberOfBits <= 8)
 			{
-				NetBitWriter.WriteByte((byte)(source >> 16), numberOfBits, destination, destinationBitOffset);
+                WriteByte((byte)(source >> 16), numberOfBits, destination, destinationBitOffset);
 				return returnValue;
 			}
-			NetBitWriter.WriteByte((byte)(source >> 16), 8, destination, destinationBitOffset);
+            WriteByte((byte)(source >> 16), 8, destination, destinationBitOffset);
 			destinationBitOffset += 8;
 			numberOfBits -= 8;
 
 			if (numberOfBits <= 8)
 			{
-				NetBitWriter.WriteByte((byte)(source >> 24), numberOfBits, destination, destinationBitOffset);
+                WriteByte((byte)(source >> 24), numberOfBits, destination, destinationBitOffset);
 				return returnValue;
 			}
-			NetBitWriter.WriteByte((byte)(source >> 24), 8, destination, destinationBitOffset);
+            WriteByte((byte)(source >> 24), 8, destination, destinationBitOffset);
 			destinationBitOffset += 8;
 			numberOfBits -= 8;
 
 			if (numberOfBits <= 8)
 			{
-				NetBitWriter.WriteByte((byte)(source >> 32), numberOfBits, destination, destinationBitOffset);
+                WriteByte((byte)(source >> 32), numberOfBits, destination, destinationBitOffset);
 				return returnValue;
 			}
-			NetBitWriter.WriteByte((byte)(source >> 32), 8, destination, destinationBitOffset);
+            WriteByte((byte)(source >> 32), 8, destination, destinationBitOffset);
 			destinationBitOffset += 8;
 			numberOfBits -= 8;
 
 			if (numberOfBits <= 8)
 			{
-				NetBitWriter.WriteByte((byte)(source >> 40), numberOfBits, destination, destinationBitOffset);
+                WriteByte((byte)(source >> 40), numberOfBits, destination, destinationBitOffset);
 				return returnValue;
 			}
-			NetBitWriter.WriteByte((byte)(source >> 40), 8, destination, destinationBitOffset);
+            WriteByte((byte)(source >> 40), 8, destination, destinationBitOffset);
 			destinationBitOffset += 8;
 			numberOfBits -= 8;
 
 			if (numberOfBits <= 8)
 			{
-				NetBitWriter.WriteByte((byte)(source >> 48), numberOfBits, destination, destinationBitOffset);
+                WriteByte((byte)(source >> 48), numberOfBits, destination, destinationBitOffset);
 				return returnValue;
 			}
-			NetBitWriter.WriteByte((byte)(source >> 48), 8, destination, destinationBitOffset);
+            WriteByte((byte)(source >> 48), 8, destination, destinationBitOffset);
 			destinationBitOffset += 8;
 			numberOfBits -= 8;
 
 			if (numberOfBits <= 8)
 			{
-				NetBitWriter.WriteByte((byte)(source >> 56), numberOfBits, destination, destinationBitOffset);
+                WriteByte((byte)(source >> 56), numberOfBits, destination, destinationBitOffset);
 				return returnValue;
 			}
-			NetBitWriter.WriteByte((byte)(source >> 56), 8, destination, destinationBitOffset);
+            WriteByte((byte)(source >> 56), 8, destination, destinationBitOffset);
 			destinationBitOffset += 8;
 			numberOfBits -= 8;
 

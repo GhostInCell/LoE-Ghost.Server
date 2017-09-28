@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Lidgren.Network
+﻿namespace Lidgren.Network
 {
-	internal struct NetStoredReliableMessage
+    internal struct NetStoredReliableMessage
 	{
 		public int NumSent;
 		public double LastSent;

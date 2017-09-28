@@ -193,13 +193,16 @@ namespace Ghost.Server.Core.Servers
         #region Events Handlers
         private void Room_ServerStatusChanged()
         {
-            if (_room.ServerStatus == ConnectionStatus.Connected)
+            switch (_room.ServerStatus)
             {
-                ServersMgr.Add(this);
-                _id = _room.RoomId.ToString().Normalize(8);
+                case ConnectionStatus.Connected:
+                    ServersMgr.Add(this);
+                    _id = _room.RoomId.ToString().Normalize(8);
+                    break;
+                case ConnectionStatus.Disconnecting:
+                    ServersMgr.Remove(this);
+                    break;
             }
-            else
-                ServersMgr.Remove(this);
             ServerLogger.LogServer(this, $" Status {_room.ServerStatus}");
         }
         private void Room_PlayerAdded(Player obj)
@@ -236,7 +239,7 @@ namespace Ghost.Server.Core.Servers
             _cfg = new NetworkConfiguration(_maxPlayers, _port, Configs.Get<int>(Configs.Map_Tick), _map.Name, dispatcherAddress: Configs.Get<string>(Configs.Server_Host),
                 userDefinedAuthData: $"{ServersMgr.Dedicated}@{GetType().Name}{(ServersMgr.Dedicated ? string.Empty : $"@{ServersMgr.Master.Guid}")}",
                 dispatcherPort: Configs.Get<int>(Configs.Server_Maps_Port), listenAddress: Configs.Get<string>(Configs.Map_Host));
-            _room = new Room(_cfg);
+            _room = new Room(_cfg, new PNetR.Impl.LidgrenRoomServer(), new PNetR.Impl.LidgrenDispatchClient());
             _objects = new ObjectsMgr(this);
             _script = new MapServerScript(this);
             _room.PlayerAdded += Room_PlayerAdded;

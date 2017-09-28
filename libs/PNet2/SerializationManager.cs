@@ -202,14 +202,13 @@ namespace PNet
             return false;
         }
 
-
         static readonly ConcurrentDictionary<Type, bool> TypesAreINet = new ConcurrentDictionary<Type, bool>();
 
         bool TypeIsINet(Type type)
         {
             if (TypesAreINet.TryGetValue(type, out var value))
                 return value;
-
+            
             var isInet = type.GetInterfaces().Contains(typeof(INetSerializable));
             TypesAreINet[type] = isInet;
             return isInet;

@@ -17,15 +17,14 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR TH
 USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 */
-using System;
 using System.Net;
 
 namespace Lidgren.Network
 {
-	/// <summary>
-	/// Partly immutable after NetPeer has been initialized
-	/// </summary>
-	public sealed class NetPeerConfiguration
+    /// <summary>
+    /// Partly immutable after NetPeer has been initialized
+    /// </summary>
+    public sealed class NetPeerConfiguration
 	{
 		// Maximum transmission unit
 		// Ethernet can take 1500 bytes of payload, so lets stay below that.
@@ -58,6 +57,7 @@ namespace Lidgren.Network
 		internal bool m_enableUPnP;
 		internal bool m_autoFlushSendQueue;
 		private NetUnreliableSizeBehaviour m_unreliableSizeBehaviour;
+		internal bool m_suppressUnreliableUnorderedAcks;
 
 		internal NetIncomingMessageType m_disabledTypes;
 		internal int m_port;
@@ -112,6 +112,7 @@ namespace Lidgren.Network
 			m_resendHandshakeInterval = 3.0f;
 			m_maximumHandshakeAttempts = 5;
 			m_autoFlushSendQueue = true;
+			m_suppressUnreliableUnorderedAcks = false;
 
 			m_maximumTransmissionUnit = kDefaultMTU;
 			m_autoExpandMTU = false;
@@ -312,6 +313,20 @@ namespace Lidgren.Network
 		}
 
 		/// <summary>
+		/// If true, will not send acks for unreliable unordered messages. This will save bandwidth, but disable flow control and duplicate detection for this type of messages.
+		/// </summary>
+		public bool SuppressUnreliableUnorderedAcks
+		{
+			get { return m_suppressUnreliableUnorderedAcks; }
+			set
+			{
+				if (m_isLocked)
+					throw new NetException(c_isLockedMessage);
+				m_suppressUnreliableUnorderedAcks = value;
+			}
+		}
+
+		/// <summary>
 		/// Gets or sets the local ip address to bind to. Defaults to IPAddress.Any. Cannot be changed once NetPeer is initialized.
 		/// </summary>
 		public IPAddress LocalAddress
@@ -496,7 +511,7 @@ namespace Lidgren.Network
 		/// </summary>
 		public NetPeerConfiguration Clone()
 		{
-			NetPeerConfiguration retval = MemberwiseClone() as NetPeerConfiguration;
+			NetPeerConfiguration retval = this.MemberwiseClone() as NetPeerConfiguration;
 			retval.m_isLocked = false;
 			return retval;
 		}

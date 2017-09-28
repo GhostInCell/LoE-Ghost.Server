@@ -116,7 +116,8 @@ namespace Ghost.Server.Core.Servers
         public void Start()
         {
             if (_server != null) return;
-            _server = new PNetS.Server(); ReloadCFG();
+            _server = new PNetS.Server(new PNetS.Impl.LidgrenDispatchServer());
+            ReloadCFG();
             _server.RoomAdded += MasterServer_RoomAdded;
             _server.RoomRemoved += MasterServer_RoomRemoved;
             _server.PlayerAdded += MasterServer_PlayerAdded;

@@ -10,7 +10,7 @@ using PNet;
 using PNetR;
 using System.Collections.Generic;
 using System.Numerics;
-using static PNet.NetConverter;
+using static Ghost.Server.Utilities.NetConverter;
 
 namespace Ghost.Server.Core.Objects
 {

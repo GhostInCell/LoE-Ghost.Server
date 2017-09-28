@@ -16,20 +16,22 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRA
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-using System;
-using System.Net;
 using System.Diagnostics;
+
+#if !__NOIPENDPOINT__
+using NetEndPoint = System.Net.IPEndPoint;
+#endif
 
 namespace Lidgren.Network
 {
-	/// <summary>
-	/// Incoming message either sent from a remote peer or generated within the library
-	/// </summary>
-	[DebuggerDisplay("Type={MessageType} LengthBits={LengthBits}")]
+    /// <summary>
+    /// Incoming message either sent from a remote peer or generated within the library
+    /// </summary>
+    [DebuggerDisplay("Type={MessageType} LengthBits={LengthBits}")]
 	public sealed class NetIncomingMessage : NetBuffer
 	{
 		internal NetIncomingMessageType m_incomingMessageType;
-		internal IPEndPoint m_senderEndPoint;
+		internal NetEndPoint m_senderEndPoint;
 		internal NetConnection m_senderConnection;
 		internal int m_sequenceNumber;
 		internal NetMessageType m_receivedMessageType;
@@ -52,9 +54,9 @@ namespace Lidgren.Network
 		public int SequenceChannel { get { return (int)m_receivedMessageType - (int)NetUtility.GetDeliveryMethod(m_receivedMessageType); } }
 
 		/// <summary>
-		/// IPEndPoint of sender, if any
+		/// endpoint of sender, if any
 		/// </summary>
-		public IPEndPoint SenderEndPoint { get { return m_senderEndPoint; } }
+		public NetEndPoint SenderEndPoint { get { return m_senderEndPoint; } }
 
 		/// <summary>
 		/// NetConnection of sender, if any
@@ -109,7 +111,7 @@ namespace Lidgren.Network
 		/// </summary>
 		public override string ToString()
 		{
-			return "[NetIncomingMessage #" + m_sequenceNumber + " " + LengthBytes + " bytes]";
+			return "[NetIncomingMessage #" + m_sequenceNumber + " " + this.LengthBytes + " bytes]";
 		}
 	}
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using PNet;
+﻿using PNet;
 
 namespace PNetR
 {
@@ -25,6 +20,11 @@ namespace PNetR
             }
         }
 
+        /// <summary>
+        /// For rpcs that are not handled by a subscribed method, either allow or disallow them to continue forwarding
+        /// </summary>
+        public bool AllowUnhandledRpcForwarding { get; set; }
+
         public readonly Room Room;
 
         internal NetworkViewManager(Room room)
@@ -36,16 +36,16 @@ namespace PNetR
         {
             lock (_networkViews)
             {
-                var nid = (ushort)_networkViews.Add(null);
-                var view = new NetworkView(this, nid, owner);
+                var nid = _networkViews.Add(null);
+                var view = new NetworkView(this, new NetworkViewId((ushort) nid), owner);
                 _networkViews[nid] = view;
                 return view;
             }
         }
 
-        public NetworkView Get(ushort id)
+        public NetworkView Get(NetworkViewId id)
         {
-            _networkViews.TryGetValue(id, out var view);
+            _networkViews.TryGetValue(id.Id, out var view);
             return view;
         }
 
@@ -56,7 +56,7 @@ namespace PNetR
         /// <returns></returns>
         public bool Contains(NetworkView view)
         {
-            if (_networkViews.TryGetValue(view.Id, out var oview))
+            if (_networkViews.TryGetValue(view.Id.Id, out var oview))
                 return oview == view;
             return false;
         }
@@ -67,7 +67,7 @@ namespace PNetR
         /// <param name="view"></param>
         internal void Remove(NetworkView view)
         {
-            _networkViews.Remove(view.Id);
+            _networkViews.Remove(view.Id.Id);
         }
 
         internal void CallRpc(NetMessage msg, NetMessageInfo info, SubMsgType sub)
@@ -119,7 +119,7 @@ namespace PNetR
                 view.IncomingStream(msg, sender);
             else
             {
-                Debug.LogWarning($"Could not find view {id} to stream to");
+                //Debug.LogWarning($"Could not find view {id} to stream to");
             }
         }
 

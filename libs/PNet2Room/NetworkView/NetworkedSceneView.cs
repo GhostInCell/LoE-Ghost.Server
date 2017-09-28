@@ -7,20 +7,26 @@ namespace PNetR
     /// <summary>
     /// Network view, but for scene objects
     /// </summary>
-    public partial class NetworkedSceneObjectView
+    public class NetworkedSceneObjectView: IInfoRpcProvider<NetMessageInfo>, IProxySingle<ISceneViewProxy>
     {
-        internal NetworkedSceneObjectView(Room room)
+        internal NetworkedSceneObjectView(SceneViewManager sceneViewManager, Room room)
         {
+            Manager = sceneViewManager;
             _room = room;
         }
         readonly Room _room;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public readonly SceneViewManager Manager;
 
         /// <summary>
         /// The scene/room Network ID of this item. Should only be one per room
         /// </summary>
         public ushort NetworkID { get; internal set; }
 
-        #region RPC Processing
+        #region IInfoRpcProvider<NetMessageInfo>
 
         readonly Dictionary<byte, RpcProcessor> _rpcProcessors = new Dictionary<byte, RpcProcessor>();
 
@@ -59,7 +65,7 @@ namespace PNetR
         /// Unsubscribe from an rpc
         /// </summary>
         /// <param name="rpcID"></param>
-        public void UnsubscribeFromRpc(byte rpcID)
+        public void UnsubscribeRpc(byte rpcID)
         {
             _rpcProcessors.Remove(rpcID);
         }
@@ -78,13 +84,42 @@ namespace PNetR
                     _rpcProcessors.Remove(rpcID);
                 }
             }
-            else
+            else if (!Manager.AllowUnhandledRpcForwarding)
             {
                 Debug.LogWarning($"NetworkedSceneView {rpcID} received unhandled RPC {NetworkID}");
                 info.ContinueForwarding = false;
             }
         }
 
+        public void SubscribeRpcsOnObject(object obj)
+        {
+            RpcSubscriber.SubscribeObject<NetMessageInfo, RpcAttribute>(this, obj, _room.Serializer, Debug.Logger);
+        }
+
+        public void ClearSubscriptions()
+        {
+            _rpcProcessors.Clear();
+        }
+
+        /// <summary>
+        /// Unsubscribe all marked rpcs on listener
+        /// </summary>
+        /// <param name="listener"></param>
+        public void Unsubscribe(object listener)
+        {
+            var cType = listener.GetType();
+
+            if (cType == typeof(NetworkView)) //speedup
+                return;
+
+            RpcSubscriber.ForEachRpc<RpcAttribute>(cType, (method, parms, parmTypes, tokens) =>
+            {
+                foreach (var token in tokens)
+                {
+                    UnsubscribeRpc(token.Item2.RpcId);
+                }
+            });
+        }
         #endregion
 
         /// <summary>
@@ -108,7 +143,7 @@ namespace PNetR
             {
                 _room.Serializer.Serialize(arg, msg);
             }
-            ImplSendMessage(msg, ReliabilityMode.Ordered);
+            _room.SendSceneView(msg, ReliabilityMode.Ordered);
         }
 
         NetMessage StartMessage(byte rpcId, RpcMode mode, int size)
@@ -122,6 +157,27 @@ namespace PNetR
             return msg;
         }
 
-        partial void ImplSendMessage(NetMessage msg, ReliabilityMode mode);
+        #region IProxySingle<ISceneViewProxy>
+        private ISceneViewProxy _proxyObject;
+        /// <summary>
+        /// the value set from Proxy(IServerProxy proxy)
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T Proxy<T>()
+        {
+            return (T)_proxyObject;
+        }
+        /// <summary>
+        /// set the proxy object to use when returning Proxy`T()
+        /// </summary>
+        /// <param name="proxy"></param>
+        public void Proxy(ISceneViewProxy proxy)
+        {
+            _proxyObject = proxy;
+            if (_proxyObject != null)
+                proxy.View = this;
+        }
+        #endregion
     }
 }

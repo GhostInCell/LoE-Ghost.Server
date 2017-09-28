@@ -35,7 +35,7 @@ namespace Ghost.Server.Utilities.Abstracts
         {
             get
             {
-                return _view.Id;
+                return _view.Id.Id;
             }
         }
         public override Vector3 Position

@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Lidgren.Network
 {
-	/// <summary>
-	/// Base for a non-threadsafe encryption class
-	/// </summary>
-	public abstract class NetBlockEncryptionBase : NetEncryption
+    /// <summary>
+    /// Base for a non-threadsafe encryption class
+    /// </summary>
+    public abstract class NetBlockEncryptionBase : NetEncryption
 	{
 		// temporary space for one block to avoid reallocating every time
 		private byte[] m_tmp;

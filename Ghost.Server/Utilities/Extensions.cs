@@ -19,7 +19,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using static PNet.NetConverter;
+using static Ghost.Server.Utilities.NetConverter;
 
 namespace Ghost.Server.Utilities
 {
@@ -596,6 +596,313 @@ namespace Ghost.Server.Utilities
             return Quaternion.CreateFromAxisAngle(Vector3.Normalize(Vector3.Cross(source, dest)), (float)Math.Acos(dot)).QuatToEul2();
         }
     }
+    public static class NetConverter
+    {
+        public struct ByteSerializer : INetSerializable
+        {
+            public static readonly ByteSerializer Zero = new ByteSerializer(0);
+
+            public byte Value;
+
+            public int AllocSize
+            {
+                get
+                {
+                    return sizeof(byte);
+                }
+            }
+
+            public ByteSerializer(byte value)
+            {
+                Value = value;
+            }
+
+            public void OnSerialize(NetMessage message)
+            {
+                message.Write(Value);
+            }
+
+            public void OnDeserialize(NetMessage message)
+            {
+                Value = message.ReadByte();
+            }
+
+            public static implicit operator byte(ByteSerializer value)
+            {
+                return value.Value;
+            }
+            public static implicit operator ByteSerializer(byte value)
+            {
+                return new ByteSerializer(value);
+            }
+        }
+        public struct Int16Serializer : INetSerializable
+        {
+            public static readonly Int16Serializer Zero = new Int16Serializer(0);
+
+            public short Value;
+
+            public int AllocSize
+            {
+                get
+                {
+                    return sizeof(short);
+                }
+            }
+
+            public Int16Serializer(short value)
+            {
+                Value = value;
+            }
+
+            public void OnSerialize(NetMessage message)
+            {
+                message.Write(Value);
+            }
+
+            public void OnDeserialize(NetMessage message)
+            {
+                Value = message.ReadInt16();
+            }
+
+            public static implicit operator short(Int16Serializer value)
+            {
+                return value.Value;
+            }
+            public static implicit operator Int16Serializer(short value)
+            {
+                return new Int16Serializer(value);
+            }
+        }
+        public struct Int32Serializer : INetSerializable
+        {
+            public static readonly Int32Serializer Zero = new Int32Serializer(0);
+
+            public int Value;
+
+            public int AllocSize
+            {
+                get
+                {
+                    return sizeof(int);
+                }
+            }
+
+            public Int32Serializer(int value)
+            {
+                Value = value;
+            }
+
+            public void OnSerialize(NetMessage message)
+            {
+                message.Write(Value);
+            }
+
+            public void OnDeserialize(NetMessage message)
+            {
+                Value = message.ReadInt32();
+            }
+
+            public static implicit operator int(Int32Serializer value)
+            {
+                return value.Value;
+            }
+            public static implicit operator Int32Serializer(int value)
+            {
+                return new Int32Serializer(value);
+            }
+        }
+        public struct Int64Serializer : INetSerializable
+        {
+            public static readonly Int64Serializer Zero = new Int64Serializer(0);
+
+            public long Value;
+
+            public int AllocSize
+            {
+                get
+                {
+                    return sizeof(long);
+                }
+            }
+
+            public Int64Serializer(long value)
+            {
+                Value = value;
+            }
+
+            public void OnSerialize(NetMessage message)
+            {
+                message.Write(Value);
+            }
+
+            public void OnDeserialize(NetMessage message)
+            {
+                Value = message.ReadInt64();
+            }
+
+            public static implicit operator long(Int64Serializer value)
+            {
+                return value.Value;
+            }
+            public static implicit operator Int64Serializer(long value)
+            {
+                return new Int64Serializer(value);
+            }
+        }
+        public struct UInt16Serializer : INetSerializable
+        {
+            public static readonly UInt16Serializer Zero = new UInt16Serializer(0);
+
+            public ushort Value;
+
+            public int AllocSize
+            {
+                get
+                {
+                    return sizeof(ushort);
+                }
+            }
+
+            public UInt16Serializer(ushort value)
+            {
+                Value = value;
+            }
+
+            public void OnSerialize(NetMessage message)
+            {
+                message.Write(Value);
+            }
+
+            public void OnDeserialize(NetMessage message)
+            {
+                Value = message.ReadUInt16();
+            }
+
+            public static implicit operator ushort(UInt16Serializer value)
+            {
+                return value.Value;
+            }
+            public static implicit operator UInt16Serializer(ushort value)
+            {
+                return new UInt16Serializer(value);
+            }
+        }
+        public struct StringSerializer : INetSerializable
+        {
+            public static readonly StringSerializer Empty = new StringSerializer(string.Empty);
+
+            public string Value;
+
+            public int AllocSize
+            {
+                get
+                {
+                    return Value?.Length * 2 ?? 0 + 4;
+                }
+            }
+
+            public StringSerializer(string value)
+            {
+                Value = value;
+            }
+
+            public void OnSerialize(NetMessage message)
+            {
+                message.Write(Value);
+            }
+
+            public void OnDeserialize(NetMessage message)
+            {
+                Value = message.ReadString();
+            }
+
+            public static implicit operator string(StringSerializer value)
+            {
+                return value.Value;
+            }
+            public static implicit operator StringSerializer(string value)
+            {
+                return new StringSerializer(value);
+            }
+        }
+        public struct BooleanSerializer : INetSerializable
+        {
+            public bool Value;
+
+            public int AllocSize
+            {
+                get
+                {
+                    return 1;
+                }
+            }
+
+            public BooleanSerializer(bool value)
+            {
+                Value = value;
+            }
+
+            public void OnSerialize(NetMessage message)
+            {
+                message.Write(Value);
+            }
+
+            public void OnDeserialize(NetMessage message)
+            {
+                Value = message.ReadBoolean();
+            }
+
+            public static implicit operator bool(BooleanSerializer value)
+            {
+                return value.Value;
+            }
+            public static implicit operator BooleanSerializer(bool value)
+            {
+                return new BooleanSerializer(value);
+            }
+        }
+        public struct Vector3Serializer : INetSerializable
+        {
+            public Vector3 Value;
+
+            public int AllocSize
+            {
+                get
+                {
+                    return sizeof(float) * 3;
+                }
+            }
+
+            public Vector3Serializer(Vector3 value)
+            {
+                Value = value;
+            }
+
+            public void OnSerialize(NetMessage message)
+            {
+                message.Write(Value.X);
+                message.Write(Value.Y);
+                message.Write(Value.Z);
+            }
+
+            public void OnDeserialize(NetMessage message)
+            {
+                Value.X = message.ReadSingle();
+                Value.Y = message.ReadSingle();
+                Value.Z = message.ReadSingle();
+            }
+
+            public static implicit operator Vector3(Vector3Serializer value)
+            {
+                return value.Value;
+            }
+            public static implicit operator Vector3Serializer(Vector3 value)
+            {
+                return new Vector3Serializer(value);
+            }
+        }
+    }
     public static class HashCodeHelper
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -800,12 +1107,12 @@ namespace Ghost.Server.Utilities
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Error(this MapPlayer player, string msg)
         {
-            player.Player.Rpc<StringSerializer>(127, msg);
+            player.Player.Rpc<NetConverter.StringSerializer>(127, msg);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Error(this PNetR.Player player, string msg)
         {
-            player.Rpc<StringSerializer>(127, msg);
+            player.Rpc<NetConverter.StringSerializer>(127, msg);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void MuteMsg(this MapPlayer player, DB_Ban ban)
@@ -1035,9 +1342,10 @@ namespace Ghost.Server.Utilities
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void WritePosition(this NetMessage msg, Vector3 vec)
         {
-            msg.WriteLimitedSingle(vec.X, Constants.DefaultRoomBounds.Min.X, Constants.DefaultRoomBounds.Max.X, 16);
-            msg.WriteLimitedSingle(vec.Y, Constants.DefaultRoomBounds.Min.Y, Constants.DefaultRoomBounds.Max.Y, 16);
-            msg.WriteLimitedSingle(vec.Z, Constants.DefaultRoomBounds.Min.Z, Constants.DefaultRoomBounds.Max.Z, 16);
+            var pos = Vector3.Clamp(vec, Constants.DefaultRoomBounds.Min, Constants.DefaultRoomBounds.Max);
+            msg.WriteRangedSingle(pos.X, Constants.DefaultRoomBounds.Min.X, Constants.DefaultRoomBounds.Max.X, 16);
+            msg.WriteRangedSingle(pos.Y, Constants.DefaultRoomBounds.Min.Y, Constants.DefaultRoomBounds.Max.Y, 16);
+            msg.WriteRangedSingle(pos.Z, Constants.DefaultRoomBounds.Min.Z, Constants.DefaultRoomBounds.Max.Z, 16);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 ReadRotation(this NetMessage msg, ref bool full)
@@ -1059,14 +1367,15 @@ namespace Ghost.Server.Utilities
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void WriteRotation(this NetMessage msg, Vector3 vec, bool full = false)
         {
+            var rot = Vector3.Clamp(vec, Constants.DefaultRotationBounds.Min, Constants.DefaultRotationBounds.Max);
             if (full)
             {
-                msg.WriteLimitedSingle(vec.X, -6.28318548f, 6.28318548f, 8);
-                msg.WriteLimitedSingle(vec.Y, -6.28318548f, 6.28318548f, 8);
-                msg.WriteLimitedSingle(vec.Z, -6.28318548f, 6.28318548f, 8);
+                msg.WriteRangedSingle(rot.X, Constants.DefaultRotationBounds.Min.X, Constants.DefaultRotationBounds.Max.X, 8);
+                msg.WriteRangedSingle(rot.Y, Constants.DefaultRotationBounds.Min.Y, Constants.DefaultRotationBounds.Max.Y, 8);
+                msg.WriteRangedSingle(rot.Z, Constants.DefaultRotationBounds.Min.Z, Constants.DefaultRotationBounds.Max.Z, 8);
             }
             else
-                msg.WriteLimitedSingle(vec.Y, -6.28318548f, 6.28318548f, 8);
+                msg.WriteRangedSingle(rot.Y, Constants.DefaultRotationBounds.Min.Y, Constants.DefaultRotationBounds.Max.Y, 8);
         }
     }
     public static class QuaternionExtensions

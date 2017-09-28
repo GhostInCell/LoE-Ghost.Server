@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Lidgren.Network
+﻿namespace Lidgren.Network
 {
-	internal sealed class NetReliableOrderedReceiver : NetReceiverChannelBase
+    internal sealed class NetReliableOrderedReceiver : NetReceiverChannelBase
 	{
 		private int m_windowStart;
 		private int m_windowSize;
@@ -66,8 +64,9 @@ namespace Lidgren.Network
 
 			if (relate < 0)
 			{
-				m_peer.LogVerbose("Received message #" + message.m_sequenceNumber + " DROPPING DUPLICATE");
 				// duplicate
+				m_connection.m_statistics.MessageDropped();
+				m_peer.LogVerbose("Received message #" + message.m_sequenceNumber + " DROPPING DUPLICATE");
 				return;
 			}
 
@@ -75,6 +74,7 @@ namespace Lidgren.Network
 			if (relate > m_windowSize)
 			{
 				// too early message!
+				m_connection.m_statistics.MessageDropped();
 				m_peer.LogDebug("Received " + message + " TOO EARLY! Expected " + m_windowStart);
 				return;
 			}

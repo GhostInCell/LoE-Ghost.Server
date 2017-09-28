@@ -16,15 +16,17 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRA
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-using System;
-using System.Net;
+
+#if !__NOIPENDPOINT__
+using NetEndPoint = System.Net.IPEndPoint;
+#endif
 
 namespace Lidgren.Network
 {
-	/// <summary>
-	/// Specialized version of NetPeer used for a "client" connection. It does not accept any incoming connections and maintains a ServerConnection property
-	/// </summary>
-	public class NetClient : NetPeer
+    /// <summary>
+    /// Specialized version of NetPeer used for a "client" connection. It does not accept any incoming connections and maintains a ServerConnection property
+    /// </summary>
+    public class NetClient : NetPeer
 	{
 		/// <summary>
 		/// Gets the connection to the server, if any
@@ -80,7 +82,7 @@ namespace Lidgren.Network
 		/// <param name="remoteEndPoint">The remote endpoint to connect to</param>
 		/// <param name="hailMessage">The hail message to pass</param>
 		/// <returns>server connection, or null if already connected</returns>
-		public override NetConnection Connect(IPEndPoint remoteEndPoint, NetOutgoingMessage hailMessage)
+		public override NetConnection Connect(NetEndPoint remoteEndPoint, NetOutgoingMessage hailMessage)
 		{
 			lock (m_connections)
 			{
@@ -153,6 +155,7 @@ namespace Lidgren.Network
 			if (serverConnection == null)
 			{
 				LogWarning("Cannot send message, no server connection!");
+				Recycle(msg);
 				return NetSendResult.FailedNotConnected;
 			}
 

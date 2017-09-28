@@ -21,6 +21,17 @@ namespace PNetR
         }
 
         public void Rpc(byte rpcId, 
+            INetSerializable arg0)
+        {
+            int size = 0;
+            size += arg0.AllocSize;
+
+            var msg = StartMessage(Room, rpcId, ReliabilityMode.Ordered, size);
+            arg0.OnSerialize(msg);
+            SendMessage(msg, ReliabilityMode.Ordered);
+        }
+
+        public void Rpc(byte rpcId, 
             INetSerializable arg0, 
             INetSerializable arg1)
         {
@@ -112,6 +123,15 @@ namespace PNetR
             SendMessage(msg, ReliabilityMode.Ordered);
         }
 
+        public void Rpc(byte rpcId, params INetSerializable[] args)
+        {
+            int size = 0;
+            args.AllocSize(ref size);
+            var msg = StartMessage(Room, rpcId, ReliabilityMode.Ordered, size);
+            INetSerializableExtensions.WriteParams(ref msg, args);
+            SendMessage(msg, ReliabilityMode.Ordered);
+        }
+
         public void Rpc(byte rpcId, params object[] args)
         {
             var size = 0;
@@ -128,15 +148,6 @@ namespace PNetR
             {
                 Room.Serializer.Serialize(arg, msg);
             }
-            SendMessage(msg, ReliabilityMode.Ordered);
-        }
-
-        public void Rpc(byte rpcId, params INetSerializable[] args)
-        {
-            int size = 0;
-            args.AllocSize(ref size);
-            var msg = StartMessage(Room, rpcId, ReliabilityMode.Ordered, size);
-            INetSerializableExtensions.WriteParams(ref msg, args);
             SendMessage(msg, ReliabilityMode.Ordered);
         }
 

@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Threading;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Lidgren.Network
 {
-	internal class ReceivedFragmentGroup
+    internal class ReceivedFragmentGroup
 	{
 		//public float LastReceived;
 		public byte[] Data;
@@ -83,18 +83,18 @@ namespace Lidgren.Network
 		{
 			VerifyNetworkThread();
 
-            //
-            // read fragmentation header and combine fragments
-            //
-            int ptr = NetFragmentationHelper.ReadHeader(
-im.m_data, 0,
-out var group,
-out var totalBits,
-out var chunkByteSize,
-out var chunkNumber
-);
+			//
+			// read fragmentation header and combine fragments
+			//
+			int ptr = NetFragmentationHelper.ReadHeader(
+				im.m_data, 0,
+				out var group,
+				out var totalBits,
+				out var chunkByteSize,
+				out var chunkNumber
+			);
 
-            NetException.Assert(im.LengthBytes > ptr);
+			NetException.Assert(im.LengthBytes > ptr);
 
 			NetException.Assert(group > 0);
 			NetException.Assert(totalBits > 0);
@@ -113,21 +113,21 @@ out var chunkNumber
 				return;
 			}
 
-            if (!m_receivedFragmentGroups.TryGetValue(im.SenderConnection, out var groups))
-            {
-                groups = new Dictionary<int, ReceivedFragmentGroup>();
-                m_receivedFragmentGroups[im.SenderConnection] = groups;
-            }
+			if (!m_receivedFragmentGroups.TryGetValue(im.SenderConnection, out var groups))
+			{
+				groups = new Dictionary<int, ReceivedFragmentGroup>();
+				m_receivedFragmentGroups[im.SenderConnection] = groups;
+			}
 
-            if (!groups.TryGetValue(group, out var info))
-            {
-                info = new ReceivedFragmentGroup();
-                info.Data = new byte[totalBytes];
-                info.ReceivedChunks = new NetBitVector(totalNumChunks);
-                groups[group] = info;
-            }
+			if (!groups.TryGetValue(group, out var info))
+			{
+				info = new ReceivedFragmentGroup();
+				info.Data = new byte[totalBytes];
+				info.ReceivedChunks = new NetBitVector(totalNumChunks);
+				groups[group] = info;
+			}
 
-            info.ReceivedChunks[chunkNumber] = true;
+			info.ReceivedChunks[chunkNumber] = true;
 			//info.LastReceived = (float)NetTime.Now;
 
 			// copy to data

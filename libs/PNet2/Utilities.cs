@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Numerics;
 #if LIDGREN
 using Lidgren.Network;
 #endif
@@ -31,7 +30,7 @@ namespace PNet
                 guid = new Guid(str);
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 guid = new Guid();
                 return false;
@@ -58,6 +57,97 @@ namespace PNet
 #else
         public static double Now { get { throw new NotImplementedException(); } }
 #endif
+    }
+
+    public static class EventUtils
+    {
+        /// <summary>
+        /// run the specified eventHandler if it is not null.
+        /// Extension methods allow running methods on null objects
+        /// </summary>
+        /// <param name="eventHandler"></param>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public static void Raise(this EventHandler eventHandler,
+            object sender, EventArgs e)
+        {
+            eventHandler?.Invoke(sender, e);
+        }
+
+        /// <summary>
+        /// run the specified eventHandler if it is not null.
+        /// Extension methods allow running methods on null objects
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="eventHandler"></param>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public static void Raise<T>(this EventHandler<T> eventHandler,
+            object sender, T e) where T : EventArgs
+        {
+            eventHandler?.Invoke(sender, e);
+        }
+
+        /// <summary>
+        /// run the specified eventHandler if it is not null.
+        /// Extension methods allow running methods on null objects
+        /// </summary>
+        /// <param name="eventHandler"></param>
+        public static void Raise(this Action eventHandler)
+        {
+            eventHandler?.Invoke();
+        }
+        public static void TryRaise(this Action eventHandler, ILogger logger)
+        {
+            try
+            {
+                eventHandler?.Invoke();
+            }
+            catch (Exception e)
+            {
+                if (logger != null)
+                    logger.Exception(e, "");
+            }
+        }
+
+        /// <summary>
+        /// run the specified eventHandler if it is not null.
+        /// Extension methods allow running methods on null objects
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="eventHandler"></param>
+        /// <param name="arg"></param>
+        public static void Raise<T>(this Action<T> eventHandler, T arg)
+        {
+            eventHandler?.Invoke(arg);
+        }
+
+        public static void TryRaise<T>(this Action<T> eventHandler, T arg, ILogger logger)
+        {
+            try
+            {
+                eventHandler?.Invoke(arg);
+            }
+            catch (Exception e)
+            {
+                if (logger != null)
+                    logger.Exception(e, "");
+            }
+        }
+
+        /// <summary>
+        /// run the specified eventHandler if it is not null.
+        /// Extension methods allow running methods on null objects
+        /// </summary>
+        /// <param name="eventHandler"></param>
+        /// <param name="arg1"></param>
+        /// <param name="arg2"></param>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        public static void Raise<T1, T2>(this Action<T1, T2> eventHandler, T1 arg1, T2 arg2)
+        {
+            eventHandler?.Invoke(arg1, arg2);
+        }
     }
 
     public static class AttributeExtensions
@@ -119,314 +209,6 @@ namespace PNet
             foreach (var item in enumerable)
             {
                 function.Invoke(item);
-            }
-        }
-    }
-
-    public static class NetConverter
-    {
-        public struct ByteSerializer : INetSerializable
-        {
-            public static readonly ByteSerializer Zero = new ByteSerializer(0);
-
-            public byte Value;
-
-            public int AllocSize
-            {
-                get
-                {
-                    return sizeof(byte);
-                }
-            }
-
-            public ByteSerializer(byte value)
-            {
-                Value = value;
-            }
-
-            public void OnSerialize(NetMessage message)
-            {
-                message.Write(Value);
-            }
-
-            public void OnDeserialize(NetMessage message)
-            {
-                Value = message.ReadByte();
-            }
-
-            public static implicit operator byte(ByteSerializer value)
-            {
-                return value.Value;
-            }
-            public static implicit operator ByteSerializer(byte value)
-            {
-                return new ByteSerializer(value);
-            }
-        }
-        public struct Int16Serializer : INetSerializable
-        {
-            public static readonly Int16Serializer Zero = new Int16Serializer(0);
-
-            public short Value;
-
-            public int AllocSize
-            {
-                get
-                {
-                    return sizeof(short);
-                }
-            }
-
-            public Int16Serializer(short value)
-            {
-                Value = value;
-            }
-
-            public void OnSerialize(NetMessage message)
-            {
-                message.Write(Value);
-            }
-
-            public void OnDeserialize(NetMessage message)
-            {
-                Value = message.ReadInt16();
-            }
-
-            public static implicit operator short(Int16Serializer value)
-            {
-                return value.Value;
-            }
-            public static implicit operator Int16Serializer(short value)
-            {
-                return new Int16Serializer(value);
-            }
-        }
-        public struct Int32Serializer : INetSerializable
-        {
-            public static readonly Int32Serializer Zero = new Int32Serializer(0);
-
-            public int Value;
-
-            public int AllocSize
-            {
-                get
-                {
-                    return sizeof(int);
-                }
-            }
-
-            public Int32Serializer(int value)
-            {
-                Value = value;
-            }
-
-            public void OnSerialize(NetMessage message)
-            {
-                message.Write(Value);
-            }
-
-            public void OnDeserialize(NetMessage message)
-            {
-                Value = message.ReadInt32();
-            }
-
-            public static implicit operator int(Int32Serializer value)
-            {
-                return value.Value;
-            }
-            public static implicit operator Int32Serializer(int value)
-            {
-                return new Int32Serializer(value);
-            }
-        }
-        public struct Int64Serializer : INetSerializable
-        {
-            public static readonly Int64Serializer Zero = new Int64Serializer(0);
-
-            public long Value;
-
-            public int AllocSize
-            {
-                get
-                {
-                    return sizeof(long);
-                }
-            }
-
-            public Int64Serializer(long value)
-            {
-                Value = value;
-            }
-
-            public void OnSerialize(NetMessage message)
-            {
-                message.Write(Value);
-            }
-
-            public void OnDeserialize(NetMessage message)
-            {
-                Value = message.ReadInt64();
-            }
-
-            public static implicit operator long(Int64Serializer value)
-            {
-                return value.Value;
-            }
-            public static implicit operator Int64Serializer(long value)
-            {
-                return new Int64Serializer(value);
-            }
-        }
-        public struct UInt16Serializer : INetSerializable
-        {
-            public static readonly UInt16Serializer Zero = new UInt16Serializer(0);
-
-            public ushort Value;
-
-            public int AllocSize
-            {
-                get
-                {
-                    return sizeof(ushort);
-                }
-            }
-
-            public UInt16Serializer(ushort value)
-            {
-                Value = value;
-            }
-
-            public void OnSerialize(NetMessage message)
-            {
-                message.Write(Value);
-            }
-
-            public void OnDeserialize(NetMessage message)
-            {
-                Value = message.ReadUInt16();
-            }
-
-            public static implicit operator ushort(UInt16Serializer value)
-            {
-                return value.Value;
-            }
-            public static implicit operator UInt16Serializer(ushort value)
-            {
-                return new UInt16Serializer(value);
-            }
-        }
-        public struct StringSerializer : INetSerializable
-        {
-            public static readonly StringSerializer Empty = new StringSerializer(string.Empty);
-
-            public string Value;
-
-            public int AllocSize
-            {
-                get
-                {
-                    return Value?.Length * 2 ?? 0 + 4;
-                }
-            }
-
-            public StringSerializer(string value)
-            {
-                Value = value;
-            }
-
-            public void OnSerialize(NetMessage message)
-            {
-                message.Write(Value);
-            }
-
-            public void OnDeserialize(NetMessage message)
-            {
-                Value = message.ReadString();
-            }
-
-            public static implicit operator string(StringSerializer value)
-            {
-                return value.Value;
-            }
-            public static implicit operator StringSerializer(string value)
-            {
-                return new StringSerializer(value);
-            }
-        }
-        public struct BooleanSerializer : INetSerializable
-        {
-            public bool Value;
-
-            public int AllocSize
-            {
-                get
-                {
-                    return 1;
-                }
-            }
-
-            public BooleanSerializer(bool value)
-            {
-                Value = value;
-            }
-
-            public void OnSerialize(NetMessage message)
-            {
-                message.Write(Value);
-            }
-
-            public void OnDeserialize(NetMessage message)
-            {
-                Value = message.ReadBoolean();
-            }
-
-            public static implicit operator bool(BooleanSerializer value)
-            {
-                return value.Value;
-            }
-            public static implicit operator BooleanSerializer(bool value)
-            {
-                return new BooleanSerializer(value);
-            }
-        }
-        public struct Vector3Serializer : INetSerializable
-        {
-            public Vector3 Value;
-
-            public int AllocSize
-            {
-                get
-                {
-                    return sizeof(float) * 3;
-                }
-            }
-
-            public Vector3Serializer(Vector3 value)
-            {
-                Value = value;
-            }
-
-            public void OnSerialize(NetMessage message)
-            {
-                message.Write(Value.X);
-                message.Write(Value.Y);
-                message.Write(Value.Z);
-            }
-
-            public void OnDeserialize(NetMessage message)
-            {
-                Value.X = message.ReadSingle();
-                Value.Y = message.ReadSingle();
-                Value.Z = message.ReadSingle();
-            }
-
-            public static implicit operator Vector3(Vector3Serializer value)
-            {
-                return value.Value;
-            }
-            public static implicit operator Vector3Serializer(Vector3 value)
-            {
-                return new Vector3Serializer(value);
             }
         }
     }

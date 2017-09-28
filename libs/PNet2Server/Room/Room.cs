@@ -1,8 +1,8 @@
-﻿using System;
+﻿using PNet;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using PNet;
 
 namespace PNetS
 {
@@ -13,9 +13,12 @@ namespace PNetS
         public readonly IPEndPoint Address;
         private int _playerCount;
 
-        internal bool Running = true;
+        public bool Running = true;
 
         private readonly Server _server;
+
+        public object Connection { get; set; }
+
         internal Room(Server server, string roomId, Guid guid, IPEndPoint address)
         {
             Guid = guid;
@@ -76,9 +79,9 @@ namespace PNetS
                         @new._playerCount++;
                 }
             }
-            catch (NullReferenceException)
+            catch (NullReferenceException ex)
             {
-                throw new Exception("MovePlayerCount nullref: " + old + @new + server);
+                throw new Exception($"MovePlayerCount nullref: {old}|{@new}|{server}");
             }
         }
 
@@ -86,9 +89,7 @@ namespace PNetS
         {
             var proc = _rpcProcessors[rpcId];
             if (proc == null)
-            {
                 Debug.LogWarning($"Unhandled room rpc {rpcId}");
-            }
             else
                 proc(msg);
         }
@@ -123,21 +124,18 @@ namespace PNetS
 
         internal void SendMessage(NetMessage msg, ReliabilityMode mode)
         {
-            ImplementationSendMessage(msg, mode);
+            _server.SendToRoom(this, msg, mode);
         }
-        partial void ImplementationSendMessage(NetMessage msg, ReliabilityMode mode);
 
         internal void SendMessageToOthers(NetMessage msg, ReliabilityMode mode)
         {
-            ImplSendMessageToOthers(msg, mode);
+            _server.SendToOtherRooms(this, msg, mode);
         }
-        partial void ImplSendMessageToOthers(NetMessage msg, ReliabilityMode mode);
 
         internal void SendToAll(NetMessage msg, ReliabilityMode mode)
         {
-            ImplSendToAll(msg, mode);
+            _server.SendToAllRooms(msg, mode);
         }
-        partial void ImplSendToAll(NetMessage msg, ReliabilityMode mode);
 
         private IRoomProxy _proxyObject;
 
@@ -146,10 +144,7 @@ namespace PNetS
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T Proxy<T>()
-        {
-            return (T)_proxyObject;
-        }
+        public T Proxy<T>() => (T)_proxyObject;
         /// <summary>
         /// set the proxy object to use when returning Proxy`T().
         /// This is only useful if you're using something like Castle.Windsor's dynamic proxy generation.
@@ -162,10 +157,7 @@ namespace PNetS
                 proxy.Room = this;
         }
 
-        public override string ToString()
-        {
-            return "{Room " + Guid + ":" + RoomId + "}";
-        }
+        public override string ToString() => $"{{Room {Guid}:{RoomId}}}";
 
         /// <summary>
         /// User defined auth data passed during start

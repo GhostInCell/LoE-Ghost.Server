@@ -102,27 +102,39 @@ namespace Lidgren.Network
 		/// </summary>
 		public long StorageBytesAllocated { get { return m_bytesAllocated; } }
 
+		/// <summary>
+		/// Gets the number of bytes in the recycled pool
+		/// </summary>
+		public int BytesInRecyclePool
+		{
+			get
+			{
+				lock (m_peer.m_storagePool)
+					return m_peer.m_storagePoolBytes;
+			}
+		}
+
         [Conditional("DEBUG"), Conditional("USE_RELEASE_STATISTICS")]
         internal void PacketSent(int numBytes, int numMessages)
-        {
-            m_sentPackets++;
-            m_sentBytes += numBytes;
-            m_sentMessages += numMessages;
-        }
+		{
+			m_sentPackets++;
+			m_sentBytes += numBytes;
+			m_sentMessages += numMessages;
+		}
 
         [Conditional("DEBUG"), Conditional("USE_RELEASE_STATISTICS")]
         internal void PacketReceived(int numBytes, int numMessages, int numFragments)
-        {
-            m_receivedPackets++;
-            m_receivedBytes += numBytes;
-            m_receivedMessages += numMessages;
-            m_receivedFragments += numFragments;
-        }
+		{
+			m_receivedPackets++;
+			m_receivedBytes += numBytes;
+			m_receivedMessages += numMessages;
+			m_receivedFragments += numFragments;
+		}
 
-        /// <summary>
-        /// Returns a string that represents this object
-        /// </summary>
-        public override string ToString()
+		/// <summary>
+		/// Returns a string that represents this object
+		/// </summary>
+		public override string ToString()
 		{
 			StringBuilder bdr = new StringBuilder();
 			bdr.AppendLine(m_peer.ConnectionsCount.ToString() + " connections");
@@ -134,6 +146,8 @@ namespace Lidgren.Network
 			bdr.AppendLine("Received (n/a) bytes in (n/a) messages in (n/a) packets");
 #endif
 			bdr.AppendLine("Storage allocated " + m_bytesAllocated + " bytes");
+			if (m_peer.m_storagePool != null)
+				bdr.AppendLine("Recycled pool " + m_peer.m_storagePoolBytes + " bytes (" + m_peer.m_storageSlotsUsedCount + " entries)");
 			return bdr.ToString();
 		}
 	}

@@ -8,7 +8,7 @@ using Ghost.Server.Utilities.Abstracts;
 using PNetR;
 using System;
 using System.Numerics;
-using static PNet.NetConverter;
+using static Ghost.Server.Utilities.NetConverter;
 
 namespace Ghost.Server.Core.Objects
 {
@@ -50,6 +50,7 @@ namespace Ghost.Server.Core.Objects
         {
             _player = player;
             OnSpawn += WO_Player_OnSpawn;
+            OnUpdate += WO_Player_OnUpdate;
             OnKilled += WO_Player_OnKilled;
             OnDestroy += WO_Player_OnDestroy;
             OnDespawn += WO_Player_OnDespawn;
@@ -92,6 +93,11 @@ namespace Ghost.Server.Core.Objects
                 _manager.SetPosition(this);
             _player.Data.Position = _movement.Position;
             _player.Data.Rotation = _movement.Rotation;
+            _server.Room.RequestAllRoomViews(_player.Player);
+        }
+        private void WO_Player_OnUpdate(TimeSpan obj)
+        {
+            _server.Room.RequestUpdatedRoomViews(_player.Player);
         }
         private void WO_Player_OnKilled(CreatureObject obj)
         {

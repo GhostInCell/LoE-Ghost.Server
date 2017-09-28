@@ -1,6 +1,9 @@
 ﻿using System;
-using System.Net;
 using System.Threading;
+
+#if !__NOIPENDPOINT__
+using NetEndPoint = System.Net.IPEndPoint;
+#endif
 
 namespace Lidgren.Network
 {
@@ -195,12 +198,12 @@ namespace Lidgren.Network
 		{
 			if (m_localHailMessage != null)
 			{
-				byte[] hi = m_localHailMessage.m_data;
+				var hi = m_localHailMessage.Data;
 				if (hi != null && hi.Length >= m_localHailMessage.LengthBytes)
 				{
 					if (om.LengthBytes + m_localHailMessage.LengthBytes > m_peerConfiguration.m_maximumTransmissionUnit - 10)
 						m_peer.ThrowOrLog("Hail message too large; can maximally be " + (m_peerConfiguration.m_maximumTransmissionUnit - 10 - om.LengthBytes));
-					om.Write(m_localHailMessage.m_data, 0, m_localHailMessage.LengthBytes);
+					om.Write(m_localHailMessage.Data, 0, m_localHailMessage.LengthBytes);
 				}
 			}
 		}
@@ -278,121 +281,121 @@ namespace Lidgren.Network
 		{
 			m_peer.VerifyNetworkThread();
 
-            switch (tp)
-            {
-                case NetMessageType.Connect:
-                    if (m_status == NetConnectionStatus.ReceivedInitiation)
-                    {
-                        // Whee! Server full has already been checked
-                        bool ok = ValidateHandshakeData(ptr, payloadLength, out var hail);
-                        if (ok)
-                        {
-                            if (hail != null)
-                            {
-                                m_remoteHailMessage = m_peer.CreateIncomingMessage(NetIncomingMessageType.Data, hail);
-                                m_remoteHailMessage.LengthBits = (hail.Length * 8);
-                            }
-                            else
-                            {
-                                m_remoteHailMessage = null;
-                            }
+			switch (tp)
+			{
+				case NetMessageType.Connect:
+					if (m_status == NetConnectionStatus.ReceivedInitiation)
+					{
+						// Whee! Server full has already been checked
+						bool ok = ValidateHandshakeData(ptr, payloadLength, out var hail);
+						if (ok)
+						{
+							if (hail != null)
+							{
+								m_remoteHailMessage = m_peer.CreateIncomingMessage(NetIncomingMessageType.Data, hail);
+								m_remoteHailMessage.LengthBits = (hail.Length * 8);
+							}
+							else
+							{
+								m_remoteHailMessage = null; 
+							}
 
-                            if (m_peerConfiguration.IsMessageTypeEnabled(NetIncomingMessageType.ConnectionApproval))
-                            {
-                                // ok, let's not add connection just yet
-                                NetIncomingMessage appMsg = m_peer.CreateIncomingMessage(NetIncomingMessageType.ConnectionApproval, (m_remoteHailMessage == null ? 0 : m_remoteHailMessage.LengthBytes));
-                                appMsg.m_receiveTime = now;
-                                appMsg.m_senderConnection = this;
-                                appMsg.m_senderEndPoint = m_remoteEndPoint;
-                                if (m_remoteHailMessage != null)
-                                    appMsg.Write(m_remoteHailMessage.m_data, 0, m_remoteHailMessage.LengthBytes);
-                                SetStatus(NetConnectionStatus.RespondedAwaitingApproval, "Awaiting approval");
-                                m_peer.ReleaseMessage(appMsg);
-                                return;
-                            }
+							if (m_peerConfiguration.IsMessageTypeEnabled(NetIncomingMessageType.ConnectionApproval))
+							{
+								// ok, let's not add connection just yet
+								NetIncomingMessage appMsg = m_peer.CreateIncomingMessage(NetIncomingMessageType.ConnectionApproval, (m_remoteHailMessage == null ? 0 : m_remoteHailMessage.LengthBytes));
+								appMsg.m_receiveTime = now;
+								appMsg.m_senderConnection = this;
+								appMsg.m_senderEndPoint = m_remoteEndPoint;
+								if (m_remoteHailMessage != null)
+									appMsg.Write(m_remoteHailMessage.m_data, 0, m_remoteHailMessage.LengthBytes);
+								SetStatus(NetConnectionStatus.RespondedAwaitingApproval, "Awaiting approval");
+								m_peer.ReleaseMessage(appMsg);
+								return;
+							}
 
-                            SendConnectResponse((float)now, true);
-                        }
-                        return;
-                    }
-                    if (m_status == NetConnectionStatus.RespondedAwaitingApproval)
-                    {
-                        m_peer.LogWarning("Ignoring multiple Connect() most likely due to a delayed Approval");
-                        return;
-                    }
-                    if (m_status == NetConnectionStatus.RespondedConnect)
-                    {
-                        // our ConnectResponse must have been lost
-                        SendConnectResponse((float)now, true);
-                        return;
-                    }
-                    m_peer.LogDebug("Unhandled Connect: " + tp + ", status is " + m_status + " length: " + payloadLength);
-                    break;
-                case NetMessageType.ConnectResponse:
-                    HandleConnectResponse(now, tp, ptr, payloadLength);
-                    break;
+							SendConnectResponse((float)now, true);
+						}
+						return;
+					}
+					if (m_status == NetConnectionStatus.RespondedAwaitingApproval)
+					{
+						m_peer.LogWarning("Ignoring multiple Connect() most likely due to a delayed Approval");
+						return;
+					}
+					if (m_status == NetConnectionStatus.RespondedConnect)
+					{
+						// our ConnectResponse must have been lost
+						SendConnectResponse((float)now, true);
+						return;
+					}
+					m_peer.LogDebug("Unhandled Connect: " + tp + ", status is " + m_status + " length: " + payloadLength);
+					break;
+				case NetMessageType.ConnectResponse:
+					HandleConnectResponse(now, tp, ptr, payloadLength);
+					break;
 
-                case NetMessageType.ConnectionEstablished:
-                    switch (m_status)
-                    {
-                        case NetConnectionStatus.Connected:
-                            // ok...
-                            break;
-                        case NetConnectionStatus.Disconnected:
-                        case NetConnectionStatus.Disconnecting:
-                        case NetConnectionStatus.None:
-                            // too bad, almost made it
-                            break;
-                        case NetConnectionStatus.ReceivedInitiation:
-                            // uh, a little premature... ignore
-                            break;
-                        case NetConnectionStatus.InitiatedConnect:
-                            // weird, should have been RespondedConnect...
-                            break;
-                        case NetConnectionStatus.RespondedConnect:
-                            // awesome
+				case NetMessageType.ConnectionEstablished:
+					switch (m_status)
+					{
+						case NetConnectionStatus.Connected:
+							// ok...
+							break;
+						case NetConnectionStatus.Disconnected:
+						case NetConnectionStatus.Disconnecting:
+						case NetConnectionStatus.None:
+							// too bad, almost made it
+							break;
+						case NetConnectionStatus.ReceivedInitiation:
+							// uh, a little premature... ignore
+							break;
+						case NetConnectionStatus.InitiatedConnect:
+							// weird, should have been RespondedConnect...
+							break;
+						case NetConnectionStatus.RespondedConnect:
+							// awesome
+				
+							NetIncomingMessage msg = m_peer.SetupReadHelperMessage(ptr, payloadLength);
+							InitializeRemoteTimeOffset(msg.ReadSingle());
 
-                            NetIncomingMessage msg = m_peer.SetupReadHelperMessage(ptr, payloadLength);
-                            InitializeRemoteTimeOffset(msg.ReadSingle());
+							m_peer.AcceptConnection(this);
+							InitializePing();
+							SetStatus(NetConnectionStatus.Connected, "Connected to " + NetUtility.ToHexString(m_remoteUniqueIdentifier));
+							return;
+					}
+					break;
 
-                            m_peer.AcceptConnection(this);
-                            InitializePing();
-                            SetStatus(NetConnectionStatus.Connected, "Connected to " + NetUtility.ToHexString(m_remoteUniqueIdentifier));
-                            return;
-                    }
-                    break;
+				case NetMessageType.Disconnect:
+					// ouch
+					string reason = "Ouch";
+					try
+					{
+						NetIncomingMessage inc = m_peer.SetupReadHelperMessage(ptr, payloadLength);
+						reason = inc.ReadString();
+					}
+					catch
+					{
+					}
+					ExecuteDisconnect(reason, false);
+					break;
 
-                case NetMessageType.Disconnect:
-                    // ouch
-                    string reason = "Ouch";
-                    try
-                    {
-                        NetIncomingMessage inc = m_peer.SetupReadHelperMessage(ptr, payloadLength);
-                        reason = inc.ReadString();
-                    }
-                    catch
-                    {
-                    }
-                    ExecuteDisconnect(reason, false);
-                    break;
+				case NetMessageType.Discovery:
+					m_peer.HandleIncomingDiscoveryRequest(now, m_remoteEndPoint, ptr, payloadLength);
+					return;
 
-                case NetMessageType.Discovery:
-                    m_peer.HandleIncomingDiscoveryRequest(now, m_remoteEndPoint, ptr, payloadLength);
-                    return;
+				case NetMessageType.DiscoveryResponse:
+					m_peer.HandleIncomingDiscoveryResponse(now, m_remoteEndPoint, ptr, payloadLength);
+					return;
 
-                case NetMessageType.DiscoveryResponse:
-                    m_peer.HandleIncomingDiscoveryResponse(now, m_remoteEndPoint, ptr, payloadLength);
-                    return;
+				case NetMessageType.Ping:
+					// silently ignore
+					return;
 
-                case NetMessageType.Ping:
-                    // silently ignore
-                    return;
-
-                default:
-                    m_peer.LogDebug("Unhandled type during handshake: " + tp + " length: " + payloadLength);
-                    break;
-            }
-        }
+				default:
+					m_peer.LogDebug("Unhandled type during handshake: " + tp + " length: " + payloadLength);
+					break;
+			}
+		}
 
 		private void HandleConnectResponse(double now, NetMessageType tp, int ptr, int payloadLength)
 		{

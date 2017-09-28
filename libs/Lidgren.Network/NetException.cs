@@ -18,14 +18,13 @@ USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using System;
 using System.Diagnostics;
-using System.Runtime.Serialization;
 
 namespace Lidgren.Network
 {
-	/// <summary>
-	/// Exception thrown in the Lidgren Network Library
-	/// </summary>
-	public sealed class NetException : Exception
+    /// <summary>
+    /// Exception thrown in the Lidgren Network Library
+    /// </summary>
+    public sealed class NetException : Exception
 	{
 		/// <summary>
 		/// NetException constructor

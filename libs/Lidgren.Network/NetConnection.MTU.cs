@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Lidgren.Network
+﻿namespace Lidgren.Network
 {
-	public partial class NetConnection  
+    public partial class NetConnection  
 	{
 		private enum ExpandMTUStatus
 		{
@@ -152,8 +150,8 @@ namespace Lidgren.Network
 			om.Write(size);
 			om.m_messageType = NetMessageType.ExpandMTUSuccess;
 			int len = om.Encode(m_peer.m_sendBuffer, 0, 0);
-            m_peer.SendPacket(len, m_remoteEndPoint, 1, out var connectionReset);
-            m_peer.Recycle(om);
+			m_peer.SendPacket(len, m_remoteEndPoint, 1, out var connectionReset);
+			m_peer.Recycle(om);
 
 			//m_peer.LogDebug("Received MTU expand request for " + size + " bytes");
 

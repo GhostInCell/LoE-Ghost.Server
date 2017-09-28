@@ -17,15 +17,14 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR TH
 USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 */
-using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Lidgren.Network
 {
-	/// <summary>
-	/// The type of a NetIncomingMessage
-	/// </summary>
-	[SuppressMessage("Microsoft.Design", "CA1027:MarkEnumsWithFlags")]
+    /// <summary>
+    /// The type of a NetIncomingMessage
+    /// </summary>
+    [SuppressMessage("Microsoft.Design", "CA1027:MarkEnumsWithFlags")]
 	public enum NetIncomingMessageType
 	{
 		//

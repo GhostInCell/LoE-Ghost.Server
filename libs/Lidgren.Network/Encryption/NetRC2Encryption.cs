@@ -1,10 +1,8 @@
-using System;
-using System.IO;
 using System.Security.Cryptography;
 
 namespace Lidgren.Network
 {
-	public class NetRC2Encryption : NetCryptoProviderBase
+    public class NetRC2Encryption : NetCryptoProviderBase
 	{
 		public NetRC2Encryption(NetPeer peer)
 			: base(peer, new RC2CryptoServiceProvider())

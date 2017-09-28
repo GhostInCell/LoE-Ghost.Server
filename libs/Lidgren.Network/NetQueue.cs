@@ -18,8 +18,8 @@ USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 */
 using System;
-using System.Diagnostics;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 
 //
@@ -28,10 +28,10 @@ using System.Threading;
 
 namespace Lidgren.Network
 {
-	/// <summary>
-	/// Thread safe (blocking) expanding queue with TryDequeue() and EnqueueFirst()
-	/// </summary>
-	[DebuggerDisplay("Count={Count} Capacity={Capacity}")]
+    /// <summary>
+    /// Thread safe (blocking) expanding queue with TryDequeue() and EnqueueFirst()
+    /// </summary>
+    [DebuggerDisplay("Count={Count} Capacity={Capacity}")]
 	public sealed class NetQueue<T>
 	{
 		// Example:
@@ -56,12 +56,29 @@ namespace Lidgren.Network
 		/// <summary>
 		/// Gets the number of items in the queue
 		/// </summary>
-		public int Count { get { return m_size; } }
+		public int Count {
+			get
+			{
+				m_lock.EnterReadLock();
+				int count = m_size;
+				m_lock.ExitReadLock();
+				return count;
+			}
+		}
 
 		/// <summary>
 		/// Gets the current capacity for the queue
 		/// </summary>
-		public int Capacity { get { return m_items.Length; } }
+		public int Capacity
+		{
+			get
+			{
+				m_lock.EnterReadLock();
+				int capacity = m_items.Length;
+				m_lock.ExitReadLock();
+				return capacity;
+			}
+		}
 
 		/// <summary>
 		/// NetQueue constructor

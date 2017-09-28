@@ -1,15 +1,14 @@
-﻿using System;
+﻿using PNet;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using PNet;
 
 namespace PNetR
 {
     public partial class Room
     {
         private readonly Dictionary<Guid, WaitingToken> _waitingTokens = new Dictionary<Guid, WaitingToken>();
+        public int PlayerCount { get; private set; }
 
         internal void PlayerWillConnect(NetMessage msg)
         {
@@ -30,7 +29,7 @@ namespace PNetR
             }
         }
 
-        private void VerifyPlayerConnecting(Player player, Guid token)
+        internal void VerifyPlayerConnecting(Player player, Guid token)
         {
             if (_waitingTokens.TryGetValue(token, out var wait))
             {
@@ -43,7 +42,8 @@ namespace PNetR
         }
 
         private static readonly TimeSpan WaitTime = TimeSpan.FromSeconds(10);
-        void VerifyWaitingPlayers()
+
+        internal void VerifyWaitingPlayers()
         {
             if (_waitingTokens.Count == 0) return;
 
@@ -70,25 +70,46 @@ namespace PNetR
             }
         }
 
+        internal void AllowConnect(Player player)
+        {
+            _roomServer.AllowConnect(player);
+        }
+
+        internal void SendToPlayer(Player player, NetMessage msg, ReliabilityMode mode)
+        {
+            _roomServer.SendToPlayer(player, msg, mode);
+        }
+
         internal void SendToPlayers(NetMessage msg, ReliabilityMode mode)
         {
-            ImplSendToPlayers(msg, mode);
+            _roomServer.SendToPlayers(msg, mode);
         }
-        partial void ImplSendToPlayers(NetMessage msg, ReliabilityMode mode);
+
+        internal void SendToConnections(List<object> connections, NetMessage msg, ReliabilityMode reliable)
+        {
+            _roomServer.SendToConnections(connections, msg, reliable);
+        }
 
         internal void SendExcept(NetMessage msg, Player except, ReliabilityMode mode)
         {
-            ImplSendExcept(msg, except, mode);
+            _roomServer.SendExcept(msg, except, mode);
         }
-        partial void ImplSendExcept(NetMessage msg, Player except, ReliabilityMode mode);
-        partial void ImplSendToPlayer(Player player, NetMessage msg, ReliabilityMode mode);
-
-        internal void SendToPlayers(Player[] players, NetMessage msg, ReliabilityMode mode)
+        
+        internal void SendToPlayers(List<Player> players, NetMessage msg, ReliabilityMode mode)
         {
-            ImplSendToPlayers(players, msg, mode);
+            _roomServer.SendToPlayers(players, msg, mode);
         }
-        partial void ImplSendToPlayers(Player[] players, NetMessage msg, ReliabilityMode mode);
 
+        internal void SendSceneView(NetMessage msg, ReliabilityMode mode)
+        {
+            _roomServer.SendSceneView(msg, mode);
+        }
+
+        internal void Disconnect(Player player, string reason)
+        {
+            _roomServer.Disconnect(player, reason);
+        }
+        
         class WaitingToken
         {
             public readonly DateTime StartTime;
@@ -109,18 +130,6 @@ namespace PNetR
         {
             CleanupInvalidNetworkViewOwners();
 
-            foreach (var view in NetworkManager.AllViews)
-            {
-                if (view == null) continue;
-                if (!view.OnPlayerEnteredRoom(player)) continue;
-
-                var pos = view.GetPosition();
-                var rot = view.GetRotation();
-
-                var msg = ConstructInstMessage(view, pos, rot);
-                ImplSendToPlayer(player, msg, ReliabilityMode.Ordered);
-            }
-
             try
             {
                 PlayerAdded?.Invoke(player);
@@ -128,6 +137,45 @@ namespace PNetR
             catch (Exception e)
             {
                 Debug.LogException(e);
+            }
+        }
+
+        public void RequestAllRoomViews(Player player)
+        {
+            foreach (var view in NetworkManager.AllViews)
+            {
+                if (view == null) continue;
+                if (!view.OnPlayerEnteredRoom(player)) continue;
+                if(view.Owner == player) continue;
+
+                var pos = view.GetPosition();
+                var rot = view.GetRotation();
+
+                var msg = ConstructInstMessage(view, pos, rot);
+                SendToPlayer(player, msg, ReliabilityMode.Ordered);
+            }
+        }
+
+        public void RequestUpdatedRoomViews(Player player, bool shouldDestroy = false)
+        {
+            foreach (var view in NetworkManager.AllViews)
+            {
+                if (view == null) continue;
+                if(view.Owner.Id > 0) // Need a better way to handle this
+                    continue;
+
+                if (shouldDestroy)
+                {
+                    var destroymsg = GetDestroyMessage(view, RandPRpcs.Destroy, 0);
+                    SendToPlayer(player, destroymsg, ReliabilityMode.Ordered);
+                }
+                if (!view.OnPlayerEnteredRoom(player)) continue;
+
+                var pos = view.GetPosition();
+                var rot = view.GetRotation();
+
+                var msg = ConstructInstMessage(view, pos, rot);
+                SendToPlayer(player, msg, ReliabilityMode.Ordered);
             }
         }
 
@@ -152,7 +200,65 @@ namespace PNetR
             {
                 Serializer.Serialize(arg, msg);
             }
-            ImplSendToPlayers(msg, ReliabilityMode.Ordered);
+            SendToPlayers(msg, ReliabilityMode.Ordered);
+        }
+
+        internal Player ConstructNewPlayer()
+        {
+            return ConstructNetData != null ? new Player(this, ConstructNetData()) : new Player(this);
+        }
+
+        internal void AddPlayer(Player player)
+        {
+            Player oldPlayer;
+            _players.TryGetValue(player.Id, out oldPlayer);
+            if (oldPlayer != null)
+            {
+                Debug.LogWarning($"Contention over id {player.Id} : {oldPlayer} is still connected, but should probably not be. Disconnecting");
+                oldPlayer.Disconnect("player id contention");
+            }
+
+            _players[player.Id] = player;
+            PlayerCount++;
+            Debug.Log($"Player {player.Id} joined at {player.Connection}");
+            SendViewInstantiates(player);
+
+            var pconnected = ServerGetMessage(4);
+            pconnected.Write(RpcUtils.GetHeader(ReliabilityMode.Ordered, BroadcastMode.Server, MsgType.Internal));
+            pconnected.Write(DandRRpcs.PlayerConnected);
+            pconnected.Write(player.Id);
+            Server.SendMessage(pconnected, ReliabilityMode.Ordered);
+        }
+
+        internal void RemovePlayer(Player player)
+        {
+            if (player.Id == 0)
+            {
+                Debug.LogWarning("Player disconnected with id 0. They probably didn't finish connecting");
+            }
+            else
+            {
+                Player oplayer;
+                _players.TryGetValue(player.Id, out oplayer);
+                if (oplayer != player)
+                {
+                    Debug.Log($"Finished removing player {player} over contention with id {player.Id}");
+                }
+                else
+                {
+                    _players.Remove(player.Id);
+                    PlayerCount--;
+                }
+
+                try
+                {
+                    PlayerRemoved.Raise(player);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogException(e);
+                }
+            }
         }
     }
 }

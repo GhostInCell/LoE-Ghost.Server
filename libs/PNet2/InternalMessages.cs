@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace PNet
+﻿namespace PNet
 {
     public static class DtoRMsgs
     {
@@ -59,6 +54,7 @@ namespace PNet
         public const byte Destroy = 3;
         public const byte SceneObjectRpc = 4;
         public const byte Hide = 6;
+        public const byte InstantiatePlus = 7;
 
         public const byte Ping = 75;
         public const byte Pong = 76;

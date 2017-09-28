@@ -3,10 +3,10 @@ using System.Security.Cryptography;
 
 namespace Lidgren.Network
 {
-	/// <summary>
-	/// Multiply With Carry random
-	/// </summary>
-	public class MWCRandom : NetRandom
+    /// <summary>
+    /// Multiply With Carry random
+    /// </summary>
+    public class MWCRandom : NetRandom
 	{
 		/// <summary>
 		/// Get global instance of MWCRandom

@@ -6,7 +6,7 @@ using PNetR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static PNet.NetConverter;
+using static Ghost.Server.Utilities.NetConverter;
 
 namespace Ghost.Server.Utilities.Abstracts
 {

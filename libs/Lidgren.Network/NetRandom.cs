@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading;
 
 namespace Lidgren.Network
 {
-	/// <summary>
-	/// NetRandom base class
-	/// </summary>
-	public abstract class NetRandom : Random
+    /// <summary>
+    /// NetRandom base class
+    /// </summary>
+    public abstract class NetRandom : Random
 	{
 		/// <summary>
 		/// Get global instance of NetRandom (uses MWCRandom)

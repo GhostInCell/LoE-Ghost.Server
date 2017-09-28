@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PNet;
+﻿using PNet;
+using System;
 
 namespace PNetS
 {
@@ -12,12 +8,14 @@ namespace PNetS
         public void Rpc(byte rpcId, params object[] args)
         {
             var size = 0;
+            var idx = 0;
             foreach (var arg in args)
             {
                 if (arg == null)
-                    throw new NullReferenceException("Cannot serialize null value");
-
+                    throw new ArgumentNullException($"args[{idx}]", "Cannot serialize null value");
+                
                 size += _server.Serializer.SizeOf(arg);
+                idx++;
             }
 
             var msg = StartMessage(rpcId, ReliabilityMode.Ordered, size);

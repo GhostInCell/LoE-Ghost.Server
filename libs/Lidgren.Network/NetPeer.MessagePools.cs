@@ -6,21 +6,24 @@ namespace Lidgren.Network
 {
 	public partial class NetPeer
 	{
-        private Stack<byte[]>[] m_storagePool;
+        private Stack<byte[]>[] _byteRecycle;
+
+		internal List<byte[]> m_storagePool;
 		private NetQueue<NetOutgoingMessage> m_outgoingMessagesPool;
 		private NetQueue<NetIncomingMessage> m_incomingMessagesPool;
 
+		internal int m_storagePoolBytes;
+		internal int m_storageSlotsUsedCount;
 		private int m_maxCacheCount;
 
 		private void InitializePools()
 		{
+			m_storageSlotsUsedCount = 0;
+
 			if (m_configuration.UseMessageRecycling)
 			{
-                m_storagePool = new Stack<byte[]>[32];
-                //technically, 0 will always be skipped, but nulls are bad.
-                for (int i = 0; i < m_storagePool.Length; i++)
-                    m_storagePool[i] = new Stack<byte[]>(m_maxCacheCount);
-                m_outgoingMessagesPool = new NetQueue<NetOutgoingMessage>(4);
+				m_storagePool = new List<byte[]>(16);
+				m_outgoingMessagesPool = new NetQueue<NetOutgoingMessage>(4);
 				m_incomingMessagesPool = new NetQueue<NetIncomingMessage>(4);
 			}
 			else
@@ -29,7 +32,16 @@ namespace Lidgren.Network
 				m_outgoingMessagesPool = null;
 				m_incomingMessagesPool = null;
 			}
+
 			m_maxCacheCount = m_configuration.RecycledCacheMaxCount;
+
+            var recycle = new Stack<byte[]>[32];
+            //technically, 0 will always be skipped, but nulls are bad.
+            for (int i = 0; i < recycle.Length; i++)
+            {
+                recycle[i] = new Stack<byte[]>(m_maxCacheCount);
+            }
+            _byteRecycle = recycle;
 		}
 
 		internal byte[] GetStorage(int minimumCapacityInBytes)
@@ -51,7 +63,7 @@ namespace Lidgren.Network
 
             //try and pop a byte array to reuse
             byte[] data = null;
-            var stack = m_storagePool[n];
+            var stack = _byteRecycle[n];
             lock (stack)
                 if (stack.Count > 0)
                 {
@@ -64,14 +76,44 @@ namespace Lidgren.Network
 		    }
 		    m_statistics.m_bytesAllocated += size;
             return new byte[size];
+
+			lock (m_storagePool)
+			{
+				for (int i = 0; i < m_storagePool.Count; i++)
+				{
+					byte[] retval = m_storagePool[i];
+					if (retval != null && retval.Length >= minimumCapacityInBytes)
+					{
+						m_storagePool[i] = null;
+						m_storageSlotsUsedCount--;
+						m_storagePoolBytes -= retval.Length;
+						return retval;
+					}
+				}
+			}
+			m_statistics.m_bytesAllocated += minimumCapacityInBytes;
+			return new byte[minimumCapacityInBytes];
 		}
 
-        private static int log2(int n)
+        /// <summary>
+        /// http://graphics.stanford.edu/~seander/bithacks.html#IntegerLogIEEE64Float
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        static int log2(int n)
         {
-            int targetLevel = 0;
-            while ((n >>= 1) != 0) ++targetLevel;
-            return targetLevel;
+            var d = 0d;
+            unsafe
+            {
+                var pd = &d;
+                var pi = (int*)pd;
+                pi[1] = 0x43300000;
+                pi[0] = n;
+                *pd -= 4503599627370496.0;
+                return (pi[1] >> 20) - 0x3ff;
+            }
         }
+
         private static bool IsPowerOfTwo(int x)
         {
             return ((x != 0) && (x & (x - 1)) == 0);
@@ -85,11 +127,43 @@ namespace Lidgren.Network
             if (!IsPowerOfTwo(storage.Length)) return;
 
             var n = log2(storage.Length);
-            var stack = m_storagePool[n];
+            var stack = _byteRecycle[n];
             lock (stack)
                 if (stack.Count < m_maxCacheCount)
                     stack.Push(storage);
 		    return;
+
+			lock (m_storagePool)
+			{
+				int cnt = m_storagePool.Count;
+				for (int i = 0; i < cnt; i++)
+				{
+					if (m_storagePool[i] == null)
+					{
+						m_storageSlotsUsedCount++;
+						m_storagePoolBytes += storage.Length;
+						m_storagePool[i] = storage;
+						return;
+					}
+				}
+
+				if (m_storagePool.Count >= m_maxCacheCount)
+				{
+					// pool is full; replace randomly chosen entry to keep size distribution
+					var idx = NetRandom.Instance.Next(m_storagePool.Count);
+
+					m_storagePoolBytes -= m_storagePool[idx].Length;
+					m_storagePoolBytes += storage.Length;
+					
+					m_storagePool[idx] = storage; // replace
+				}
+				else
+				{
+					m_storageSlotsUsedCount++;
+					m_storagePoolBytes += storage.Length;
+					m_storagePool.Add(storage);
+				}
+			}
 		}
 
 		/// <summary>
@@ -103,12 +177,23 @@ namespace Lidgren.Network
 		/// <summary>
 		/// Creates a new message for sending and writes the provided string to it
 		/// </summary>
-		public NetOutgoingMessage CreateMessage(string content)
-		{
-			var om = CreateMessage(2 + content.Length); // fair guess
-			om.Write(content);
-			return om;
-		}
+	        public NetOutgoingMessage CreateMessage(string content)
+	        {
+	            NetOutgoingMessage om;
+	
+	            // Since this could be null.
+	            if (string.IsNullOrEmpty(content))
+	            {
+	                om = CreateMessage(1); // One byte for the internal variable-length zero byte.
+	            }
+	            else
+	            {
+	                om = CreateMessage(2 + content.Length); // Fair guess.
+	            }
+	
+	            om.Write(content);
+	            return om;
+	        }
 
 		/// <summary>
 		/// Creates a new message for sending
@@ -116,10 +201,10 @@ namespace Lidgren.Network
 		/// <param name="initialCapacity">initial capacity in bytes</param>
 		public NetOutgoingMessage CreateMessage(int initialCapacity)
 		{
-            if (m_outgoingMessagesPool == null || !m_outgoingMessagesPool.TryDequeue(out var retval))
-                retval = new NetOutgoingMessage();
+			if (m_outgoingMessagesPool == null || !m_outgoingMessagesPool.TryDequeue(out var retval))
+				retval = new NetOutgoingMessage();
 
-            NetException.Assert(retval.m_recyclingCount == 0, "Wrong recycling count! Should be zero" + retval.m_recyclingCount);
+			NetException.Assert(retval.m_recyclingCount == 0, "Wrong recycling count! Should be zero" + retval.m_recyclingCount);
 
 			if (initialCapacity > 0)
 				retval.m_data = GetStorage(initialCapacity);
@@ -129,21 +214,21 @@ namespace Lidgren.Network
 
 		internal NetIncomingMessage CreateIncomingMessage(NetIncomingMessageType tp, byte[] useStorageData)
 		{
-            if (m_incomingMessagesPool == null || !m_incomingMessagesPool.TryDequeue(out var retval))
-                retval = new NetIncomingMessage(tp);
-            else
-                retval.m_incomingMessageType = tp;
-            retval.m_data = useStorageData;
+			if (m_incomingMessagesPool == null || !m_incomingMessagesPool.TryDequeue(out var retval))
+				retval = new NetIncomingMessage(tp);
+			else
+				retval.m_incomingMessageType = tp;
+			retval.m_data = useStorageData;
 			return retval;
 		}
 
 		internal NetIncomingMessage CreateIncomingMessage(NetIncomingMessageType tp, int minimumByteSize)
 		{
-            if (m_incomingMessagesPool == null || !m_incomingMessagesPool.TryDequeue(out var retval))
-                retval = new NetIncomingMessage(tp);
-            else
-                retval.m_incomingMessageType = tp;
-            retval.m_data = GetStorage(minimumByteSize);
+			if (m_incomingMessagesPool == null || !m_incomingMessagesPool.TryDequeue(out var retval))
+				retval = new NetIncomingMessage(tp);
+			else
+				retval.m_incomingMessageType = tp;
+			retval.m_data = GetStorage(minimumByteSize);
 			return retval;
 		}
 

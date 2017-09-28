@@ -5,12 +5,16 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
+#if !__NOIPENDPOINT__
+using NetEndPoint = System.Net.IPEndPoint;
+#endif
+
 namespace Lidgren.Network
 {
-	/// <summary>
-	/// Status of the UPnP capabilities
-	/// </summary>
-	public enum UPnPStatus
+    /// <summary>
+    /// Status of the UPnP capabilities
+    /// </summary>
+    public enum UPnPStatus
 	{
 		/// <summary>
 		/// Still discovering UPnP capabilities
@@ -67,21 +71,24 @@ namespace Lidgren.Network
 "MAN:\"ssdp:discover\"\r\n" +
 "MX:3\r\n\r\n";
 
+			m_discoveryResponseDeadline = NetTime.Now + 6.0; // arbitrarily chosen number, router gets 6 seconds to respond
 			m_status = UPnPStatus.Discovering;
 
 			byte[] arr = System.Text.Encoding.UTF8.GetBytes(str);
 
 			m_peer.LogDebug("Attempting UPnP discovery");
 			peer.Socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Broadcast, true);
-			peer.RawSend(arr, 0, arr.Length, new IPEndPoint(IPAddress.Broadcast, 1900));
+			peer.RawSend(arr, 0, arr.Length, new NetEndPoint(NetUtility.GetBroadcastAddress(), 1900));
 			peer.Socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Broadcast, false);
-
-			// allow some extra time for router to respond
-			//Thread.Sleep(100);
-
-			m_discoveryResponseDeadline = NetTime.Now + 6.0; // arbitrarily chosen number, router gets 6 seconds to respond
-			m_status = UPnPStatus.Discovering;
 		}
+
+	    internal void CheckForDiscoveryTimeout()
+	    {
+	        if ((m_status != UPnPStatus.Discovering) || (NetTime.Now < m_discoveryResponseDeadline))
+                return;
+	        m_peer.LogDebug("UPnP discovery timed out");
+	        m_status = UPnPStatus.NotAvailable;
+	    }
 
 		internal void ExtractServiceUrl(string resp)
 		{
@@ -90,7 +97,9 @@ namespace Lidgren.Network
 			{
 #endif
 			XmlDocument desc = new XmlDocument();
-			desc.Load(WebRequest.Create(resp).GetResponse().GetResponseStream());
+			using (var response = WebRequest.Create(resp).GetResponse())
+				desc.Load(response.GetResponseStream());
+
 			XmlNamespaceManager nsMgr = new XmlNamespaceManager(desc.NameTable);
 			nsMgr.AddNamespace("tns", "urn:schemas-upnp-org:device-1-0");
 			XmlNode typen = desc.SelectSingleNode("//tns:device/tns:deviceType/text()", nsMgr);
@@ -125,7 +134,7 @@ namespace Lidgren.Network
 		private static string CombineUrls(string gatewayURL, string subURL)
 		{
 			// Is Control URL an absolute URL?
-			if ((subURL.Contains("http:")))
+			if ((subURL.Contains("http:")) || (subURL.Contains(".")))
 				return subURL;
 
 			gatewayURL = gatewayURL.Replace("http://", "");  // strip any protocol
@@ -161,8 +170,8 @@ namespace Lidgren.Network
 			if (!CheckAvailability())
 				return false;
 
-            var client = NetUtility.GetMyAddress(out var mask);
-            if (client == null)
+			var client = NetUtility.GetMyAddress(out var mask);
+			if (client == null)
 				return false;
 
 			try
@@ -181,7 +190,7 @@ namespace Lidgren.Network
 					"AddPortMapping");
 
 				m_peer.LogDebug("Sent UPnP port forward request");
-				System.Threading.Thread.Sleep(50);
+				NetUtility.Sleep(50);
 			}
 			catch (Exception ex)
 			{
@@ -240,26 +249,28 @@ namespace Lidgren.Network
 			}
 		}
 
-		private XmlDocument SOAPRequest(string url, string soap, string function)
-		{
-			string req = "<?xml version=\"1.0\"?>" +
-			"<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">" +
-			"<s:Body>" +
-			soap +
-			"</s:Body>" +
-			"</s:Envelope>";
-			WebRequest r = HttpWebRequest.Create(url);
-			r.Method = "POST";
-			byte[] b = System.Text.Encoding.UTF8.GetBytes(req);
-			r.Headers.Add("SOAPACTION", "\"urn:schemas-upnp-org:service:" + m_serviceName + ":1#" + function + "\""); 
-			r.ContentType = "text/xml; charset=\"utf-8\"";
-			r.ContentLength = b.Length;
-			r.GetRequestStream().Write(b, 0, b.Length);
-			XmlDocument resp = new XmlDocument();
-			WebResponse wres = r.GetResponse();
-			Stream ress = wres.GetResponseStream();
-			resp.Load(ress);
-			return resp;
-		}
+        private XmlDocument SOAPRequest(string url, string soap, string function)
+        {
+            string req = "<?xml version=\"1.0\"?>" +
+            "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">" +
+            "<s:Body>" +
+            soap +
+            "</s:Body>" +
+            "</s:Envelope>";
+            WebRequest r = HttpWebRequest.Create(url);
+            r.Method = "POST";
+            byte[] b = System.Text.Encoding.UTF8.GetBytes(req);
+            r.Headers.Add("SOAPACTION", "\"urn:schemas-upnp-org:service:" + m_serviceName + ":1#" + function + "\"");
+            r.ContentType = "text/xml; charset=\"utf-8\"";
+            r.ContentLength = b.Length;
+            r.GetRequestStream().Write(b, 0, b.Length);
+            using (WebResponse wres = r.GetResponse())
+            {
+                XmlDocument resp = new XmlDocument();
+                Stream ress = wres.GetResponseStream();
+                resp.Load(ress);
+                return resp;
+            }
+        }
 	}
 }

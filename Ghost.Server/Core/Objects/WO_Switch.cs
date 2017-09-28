@@ -39,7 +39,7 @@ namespace Ghost.Server.Core.Objects
         #region Events Handlers
         private void WO_Switch_OnDestroy()
         {
-            m_view.UnsubscribeFromRpc(1);
+            m_view.UnsubscribeRpc(1);
             m_view = null;
         }
         #endregion

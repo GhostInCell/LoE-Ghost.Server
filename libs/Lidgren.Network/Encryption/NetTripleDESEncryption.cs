@@ -1,10 +1,8 @@
-using System;
-using System.IO;
 using System.Security.Cryptography;
 
 namespace Lidgren.Network
 {
-	public class NetTripleDESEncryption : NetCryptoProviderBase
+    public class NetTripleDESEncryption : NetCryptoProviderBase
 	{
 		public NetTripleDESEncryption(NetPeer peer)
 			: base(peer, new TripleDESCryptoServiceProvider())

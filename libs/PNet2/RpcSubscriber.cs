@@ -1,8 +1,8 @@
-﻿using System;
+﻿using SharpFactory.DMDDemo;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using SharpFactory.DMDDemo;
 
 namespace PNet
 {
@@ -154,7 +154,7 @@ namespace PNet
                         return;
 
                     var filterProviders = GetAttributes<IComponentRpcFilterProvider<TInfo>>(objType, method, parmTypes);
-                    var filters = filterProviders.Select(fprov => fprov.Value.GetFilter(provider)).ToArray();
+                    var filters = filterProviders.Select(fprov => fprov.Item2.GetFilter(provider)).ToArray();
 
                     RpcCallers.TryGetValue(method.MethodHandle, out var pre);
                     //prevent the open delegate from needing a reference to this networkview?
@@ -248,7 +248,7 @@ namespace PNet
         }
 
         internal delegate void EachRpcAction<TAttr>(
-            MethodInfo method, ParameterInfo[] parameters, Type[] paramTypes, List<KeyValuePair<byte?, TAttr>> attributes);
+            MethodInfo method, ParameterInfo[] parameters, Type[] paramTypes, List<(byte?, TAttr)> attributes);
         /// <summary>
         /// Execute the specified action on each method with the specified TAttr attribute, including methods that implement interfaces with the attribute
         /// </summary>
@@ -381,14 +381,10 @@ namespace PNet
         /// <param name="method"></param>
         /// <param name="parmTypes"></param>
         /// <returns></returns>
-        public static List<KeyValuePair<byte?, TAttr>> GetAttributes<TAttr>(Type objType, MethodInfo method, Type[] parmTypes) 
+        public static List<(byte?, TAttr)> GetAttributes<TAttr>(Type objType, MethodInfo method, Type[] parmTypes) 
             where TAttr : class
         {
-// ReSharper disable once AssignNullToNotNullAttribute
-            var tokens =
-                new List<KeyValuePair<byte?, TAttr>>(
-                    (Attribute.GetCustomAttributes(method, false).Where(a => a is TAttr)).Select(
-                        a => new KeyValuePair<byte?, TAttr>(null, a as TAttr)));
+            var tokens = method.GetCustomAttributes(false).OfType<TAttr>().Select(x => (default(byte?), x)).ToList();
             FillAttributesFromInterfaces(objType, method, parmTypes, tokens);
             return tokens;
         }
@@ -404,7 +400,7 @@ namespace PNet
                 );
         }
 
-        static void FillAttributesFromInterfaces<TAttr>(Type objType, MethodInfo method, Type[] parmTypes, List<KeyValuePair<byte?, TAttr>> tokens) 
+        static void FillAttributesFromInterfaces<TAttr>(Type objType, MethodInfo method, Type[] parmTypes, List<(byte?, TAttr)> tokens) 
             where TAttr : class
         {
             foreach (var inter in objType.GetInterfaces())
@@ -415,79 +411,75 @@ namespace PNet
                 byte? icidn = null;
                 if (inter.GetNetId(out var icid))
                     icidn = icid;
-
-                var tokes =
-                    (Attribute.GetCustomAttributes(interMethod, false).Where(a => a is TAttr)).Select(a => new KeyValuePair<byte?, TAttr>(icidn, a as TAttr));
-// ReSharper disable once AssignNullToNotNullAttribute
-                tokens.AddRange(tokes);
+                tokens.AddRange(interMethod.GetCustomAttributes(false).OfType<TAttr>().Select(x => (icidn, x)));
             }
         }
 
         #region subscribe tokens
-        private static void SubscribeTokens<TAttr>(IRpcProvider provider, IEnumerable<KeyValuePair<byte?, TAttr>> tokens, Action<NetMessage> del)
+        private static void SubscribeTokens<TAttr>(IRpcProvider provider, IEnumerable<(byte?, TAttr)> tokens, Action<NetMessage> del)
              where TAttr : Attribute, IRpcAttribute
         {
             foreach (var token in tokens)
             {
-                if (token.Value == null)
+                if (token.Item2 == null)
                     continue;
-                provider.SubscribeToRpc(token.Value.RpcId, del);
+                provider.SubscribeToRpc(token.Item2.RpcId, del);
             }
         }
 
-        private static void SubscribeTokens<T, TAttr>(IInfoRpcProvider<T> provider, IEnumerable<KeyValuePair<byte?, TAttr>> tokens,
+        private static void SubscribeTokens<T, TAttr>(IInfoRpcProvider<T> provider, IEnumerable<(byte?, TAttr)> tokens,
             Action<NetMessage, T> del) where TAttr : Attribute, IRpcAttribute
         {
             foreach (var token in tokens)
             {
 
-                if (token.Value == null)
+                if (token.Item2 == null)
                     continue;
-                provider.SubscribeToRpc(token.Value.RpcId, del, defaultContinueForwarding: token.Value.DefaultContinueForwarding);
+                provider.SubscribeToRpc(token.Item2.RpcId, del, defaultContinueForwarding: token.Item2.DefaultContinueForwarding);
             }
         }
 
-        private static void SubscribeTokens<T, TAttr>(IComponentInfoRpcProvider<T> provider, byte compId, IEnumerable<KeyValuePair<byte?, TAttr>> tokens,
+        private static void SubscribeTokens<T, TAttr>(IComponentInfoRpcProvider<T> provider, byte compId, IEnumerable<(byte?, TAttr)> tokens,
             Action<NetMessage, T> del) where TAttr : Attribute, IRpcAttribute
         {
             foreach (var token in tokens)
             {
-                if (token.Value == null)
+                if (token.Item2 == null)
                     continue;
-                provider.SubscribeToRpc(token.Key ?? compId, token.Value.RpcId, del, defaultContinueForwarding: token.Value.DefaultContinueForwarding);
+                provider.SubscribeToRpc(token.Item1 ?? compId, token.Item2.RpcId, del, defaultContinueForwarding: token.Item2.DefaultContinueForwarding);
             }
         }
 
-        private static void SubscribeTokens<TAttr>(IComponentRpcProvider provider, byte compId, IEnumerable<KeyValuePair<byte?, TAttr>> tokens, Action<NetMessage> del)
+        private static void SubscribeTokens<TAttr>(IComponentRpcProvider provider, byte compId, IEnumerable<(byte?, TAttr)> tokens, Action<NetMessage> del)
             where TAttr : Attribute, IRpcAttribute
         {
             foreach (var token in tokens)
             {
-                if (token.Value == null)
+                if (token.Item2 == null)
                     continue;
-                provider.SubscribeToRpc(token.Key ?? compId, token.Value.RpcId, del);
+                provider.SubscribeToRpc(token.Item1 ?? compId, token.Item2.RpcId, del);
             }
         }
 
-        private static void SubscribeTokens<TAttr>(IComponentRpcProvider provider, byte compId, IEnumerable<KeyValuePair<byte?, TAttr>> tokens, Func<NetMessage, object> fncDel)
+        private static void SubscribeTokens<TAttr>(IComponentRpcProvider provider, byte compId, IEnumerable<(byte?, TAttr)> tokens, Func<NetMessage, object> fncDel)
             where TAttr : Attribute, IRpcAttribute
         {
             foreach (var token in tokens)
             {
-                if (token.Value == null)
+                if (token.Item2 == null)
                     continue;
-                provider.SubscribeToFunc(token.Key ?? compId, token.Value.RpcId, fncDel);
+                provider.SubscribeToFunc(token.Item1 ?? compId, token.Item2.RpcId, fncDel);
             }
         }
 
-        private static void SubscribeTokens<T, TAttr>(IComponentInfoRpcProvider<T> provider, byte compId, IEnumerable<KeyValuePair<byte?, TAttr>> tokens, Func<NetMessage, T, object> fncDel)
+        private static void SubscribeTokens<T, TAttr>(IComponentInfoRpcProvider<T> provider, byte compId, IEnumerable<(byte?, TAttr)> tokens, Func<NetMessage, T, object> fncDel)
             where TAttr : Attribute, IRpcAttribute
         {
             foreach (var token in tokens)
             {
-                if (token.Value == null)
+                if (token.Item2 == null)
                     continue;
-                provider.SubscribeToFunc(token.Key ?? compId, token.Value.RpcId, fncDel);
+                provider.SubscribeToFunc(token.Item1 ?? compId, token.Item2.RpcId, fncDel);
             }
         }
         #endregion

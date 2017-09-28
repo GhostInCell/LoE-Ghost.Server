@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Lidgren.Network
+﻿namespace Lidgren.Network
 {
-	internal static class NetFragmentationHelper
+    internal static class NetFragmentationHelper
 	{
 		internal static int WriteHeader(
 			byte[] destination,

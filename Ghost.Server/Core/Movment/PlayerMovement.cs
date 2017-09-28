@@ -8,7 +8,7 @@ using PNet;
 using PNetR;
 using System.Numerics;
 using System;
-using static PNet.NetConverter;
+using static Ghost.Server.Utilities.NetConverter;
 
 namespace Ghost.Server.Core.Movment
 {

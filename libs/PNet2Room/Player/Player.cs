@@ -1,6 +1,6 @@
-﻿using System;
+﻿using PNet;
+using System;
 using System.Net;
-using PNet;
 
 namespace PNetR
 {
@@ -12,7 +12,12 @@ namespace PNetR
         /// </summary>
         public Guid Token { get; internal set; }
 
-        public IPEndPoint EndPoint { get { return Connection.RemoteEndPoint; } }
+        /// <summary>
+        /// the actual endpoint connection to the player
+        /// </summary>
+        public IPEndPoint EndPoint { get; internal set; }
+
+        public object Connection;
 
         internal readonly Room Room;
 
@@ -85,15 +90,16 @@ namespace PNetR
         /// <summary>
         /// 
         /// </summary>
-        public void SynchNetData()
+        public bool SynchNetData()
         {
-            if (NetUserData == null) return;
+            if (NetUserData == null) return false;
             var msg = Room.ServerGetMessage(NetUserData.AllocSize + 4);
             msg.Write(RpcUtils.GetHeader(ReliabilityMode.Ordered, BroadcastMode.Server, MsgType.Internal));
             msg.Write(DandRRpcs.SyncNetUser);
             msg.Write(Id);
             NetUserData.OnSerialize(msg);
             Room.Server.SendMessage(msg, ReliabilityMode.Ordered);
+            return true;
         }
 
         /// <summary>
@@ -122,21 +128,18 @@ namespace PNetR
         public void Disconnect(string reason)
         {
             //todo: send disconnect message to PNetS
-            ImplementationDisconnect(reason);
+            Room.Disconnect(this, reason);
         }
-        partial void ImplementationDisconnect(string reason);
 
         internal void AllowConnect()
         {
-            ImplementationAllowConnect();
+            Room.AllowConnect(this);
         }
-        partial void ImplementationAllowConnect();
 
         internal void SendMessage(NetMessage msg, ReliabilityMode mode)
         {
-            ImplementationSendMessage(msg, mode);
+            Room.SendToPlayer(this, msg, mode);
         }
-        partial void ImplementationSendMessage(NetMessage msg, ReliabilityMode mode);
 
         private static Player _serverPlayer;
         public static Player Server
@@ -144,21 +147,17 @@ namespace PNetR
             get { return _serverPlayer ?? (_serverPlayer = new Player(null){Id = 0}); }
         }
 
-        public bool IsValid
-        {
-            get { return Id != 0; }
-        }
+        public bool IsValid => Id != 0;
 
         private IPlayerProxy _proxyObject;
+
         /// <summary>
         /// the value set from Proxy(IRoomProxy proxy)
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T Proxy<T>()
-        {
-            return (T)_proxyObject;
-        }
+        public T Proxy<T>() => (T)_proxyObject;
+
         /// <summary>
         /// set the proxy object to use when returning Proxy`T().
         /// This is only useful if you're using something like Castle.Windsor's dynamic proxy generation.
@@ -171,10 +170,7 @@ namespace PNetR
                 proxy.Player = this;
         }
 
-        public override string ToString()
-        {
-            return string.Format("{{Player {0} {1} {2}}}", Id, UserData, NetUserData);
-        }
+        public override string ToString() => $"{{Player {Id} {UserData} {NetUserData}}}";
 
         /// <summary>
         /// Create an invalid "player" with almost identical user data.

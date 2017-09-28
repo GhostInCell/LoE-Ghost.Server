@@ -57,6 +57,8 @@ namespace Ghost.Server.Utilities
 
         public static readonly BoundingBox DefaultRoomBounds = new BoundingBox(new Vector3(-3000f, -2000f, -3000f), new Vector3(5000f, 3000f, 5000f));
 
+        public static readonly BoundingBox DefaultRotationBounds = new BoundingBox(new Vector3(-6.28318548f), new Vector3(6.28318548f));
+
         public const string StuckCommand = "unstuck me";
         public const string Characters = "Characters";
         public const string Configs = "loe_server.cfg";       

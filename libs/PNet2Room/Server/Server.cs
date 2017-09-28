@@ -1,11 +1,13 @@
-﻿using System;
+﻿using PNet;
+using System;
 using System.Collections.Generic;
-using PNet;
 
 namespace PNetR
 {
     public partial class Server : IRpcProvider, IProxySingle<IServerProxy>
     {
+        public object Connection { get; internal set; }
+
         private readonly Room _room;
         internal Server(Room room)
         {
@@ -14,9 +16,8 @@ namespace PNetR
 
         internal void SendMessage(NetMessage msg, ReliabilityMode mode)
         {
-            ImplementationSendMessage(msg, mode);
+            _room.SendToDispatcher(msg, mode);
         }
-        partial void ImplementationSendMessage(NetMessage msg, ReliabilityMode mode);
 
         private void CallRpc(byte rpcId, NetMessage msg)
         {

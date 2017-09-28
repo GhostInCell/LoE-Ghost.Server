@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Lidgren.Network
+﻿namespace Lidgren.Network
 {
-	/// <summary>
-	/// How the library deals with resends and handling of late messages
-	/// </summary>
-	public enum NetDeliveryMethod : byte
+    /// <summary>
+    /// How the library deals with resends and handling of late messages
+    /// </summary>
+    public enum NetDeliveryMethod : byte
 	{
 		//
 		// Actually a publicly visible subset of NetMessageType

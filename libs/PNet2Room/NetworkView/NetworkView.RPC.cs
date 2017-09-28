@@ -141,7 +141,6 @@ namespace PNetR
         void Enqueue(AContinuation continuation, ushort playerId)
         {
             //todo: timeouts
-
             if (!_continuations.TryGetValue(playerId, out var playerQueues))
             {
                 playerQueues = new Dictionary<int, Queue<AContinuation>>();
@@ -178,7 +177,7 @@ namespace PNetR
             var msg = Room.RoomGetMessage(size + 5);
             
             msg.Write(RpcUtils.GetHeader(mode, MsgType.Netview));
-            msg.Write(Id);
+            Id.OnSerialize(msg);
             msg.Write(cid);
             msg.Write(rpcId);
             return msg;
@@ -198,7 +197,7 @@ namespace PNetR
 
             //just using "server" because its going to one target that isn't the owner
             msg.Write(RpcUtils.GetHeader(mode, BroadcastMode.Server, MsgType.Netview));
-            msg.Write(Id);
+            Id.OnSerialize(msg);
             msg.Write(cid);
             msg.Write(rpcId);
             return msg;
@@ -220,13 +219,33 @@ namespace PNetR
 
             ImplSendMessage(msg, reliable, broadcast);
         }
+
         /// <summary>
         /// Send message. Filtering is already done for invalid broadcast+owner combinations (others+server, owner+server)
         /// </summary>
         /// <param name="msg"></param>
         /// <param name="reliable"></param>
         /// <param name="broadcast"></param>
-        partial void ImplSendMessage(NetMessage msg, ReliabilityMode reliable, BroadcastMode broadcast);
+        void ImplSendMessage(NetMessage msg, ReliabilityMode reliable, BroadcastMode broadcast)
+        {
+            switch (broadcast)
+            {
+                case BroadcastMode.All:
+                    if (ObserversAndOwner.Count > 0)
+                        Manager.Room.SendToConnections(ObserversAndOwner, msg, reliable);
+                    break;
+                case BroadcastMode.Others:
+                    if (Observers.Count > 0)
+                        Manager.Room.SendToConnections(Observers, msg, reliable);
+                    break;
+                case BroadcastMode.Owner:
+                    Manager.Room.SendToPlayer(Owner, msg, reliable);
+                    break;
+                default:
+                    throw new NotImplementedException();
+                    break;
+            }
+        }
 
         internal void SendMessage(NetMessage msg, Player player, ReliabilityMode mode)
         {
@@ -235,9 +254,9 @@ namespace PNetR
                 NetMessage.RecycleMessage(msg);
                 return;
             }
-            ImplSendMessage(msg, mode, player);
+
+            Manager.Room.SendToPlayer(player, msg, mode);
         }
-        partial void ImplSendMessage(NetMessage msg, ReliabilityMode mode, Player player);
 
         /// <summary>
         /// Send a message to all players except the specified one (same as All if player is Player.Server)
@@ -253,7 +272,18 @@ namespace PNetR
                 ImplSendExcept(msg, player, mode);
         }
 
-        partial void ImplSendExcept(NetMessage msg, Player player, ReliabilityMode mode);
+        void ImplSendExcept(NetMessage msg, Player player, ReliabilityMode mode)
+        {
+            var conns = new List<object>();
+// ReSharper disable once ForCanBeConvertedToForeach speed is necessary
+            for (int i = 0; i < ObserversAndOwner.Count; i++)
+            {
+                var c = ObserversAndOwner[i];
+                if (c != player.Connection) conns.Add(c);
+            }
+            if (conns.Count == 0) return;
+            Manager.Room.SendToConnections(conns, msg, mode);
+        }
 
         partial void ImplSendMessage(NetMessage msg, List<Player> players, ReliabilityMode mode);
     }

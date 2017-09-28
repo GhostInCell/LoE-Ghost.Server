@@ -17,14 +17,13 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR TH
 USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 */
-using System;
 
 namespace Lidgren.Network
 {
-	/// <summary>
-	/// Status for a NetPeer instance
-	/// </summary>
-	public enum NetPeerStatus
+    /// <summary>
+    /// Status for a NetPeer instance
+    /// </summary>
+    public enum NetPeerStatus
 	{
 		/// <summary>
 		/// NetPeer is not running; socket is not bound

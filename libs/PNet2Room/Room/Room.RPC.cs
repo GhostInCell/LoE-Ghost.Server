@@ -1,10 +1,6 @@
-﻿using System;
+﻿using PNet;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using PNet;
-using SharpFactory.DMDDemo;
 
 namespace PNetR
 {
@@ -56,7 +52,7 @@ namespace PNetR
             {
                 foreach (var token in tokens)
                 {
-                    UnsubscribeRpc(token.Value.RpcId);
+                    UnsubscribeRpc(token.Item2.RpcId);
                 }
             });
         }

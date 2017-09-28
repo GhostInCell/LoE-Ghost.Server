@@ -1,4 +1,4 @@
- /* Copyright (c) 2010 Michael Lidgren
+/* Copyright (c) 2010 Michael Lidgren
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software
 and associated documentation files (the "Software"), to deal in the Software without
@@ -21,7 +21,7 @@ using System.Reflection;
 
 namespace Lidgren.Network
 {
-	public partial class NetBuffer
+    public partial class NetBuffer
 	{
 		/// <summary>
 		/// Reads all public and private declared instance fields of the object in alphabetical order using reflection
@@ -48,16 +48,16 @@ namespace Lidgren.Network
 			{
 				object value;
 
-                // find read method
-                if (s_readMethods.TryGetValue(fi.FieldType, out var readMethod))
-                {
-                    // read value
-                    value = readMethod.Invoke(this, null);
+				// find read method
+				if (s_readMethods.TryGetValue(fi.FieldType, out var readMethod))
+				{
+					// read value
+					value = readMethod.Invoke(this, null);
 
-                    // set the value
-                    fi.SetValue(target, value);
-                }
-            }
+					// set the value
+					fi.SetValue(target, value);
+				}
+			}
 		}
 
 		/// <summary>
@@ -84,22 +84,22 @@ namespace Lidgren.Network
 			{
 				object value;
 
-                // find read method
-                if (s_readMethods.TryGetValue(fi.PropertyType, out var readMethod))
-                {
-                    // read value
-                    value = readMethod.Invoke(this, null);
+				// find read method
+				if (s_readMethods.TryGetValue(fi.PropertyType, out var readMethod))
+				{
+					// read value
+					value = readMethod.Invoke(this, null);
 
                     // set the value
 #if UNITY_WEBPLAYER || UNITY_4_5
                     var setMethod = fi.GetSetMethod();
 #else
-					var setMethod = fi.SetMethod;
+                    var setMethod = fi.SetMethod;
 #endif
-                    if (setMethod != null)
-                        setMethod.Invoke(target, new object[] { value });
-                }
-            }
+					if (setMethod != null)
+						setMethod.Invoke(target, new object[] { value });
+				}
+			}
 		}
 	}
 }

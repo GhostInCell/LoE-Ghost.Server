@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using PNet;
+﻿using PNet;
 
 namespace PNetR
 {
@@ -63,7 +59,7 @@ namespace PNetR
         /// <param name="authData"></param>
         /// <param name="userDefinedAuthData"></param>
         public NetworkConfiguration(
-            int maximumPlayers = 32, int listenPort = 14000, int tickRate = 66, 
+            int maximumPlayers = 32, int listenPort = 14002, int tickRate = 66, 
             string roomIdentifier = "room", string appIdentifier = "PNet", 
             string dispatcherAddress = "localhost", int dispatcherPort = 14001, string listenAddress = null,
             RoomAuthType roomAuthType = RoomAuthType.AllowedHost,

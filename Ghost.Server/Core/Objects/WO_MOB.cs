@@ -8,7 +8,7 @@ using Ghost.Server.Utilities;
 using Ghost.Server.Utilities.Abstracts;
 using PNetR;
 using System.Numerics;
-using static PNet.NetConverter;
+using static Ghost.Server.Utilities.NetConverter;
 
 namespace Ghost.Server.Core.Objects
 {

@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace Lidgren.Network
+﻿namespace Lidgren.Network
 {
-	/// <summary>
-	/// Result of a SendMessage call
-	/// </summary>
-	public enum NetSendResult
+    /// <summary>
+    /// Result of a SendMessage call
+    /// </summary>
+    public enum NetSendResult
 	{
 		/// <summary>
 		/// Message failed to enqueue because there is no connection

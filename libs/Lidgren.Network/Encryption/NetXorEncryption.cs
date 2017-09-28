@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace Lidgren.Network
 {
-	/// <summary>
-	/// Example class; not very good encryption
-	/// </summary>
-	public class NetXorEncryption : NetEncryption
+    /// <summary>
+    /// Example class; not very good encryption
+    /// </summary>
+    public class NetXorEncryption : NetEncryption
 	{
 		private byte[] m_key;
 

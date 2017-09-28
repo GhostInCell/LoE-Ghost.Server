@@ -22,10 +22,10 @@ using System.Diagnostics;
 
 namespace Lidgren.Network
 {
-	/// <summary>
-	/// Outgoing message used to send data to remote peer(s)
-	/// </summary>
-	[DebuggerDisplay("LengthBits={LengthBits}")]
+    /// <summary>
+    /// Outgoing message used to send data to remote peer(s)
+    /// </summary>
+    [DebuggerDisplay("LengthBits={LengthBits}")]
 	public sealed class NetOutgoingMessage : NetBuffer
 	{
 		internal NetMessageType m_messageType;

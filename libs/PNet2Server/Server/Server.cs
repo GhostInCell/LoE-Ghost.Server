@@ -34,6 +34,10 @@ namespace PNetS
 
         private readonly IntDictionary<Player> _players = new IntDictionary<Player>(256);
         internal IntDictionary<Player> Players { get { return _players; } }
+        /// <summary>
+        /// Number of players connected to the server
+        /// </summary>
+        public int PlayerCount { get; private set; }
 
         /// <summary>
         /// event fired when a Player object is constructing, should be used to return the object used for Player.NetUserData
@@ -53,17 +57,26 @@ namespace PNetS
         /// </summary>
         public event Action<Player> PlayerAdded;
         /// <summary>
-        /// fired when a player disconnects
+        /// fired when a player disconnects.
+        /// <remarks>
+        /// If the player's id is 0, then the player was not finished being added, meaning they had verification done, but either failed it, or disconnected before finishing.
+        /// However, having a value does not necessarily mean PlayerAdded was fired on the player, just that AllowConnect was run on them.
+        /// </remarks>
         /// </summary>
         public event Action<Player> PlayerRemoved;
 
         internal readonly int Id;
         private static int idCounter;
 
-        public Server()
+        private readonly ADispatchServer _server;
+
+        public Server(ADispatchServer server)
         {
             Id = Interlocked.Increment(ref idCounter);
             _players.Add(Player.ServerPlayer);
+
+            _server = server;
+            _server.Server = this;
         }
 
         public void Initialize(NetworkConfiguration configuration)
@@ -73,15 +86,15 @@ namespace PNetS
             var allhosts = Configuration.RoomHosts.Split(';');
             AllowedRoomHosts.AddRange(allhosts.SelectMany(Dns.GetHostAddresses).ToList());
 
-            InternalInitialize();
+            _server.Initialize();
         }
-        partial void InternalInitialize();
 
-        public void Shutdown(string reason = "Dispatcher shutting down")
-        {
-            ImplementationShutdown(reason);
-        }
-        partial void ImplementationShutdown(string reason);
+        /// <summary>
+        /// Shut down the server, and return a task that completes once the server finishes shutting down.
+        /// </summary>
+        /// <param name="reason"></param>
+        /// <returns></returns>
+        public Task Shutdown(string reason = "Dispatcher shutting down") => _server.Shutdown(reason);
 
         public bool TryGetRooms(string roomId, out Room[] rooms)
         {
@@ -111,7 +124,8 @@ namespace PNetS
         /// total number of rooms
         /// </summary>
         public int RoomCount { get { return _rooms.Count; } }
-        private void AddRoom(Room room)
+
+        internal void AddRoom(Room room)
         {
             _rooms[room.Guid] = room;
             
@@ -123,10 +137,7 @@ namespace PNetS
             {
                 Debug.LogException(e);
             }
-        }
-
-        void UpdateRoomsOfNewRoom(Room room)
-        {
+            
             //tell all rooms about this room
 
             var msg = GetMessage(room.RoomId.Length * 2 + 18);
@@ -148,19 +159,23 @@ namespace PNetS
             room.SendMessage(msg, ReliabilityMode.Ordered);
         }
 
-        private void RemoveRoom(Room room)
+        internal void RemoveRoom(Room room)
         {
             if (room == null) return;
 
-            _rooms.TryRemove(room.Guid, out var removed);
-            if (removed != room)
+            if (!_rooms.TryRemove(room.Guid, out var removed))
+            {
+                Debug.LogWarning($"Tried to remove {removed}, but it wasn't in the list of rooms");
+                //we'll still send messages and stuff regarding this, just in case people didn't get it. or something.
+            }
+            else if (removed != room)
             {
                 Debug.LogError($"Removed {removed}, but we were attempting to remove {room}");
             }
 
             try
             {
-                RoomRemoved?.Invoke(removed);
+                RoomRemoved?.Invoke(room);
             }
             catch (Exception e)
             {
@@ -170,8 +185,8 @@ namespace PNetS
             var msg = GetMessage(18);
             msg.Write(RpcUtils.GetHeader(ReliabilityMode.Ordered, BroadcastMode.Server, MsgType.Internal));
             msg.Write(DandRRpcs.RoomRemove);
-            msg.Write(removed.Guid);
-            removed.SendMessageToOthers(msg, ReliabilityMode.Ordered);
+            msg.Write(room.Guid);
+            SendToOtherRooms(room, msg, ReliabilityMode.Ordered);
 
             Player[] players;
             lock (_players)
@@ -179,7 +194,7 @@ namespace PNetS
             foreach (var player in players)
             {
                 if (player == null) continue;
-                if (player.SwitchingToRoom == removed.Guid)
+                if (player.SwitchingToRoom == room.Guid)
                     player.OnSwitchingToRoomInvalidated();
             }
         }
@@ -193,6 +208,7 @@ namespace PNetS
             {
                 //add a 'fake' player to the slot, to reserve the id.
                 var nid = _players.Add(Player.ServerPlayer);
+                PlayerCount++;
                 if (nid > ushort.MaxValue)
                 {
                     throw new IndexOutOfRangeException(
@@ -200,6 +216,27 @@ namespace PNetS
                 }
 
                 player.Id = (ushort) nid;
+            }
+
+            _server.AllowPlayerToConnect(player);
+        }
+
+        internal void PlayerConnecting(object connection, IPEndPoint endpoint, Action<Player> ctor, NetMessage msg)
+        {
+            var player = new Player(this) { Connection = connection, EndPoint = endpoint };
+            ctor(player);
+
+            player.Status = ConnectionStatus.Connecting;
+            if (ConstructNetData != null)
+                player.NetUserData = ConstructNetData();
+
+            if (VerifyPlayer != null)
+            {
+                VerifyPlayer(player, msg);
+            }
+            else
+            {
+                player.AllowConnect();
             }
         }
 
@@ -219,23 +256,25 @@ namespace PNetS
             catch (Exception e) { Debug.LogException(e); }
         }
 
-        private void RemovePlayer(Player player)
+        internal void RemovePlayer(Player player)
         {
-            if (player.Id == 0)
-                return;
+            if (player.Id != 0)
+            {
+                //first need to inform the room, if there is one, of the player's disconnect. 
+                //Otherwise a new player might obtain the id and send that to a new room before this message gets there
+                player.DisconnectOnRoom();
 
-            //first need to inform the room, if there is one, of the player's disconnect. 
-            //Otherwise a new player might obtain the id and send that to a new room before this message gets there
-            player.DisconnectOnRoom();
-            
-            //this will clean up the player whether or not they actually finished being added.
-            lock(_players)
-                _players.Remove(player.Id);
-            
-            Room.MovePlayerCount(this, player.CurrentRoomGuid, Guid.Empty);
-            
-            //todo: anything else? this is run on disconnect
+                //this will clean up the player whether or not they actually finished being added.
+                lock (_players)
+                {
+                    _players.Remove(player.Id);
+                    PlayerCount--;
+                }
 
+                Room.MovePlayerCount(this, player.CurrentRoomGuid, Guid.Empty);
+            }
+
+            //it is necessary that we still raise the event, in case users are doing something during verification
             try
             {
                 PlayerRemoved?.Invoke(player);
@@ -244,7 +283,7 @@ namespace PNetS
         }
 
 #if DEBUG
-        private void RemovePlayerNoNotify(Player player)
+        internal void RemovePlayerNoNotify(Player player)
         {
             Debug.Log($"removing {player} from room, without notifying the room");
 
@@ -278,14 +317,7 @@ namespace PNetS
             return player;
         }
 
-        internal NetMessage GetMessage(int length)
-        {
-            NetMessage msg = null;
-            ImplGetMessage(length, ref msg);
-            return msg;
-        }
-
-        partial void ImplGetMessage(int length, ref NetMessage message);
+        internal NetMessage GetMessage(int length) => _server.GetMessage(length);
 
         #region password authorization cooldown
         private readonly ConcurrentDictionary<IPEndPoint, DateTime> _passCooldowns = new ConcurrentDictionary<IPEndPoint, DateTime>();
@@ -309,7 +341,7 @@ namespace PNetS
         }
         #endregion
 
-        private bool ApproveRoomConnection(IPEndPoint sender, NetMessage msg, out string denyReason, out Room room)
+        internal bool ApproveRoomConnection(IPEndPoint sender, NetMessage msg, out string denyReason, out Room room)
         {
             room = null;
             if (msg == null)
@@ -399,6 +431,21 @@ namespace PNetS
 
             denyReason = null;
             return true;
+        }
+
+        internal void SendToRoom(Room room, NetMessage msg, ReliabilityMode mode)
+        {
+            _server.SendToRoom(room, msg, mode);
+        }
+
+        internal void SendToOtherRooms(Room room, NetMessage msg, ReliabilityMode mode)
+        {
+            _server.SendToOtherRooms(room, msg, mode);
+        }
+
+        internal void SendToAllRooms(NetMessage msg, ReliabilityMode mode)
+        {
+            _server.SendToAllRooms(msg, mode);
         }
     }
 }
