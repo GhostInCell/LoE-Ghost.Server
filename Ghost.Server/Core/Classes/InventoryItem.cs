@@ -18,6 +18,8 @@ namespace Ghost.Server.Core.Classes
         public uint Color02;
         [ProtoMember(4)]
         public int[] Sockets;
+        [ProtoMember(5)]
+        public byte Condition;
 
         public bool IsEmpty
         {
@@ -59,6 +61,7 @@ namespace Ghost.Server.Core.Classes
                 message.Write((byte)Sockets.Length);
                 foreach (var socket in Sockets)
                     message.Write(socket);
+                message.Write(Condition);
             }
         }
 
@@ -72,6 +75,7 @@ namespace Ghost.Server.Core.Classes
                 Sockets = new int[message.ReadByte()];
                 for (int index = 0; index < Sockets.Length; index++)
                     Sockets[index] = message.ReadInt32();
+                Condition = message.ReadByte();
             }
         }
     }

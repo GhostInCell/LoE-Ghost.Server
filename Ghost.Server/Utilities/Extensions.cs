@@ -1147,6 +1147,11 @@ namespace Ghost.Server.Utilities
             player.SubRpc(210, 70, Constants.DefaultRoomBounds);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetVersion(this PNetR.Player player)
+        {
+            player.SubRpc<Int32Serializer>(210, 1, Constants.RoomVersion);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetBounds(this PNetR.Player player, Vector3 min, Vector3 max)
         {
             player.SubRpc(210, 70, new BoundingBox(min, max));

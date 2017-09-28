@@ -14,9 +14,9 @@ namespace Lidgren.Network
 		private static readonly Dictionary<Type, MethodInfo> s_readMethods;
 		private static readonly Dictionary<Type, MethodInfo> s_writeMethods;
 
-		internal byte[] m_data;
-		internal int m_bitLength;
-		internal int m_readPosition;
+        protected internal byte[] m_data;
+        protected internal int m_bitLength;
+        protected internal int m_readPosition;
 
 		/// <summary>
 		/// Gets or sets the internal data buffer

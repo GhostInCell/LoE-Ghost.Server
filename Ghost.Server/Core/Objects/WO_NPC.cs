@@ -209,6 +209,8 @@ namespace Ghost.Server.Core.Objects
         private void WO_NPC_OnSpawn()
         {
             _view = _server.Room.Instantiate("PlayerBase", _movement.Position, _movement.Rotation);
+            if ((_npc.Flags & NPCFlags.Dialog) > 0)
+                _view.MoreInstantiates = new MoreInstantiates(new[] { "Dialog" }, string.Empty);
             _view.CheckVisibility += View_CheckVisibility;
             _view.FinishedInstantiation += View_FinishedInstantiation;
             _view.SubscribeToRpc(7, 04, RPC_07_04);

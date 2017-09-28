@@ -43,6 +43,8 @@ namespace Ghost.Server.Utilities
 
         public const int MuteCheckDelay = 10;
 
+        public const int RoomVersion = 20170922;
+
         public const byte Killed = 1;
         public const byte Fainted = 3;
         public const byte Destroyed = 0;

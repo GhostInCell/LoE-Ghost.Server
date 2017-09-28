@@ -279,6 +279,7 @@ namespace Ghost.Server.Core.Players
             else
             {
                 _player.SetBounds();
+                _player.SetVersion();
                 _object = new WO_Player(this);
                 _save = new AutoSaveChar(this);
                 _items = _object.GetComponent<ItemsMgr>();

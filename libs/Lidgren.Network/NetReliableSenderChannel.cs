@@ -160,33 +160,34 @@ namespace Lidgren.Network
 			return;
 		}
 
-		private void DestoreMessage(double now, int storeIndex, out bool resetTimeout)
-		{
-			// reset timeout if we receive ack within kThreshold of sending it
-			const double kThreshold = 2.0;
-			var srm = m_storedMessages[storeIndex];
-			resetTimeout = (srm.NumSent == 1) && (now - srm.LastSent < kThreshold);
+        private void DestoreMessage(double now, int storeIndex, out bool resetTimeout)
+        {
+            // reset timeout if we receive ack within kThreshold of sending it
+            const double kThreshold = 2.0;
+            var srm = m_storedMessages[storeIndex];
+            resetTimeout = (srm.NumSent == 1) && (now - srm.LastSent < kThreshold);
 
-			var storedMessage = srm.Message;
+            var storedMessage = srm.Message;
 
-			// on each destore; reduce recyclingcount so that when all instances are destored, the outgoing message can be recycled
-			Interlocked.Decrement(ref storedMessage.m_recyclingCount);
+            // on each destore; reduce recyclingcount so that when all instances are destored, the outgoing message can be recycled
+            Interlocked.Decrement(ref storedMessage.m_recyclingCount);
 #if DEBUG
-			if (storedMessage == null)
-				throw new NetException("m_storedMessages[" + storeIndex + "].Message is null; sent " + m_storedMessages[storeIndex].NumSent + " times, last time " + (NetTime.Now - m_storedMessages[storeIndex].LastSent) + " seconds ago");
+            if (storedMessage == null)
+                throw new NetException("m_storedMessages[" + storeIndex + "].Message is null; sent " + m_storedMessages[storeIndex].NumSent + " times, last time " + (NetTime.Now - m_storedMessages[storeIndex].LastSent) + " seconds ago");
+
+            else
 #else
 			if (storedMessage != null)
-			{
+			
 #endif
-			if (storedMessage.m_recyclingCount <= 0)
-				m_connection.m_peer.Recycle(storedMessage);
+            {
+                if (storedMessage.m_recyclingCount <= 0)
+                    m_connection.m_peer.Recycle(storedMessage);
+            }
 
-#if !DEBUG
-			}
-#endif
-			m_usedStoredMessages &= ~((ulong)1 << storeIndex); // clear used bit
-			m_storedMessages[storeIndex] = new NetStoredReliableMessage();
-		}
+            m_usedStoredMessages &= ~((ulong)1 << storeIndex); // clear used bit
+            m_storedMessages[storeIndex] = new NetStoredReliableMessage();
+        }
 
 		// remoteWindowStart is remote expected sequence number; everything below this has arrived properly
 		// seqNr is the actual nr received

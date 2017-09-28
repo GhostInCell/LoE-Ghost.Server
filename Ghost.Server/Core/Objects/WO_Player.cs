@@ -50,7 +50,6 @@ namespace Ghost.Server.Core.Objects
         {
             _player = player;
             OnSpawn += WO_Player_OnSpawn;
-            OnUpdate += WO_Player_OnUpdate;
             OnKilled += WO_Player_OnKilled;
             OnDestroy += WO_Player_OnDestroy;
             OnDespawn += WO_Player_OnDespawn;
@@ -94,10 +93,6 @@ namespace Ghost.Server.Core.Objects
             _player.Data.Position = _movement.Position;
             _player.Data.Rotation = _movement.Rotation;
             _server.Room.RequestAllRoomViews(_player.Player);
-        }
-        private void WO_Player_OnUpdate(TimeSpan obj)
-        {
-            _server.Room.RequestUpdatedRoomViews(_player.Player);
         }
         private void WO_Player_OnKilled(CreatureObject obj)
         {

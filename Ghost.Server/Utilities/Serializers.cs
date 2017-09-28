@@ -130,7 +130,8 @@ namespace Ghost.Server.Utilities
 
         public void OnSerialize(NetMessage message)
         {
-            WearablePosition wSlots = WearablePosition.None; message.Write(Constants.MaxWornItems);
+            var wSlots = WearablePosition.None;
+            message.Write(Constants.MaxWornItems);
             for (int index = 0, count = m_data.Count; index < Constants.MaxWornItems; index++)
             {
                 if (count > 0)
