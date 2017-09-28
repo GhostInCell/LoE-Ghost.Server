@@ -5,14 +5,18 @@ Server only has testing content (npcs, dialogues, monsters) and no any content f
 # How to use
 You need php+mysql web server like this <a href="http://sourceforge.net/projects/wampserver/">Wamp Server</a>
 <ol>
-<li>Execute <i>legends_of_equestria.sql</i> on mysql server.</li>
-<li>Compile and run <i>Server.exe</i> for generating default configs file.</li>
+<li>Install <a href="https://www.microsoft.com/net/download/core#/runtime">.Net Core Runtime 2.0</a>
+<li>Clone or download this repo</li>
+<li>Execute <i>legends_of_equestria.sql</i> on mysql server</li>
+<li>Navigate to &lt;Repo Dir&gt;/Server</li>
+<li>Execute in console <i>dotnet restore</i></li>
+<li>Than <i>dotnet run</i> for generating default configs file</li>
 <li>For local using:<ul>
-<li>Copy <i>connection_s.json</i> to you Legends of Equestria game folder.</i></li>
-<li>Replace mysql user and password in <i>loe_server.cfg</i> and <i>config.php</i> by your own.</li></ul></li>
-<li>Copy files from <i>www</i> folder to web server <i>www</i> folder.</li>
-<li>Run <i>Server.exe</i> and wait full loading them type command: 
-<b>user create</b> <ins>login</ins> <ins>password</ins> <ins>access</ins>
+<li>Copy <i>connection_s.json</i> to you Legends of Equestria game folder</i></li>
+<li>Replace mysql user and password in <i>loe_server.cfg</i> and <i>config.php</i> by your own</li></ul></li>
+<li>Copy files from <i>www</i> folder to web server <i>www</i> folder</li>
+<li>Execute <i>dotnet run</i> again and wait full loading them type command: 
+<b>user create</b> &lt;login&gt; &lt;password&gt; &lt;access&gt;
 <br>access:<ul>
 <li>Player = 1</li>
 <li>TeamMember = 20</li>
