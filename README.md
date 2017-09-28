@@ -1,7 +1,7 @@
 # Legends of Equestria Private Server
-Tested on Windows 10 with 27.07.2016 client release.
+Tested on Windows 10 with 22.09.2017 client release.
 # Content
-Server only has testing content (npcs, dialogs, monsters) and not any content from oficial server.
+Server only has testing content (npcs, dialogues, monsters) and no any content from official server.
 # How to use
 You need php+mysql web server like this <a href="http://sourceforge.net/projects/wampserver/">Wamp Server</a>
 <ol>
